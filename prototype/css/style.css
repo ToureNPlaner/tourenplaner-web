@@ -215,6 +215,7 @@ footer  { }
 
 #main #sidebar { z-index: 2; position: absolute; height: 100%; width: 200px; top: 0px; left: 0px; border-right: 1px solid black; }
 
+#main #map { width: 100%; height: 100%; z-index: 0; background:grey; }
 
 
 
