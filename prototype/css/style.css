@@ -1,7 +1,7 @@
 /*
  * HTML5 ✰ Boilerplate
  *
- * What follows is the result of much research on cross-browser styling. 
+ * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
@@ -35,7 +35,7 @@ body { margin: 0; font-size: 13px; line-height: 1.231; }
 
 body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
-/* 
+/*
  * These selection declarations have to be separate
  * No text-shadow: twitter.com/miketaylr/status/12228805301
  * Also: hot pink!
@@ -107,13 +107,13 @@ nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
 
 /*
  * 1. Improve image quality when scaled in IE7 http://h5bp.com/d
- * 2. Remove the gap between images and borders on image containers http://h5bp.com/e 
+ * 2. Remove the gap between images and borders on image containers http://h5bp.com/e
  */
 
 img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
 
 /*
- * Correct overflow displayed oddly in IE9 
+ * Correct overflow displayed oddly in IE9
  */
 
 svg:not(:root) { overflow: hidden; }
@@ -133,9 +133,9 @@ figure { margin: 0; }
 form { margin: 0; }
 fieldset { border: 0; margin: 0; padding: 0; }
 
-/* 
- * 1. Correct color not inheriting in IE6/7/8/9 
- * 2. Correct alignment displayed oddly in IE6/7 
+/*
+ * 1. Correct color not inheriting in IE6/7/8/9
+ * 2. Correct alignment displayed oddly in IE6/7
  */
 
 legend { border: 0; *margin-left: -7px; padding: 0; }
@@ -172,9 +172,9 @@ button, input[type="button"], input[type="reset"], input[type="submit"] { cursor
 input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
 input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
 
-/* 
+/*
  * Remove inner padding and border in FF3/4
- * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ 
+ * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/
  */
 
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
@@ -196,12 +196,22 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 /* =============================================================================
    Primary styles
-   Author: 
+   Author:
    ========================================================================== */
 
+header  { float: right; border-bottom: 1px solid black; border-left: 1px solid black; height: 20px; padding: 0 5px;  line-height: 16px; }
+header .login { padding-right: 10px; }
+header .settings-icon { height: 20px; width: 20px; }
+header .settings-icon-overlay { border-left: 1px solid black; border-right: 1px solid black; background: white; }
+header .settings { z-index: 2; display: none; position: absolute; top: 20px; right: 0px; border: 1px solid black; padding: 0 5px; }
 
+footer  { }
 
+#main   { }
 
+#main #data   { z-index: 2; position: absolute; bottom: 0px; right: 0px; padding: 0 5px; border-top: 1px solid black; border-left: 1px solid black; }
+
+#main #sidebar { z-index: 2; position: absolute; height: 100%; width: 200px; top: 0px; left: 0px; border-right: 1px solid black; }
 
 
 
@@ -237,7 +247,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* Hide visually and from screenreaders, but maintain layout */
 .invisible { visibility: hidden; }
 
-/* Contain floats: nicolasgallagher.com/micro-clearfix-hack/ */ 
+/* Contain floats: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
@@ -266,7 +276,7 @@ table { border-collapse: collapse; border-spacing: 0; }
    Print styles.
    Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
    ========================================================================== */
- 
+
 @media print {
   * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: sanbeiji.com/archives/953 */
   a, a:visited { text-decoration: underline; }
