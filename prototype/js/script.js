@@ -14,4 +14,20 @@ $(function() {
     $('#main #sidebar').resizable({
         handles: 'e'
     });
+    
+    $('#main #data').resizable({
+       handles: 'w,nw,n' 
+    });
+    
+    $('#main #data .minimize a').click(function() {        
+        $('#main #data #content').toggle('blind');
+        $('#main #data .maximize').show();
+        $(this).parent().hide();
+    });
+    
+    $('#main #data .maximize a').click(function() {
+        $('#main #data #content').toggle('blind');
+        $('#main #data .minimize').show();
+        $(this).parent().hide();
+    });
 });
