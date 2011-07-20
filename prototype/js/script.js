@@ -2,6 +2,8 @@
 
 */
 
+var data_style = "";
+
 $(function() {
     // Header settings dropdown
     $('header .settings-icon a').click(function() {
@@ -19,15 +21,19 @@ $(function() {
        handles: 'w,nw,n' 
     });
     
-    $('#main #data .minimize a').click(function() {        
-        $('#main #data #content').toggle('blind');
-        $('#main #data .maximize').show();
-        $(this).parent().hide();
+    $('#main #data #minmax a').click(function() {
+        $('#main #data #content').toggle();
+        var parent = $('#main #data');
+        parent.toggleClass('minimized');
+        if ($(this).html() == '_') {
+            $(this).html('Daten');
+            
+            data_style = parent.attr('style');
+            parent.attr('style', '');
+        } else {
+            $(this).html('_');
+            parent.attr('style', data_style);
+        }
     });
     
-    $('#main #data .maximize a').click(function() {
-        $('#main #data #content').toggle('blind');
-        $('#main #data .minimize').show();
-        $(this).parent().hide();
-    });
 });
