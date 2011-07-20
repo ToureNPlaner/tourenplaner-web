@@ -209,6 +209,9 @@ header .settings { z-index: 2; display: none; position: absolute; top: 20px; rig
 
 footer  { }
 
+#login { display: none; }
+#login .validate { display: none; }
+
 #main   { }
 
 #main #data   { z-index: 2; position: absolute; bottom: 0px; right: 0px; padding: 0 5px; border-top: 1px solid black; border-left: 1px solid black; }

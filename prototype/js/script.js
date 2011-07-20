@@ -3,7 +3,9 @@
 */
 
 var data_style = "";
+var user = { username: "", password: "" };
 
+/** Initialize all UI functions/buttons/dialogs/whatever */
 $(function() {
     // Header settings dropdown
     $('header .settings-icon a').click(function() {
@@ -36,4 +38,41 @@ $(function() {
         }
     });
     
+    $('header .login a').click(function() {
+        $('#login').dialog({
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Login" : function() {
+                    var valid = true;
+                    var username = $('#login form #username').val();
+                    var password = $('#login form #password').val();
+                    
+                    if (username.length == 0) {
+                        valid = false;
+                        $('#login form #username').addClass('ui-state-error')
+                    }
+                    if (password.length == 0) {
+                        valid = false;
+                        $('#login form #password').addClass('ui-state-error');
+                    }
+                    
+                    if (valid) {
+                        user = { username: username, password: password };
+                        log(user);
+                        $(this).dialog('close');
+                    } else {
+                        $('.validate', this).show();
+                    }
+                },                
+                "Cancel" : function() {
+                    $(this).dialog('close');
+                }            
+            },
+            close: function() {
+                $('input', this).val('').removeClass('ui-state-error');
+                $('.validate', this).hide();
+            }
+        });
+    });
 });
