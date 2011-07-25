@@ -57,7 +57,7 @@ $(function() {
                     var valid = true;
                     var username = $('#login form #username').val();
                     var password = $('#login form #password').val();
-                    
+
                     if (username.length == 0) {
                         valid = false;
                         $('#login form #username').addClass('ui-state-error')
@@ -67,10 +67,17 @@ $(function() {
                         $('#login form #password').addClass('ui-state-error');
                     }
                     
+		    // user: FooUser
+		    // pass: FooPassword
+		    if(base64_encode(username+":"+password) != 'Rm9vVXNlcjpGb29QYXNzd29yZA=='){
+        		valid = false;
+		    }
+
                     if (valid) {
                         user = { username: username, password: password };
                         log(user);
                         $(this).dialog('close');
+			alert("validiert :)");
                     } else {
                         $('.validate', this).show();
                     }
