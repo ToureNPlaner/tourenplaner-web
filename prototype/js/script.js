@@ -19,6 +19,16 @@ $(function() {
         handles: 'e'
     });
     
+    // update map size when resize sidebar
+    var resizeUpdater = function(event, ui) {
+    	$("#main #map").css('left', ui.size.width);
+    	$("#main #map").css('width', "100%");
+    	$("#main #map").css('height', "100%");
+    	mapObject.refresh();
+    }
+    $("#main #sidebar").bind("resize", resizeUpdater);
+    $("#main #sidebar").bind("resizestop", resizeUpdater);
+    
     $('#main #data').resizable({
        handles: 'w,nw,n' 
     });
