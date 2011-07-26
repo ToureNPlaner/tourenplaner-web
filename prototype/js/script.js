@@ -4,6 +4,7 @@
 
 var data_style = "";
 var user = { username: "", password: "" };
+var authBase64 = "";
 
 /** Initialize all UI functions/buttons/dialogs/whatever */
 $(function() {
@@ -69,7 +70,8 @@ $(function() {
                     
 		    // user: FooUser
 		    // pass: FooPassword
-		    if(base64_encode(username+":"+password) != 'Rm9vVXNlcjpGb29QYXNzd29yZA=='){
+		    authBase64 = base64_encode(username + ":" + password);
+		    if(authBase64 != 'Rm9vVXNlcjpGb29QYXNzd29yZA=='){
         		valid = false;
 		    }
 
@@ -77,7 +79,7 @@ $(function() {
                         user = { username: username, password: password };
                         log(user);
                         $(this).dialog('close');
-			alert("validiert :)");
+			$('.login').html(user.username);
                     } else {
                         $('.validate', this).show();
                     }
@@ -93,3 +95,38 @@ $(function() {
         });
     });
 });
+
+$(document).ready(function() {
+    $("button").button();
+    $("button").click(function(){
+	var start = $('#main #sidebar form #start').val();
+	var target = $('#main #sidebar form #target').val();
+	request(start, target);
+    });
+});
+
+function request(start, target){
+	var requestString = '{"Request" : [[' + start + '], [' + target + ']]}';
+	var authHeader = "'Basic " + authBase64 + "'";
+//	jQuery.support.cors = true; // force cross-site scripting (as of jQuery 1.5)
+
+	// method performs an asyncronous HTTP request.
+	// use success function and data.slice to handle received data
+	// returns a jqXHR object
+	var jqxhr = $.ajax({
+		url: 'http://localhost:8081/sp',
+		cache: false,
+		type: 'POST',
+//		crossDomain: true,
+		accepts: 'json',
+		headers: {'Authorization' : authHeader},
+		data: requestString,
+		success: function( data, textStatus, jqXHR ) {
+			// Get responding route with: "jqXHR.responseText"
+			alert(jqXHR.responseText);
+		},
+		error: function( jqXHR, textStatus, errorThrown ) {
+			alert(textStatus + ": " + errorThrown);
+		}
+	});
+};

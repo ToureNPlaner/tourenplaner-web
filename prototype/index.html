@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  
+
   <div id="login" title="Login">
     <p class="validate">Please fill out all fields.</p>
     
@@ -58,6 +58,15 @@
 	  <div id="map"></div>
 	  <div id="sidebar">
 		<p>The sidebar goes here.</p>
+		<form name="route">
+      		   <label for="start">Start:</label><br />
+      		   <input type="text" name="start" id="start" class="ui-widget-content ui-corner-all" /><br />
+      
+      		   <label for="target">Target:</label><br />
+      		   <input type="text" name="target" id="target" class="ui-widget-content ui-corner-all" /><br /><br />
+    		</form>
+
+		<button>Get Route</button>
 	  </div>
 	  <div id="data">
 	      <span id="minmax">
