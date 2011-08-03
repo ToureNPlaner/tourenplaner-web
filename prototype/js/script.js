@@ -94,6 +94,39 @@ $(function() {
             }
         });
     });
+    
+    $('header .register a').click(function() {
+        $('#registration').dialog({
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Register" : function() {
+                    alert('Not implemented');
+                },
+                "Cancel" : function() {
+                    $(this).dialog('close');
+                }                
+            },
+            close: function() {
+                $('input', this).val('').removeClass('ui-state-error');
+                $('.validate', this).hide();
+            }
+        });        
+    });
+    
+    $('header .billing a').click(function() {
+        $('#billing').dialog({
+            modal: true,
+            resizable: false,
+            height: 300,
+            width: 500,
+            buttons: {                
+                "Close" : function() {
+                    $(this).dialog('close');
+                }                
+            }
+        });
+    })
 });
 
 $(document).ready(function() {

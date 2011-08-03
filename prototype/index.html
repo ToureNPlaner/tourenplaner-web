@@ -31,12 +31,54 @@
     <p class="validate">Please fill out all fields.</p>
     
     <form name="login">
-      <label for="username">Username:</label><br />
-      <input type="text" name="username" id="username" class="ui-widget-content ui-corner-all" /><br />
+      <label for="email">Email:</label><br />
+      <input type="text" name="email" id="email" class="ui-widget-content ui-corner-all" /><br />
       
       <label for="password">Password:</label><br />
-      <input type="password" name="password" id="password" class="ui-widget-content ui-corner-all" /><br /><br />
+      <input type="password" name="password" id="password" class="ui-widget-content ui-corner-all" /><br />
     </form>
+  </div>
+  
+  <div id="registration" title="Registrieren">
+    <p class="validate">Please fill out all fields.</p>
+    
+    <form name="register">
+      <label for="firstname">First name:</label><br />
+      <input type="text" name="firstname" id="firstname" class="ui-widget-content ui-corner-all" /><br />
+      
+      <label for="lastname">Last name:</label><br />
+      <input type="text" name="lastname" id="lastname" class="ui-widget-content ui-corner-all" /><br />
+      
+      <label for="address">Address:</label><br />
+      <input type="text" name="address" id="address" class="ui-widget-content ui-corner-all" /><br />
+      
+      <label for="email">Email:</label><br />
+      <input type="text" name="email" id="email" class="ui-widget-content ui-corner-all" /><br />
+      
+      <label for="password">Password:</label><br />
+      <input type="password" name="password" id="password" class="ui-widget-content ui-corner-all" /><br />
+      
+      <label for="repeat_password">Repeat password:</label><br />
+      <input type="password" name="password" id="password" class="ui-widget-content ui-corner-all" /><br />
+    </form>
+  </div>
+  
+  <div id="billing" title="Billing">
+    <h2>Last Month</h2>
+    
+    <table border="1" width="100%" >
+      <tr>
+	<th>Time</th><th>Request</th><th>CPU time</th><th>Costs</th>
+      </tr>
+      
+      <tr>
+	<td>01.07.2011</td><td>-9.5123, 8.54 to -8.143,9.2</td><td>10.5 s</td><td>0.54 €</td>
+      </tr>
+      
+      <tr>
+	<td>13.07.2011</td><td>43.43, 12.58 to 45.43, 12.49</td><td>35.31 s</td><td>1.49 €</td>
+      </tr>
+    </table>
   </div>
 
   <div id="container">
@@ -44,13 +86,19 @@
 	  <span class="login">
 		<a href="#">Login</a>
 	  </span>
+	  
+	  <span class="register">
+		<a href="#">Register</a>
+	  </span>
 
 	  <span class="settings-icon settings-icon-no-overlay">
 		<a href="#"><img src="img/cog.png" alt="Settings" /></a>
 	  </span>
 
 	  <div class="settings">
-		<p>This is just some text for now</p>
+		<span class="billing">
+		  <a href="#">Billing</a>
+		</span>
 	  </div>
     </header>
 
@@ -74,7 +122,22 @@
 	      </span>
 	      
 	      <div id="content">
-		<p>All your data are belong to me.</p>
+		<h3>Punkt 1</h3>	
+		
+		<form name="point">
+		  <input type="hidden" name="id" value="1" />
+		  
+		  <label for="lat">Latitude: </label>
+		  <input type="number" name="lat" id="lat" class="ui-widget-content ui-corner-all" /><br />
+		  
+		  <label for="lon">Longitude: </label>
+		  <input type="number" name="lon" id="lon" class="ui-widget-content ui-corner-all" /><br />
+		  
+		  <label for="k">Constraint: </label>
+		  <input type="number" name="k" id="k" class="ui-widget-content ui-corner-all" /><br /><br />
+		  
+		  <button>Apply</button> <button>Delete Point</button>
+		</form>
 	      </div>
 	  </div>
     </div>
