@@ -1,37 +1,16 @@
 window.Router = Backbone.Router.extend({
    
     routes: {
-        "/login":        "login",    // #login
-        "/register":     "register", // #register
-        "/billing":      "billing",  // #billing
-        "/route/:id":    "request"   // #route/7
+        "/login":        "login",    // #/login
+        "/logout":       "logout",   // #/logout
+        "/register":     "register", // #/register
+        "/settings":     "settings", // #/settings
+        "/billing":      "billing",  // #/billing
+        "/route/:id":    "request"   // #/route/7
     },
     
     initialize: function(options) {
-        log('Router initialized');
-        var cookie = $.cookie('tourenplaner');
-        log('Cookie', cookie);
-        if (cookie && typeof cookie !== 'undefined') {
-            var cookieval, arr, username;
-            try {
-                cookieval = Base64.decode(cookie);
-            
-                log('Cookie found with value:', cookie, 'decoded:', cookieval);
-            
-                arr = cookieval.split(':');
-                if (arr.length != 2)
-                    cookie = '';
-                username = arr[0];
-                password = arr[1];
-                
-                //TODO: Create User object
-                //TODO: Check with the server
-            } catch (e) {
-                log('Invalid cookie! Resetting!');
-                cookie = '';
-            }
-        }
-        $.cookie('tourenplaner', cookie, { path: '/', expires: 7});
+        this.user = new User();
     },
   
     login: function() {
@@ -42,6 +21,7 @@ window.Router = Backbone.Router.extend({
             resizable: false,
             buttons: {
                 "Login" : function() {
+                    //TODO: Call _this.user.login(username, password) and check the result
                     alert('To be implemented');
                     $(this).dialog('close');
                 },
@@ -57,7 +37,16 @@ window.Router = Backbone.Router.extend({
         });
     },
     
+    logout: function() {
+        if (this.user.isLoggedIn())
+            this.user.logout();
+    },
+    
     register: function() {
+        alert('To be implemented');
+    },
+    
+    settings: function() {
         alert('To be implemented');
     },
     

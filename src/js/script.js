@@ -1,7 +1,8 @@
 $(function() {
-    var app = new Router();
+    window.app = new Router();
+    var topbar = new Topbar();
     
-    Backbone.history.start({ pushState: true });
+    Backbone.history.start();
 });
 
 
