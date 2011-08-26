@@ -21,9 +21,12 @@ window.Router = Backbone.Router.extend({
             resizable: false,
             buttons: {
                 "Login" : function() {
-                    //TODO: Call _this.user.login(username, password) and check the result
-                    alert('To be implemented');
-                    $(this).dialog('close');
+                    var username = $('#email', this).val();
+                    var password = $('#password', this).val();
+                    if (!window.app.user.login(username, password))
+                        $('.validate', this).show();
+                    else
+                        $(this).dialog('close');
                 },
                 "Cancel" : function() {
                     $(this).dialog('close');

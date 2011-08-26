@@ -17,7 +17,7 @@ window.Topbar = Backbone.View.extend({
         this.$('ul li').toggle();
         
         if (user.isLoggedIn())
-            this.$('li.user').html(user.get('vorname') + ' ' + user.get('nachname'));
+            this.$('li.user a').html(user.get('firstname') + ' ' + user.get('lastname'));
     }
     
 });

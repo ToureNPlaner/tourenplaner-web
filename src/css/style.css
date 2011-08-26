@@ -298,6 +298,7 @@ td { vertical-align: top; }
    ========================================================================== */
 
 #login { display: none; }
+#login .validate { display: none; }
 
 #main { margin-top: 20px; }
 
