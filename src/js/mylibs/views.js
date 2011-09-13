@@ -66,6 +66,9 @@ window.Sidebar = Backbone.View.extend({
         this.onResize();
 
         $(window).resize(_.bind(this.onResize, this));
+        this.el.resizable({
+            handles: 'e'
+        })
     },
 
     onResize: function() {
