@@ -73,8 +73,8 @@ window.Api = Backbone.View.extend({
     /* authUser
      * confirmes user.
      */
-    authUser : function () {
-        return this.send('authuser', '');
+    authUser : function (username, password) {
+        return this.send('authuser', {username: username, password: password});
     },
     
     /* getUser

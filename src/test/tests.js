@@ -4,15 +4,10 @@
 
 // below are some general tests but feel free to delete them.
 
-module("example tests");
-test("HTML5 Boilerplate is sweet",function(){
-  expect(1);
-  equals("boilerplate".replace("boilerplate","sweet"),"sweet","Yes. HTML5 Boilerplate is, in fact, sweet");
-
-})
+window.testApi = new Api();
 
 // these test things from plugins.js
-test("Environment is good",function(){
+test("Log function/Modernizr",function(){
   expect(3);
   ok( !!window.log, "log function present");
 
@@ -21,4 +16,12 @@ test("Environment is good",function(){
   equals( log.history.length - history, 1, "log history keeps track" )
 
   ok( !!window.Modernizr, "Modernizr global is present")
-})
+});
+
+test("Login function", function() {
+  expect(3);
+  
+  ok( !! testApi.authUser('asd', 'asd'), "login working for asd:asd");
+  ok( ! testApi.authUser('bsd', 'asd'), "login not working for bsd:asd");
+  ok( ! testApi.authUser('asd', 'bsd'), "login not working for asd:bsd");
+});
