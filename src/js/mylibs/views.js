@@ -1,4 +1,4 @@
-window.Body = Backbone.View.extend({
+window.BodyView = Backbone.View.extend({
     el: $('body'),
 
     events: {
@@ -6,8 +6,8 @@ window.Body = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.topbar = new Topbar();
-        this.main = new Main();
+        this.topbar = new TopbarView();
+        this.main = new MainView();
     },
 
     onBodyClick: function() {
@@ -15,7 +15,7 @@ window.Body = Backbone.View.extend({
     }
 });
 
-window.Topbar = Backbone.View.extend({
+window.TopbarView = Backbone.View.extend({
 
     el: $('header'),
 
@@ -48,17 +48,18 @@ window.Topbar = Backbone.View.extend({
 
 });
 
-window.Main = Backbone.View.extend({
+window.MainView = Backbone.View.extend({
 
     el: $('#main'),
 
     initialize: function() {
-        this.sidebar = new Sidebar();
-        this.map = new Map({ sidebar: this.sidebar });
+        this.sidebar = new SidebarView();
+        this.map = new MapView({ sidebar: this.sidebar });
+        this.data = new DataView();
     }
 });
 
-window.Sidebar = Backbone.View.extend({
+window.SidebarView = Backbone.View.extend({
 
     el: $('#main #sidebar'),
 
@@ -76,7 +77,7 @@ window.Sidebar = Backbone.View.extend({
     }
 });
 
-window.Map = Backbone.View.extend({
+window.MapView = Backbone.View.extend({
 
     el: $('#main #map'),
 
@@ -95,5 +96,42 @@ window.Map = Backbone.View.extend({
         }
         this.el.height($(window).height() - 40);
         this.el.width($(window).width() - width);
+    }
+});
+
+window.DataView = Backbone.View.extend({
+
+    el: $('#main #data'),
+
+    /**
+     * Used to save the old size (before minimizing). Using this, we can restore the old size.
+     */
+    oldStyle: "",
+
+    events: {
+        "click span.minmax a": "onMinMax"
+    },
+
+    initialize: function() {
+        this.el.resizable({
+           handles: "n, nw, w"
+        });
+    },
+
+    onMinMax: function() {
+        this.el.toggleClass('minimized');
+        this.$('.content').toggle();
+
+        var link = this.$('.minmax a');
+        if (link.html() === '_') {
+            link.html('Daten');
+
+            this.oldStyle = this.el.attr('style');
+            this.el.attr('style', '');
+        } else {
+            link.html('_');
+
+            this.el.attr('style', this.oldStyle);
+        }
     }
 });

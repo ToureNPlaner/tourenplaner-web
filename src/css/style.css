@@ -34,6 +34,23 @@
   background:grey;
 }
 
+#main #data {
+  z-index: 2;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 0 5px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  background: white;
+  box-shadow: -2px -2px 5px #333;
+  -moz-box-shadow: -2px -2px 5px #333;
+  -webkit-box-shadow: -2px -2px 5px #333;
+}
+#main #data .minimize {
+  display: none;
+}
+
 .container {
   width: auto;
 }
