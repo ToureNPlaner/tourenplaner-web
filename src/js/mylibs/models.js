@@ -7,7 +7,7 @@ window.User = Backbone.Model.extend({
     /** Don't use initialize here because it gets called too early */
     onStartup: function() {     
         var cookie = $.cookie('tourenplaner');
-        if (cookie && typeof cookie !== 'undefined') {
+        if (cookie && !_.isUndefined(cookie)) {
             var dec, decarr;
             try {
                 dec = Base64.decode(cookie);

@@ -135,3 +135,43 @@ window.DataView = Backbone.View.extend({
         }
     }
 });
+
+window.LoginView = Backbone.View.extend({
+   
+    el: $('#login'),
+    
+    initialize: function() { },
+   
+    render: function() {
+        this.el.dialog({
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Login" : _.bind(this.onLogin, this),
+                "Cancel" : _.bind(this.remove, this)
+            },
+            close: _.bind(this.onClose, this)
+        });
+        
+        return this;
+    },
+    
+    remove: function() {
+        this.el.dialog('close');
+    },
+    
+    onLogin: function() {
+        var username = this.$('input#email').val();
+        var password = this.$('input#password').val();
+        if (!window.app.user.login(username, password))
+            this.$('.validate').show();
+        else
+            this.remove();
+    },
+    
+    onClose: function() {
+        this.$('input').val('').removeClass('ui-state-error');
+        this.$('.validate').hide();
+        window.app.navigate('');
+    }
+});

@@ -14,30 +14,9 @@ window.Router = Backbone.Router.extend({
     },
 
     login: function() {
-        _this = this;
-
-        $('#login').dialog({
-            modal: true,
-            resizable: false,
-            buttons: {
-                "Login" : function() {
-                    var username = $('#email', this).val();
-                    var password = $('#password', this).val();
-                    if (!window.app.user.login(username, password))
-                        $('.validate', this).show();
-                    else
-                        $(this).dialog('close');
-                },
-                "Cancel" : function() {
-                    $(this).dialog('close');
-                }
-            },
-            close: function() {
-                $('input', this).val('').removeClass('ui-state-error');
-                $('.validate', this).hide();
-                _this.navigate('');
-            }
-        });
+        if (_.isNull(this.loginView) || _.isUndefined(this.loginView))
+            this.loginView = new LoginView();
+        this.loginView.render();
     },
 
     logout: function() {
