@@ -1,4 +1,4 @@
-window.Api = Backbone.View.extend({
+window.Api = {
 
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
@@ -9,11 +9,12 @@ window.Api = Backbone.View.extend({
 
     /* send
      * sends given request to server. with or without authentication
+     * param: type chooses how the request should be send. POST or GET.
      * param: urlSuffix chooses algorithm, info or modi 
      * param: requestString contains the request
      * return response by server - generalley as json
      */
-    send : function (urlSuffix, requestString) {
+    send : function (type, urlSuffix, requestString) {
         var url = this.server + ':' + this.port + '/' + urlSuffix;
         
         if (this.authRequired) {
@@ -22,7 +23,7 @@ window.Api = Backbone.View.extend({
             return $.ajax({
                 url: url,
                 cache: false,
-                type: 'POST',
+                type: type,
                 accepts: 'json',
                 headers: {'Authorization' : this.authAsBase64},
                 data: requestString,
@@ -40,7 +41,7 @@ window.Api = Backbone.View.extend({
             return $.ajax({
                 url: url,
                 cache: false,
-                type: 'POST',
+                type: type,
                 accepts: 'json',
                 data: requestString,
                 success: function (data, textStatus, jqXHR) {
@@ -59,22 +60,22 @@ window.Api = Backbone.View.extend({
      * aks' server for information about the server
      */
     serverInformation : function () {
-        return this.send('info', '');  
+        return this.send('GET', 'info', '');  
     },
     
     /* registerUser
      * creates new user account
      */
-// wird userObject übergeben?
     registerUser: function (userObject) {
-        return this.send('registeruser', userObject);
+        return this.send('POST', 'registeruser', userObject);
     },
     
     /* authUser
      * confirmes user.
      */
     authUser : function (username, password) {
-        return this.send('authuser', {username: username, password: password});
+        return this.send('GET', 'authuser',
+                         {username: username, password: password});
     },
     
     /* getUser
@@ -83,9 +84,9 @@ window.Api = Backbone.View.extend({
      */
     getUser : function (id) {
         if (id === null) {
-            return this.send('getuser', '');
+            return this.send('GET', 'getuser', '');
         } else {
-            return this.send('getuser?ID=' + id, '');
+            return this.send('GET', 'getuser?ID=' + id, '');
         }
     },
     
@@ -95,9 +96,9 @@ window.Api = Backbone.View.extend({
      */
     updateUser : function (id, userObject) {
         if (id === null) {
-            return this.send('updateuser', userObject);
+            return this.send('POST', 'updateuser', userObject);
         } else {
-            return this.send('updateuser?ID=' + id, userObject);
+            return this.send('POST', 'updateuser?ID=' + id, userObject);
         }
     },
     
@@ -109,10 +110,12 @@ window.Api = Backbone.View.extend({
      */
     listRequest : function (id, limit, offset) {
         if (id === null) {
-            return this.send('listrequests?Limit=' + limit +
+            return this.send('POST',
+                             'listrequests?Limit=' + limit +
                              '&Offset=' + offset, '');
         } else {
-            return this.send('listrequests?ID=' + id +
+            return this.send('POST',
+                             'listrequests?ID=' + id +
                              '&Limit=' + limit +
                              '&Offset=' + offset, '');               
         }
@@ -124,7 +127,9 @@ window.Api = Backbone.View.extend({
      * param: offset of first user
      */
     listUser : function (limit, offset) {
-        return this.send('listusers?Limit=' + limit + '&Offset=' + offset, '');
+        return this.send('GET',
+                         'listusers?Limit=' + limit +
+                         '&Offset=' + offset, '');
     },
     
     /* deleteUser
@@ -132,7 +137,9 @@ window.Api = Backbone.View.extend({
      * param: id of user that should be deleted
      */
     deleteUser : function (id) {
-        return this.send('deleteuser?ID=' + id, '');
+        return this.send('GET',
+                         'deleteuser?ID=' + id,
+                         '');
     },
     
     /* alg
@@ -141,6 +148,6 @@ window.Api = Backbone.View.extend({
      * param: request contains problem instance (format as alg specification)
      */
     alg : function (alg, request) {
-        return this.send('alg$' + alg, request);
+        return this.send('POST', 'alg$' + alg, request);
     }
-});
+};
