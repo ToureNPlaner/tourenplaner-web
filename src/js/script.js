@@ -1,12 +1,8 @@
 $(function() {
-    window.app = new Router();    
+    window.app = new Router();
     Backbone.history.start();
-    
-    var topbar = new Topbar();
-    
+
+    window.body = new Body();
+
     window.app.user.onStartup();
 });
-
-
-
-

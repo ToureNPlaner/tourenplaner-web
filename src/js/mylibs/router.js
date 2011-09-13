@@ -1,5 +1,5 @@
 window.Router = Backbone.Router.extend({
-   
+
     routes: {
         "/login":        "login",    // #/login
         "/logout":       "logout",   // #/logout
@@ -8,14 +8,14 @@ window.Router = Backbone.Router.extend({
         "/billing":      "billing",  // #/billing
         "/route/:id":    "request"   // #/route/7
     },
-    
+
     initialize: function(options) {
         this.user = new User();
     },
-  
+
     login: function() {
         _this = this;
-        
+
         $('#login').dialog({
             modal: true,
             resizable: false,
@@ -36,29 +36,30 @@ window.Router = Backbone.Router.extend({
                 $('input', this).val('').removeClass('ui-state-error');
                 $('.validate', this).hide();
                 _this.navigate('');
-            }        
+            }
         });
     },
-    
+
     logout: function() {
         if (this.user.isLoggedIn())
             this.user.logout();
+        this.navigate('');
     },
-    
+
     register: function() {
         alert('To be implemented');
     },
-    
+
     settings: function() {
         alert('To be implemented');
     },
-    
+
     billing: function() {
         alert('To be implemented');
     },
-    
+
     request: function(id) {
         alert('To be implemented');
     }
-    
+
 });
