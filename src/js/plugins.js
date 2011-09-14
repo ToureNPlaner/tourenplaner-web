@@ -226,6 +226,18 @@ jQuery.cookie = function (key, value, options) {
 // This plugin is dual-licensed under the GNU General Public License
 //   and the MIT License and is copyright A Beautiful Site, LLC.
 //
+// create menu in html as a list
+document.write('<ul id="myMenu" class="contextMenu">\
+		<li>\
+				    <a href="#getcoordinate">get coordinates.</a>\
+				    		</li>\
+				    				<li>\
+				    						    <a href="#start">Startposition</a>\
+				    						    		</li>\
+				    						    				<li>\
+				    						    						    <a href="#target">Targetposition</a>\
+				    						    						    		</li>\
+				    						    						    				</ul>');
 if(jQuery)( function() {
 	$.extend($.fn, {
 		

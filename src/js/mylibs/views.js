@@ -87,6 +87,9 @@ mapObject.refresh();
 // $("#main #sidebar").bind("resizestop", resizeUpdater);
 $("#main #sidebar").bind("resize", resizeUpdater);
 
+
+
+var mapObject;
 window.MapView = Backbone.View.extend({
 
     el: $('#main #map'),
@@ -94,7 +97,11 @@ window.MapView = Backbone.View.extend({
     initialize: function(args) {
         this.onResize(args.sidebar);
         $(window).resize(_.bind(this.onResize, this));
+	mapObject = new Map("map");
+	mapObject.initializeMap();
+	mapObject.contextMenu();
 	mapObject.refresh();
+	
     },
 
     onResize: function(sidebar) {
