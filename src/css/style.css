@@ -32,6 +32,7 @@
   float: right;
   z-index: 1;
   background:grey;
+  position:absolute;
 }
 
 #main #data {

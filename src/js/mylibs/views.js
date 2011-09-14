@@ -77,14 +77,24 @@ window.SidebarView = Backbone.View.extend({
     }
 });
 
+// update map size when resize sidebar
+var resizeUpdater = function(event, ui) {
+$("#main #map").css('left', ui.size.width);
+$("#main #map").css('width', "100%");
+$("#main #map").css('height', "100%");
+mapObject.refresh();
+};
+// $("#main #sidebar").bind("resizestop", resizeUpdater);
+$("#main #sidebar").bind("resize", resizeUpdater);
+
 window.MapView = Backbone.View.extend({
 
     el: $('#main #map'),
 
     initialize: function(args) {
         this.onResize(args.sidebar);
-
         $(window).resize(_.bind(this.onResize, this));
+	mapObject.refresh();
     },
 
     onResize: function(sidebar) {
@@ -95,7 +105,7 @@ window.MapView = Backbone.View.extend({
             width = window.body.main.sidebar.el.outerWidth();
         }
         this.el.height($(window).height() - 40);
-        this.el.width($(window).width() - width);
+        this.el.width($(window).width());
     }
 });
 
