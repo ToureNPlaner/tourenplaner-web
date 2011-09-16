@@ -229,7 +229,7 @@ jQuery.cookie = function (key, value, options) {
 // create menu in html as a list
 document.write('<ul id="myMenu" class="contextMenu">\
 		<li>\
-				    <a href="#getcoordinate">get coordinates.</a>\
+		<a href="#getcoordinate">get coordinates.</a>\
 				    		</li>\
 				    				<li>\
 				    						    <a href="#start">Startposition</a>\
