@@ -1,5 +1,4 @@
 window.Api = {
-
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
@@ -8,68 +7,70 @@ window.Api = {
     },
 
     /* send
-     * sends given request to server. with or without authentication
-     * param: type chooses how the request should be send. POST or GET.
-     * param: urlSuffix chooses algorithm, info or modi 
-     * param: requestString contains the request
-     * return response by server - generalley as json
+     * sends given request to server. with or without authentication.
+     * handles callback from reqData
+     * param: reqData
+     *          .type chooses how the request should be send. POST or GET.
+     *          .suffix chooses algorithm, info or modi.
+     *          .request String that contains the request.
+     *          .callback function should be called when done.
      */
-    send : function (type, urlSuffix, requestString) {
-        var url = this.server + ':' + this.port + '/' + urlSuffix;
-        
-        if (this.authRequired) {
-            // method performs an asyncronous HTTP request with authentication.
-            // use success function and jqHXR.reponseText to handle received data
-            return $.ajax({
-                url: url,
-                cache: false,
-                type: type,
-                accepts: 'json',
-                headers: {'Authorization' : this.authAsBase64},
-                data: requestString,
-                success: function (data, textStatus, jqXHR) {
-                    // Get responding route with: "jqXHR.responseText"
-                    return jqXHR.responseText;
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + ": " + errorThrown);
-                }
-            });
-        } else {
-            // method performs an asyncronous HTTP request without authentication.
-            // use success function and jqHXR.reponseText to handle received data
-            return $.ajax({
-                url: url,
-                cache: false,
-                type: type,
-                accepts: 'json',
-                data: requestString,
-                success: function (data, textStatus, jqXHR) {
-                    // Get responding route with: "jqXHR.responseText"
-                    alert(jqXHR.responseText);
-                    return jqXHR.responseText;
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + ": " + errorThrown);
-                }
-            });
-        }
+    send : function (reqData) {
+        var url, event;
+        url = this.server + ':' + this.port + '/' + reqData.suffix;
+        event = {}; // needed to bind ajax-event on it
+        _.extend(event, Backbone.Events); // init event for events
+        event.bind('request', reqData.callback);
+
+        // method performs an asyncronous HTTP request with or without
+        // authentication. 
+        // performs a callback, successful or not
+        $.ajax({
+            url: url,
+            cache: false,
+            type: reqData.type,
+            accepts: 'json',
+            data: reqData.request,
+            beforeSend: function (jqXHR, settings) {
+		        if (this.authRequired) {
+		            jqXHR.setRequestHeader('Authorization', this.authAsBase64);
+		        }
+            },
+            success: function (data, textStatus, jqXHR) {
+                event.trigger('request', jqXHR.responseText, true);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                event.trigger('request', errorThrown, false);
+            }
+        });
     },
 
     /* serverInformation
      * aks' server for information about the server
      */
     serverInformation : function () {
-        return this.send('GET', 'info', '');  
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {
+            if (successful) {
+                // do something with your answer
+            } else {
+                // handle error
+            }
+        };
+        reqData = {
+            type : 'GET',
+            suffix : 'info',
+            request : '',
+            callback : callbackHandler
+        };
+        this.send(reqData);
     },
-    
     /* registerUser
      * creates new user account
      */
     registerUser: function (userObject) {
         return this.send('POST', 'registeruser', userObject);
     },
-    
     /* authUser
      * confirmes user.
      */
@@ -77,7 +78,6 @@ window.Api = {
         return this.send('GET', 'authuser',
                          {username: username, password: password});
     },
-    
     /* getUser
      * get user data by id or own data.
      * param: id of requested user, null for own data
@@ -89,7 +89,6 @@ window.Api = {
             return this.send('GET', 'getuser?ID=' + id, '');
         }
     },
-    
     /* updateUser
      * change user data by id or own
      * param: id of user you want to change, null if to change own
@@ -101,7 +100,6 @@ window.Api = {
             return this.send('POST', 'updateuser?ID=' + id, userObject);
         }
     },
-    
     /* listRequests
      * lists all requests that have been made
      * param: id of single user, null if general request
@@ -120,7 +118,6 @@ window.Api = {
                              '&Offset=' + offset, '');               
         }
     },
-    
     /* listUsers
      * lists user from server
      * param: limit max numbers of users
@@ -131,7 +128,6 @@ window.Api = {
                          'listusers?Limit=' + limit +
                          '&Offset=' + offset, '');
     },
-    
     /* deleteUser
      * deletes user from server
      * param: id of user that should be deleted
@@ -141,7 +137,6 @@ window.Api = {
                          'deleteuser?ID=' + id,
                          '');
     },
-    
     /* alg
      * sends algorithm calculation request
      * param: alg shortname of desired alg
