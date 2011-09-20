@@ -1,9 +1,36 @@
-window.Api = {
+(function() {
+
+window.Api = function(attributes) {
+    var defaults;
+
+    attributes || (attributes = {});
+    if (defaults = this.defaults)
+        attributes = _.extend({}, defaults, attributes);
+
+    this.attributes = {};
+    this.set(attributes);
+};
+
+_.extend(window.Api.prototype, {
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
         server : 'http://localhost', // url of the server
-        port : '8081' // port on which the server listens    
+        port : '8081' // port on which the server listens
+    },
+
+    set: function(attrs) {
+        if (!attrs)
+            return this;
+
+        for (var attr in attrs)
+            this.attributes[attr] = attrs[attr];
+
+        return this;
+    },
+
+    get: function(attr) {
+        return this.attributes[attr];
     },
 
     /* send
@@ -16,15 +43,20 @@ window.Api = {
      *          .callback function should be called when done.
      */
     send : function (reqData) {
-        var url, event;
-        url = this.server + ':' + this.port + '/' + reqData.suffix;
-        event = {}; // needed to bind ajax-event on it
-        _.extend(event, Backbone.Events); // init event for events
-        event.bind('request', reqData.callback);
+        var url = "", event = {};
+        if (!_.isNull(this.get('server')) && !_.isUndefined('server'))
+            url += this.get('server') + ':' + (!_.isNaN(this.get('port')) ? this.get('port') : 80);
+        url += '/' + reqData.suffix;
+
+        // init event for events and bind callback to it
+        _.extend(event, Backbone.Events);
+        if (_.isFunction(reqData.callback))
+            event.bind('request', reqData.callback);
 
         // method performs an asyncronous HTTP request with or without
-        // authentication. 
+        // authentication.
         // performs a callback, successful or not
+        var that = this;
         $.ajax({
             url: url,
             cache: false,
@@ -32,9 +64,9 @@ window.Api = {
             accepts: 'json',
             data: reqData.request,
             beforeSend: function (jqXHR, settings) {
-		        if (this.authRequired) {
-		            jqXHR.setRequestHeader('Authorization', this.authAsBase64);
-		        }
+                if (that.get('authRequired')) {
+                    settings.headers = { Authorization: that.get('authAsBase64') };
+                }
             },
             success: function (data, textStatus, jqXHR) {
                 event.trigger('request', jqXHR.responseText, true);
@@ -65,41 +97,54 @@ window.Api = {
         };
         this.send(reqData);
     },
+
     /* registerUser
      * creates new user account
      */
     registerUser: function (userObject) {
         return this.send('POST', 'registeruser', userObject);
     },
+
     /* authUser
      * confirmes user.
      */
-    authUser : function (username, password) {
-        return this.send('GET', 'authuser',
-                         {username: username, password: password});
+    authUser : function (args) {
+        if (!args || !args.email || !args.password)
+            return false;
+
+        this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
+
+        return this.send({
+            type: 'GET',
+            suffix: 'authuser',
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* getUser
      * get user data by id or own data.
      * param: id of requested user, null for own data
      */
     getUser : function (id) {
-        if (id === null) {
+        if (_.isNaN(id)) {
             return this.send('GET', 'getuser', '');
         } else {
             return this.send('GET', 'getuser?ID=' + id, '');
         }
     },
+
     /* updateUser
      * change user data by id or own
      * param: id of user you want to change, null if to change own
      */
     updateUser : function (id, userObject) {
-        if (id === null) {
+        if (_.isNaN(id)) {
             return this.send('POST', 'updateuser', userObject);
         } else {
             return this.send('POST', 'updateuser?ID=' + id, userObject);
         }
     },
+
     /* listRequests
      * lists all requests that have been made
      * param: id of single user, null if general request
@@ -107,7 +152,7 @@ window.Api = {
      * param: offset of first item
      */
     listRequest : function (id, limit, offset) {
-        if (id === null) {
+        if (_.isNaN(id)) {
             return this.send('POST',
                              'listrequests?Limit=' + limit +
                              '&Offset=' + offset, '');
@@ -115,9 +160,10 @@ window.Api = {
             return this.send('POST',
                              'listrequests?ID=' + id +
                              '&Limit=' + limit +
-                             '&Offset=' + offset, '');               
+                             '&Offset=' + offset, '');
         }
     },
+
     /* listUsers
      * lists user from server
      * param: limit max numbers of users
@@ -128,6 +174,7 @@ window.Api = {
                          'listusers?Limit=' + limit +
                          '&Offset=' + offset, '');
     },
+
     /* deleteUser
      * deletes user from server
      * param: id of user that should be deleted
@@ -137,6 +184,7 @@ window.Api = {
                          'deleteuser?ID=' + id,
                          '');
     },
+
     /* alg
      * sends algorithm calculation request
      * param: alg shortname of desired alg
@@ -145,4 +193,6 @@ window.Api = {
     alg : function (alg, request) {
         return this.send('POST', 'alg$' + alg, request);
     }
-};
+});
+
+}).call(this);
