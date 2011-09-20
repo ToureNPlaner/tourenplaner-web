@@ -1,9 +1,36 @@
-window.Api = {
+(function() {
+
+window.Api = function(attributes) {
+    var defaults;
+
+    attributes || (attributes = {});
+    if (defaults = this.defaults)
+        attributes = _.extend({}, defaults, attributes);
+
+    this.attributes = {};
+    this.set(attributes);
+};
+
+_.extend(window.Api.prototype, {
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
         server : 'http://localhost', // url of the server
-        port : '8081' // port on which the server listens    
+        port : '8081' // port on which the server listens
+    },
+
+    set: function(attrs) {
+        if (!attrs)
+            return this;
+
+        for (var attr in attrs)
+            this.attributes[attr] = attrs[attr];
+
+        return this;
+    },
+
+    get: function(attr) {
+        return this.attributes[attr];
     },
 
     /* send
@@ -16,15 +43,20 @@ window.Api = {
      *          .callback function should be called when done.
      */
     send : function (reqData) {
-        var url, event;
-        url = this.server + ':' + this.port + '/' + reqData.suffix;
-        event = {}; // needed to bind ajax-event on it
-        _.extend(event, Backbone.Events); // init event for events
-        event.bind('request', reqData.callback);
+        var url = "", event = {};
+        if (!_.isNull(this.get('server')) && !_.isUndefined('server'))
+            url += this.get('server') + ':' + (!_.isNaN(this.get('port')) ? this.get('port') : 80);
+        url += '/' + reqData.suffix;
+
+        // init event for events and bind callback to it
+        _.extend(event, Backbone.Events);
+        if (_.isFunction(reqData.callback))
+            event.bind('request', reqData.callback);
 
         // method performs an asyncronous HTTP request with or without
-        // authentication. 
+        // authentication.
         // performs a callback, successful or not
+        var that = this;
         $.ajax({
             url: url,
             cache: false,
@@ -32,9 +64,9 @@ window.Api = {
             accepts: 'json',
             data: reqData.request,
             beforeSend: function (jqXHR, settings) {
-		        if (this.authRequired) {
-		            jqXHR.setRequestHeader('Authorization', this.authAsBase64);
-		        }
+                if (that.get('authRequired')) {
+                    settings.headers = { Authorization: that.get('authAsBase64') };
+                }
             },
             success: function (data, textStatus, jqXHR) {
                 event.trigger('request', jqXHR.responseText, true);
@@ -48,107 +80,152 @@ window.Api = {
     /* serverInformation
      * aks' server for information about the server
      */
-    serverInformation : function () {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'GET', suffix : 'info', request : '', callback : callbackHandler};
-        this.send(reqData);
+    serverInformation : function (args) {
+        this.send({
+            type : 'GET',
+            suffix : 'info',
+            request : '',
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* registerUser
      * creates new user account
      */
-    registerUser: function (userObject) {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'POST', suffix : 'registeruser', request : userObject, callback : callbackHandler};
-        this.send(reqData);
+    registerUser: function (args) {
+        this.send({
+            type : 'POST',
+            suffix : 'registeruser',
+            request : args.userObject,
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* authUser
      * confirmes user.
      */
-    authUser : function (username, password) {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'GET', suffix : 'authuser', request : {username: username, password: password}, callback : callbackHandler};
-        this.send(reqData);
+    authUser : function (args) {
+        if (!args || !args.email || !args.password)
+            return false;
+
+        this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
+
+        return this.send({ //return???
+            type: 'GET',
+            suffix: 'authuser',
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* getUser
      * get user data by id or own data.
      * param: id of requested user, null for own data
      */
-    getUser : function (id) {
-        var callbackHandler, reqData;
-        if (id === null) {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'GET', suffix : 'getuser', request : '', callback : callbackHandler};
+    getUser : function (args) {
+        if (_.isNaN(args.id)) {
+            this.send({
+                type : 'GET',
+                suffix : 'getuser',
+                request : '',
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         } else {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'GET', suffix : 'getuser?ID=' + id, request : '', callback : callbackHandler};
+            this.send({
+                type : 'GET',
+                suffix : 'getuser?ID=' + id,
+                request : '',
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         }
-        this.send(reqData);
     },
+
     /* updateUser
      * change user data by id or own
      * param: id of user you want to change, null if to change own
      */
-    updateUser : function (id, userObject) {
-        var callbackHandler, reqData;
-        if (id === null) {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'POST', suffix : 'updateuser', request : userObject, callback : callbackHandler};
+    updateUser : function (args) {
+        if (_.isNaN(args.id)) {
+            this.send({
+                type : 'POST', 
+                suffix : 'updateuser',
+                request : args.userObject,
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         } else {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'POST', suffix : 'updateuser?IID=' + id, request : userObject, callback : callbackHandler};
+            this.send({
+                type : 'POST',
+                suffix : 'updateuser?ID=' + args.id,
+                request : args.userObject,
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         }
-        this.send(reqData);
     },
+
     /* listRequests
      * lists all requests that have been made
      * param: id of single user, null if general request
      * param: limit max number of items
      * param: offset of first item
      */
-    listRequest : function (id, limit, offset) {
-        var callbackHandler, reqData;
-        if (id === null) {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'POST', suffix : 'listrequests?Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
+    listRequest : function (args) {
+        if (_.isNaN(args.id)) {
+            return this.send({
+                type : 'POST',
+                suffix : 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset,
+                request : '',
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         } else {
-            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-            reqData = {type : 'POST', suffix : 'listrequests?ID=' + id + '&Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
+            return this.send({
+                type : 'POST',
+                suffix : 'listrequests?ID=' + args.id +
+                         '&Limit=' + args.limit + '&Offset=' + args.offset,
+                request : '',
+                callback : _.isFunction(args.callback) ? args.callback : null
+            });
         }
-        this.send(reqData);
     },
+
     /* listUsers
      * lists user from server
      * param: limit max numbers of users
      * param: offset of first user
      */
-    listUser : function (limit, offset) {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'GET', suffix : 'listusers?Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
-        this.send(reqData);
+    listUser : function (args) {
+        this.send({
+            type : 'GET',
+            suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
+            request : '',
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* deleteUser
      * deletes user from server
      * param: id of user that should be deleted
      */
-    deleteUser : function (id) {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'GET', suffix : 'deleteuser?ID=' + id, request : '', callback : callbackHandler};
-        this.send(reqData);
+    deleteUser : function (args) {
+        this.send({
+            type : 'GET',
+            suffix : 'deleteuser?ID=' + args.id,
+            request : '',
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
     },
+
     /* alg
      * sends algorithm calculation request
      * param: alg shortname of desired alg
      * param: request contains problem instance (format as alg specification)
      */
-    alg : function (alg, request) {
-        var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
-        reqData = {type : 'POST', suffix : 'alg$' + alg, request : request, callback : callbackHandler};
-        this.send(reqData);
+    alg : function (args) {
+        this.send({
+            type : 'POST',
+            suffix : 'alg$' + args.alg,
+            request : args.request,
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
     }
-};
+});
+
+}).call(this);
