@@ -50,55 +50,57 @@ window.Api = {
      */
     serverInformation : function () {
         var callbackHandler, reqData;
-        callbackHandler = function (response, successful) {
-            if (successful) {
-                // do something with your answer
-            } else {
-                // handle error
-            }
-        };
-        reqData = {
-            type : 'GET',
-            suffix : 'info',
-            request : '',
-            callback : callbackHandler
-        };
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'GET', suffix : 'info', request : '', callback : callbackHandler};
         this.send(reqData);
     },
     /* registerUser
      * creates new user account
      */
     registerUser: function (userObject) {
-        return this.send('POST', 'registeruser', userObject);
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'POST', suffix : 'registeruser', request : userObject, callback : callbackHandler};
+        this.send(reqData);
     },
     /* authUser
      * confirmes user.
      */
     authUser : function (username, password) {
-        return this.send('GET', 'authuser',
-                         {username: username, password: password});
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'GET', suffix : 'authuser', request : {username: username, password: password}, callback : callbackHandler};
+        this.send(reqData);
     },
     /* getUser
      * get user data by id or own data.
      * param: id of requested user, null for own data
      */
     getUser : function (id) {
+        var callbackHandler, reqData;
         if (id === null) {
-            return this.send('GET', 'getuser', '');
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'GET', suffix : 'getuser', request : '', callback : callbackHandler};
         } else {
-            return this.send('GET', 'getuser?ID=' + id, '');
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'GET', suffix : 'getuser?ID=' + id, request : '', callback : callbackHandler};
         }
+        this.send(reqData);
     },
     /* updateUser
      * change user data by id or own
      * param: id of user you want to change, null if to change own
      */
     updateUser : function (id, userObject) {
+        var callbackHandler, reqData;
         if (id === null) {
-            return this.send('POST', 'updateuser', userObject);
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'POST', suffix : 'updateuser', request : userObject, callback : callbackHandler};
         } else {
-            return this.send('POST', 'updateuser?ID=' + id, userObject);
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'POST', suffix : 'updateuser?IID=' + id, request : userObject, callback : callbackHandler};
         }
+        this.send(reqData);
     },
     /* listRequests
      * lists all requests that have been made
@@ -107,16 +109,15 @@ window.Api = {
      * param: offset of first item
      */
     listRequest : function (id, limit, offset) {
+        var callbackHandler, reqData;
         if (id === null) {
-            return this.send('POST',
-                             'listrequests?Limit=' + limit +
-                             '&Offset=' + offset, '');
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'POST', suffix : 'listrequests?Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
         } else {
-            return this.send('POST',
-                             'listrequests?ID=' + id +
-                             '&Limit=' + limit +
-                             '&Offset=' + offset, '');               
+            callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+            reqData = {type : 'POST', suffix : 'listrequests?ID=' + id + '&Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
         }
+        this.send(reqData);
     },
     /* listUsers
      * lists user from server
@@ -124,18 +125,20 @@ window.Api = {
      * param: offset of first user
      */
     listUser : function (limit, offset) {
-        return this.send('GET',
-                         'listusers?Limit=' + limit +
-                         '&Offset=' + offset, '');
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'GET', suffix : 'listusers?Limit=' + limit + '&Offset=' + offset, request : '', callback : callbackHandler};
+        this.send(reqData);
     },
     /* deleteUser
      * deletes user from server
      * param: id of user that should be deleted
      */
     deleteUser : function (id) {
-        return this.send('GET',
-                         'deleteuser?ID=' + id,
-                         '');
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'GET', suffix : 'deleteuser?ID=' + id, request : '', callback : callbackHandler};
+        this.send(reqData);
     },
     /* alg
      * sends algorithm calculation request
@@ -143,6 +146,9 @@ window.Api = {
      * param: request contains problem instance (format as alg specification)
      */
     alg : function (alg, request) {
-        return this.send('POST', 'alg$' + alg, request);
+        var callbackHandler, reqData;
+        callbackHandler = function (response, successful) {if (successful) {/*do something with your answer*/} else {/*handle error*/} };
+        reqData = {type : 'POST', suffix : 'alg$' + alg, request : request, callback : callbackHandler};
+        this.send(reqData);
     }
 };
