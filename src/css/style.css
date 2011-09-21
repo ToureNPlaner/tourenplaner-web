@@ -62,5 +62,8 @@
   -webkit-box-shadow: 0 2px 2px 0 #333;
 }
 .topbar h3 a {
-  margin-left: 0;
+  margin-left: 20px;
+}
+.topbar ul li.menu, .topbar ul li.user {
+    display: none;
 }
