@@ -45,6 +45,8 @@ _.extend(window.Api.prototype, {
      */
     send : function (reqData) {
         var url = "", event = {};
+        reqData.type || (reqData.type = 'GET');
+
         if (!_.isNull(this.get('server')) && !_.isUndefined('server')) {
             url +=  this.get('ssl') ? 'https://' : 'http://' +
                     this.get('server') + ':' +
@@ -86,7 +88,6 @@ _.extend(window.Api.prototype, {
      */
     serverInformation : function (args) {
         this.send({
-            type : 'GET',
             suffix : 'info',
             request : '',
             callback: _.isFunction(args.callback) ? args.callback : null
@@ -115,7 +116,6 @@ _.extend(window.Api.prototype, {
         this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
 
         return this.send({ //return???
-            type: 'GET',
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
@@ -128,14 +128,12 @@ _.extend(window.Api.prototype, {
     getUser : function (args) {
         if (_.isNaN(args.id)) {
             this.send({
-                type : 'GET',
                 suffix : 'getuser',
                 request : '',
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         } else {
             this.send({
-                type : 'GET',
                 suffix : 'getuser?ID=' + id,
                 request : '',
                 callback : _.isFunction(args.callback) ? args.callback : null
@@ -197,7 +195,6 @@ _.extend(window.Api.prototype, {
      */
     listUser : function (args) {
         this.send({
-            type : 'GET',
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
@@ -210,7 +207,6 @@ _.extend(window.Api.prototype, {
      */
     deleteUser : function (args) {
         this.send({
-            type : 'GET',
             suffix : 'deleteuser?ID=' + args.id,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null

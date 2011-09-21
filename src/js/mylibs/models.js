@@ -1,11 +1,11 @@
 window.User = Backbone.Model.extend({
-    
+
     defaults: {
         login: false
     },
-    
+
     /** Don't use initialize here because it gets called too early */
-    onStartup: function() {     
+    onStartup: function() {
         var cookie = $.cookie('tourenplaner');
         if (cookie && !_.isUndefined(cookie)) {
             var dec, decarr;
@@ -13,40 +13,46 @@ window.User = Backbone.Model.extend({
                 dec = Base64.decode(cookie);
                 decarr = dec.split(':');
                 log(dec, decarr);
-                if (decarr.length == 2 && this.login(decarr[0], decarr[1]))
-                    return;
+                if (decarr.length == 2)
+                    return this.login(decarr[0], decarr[1]);
             } catch (e) {
                 log('Invalid cookie', cookie);
             }
             cookie = null;
         }
-        
+
         //TODO: Add ssl: true if ssl is enabled on this server
         $.cookie('tourenplaner', cookie);
     },
-    
-    login: function(username, password) {
-        var hash = Base64.encode(username + ':' + password);
-        
-        if (username !== 'asd' && password !== 'asd')
-            return false;
-        
-        log('Login successful');
-        
-        $.cookie('tourenplaner', hash, {expires: 7, path: '/'});
-        this.set({login: true, firstname: 'Peter', lastname: 'Lustig', email: username, password: password});
-        this.trigger('login', true)
-        return true;
+
+    login: function(email, password) {
+        var that = this;
+        window.api.authUser({
+            email: email,
+            password: password,
+            callback: function(text, success) {
+                if (success) {
+                    $.cookie('tourenplaner', Base64.encode(email + ':' + password), {expires: 7, path: '/'});
+                    that.set(text);
+                    that.set({ login: true });
+
+                    log('Login successful');
+                } else {
+                    $.cookie('tourenplaner', null);
+                }
+                that.trigger('login', success);
+            }
+        });
     },
-    
+
     logout: function() {
         $.cookie('tourenplaner', null);
         this.set({login: false});
         this.trigger('login', false);
     },
-    
+
     isLoggedIn: function() {
         return this.get('login');
     }
-    
+
 });
