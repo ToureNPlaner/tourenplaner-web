@@ -21,7 +21,7 @@
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-  <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.14.custom.css">
+  <link rel="stylesheet" href="css/jquery-ui-1.8.16.custom.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/jquery.contextMenu.css">
 
@@ -35,16 +35,41 @@
 
 <body>
 
-  <div id="login" title="Login">
-    <p class="validate">Please fill out all fields.</p>
+  <div id="login" class="modal">
+      <div class="modal-header">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+      </div>
+      <div class="modal-body">
+        <div class="alert-message error error-empty">
+          <p><strong>Error!</strong> Please fill out all fields.</p>
+        </div>
 
-    <form name="login">
-      <label for="email">Email:</label><br />
-      <input type="text" name="email" id="email" class="ui-widget-content ui-corner-all" /><br />
+        <div class="alert-message error error-correct">
+          <p><strong>Error!</strong> The username or password you entered was incorrect.</p>
+        </div>
 
-      <label for="password">Password:</label><br />
-      <input type="password" name="password" id="password" class="ui-widget-content ui-corner-all" /><br />
-    </form>
+        <form name="login">
+          <div class="clearfix">
+            <label for="email">Email:</label>
+            <div class="input">
+              <input type="text" name="email" id="email" />
+            </div>
+          </div>
+
+
+          <div class="clearfix">
+            <label for="password">Password:</label>
+            <div class="input">
+              <input type="password" name="password" id="password" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn secondary cancel">Cancel</a>
+        <a href="#" class="btn primary login">Login</a>
+      </div>
   </div>
 
   <div id="container">
@@ -100,8 +125,8 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
-  <script>jQuery.ui || document.write('<script src="js/libs/jquery-ui-1.8.14.custom.min.js"><\/script>')</script>
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script> -->
+  <script>jQuery.ui || document.write('<script src="js/libs/jquery-ui-1.8.16.custom.min.js"><\/script>')</script>
 
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 
@@ -122,8 +147,6 @@
   <script src="js/mylibs/map.contextmenu.js"></script>
   <script src="js/script.js"></script>
   <!-- end scripts -->
-
-
 
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->

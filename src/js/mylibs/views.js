@@ -163,48 +163,58 @@ window.LoginView = Backbone.View.extend({
 
     el: $('#login'),
 
+    events: {
+        "hidden": "onClose",
+        "click .modal-footer a.login": "onLogin",
+        "click .modal-footer a.cancel": "remove"
+    },
+
     initialize: function() {
         window.app.user.bind('login', _.bind(this.onLoginSuccess, this));
     },
 
     render: function() {
-        this.el.dialog({
-            modal: true,
-            resizable: false,
-            buttons: {
-                "Login" : _.bind(this.onLogin, this),
-                "Cancel" : _.bind(this.remove, this)
-            },
-            close: _.bind(this.onClose, this)
+        this.el.modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: false
         });
-
         return this;
     },
 
     remove: function() {
-        this.el.dialog('close');
+        this.el.modal('hide');
     },
 
     onLogin: function() {
+        // Clear old error messages first
+        this.$('.alert-message').hide();
+
         var email = this.$('input#email').val();
         var password = this.$('input#password').val();
-        if (!window.app.user.login(email, password))
-            this.$('.validate').show();
-        else
-            this.remove();
+        if (email.length < 1 || password.length < 1) {
+            log('Invalid data');
+            this.$('.error-empty').show();
+            return;
+        }
+
+        window.app.user.login(email, password);
     },
 
     onLoginSuccess: function(success) {
         if (success) {
             this.remove();
         } else {
-            this.$('.validate').show();
+            this.$('.error-correct').show();
         }
     },
 
     onClose: function() {
-        this.$('input').val('').removeClass('ui-state-error');
-        this.$('.validate').hide();
+        this.$('input').each(function() {
+            $(this).val('');
+        });
+
+        this.$('.alert-message').hide();
         window.app.navigate('');
     }
 });

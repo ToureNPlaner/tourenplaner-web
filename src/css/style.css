@@ -1,10 +1,14 @@
-@import "bootstrap-1.2.0.css";
+@import "bootstrap-1.3.0.css";
 
 #login {
   display: none;
 }
-#login .validate {
+#login .error-empty, #login .error-correct {
   display: none;
+}
+
+#login label {
+  font-weight: bold;
 }
 
 #main {
