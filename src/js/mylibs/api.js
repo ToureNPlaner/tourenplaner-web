@@ -15,8 +15,9 @@ _.extend(window.Api.prototype, {
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
-        server : 'http://localhost', // url of the server
-        port : '8081' // port on which the server listens
+        server : 'localhost', // url of the server
+        port : '8081', // port on which the server listens
+        ssl: false
     },
 
     set: function(attrs) {
@@ -44,8 +45,11 @@ _.extend(window.Api.prototype, {
      */
     send : function (reqData) {
         var url = "", event = {};
-        if (!_.isNull(this.get('server')) && !_.isUndefined('server'))
-            url += this.get('server') + ':' + (!_.isNaN(this.get('port')) ? this.get('port') : 80);
+        if (!_.isNull(this.get('server')) && !_.isUndefined('server')) {
+            url +=  this.get('ssl') ? 'https://' : 'http://' +
+                    this.get('server') + ':' +
+                    (!_.isNaN(this.get('port')) ? this.get('port') : 80);
+        }
         url += '/' + reqData.suffix;
 
         // init event for events and bind callback to it
@@ -146,7 +150,7 @@ _.extend(window.Api.prototype, {
     updateUser : function (args) {
         if (_.isNaN(args.id)) {
             this.send({
-                type : 'POST', 
+                type : 'POST',
                 suffix : 'updateuser',
                 request : args.userObject,
                 callback : _.isFunction(args.callback) ? args.callback : null
