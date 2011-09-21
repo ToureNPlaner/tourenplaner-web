@@ -11,7 +11,7 @@ $.mockjax({
     url: "/info",
     responseText: {
         version: "1.0",
-        servertype: "public",
+        servertype: "private",
         sslport: 443,
         algorithms: [
             {
@@ -42,8 +42,15 @@ $.mockjax({
  */
 $.mockjax({
     url: "/registeruser",
-    response: function(data) {
-
+    response: function(settings) {
+        if (_.isUndefined(settings.data.email) || _.isUndefined(settings.data.password) || _.isUndefined(settings.data.firstname) || _.isUndefined(settings.data.lastname) || _.isUndefined(settings.data.address)) {
+            this.status = 400;
+            this.responseText = {
+                errorid: "ENOTVALID",
+                message: "Validation error",
+                details: "Empty argument"
+            };
+        }
     }
 });
 
@@ -70,7 +77,11 @@ $.mockjax({
             }
         } else {
             this.status = 401;
-            this.responseText = 'Benutzername oder Passwort falsch';
+            this.responseText = {
+                errorid: "EAUTH",
+                message: "Wrong email or password",
+                details: ""
+            };
         }
     }
 });
