@@ -65,7 +65,6 @@ $.mockjax({
     status: 201,
     response: function(data) {
         if (!_.isUndefined(data.headers.Authorization) && _.isEqual(data.headers.Authorization, Base64.encode('asd@asd.de:asd'))) {
-            this.status = 205;
             this.responseText = {
                 username: 'asd',
                 password: 'asd',

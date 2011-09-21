@@ -65,10 +65,10 @@ var api = new Api({
 test("api.send", 5, function() {
     ok(!api.send(), "Empty function call");
     ok(!api.send({}), "Empty object");
-    ok(!api.send({suffix: "", reqData: {}, callback: function() { }}), "Empty suffix");
+    ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
 
     ok(api.send({suffix: "authuser", callback: function() { }}), "Undefined reqData");
-    ok(api.send({suffix: "authuser", reqData: {}, callback: null}), "Empty callback");
+    ok(api.send({suffix: "authuser", request: {}, callback: null}), "Empty callback");
 })
 
 test("/info", function() {
