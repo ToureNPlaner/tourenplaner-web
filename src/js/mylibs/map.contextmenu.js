@@ -1,8 +1,10 @@
 /**
  * Binds contextmenu to map.
  */
+document.write('<ul id="myMenu" class="contextMenu"><li><a href="#getcoordinate">get coordinates.</a></li><li><a href="#start">Startposition</a></li><li><a href="#target">Targetposition</a></li></ul>');
+
 function setContextMenu() {
-       $("#main #map").contextMenu({
+	 $("#main #map").contextMenu({
 	       menu: 'myMenu'
        },
        function(action, el, pos) {
