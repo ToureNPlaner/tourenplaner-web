@@ -62,23 +62,30 @@ var api = new Api({
     authRequired: true
 });
 
-test("api.send", 5, function() {
+test("api.send", 6, function() {
     ok(!api.send(), "Empty function call");
     ok(!api.send({}), "Empty object");
-    ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
 
-    ok(api.send({suffix: "authuser", callback: function() { }}), "Undefined reqData");
-    ok(api.send({suffix: "authuser", request: {}, callback: null}), "Empty callback");
+    ok(!api.send({suffix: "authuser", callback: function() { }}), "Undefined reqData");    
+    ok(!api.send({suffix: "authuser", request: {}, callback: function() { }}), "No suffix specified");
+    ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
+    ok(!api.send({suffix: "authuser", request: {}, callback: null}), "Empty callback");
 })
 
-test("/info", function() {
+test("/info", 2, function() {
     var tmpApi = new Api({
         server: null
     });
 
     //TODO: See what we can do here
-    var ret = tmpApi.serverInformation();
+    var ret = tmpApi.serverInformation({
+        callback: function(text, success) {
+            same(success, true, 'Got some info');
+            do_start();
+        }
+    });
 
+    stop_until_expected(1);
     same(tmpApi.get('ssl'), true, "SSL information read");
 
     //TODO: Add more tests
@@ -117,7 +124,7 @@ test("/authuser", 5, function() {
     });
 });
 
-test("/registeruser", 3, function() {
+test("/registeruser", 4, function() {
     ok(!api.registerUser(), 'Empty function call');
     ok(!api.registerUser({}), 'Empty object');
 
@@ -129,8 +136,6 @@ test("/registeruser", 3, function() {
         address: "asd"
     }, test_user = {};
 
-    stop_until_expected(2);
-
     api.registerUser({
         userObject: user,
         callback: function(text, success) {
@@ -138,7 +143,6 @@ test("/registeruser", 3, function() {
             do_start();
         }
     });
-
     testuser = _.extend({}, user);
     testuser.email = "";
     api.registerUser({
@@ -148,4 +152,5 @@ test("/registeruser", 3, function() {
             do_start();
         }
     });
+    stop_until_expected(2);
 });

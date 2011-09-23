@@ -17,7 +17,11 @@ _.extend(window.Api.prototype, {
         authRequired : false,
         server : 'localhost', // url of the server
         port : '8081', // port on which the server listens
-        ssl: false
+        ssl: false,
+        error: {"errorid": "EBADCALL",
+                "message": "Request couldn't be sent",
+                "details": "Your Request contains syntactical mistakes"
+               }
     },
 
     set: function(attrs) {
@@ -43,9 +47,15 @@ _.extend(window.Api.prototype, {
      *          .request String that contains the request.
      *          .callback function should be called when done.
      */
+
+
     send : function (reqData) {
         var url = "", event = {};
+        if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
+        if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
+        if(_.isUndefined(reqData.suffix) || _.isNull(reqData.suffix)) return false;
         reqData.type || (reqData.type = 'GET');
+        reqData.request || (reqData.request = {});
 
         if (!_.isNull(this.get('server')) && !_.isUndefined('server')) {
             url +=  this.get('ssl') ? 'https://' : 'http://' +
@@ -92,12 +102,16 @@ _.extend(window.Api.prototype, {
             request : '',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
+        
     },
 
     /* registerUser
      * creates new user account
+     * param: userObject containing info about user
      */
     registerUser: function (args) {
+        if(!args || !args.userObject)
+            return false;
         this.send({
             type : 'POST',
             suffix : 'registeruser',
@@ -108,6 +122,8 @@ _.extend(window.Api.prototype, {
 
     /* authUser
      * confirmes user.
+     * param: email email-adress of user
+     * param: password that belongs to email
      */
     authUser : function (args) {
         if (!args || !args.email || !args.password)
@@ -170,6 +186,8 @@ _.extend(window.Api.prototype, {
      * param: offset of first item
      */
     listRequest : function (args) {
+        if(!args || !args.limit || !args.offset)
+            return false;
         if (_.isNaN(args.id)) {
             return this.send({
                 type : 'POST',
@@ -194,6 +212,8 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUser : function (args) {
+        if(!args || !args.limit || !args.offset)
+            return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
             request : '',
@@ -206,6 +226,8 @@ _.extend(window.Api.prototype, {
      * param: id of user that should be deleted
      */
     deleteUser : function (args) {
+        if(!args || !args.id)
+            return false;
         this.send({
             suffix : 'deleteuser?ID=' + args.id,
             request : '',
@@ -219,6 +241,8 @@ _.extend(window.Api.prototype, {
      * param: request contains problem instance (format as alg specification)
      */
     alg : function (args) {
+        if(!args || !args.alg || !args.request)
+            return false;
         this.send({
             type : 'POST',
             suffix : 'alg$' + args.alg,

@@ -43,7 +43,7 @@ $.mockjax({
 $.mockjax({
     url: "/registeruser",
     response: function(settings) {
-        if (_.isUndefined(settings.data.email) || _.isUndefined(settings.data.password) || _.isUndefined(settings.data.firstname) || _.isUndefined(settings.data.lastname) || _.isUndefined(settings.data.address)) {
+        if (_.isUndefined(settings.data.email) || _.isUndefined(settings.data.password) || _.isUndefined(settings.data.firstname) || _.isUndefined(settings.data.lastname) || _.isUndefined(settings.data.address) || settings.data.email == "" || settings.data.password == "") {
             this.status = 400;
             this.responseText = {
                 errorid: "ENOTVALID",
