@@ -84,3 +84,92 @@ $.mockjax({
         }
     }
 });
+
+/**
+ * Mocks the /getuser function on the server.
+ *
+ * Returns user object.
+ */
+$.mockjax({
+    url: "/getuser",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                username: 'asd',
+                password: 'asd',
+                email: 'asd@asd.de',
+                firstname: 'Peter',
+                lastname: 'Lustig',
+                admin: true,
+                active: true
+            }
+
+    }
+});
+
+/**
+ * Mocks the /getuser?ID=42 function on the server.
+ *
+ * Returns user object.
+ */
+$.mockjax({
+    url: "/getuser?ID=42",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                username: 'qwe',
+                password: 'qwe',
+                email: 'qwe@ewq.de',
+                firstname: 'Donald',
+                lastname: 'Duck',
+                admin: false,
+                active: true
+            }
+    }
+});
+
+/**
+ * Mocks the /updateuser function on the server.
+ *
+ * Returns user object.
+ */
+$.mockjax({
+    url: "/updateuser",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                username: data.data.username,
+                password: data.data.password,
+                email: data.data.email,
+                firstname: data.data.firstname,
+                lastname: data.data.lastname,
+                admin: false,
+                active: true
+            };
+    }
+});
+
+/**
+ * Mocks the /updateuser?ID=42 function on the server.
+ *
+ * Returns user object.
+ */
+$.mockjax({
+    url: "/updateuser?ID=42",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                username: data.data.username,
+                password: data.data.password,
+                email: data.data.email,
+                firstname: data.data.firstname,
+                lastname: data.data.lastname,
+                admin: false,
+                active: true
+            };
+    }
+});

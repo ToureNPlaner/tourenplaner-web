@@ -131,7 +131,7 @@ _.extend(window.Api.prototype, {
 
         this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
 
-        return this.send({ //return???
+        this.send({
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
@@ -142,7 +142,7 @@ _.extend(window.Api.prototype, {
      * param: id of requested user, null for own data
      */
     getUser : function (args) {
-        if (_.isNaN(args.id)) {
+        if (!args.id || _.isNaN(args.id)) {
             this.send({
                 suffix : 'getuser',
                 request : '',
@@ -150,7 +150,7 @@ _.extend(window.Api.prototype, {
             });
         } else {
             this.send({
-                suffix : 'getuser?ID=' + id,
+                suffix : 'getuser?ID=' + args.id,
                 request : '',
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
@@ -162,7 +162,9 @@ _.extend(window.Api.prototype, {
      * param: id of user you want to change, null if to change own
      */
     updateUser : function (args) {
-        if (_.isNaN(args.id)) {
+        if(!args || !args.userObject)
+            return false;
+        if (!args.id || _.isNaN(args.id)) {
             this.send({
                 type : 'POST',
                 suffix : 'updateuser',

@@ -72,22 +72,23 @@ test("api.send", 6, function() {
     ok(!api.send({suffix: "authuser", request: {}, callback: null}), "Empty callback");
 })
 
-test("/info", 2, function() {
+test("/info", 4, function() {
     var tmpApi = new Api({
         server: null
     });
 
-    //TODO: See what we can do here
     var ret = tmpApi.serverInformation({
-        callback: function(text, success) {
+        callback: function(json, success) {
             same(success, true, 'Got some info');
+            same(json.servertype, 'private', 'Servertype was determined');
+            same(json.algorithms[0].pointconstraints[0].type, 'meter', 'Algorithm constraints are ok');
+            if(!_.isNull(json.sslport) && !_.isUndefined(json.sslport))
+                tmpApi.set({ssl: true});
             do_start();
         }
     });
-
     stop_until_expected(1);
     same(tmpApi.get('ssl'), true, "SSL information read");
-
     //TODO: Add more tests
 });
 
@@ -151,6 +152,61 @@ test("/registeruser", 4, function() {
             same(success, false, "Empty email address");
             do_start();
         }
+    });
+    stop_until_expected(2);
+});
+
+test("/getuser", 2, function() {
+    api.authUser({
+        email: 'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success) {
+        }
+    });
+    api.getUser({
+        callback: function(json, success){
+            same(json.email, 'asd@asd.de', 'email checked');
+            do_start();
+        }
+    });
+    api.getUser({
+        id: 42,
+        callback: function(json, success){
+            same(json.email, 'qwe@ewq.de', 'email checked');
+            do_start();
+        }
+    });
+    stop_until_expected(2);
+});
+
+test("/updateUser", 4, function(){
+    api.authUser({
+        email: 'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success) {
+        }
+    });
+    ok(!api.updateUser(), 'empty call');
+    ok(!api.updateUser({karl: "test"}), 'missing user object');
+    
+    var user = {
+        email: "asd@asd.de",
+        password: "asd",
+        firstname: "Peter",
+        lastname: "Lustig",
+        address: "asd"
+    };
+    api.updateUser({userObject: user,
+                    callback: function(json, success){
+                        same(json.firstname, "Peter", "Firstname updated");
+                        do_start();
+                    } 
+    });
+    api.updateUser({userObject: user,
+                    callback: function(json, success){
+                        same(json.firstname, "Peter", "Firstname updated");
+                        do_start();
+                    } 
     });
     stop_until_expected(2);
 });
