@@ -17,8 +17,8 @@ _.extend(window.Api.prototype, {
         authRequired : false,
         server : 'localhost', // url of the server
         port : '8081', // port on which the server listens
-        ssl: false,
-        error: {"errorid": "EBADCALL",
+        ssl : false,
+        error : {"errorid": "EBADCALL",
                 "message": "Request couldn't be sent",
                 "details": "Your Request contains syntactical mistakes"
                }
@@ -39,7 +39,7 @@ _.extend(window.Api.prototype, {
     },
 
     /* send
-     * sends given request to server. with or without authentication.
+     * sends given request to server. with or without authentfication.
      * handles callback from reqData
      * param: reqData
      *          .type chooses how the request should be send. POST or GET.
@@ -97,12 +97,18 @@ _.extend(window.Api.prototype, {
      * aks' server for information about the server
      */
     serverInformation : function (args) {
+        var that = this;
+        var myCallback = (function (text, success) {
+            if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
+                that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
+            if (_.isFunction(args.callback))
+                args.callback(text, success);
+        });
         this.send({
             suffix : 'info',
             request : '',
-            callback: _.isFunction(args.callback) ? args.callback : null
+            callback: myCallback
         });
-        
     },
 
     /* registerUser
@@ -187,18 +193,18 @@ _.extend(window.Api.prototype, {
      * param: limit max number of items
      * param: offset of first item
      */
-    listRequest : function (args) {
+    listRequests : function (args) {
         if(!args || !args.limit || !args.offset)
             return false;
-        if (_.isNaN(args.id)) {
-            return this.send({
+        if (isNaN(args.id)) {
+            this.send({
                 type : 'POST',
                 suffix : 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset,
                 request : '',
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         } else {
-            return this.send({
+            this.send({
                 type : 'POST',
                 suffix : 'listrequests?ID=' + args.id +
                          '&Limit=' + args.limit + '&Offset=' + args.offset,
@@ -213,7 +219,7 @@ _.extend(window.Api.prototype, {
      * param: limit max numbers of users
      * param: offset of first user
      */
-    listUser : function (args) {
+    listUsers : function (args) {
         if(!args || !args.limit || !args.offset)
             return false;
         this.send({

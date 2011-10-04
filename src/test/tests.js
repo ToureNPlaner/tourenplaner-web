@@ -69,7 +69,7 @@ test("api.send", 6, function() {
     ok(!api.send({suffix: "authuser", callback: function() { }}), "Undefined reqData");    
     ok(!api.send({suffix: "authuser", request: {}, callback: function() { }}), "No suffix specified");
     ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
-    ok(!api.send({suffix: "authuser", request: {}, callback: null}), "Empty callback");
+    ok(!api.send({suffix: "authuser", request: {}}), "Empty callback");
 })
 
 test("/info", 4, function() {
@@ -77,18 +77,16 @@ test("/info", 4, function() {
         server: null
     });
 
+    stop_until_expected(1);
     var ret = tmpApi.serverInformation({
         callback: function(json, success) {
             same(success, true, 'Got some info');
             same(json.servertype, 'private', 'Servertype was determined');
             same(json.algorithms[0].pointconstraints[0].type, 'meter', 'Algorithm constraints are ok');
-            if(!_.isNull(json.sslport) && !_.isUndefined(json.sslport))
-                tmpApi.set({ssl: true});
+            same(tmpApi.get('ssl'), true, "SSL information read");
             do_start();
         }
     });
-    stop_until_expected(1);
-    same(tmpApi.get('ssl'), true, "SSL information read");
     //TODO: Add more tests
 });
 
@@ -137,6 +135,7 @@ test("/registeruser", 4, function() {
         address: "asd"
     }, test_user = {};
 
+    stop_until_expected(2);
     api.registerUser({
         userObject: user,
         callback: function(text, success) {
@@ -153,7 +152,6 @@ test("/registeruser", 4, function() {
             do_start();
         }
     });
-    stop_until_expected(2);
 });
 
 test("/getuser", 2, function() {
@@ -163,6 +161,8 @@ test("/getuser", 2, function() {
         callback: function(text, success) {
         }
     });
+    
+    stop_until_expected(2);
     api.getUser({
         callback: function(json, success){
             same(json.email, 'asd@asd.de', 'email checked');
@@ -176,7 +176,6 @@ test("/getuser", 2, function() {
             do_start();
         }
     });
-    stop_until_expected(2);
 });
 
 test("/updateUser", 4, function(){
@@ -196,17 +195,132 @@ test("/updateUser", 4, function(){
         lastname: "Lustig",
         address: "asd"
     };
-    api.updateUser({userObject: user,
-                    callback: function(json, success){
-                        same(json.firstname, "Peter", "Firstname updated");
-                        do_start();
-                    } 
-    });
-    api.updateUser({userObject: user,
-                    callback: function(json, success){
-                        same(json.firstname, "Peter", "Firstname updated");
-                        do_start();
-                    } 
-    });
+    
     stop_until_expected(2);
+    api.updateUser({userObject: user,
+                    callback: function(json, success){
+                        same(json.firstname, "Peter", "Firstname updated");
+                        do_start();
+                    } 
+    });
+    api.updateUser({userObject: user,
+                    callback: function(json, success){
+                        same(json.firstname, "Peter", "Firstname updated");
+                        do_start();
+                    } 
+    });
+});
+
+test("/listrequests", 5, function (){
+    api.authUser({
+        email:'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success){
+        }
+    });
+    
+    ok(!api.listRequests(), 'empty call');
+    ok(!api.listRequests({limit: 10}), 'missing offset');
+    ok(!api.listRequests({offset: 10}), 'missing limit');
+    
+    stop_until_expected(2);
+    api.listRequests({limit: 2,
+                  offset: 3,
+                  callback: function(json, success){
+                      same(success, true, "own request list loaded");
+                      do_start();
+                  }
+    });
+    
+    api.listRequests({id:1024,
+                      limit: 1,
+                      offset: 1032,
+                  callback: function(json, success){
+                      same(success, true, "request list of id 1024 loaded");
+                      do_start();
+                  }
+    });
+});
+
+test("/listusers", 4, function (){
+    api.authUser({
+        email:'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success){
+        }
+    });
+    
+    ok(!api.listUsers(), 'empty call');
+    ok(!api.listUsers({limit: 10}), 'missing offset');
+    ok(!api.listUsers({offset: 10}), 'missing limit');
+    
+    stop_until_expected(1);
+    api.listUsers({limit: 1,
+                  offset: 3,
+                  callback: function(json, success){
+                      same(success, true, "own request list loaded");
+                      do_start();
+                  }
+    });
+});
+
+test("/deleteuser", 4, function (){
+    api.authUser({
+        email:'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success){
+        }
+    });
+    
+    ok(!api.deleteUser(), 'empty call');
+    ok(!api.deleteUser({callback: function(){ }}), 'missing id');
+    ok(!api.deleteUser({id: "94",callback: function(){ }}), 'id ("94") is not a number');
+    
+    stop_until_expected(1);
+    api.deleteUser({id: 94,
+                  callback: function(json, success){
+                      same(success, true, "user deleted");
+                      do_start();
+                  }
+    });
+});
+
+test("/alg", 6, function (){
+    var request = {
+        version: 1,
+        points: [
+            {lt: -9.14323, ln: 8.43},
+            {lt: -54.3, ln: 1.23}
+        ],
+        constraints: {t: 100}
+    };
+    
+    ok(!api.alg(), 'empty call');
+    ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
+    ok(!api.alg({request: request, alg: "sp"}), 'missing callback');
+    ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
+    
+    stop_until_expected(2);
+    api.alg({request: request,
+            alg: "sp",
+              callback: function(json, success){
+                  same(success, true, "route calculated without auth");
+                  do_start();
+              }
+    });
+        
+    api.authUser({
+        email:'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success){
+        }
+    });
+    api.alg({request: request,
+            alg: "sp",
+              callback: function(json, success){
+                  same(success, true, "route calculated with auth");
+                  do_start();
+              }
+    });
+    
 });

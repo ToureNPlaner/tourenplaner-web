@@ -173,3 +173,121 @@ $.mockjax({
             };
     }
 });
+
+/**
+ * Mocks the /listrequests?Limit=2&Offset=3 function on the server.
+ *
+ * Returns request list.
+ */
+$.mockjax({
+    url: "/listrequests?Limit=2&Offset=3",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                number: 100,
+                requests: [{
+                    timestamp: 1234567890,
+                    duration: 500,
+                    cost: 123.24,
+                    request: {Request: [[48.781667, 9.1752781], [52.518056, 13.393333]]},
+                    response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
+                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
+                },{
+                    timestamp: 987654321,
+                    duration: 741,
+                    cost: 12.90,
+                    request: {Request: [[52.518056, 13.393333], [48.781667, 9.1752781]]},
+                    response: {Route:[[28.1427,20.1567],[89.1427,1.0847],
+                    [17.1978,86.1487],[3.1427,90.1487],[42.5927,129.4667]]}
+                }]
+            };
+    }
+});
+
+/**
+ * Mocks the /listrequests?Limit=1&Offset=3 function on the server.
+ *
+ * Returns request list.
+ */
+$.mockjax({
+    url: "/listrequests?ID=1024&Limit=1&Offset=1032",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                number: 100,
+                requests: [{
+                    timestamp: 1234567890,
+                    duration: 500,
+                    cost: 123.24,
+                    request: {Request: [[48.781667, 9.1752781], [52.518056, 13.393333]]},
+                    response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
+                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
+                }]
+            };
+    }
+});
+
+/**
+ * Mocks the /listusers?Limit=1&Offset=3 function on the server.
+ *
+ * Returns user list.
+ */
+$.mockjax({
+    url: "/listusers?Limit=1&Offset=3",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                number: 100,
+                requests: [{
+                    email: "max.mustermann@online.de",
+                    password: "1234",
+                    firstname: "Max",
+                    lastname: "Mustermann",
+                    address: "Musterstrasse 10, 12345 Musterstadt",
+                    admin: false,
+                    active: true
+                }]
+            };
+    }
+});
+
+
+/**
+ * Mocks the /deleteuser?ID=94 function on the server.
+ */
+$.mockjax({
+    url: "/deleteuser?ID=94",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+            };
+    }
+});
+
+
+/**
+ * Mocks the /alg$sp function on the server.
+ *
+ * Returns alg response.
+ */
+$.mockjax({
+    url: "/alg$sp",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                points: [
+                    {lt: -9.5123, ln: 8.12},
+                    {lt: 4.3432, ln: -76.3}
+                ],
+                misc: {
+                    distance: 100,
+                    apx: 0.5
+                }
+            };
+    }
+});
