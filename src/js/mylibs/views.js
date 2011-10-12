@@ -99,7 +99,7 @@ window.MapView = Backbone.View.extend({
 		mapObject.refresh();
 	};
 	$("#main #sidebar").bind("resize", resizeUpdater);
-    
+
 	mapObject = new Map("map");
 	setContextMenu();
         mapObject.refresh();
@@ -202,7 +202,7 @@ window.LoginView = Backbone.View.extend({
     onLoginSuccess: function(success) {
         if (success) {
             this.remove();
-        } else {
+        } else if (this.el.css('display') !== 'none') {
             this.$('.error-correct').show();
         }
     },
