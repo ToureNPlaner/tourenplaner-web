@@ -26,7 +26,9 @@ window.Router = Backbone.Router.extend({
     },
 
     register: function() {
-        alert('To be implemented');
+        if (_.isNull(this.registerView) || _.isUndefined(this.registerView))
+            this.registerView = new RegisterView();
+        this.registerView.render();
     },
 
     settings: function() {

@@ -216,3 +216,85 @@ window.LoginView = Backbone.View.extend({
         window.app.navigate('');
     }
 });
+
+window.RegisterView = Backbone.View.extend({
+
+    el: $('#register'),
+
+    events: {
+        "hidden" : "onClose",
+        "click .modal-footer a.register": "onRegister",
+        "click .modal-footer a.cancel": "remove"
+    },
+
+    initialize: function() {
+        this.validator = this.$('form').validate({
+            rules: {
+                firstname: "required",
+                lastname: "required",
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                repeat_password: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: '#password'
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            showErrors: function(errorMap, errorList) {
+                for (obj in errorList) {
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', "Error!")
+                        .popover();
+                }
+                this.defaultShowErrors();
+            },
+            errorPlacement: function() { },
+            highlight: function() { },
+            unhighlight: function(elem, error, valid) {
+                $(elem).addClass('valid').removeClass('error')
+                        .attr('rel', null).attr('data-content', null)
+                        .attr('data-original-title', null);
+            },
+            submitHandler: function() {
+                alert('submitted');
+            }
+        })
+    },
+
+    render: function() {
+        this.el.modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: true
+        });
+        return this;
+    },
+
+    remove: function() {
+        this.el.modal('hide');
+    },
+
+    onClose: function() {
+        this.$('input').each(function() {
+            $(this).val('');
+            $(this).removeClass('error');
+        });
+
+        this.$('.alert-message').hide();
+        this.validator.resetForm();
+        window.app.navigate('');
+    },
+
+    onRegister: function() {
+        this.$('form').submit();
+    },
+});

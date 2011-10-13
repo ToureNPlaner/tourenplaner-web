@@ -1,14 +1,25 @@
 @import "bootstrap-1.3.0.css";
 
-#login {
+#login, #register {
+  display: none;
+  width: 470px;
+}
+#login .alert-message, #register .alert-message {
   display: none;
 }
-#login .error-empty, #login .error-correct {
-  display: none;
+#login label, #register label {
+  font-weight: bold;
+  width: 150px;
+}
+#login .error, #register .error {
+  border: 1px solid red;
+}
+#login .valid, #register .valid {
+  border: 1px solid green;
 }
 
-#login label {
-  font-weight: bold;
+div.popover {
+  z-index: 12000;
 }
 
 #main {

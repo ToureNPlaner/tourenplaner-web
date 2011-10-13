@@ -34,44 +34,6 @@
 </head>
 
 <body>
-
-  <div id="login" class="modal">
-      <div class="modal-header">
-        <a href="#" class="close">x</a>
-        <h3>Login</h3>
-      </div>
-      <div class="modal-body">
-        <div class="alert-message error error-empty">
-          <p><strong>Error!</strong> Please fill out all fields.</p>
-        </div>
-
-        <div class="alert-message error error-correct">
-          <p><strong>Error!</strong> The username or password you entered was incorrect.</p>
-        </div>
-
-        <form name="login">
-          <div class="clearfix">
-            <label for="email">Email:</label>
-            <div class="input">
-              <input type="text" name="email" id="email" />
-            </div>
-          </div>
-
-
-          <div class="clearfix">
-            <label for="password">Password:</label>
-            <div class="input">
-              <input type="password" name="password" id="password" />
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn secondary cancel">Cancel</a>
-        <a href="#" class="btn primary login">Login</a>
-      </div>
-  </div>
-
   <div id="container">
     <header class="topbar">
       <div class="fill">
@@ -118,6 +80,105 @@
     </footer>
   </div> <!--! end of #container -->
 
+  <div id="login" class="modal">
+    <div class="modal-header">
+      <a href="#" class="close">x</a>
+      <h3>Login</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-message error error-empty">
+        <p><strong>Error!</strong> Please fill out all fields.</p>
+      </div>
+
+      <div class="alert-message error error-correct">
+        <p><strong>Error!</strong> The username or password you entered was incorrect.</p>
+      </div>
+
+      <form name="login" method="post">
+        <div class="clearfix">
+          <label for="email">Email:</label>
+          <div class="input">
+            <input type="text" name="email" id="email" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="password">Password:</label>
+          <div class="input">
+            <input type="password" name="password" id="password" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn secondary cancel">Cancel</a>
+      <a href="#" class="btn primary login">Login</a>
+    </div>
+  </div>
+
+  <div id="register" class="modal">
+    <div class="modal-header">
+      <a href="#" class="close">x</a>
+      <h3>Registration</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-message error error-empty">
+        <p><strong>Error!</strong> Please fill out all fields.</p>
+      </div>
+
+      <div class="alert-message error error-correct">
+        <p><strong>Error!</strong> There were errors in the form.</p>
+      </div>
+
+      <form name="register" method="post">
+        <div class="clearfix">
+          <label for="firstname">First name: </label>
+          <div class="input">
+            <input type="text" name="firstname" id="firstname" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="lastname">Last name: </label>
+          <div class="input">
+            <input type="text" name="lastname" id="lastname" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="address">Address: </label>
+          <div class="input">
+            <textarea name="address" id="address"></textarea>
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="email">Email: </label>
+          <div class="input">
+            <input type="text" name="email" id="email" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="password">Password: </label>
+          <div class="input">
+            <input type="password" name="password" id="password" />
+          </div>
+        </div>
+
+        <div class="clearfix">
+          <label for="repeat_password">Repeat Password: </label>
+          <div class="input">
+            <input type="password" name="repeat_password" id="repeat_password" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn secondary cancel">Cancel</a>
+      <a href="#" class="btn primary register">Register</a>
+    </div>
+  </div>
 
   <!-- JavaScript at the bottom for fast page loading -->
 
@@ -134,6 +195,7 @@
   <!-- scripts concatenated and minified via build script -->
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/backbone.js"></script>
+  <script src="js/libs/jquery.validate.min.js"></script>
 
   <script src="test/qunit/jquery.mockjax.js"></script>
   <script src="test/mockapi.js"></script>
