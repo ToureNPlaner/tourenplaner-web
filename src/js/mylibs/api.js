@@ -4,7 +4,7 @@ window.Api = function(attributes) {
     var defaults;
 
     attributes || (attributes = {});
-    if (defaults = this.defaults)
+    if ((defaults = this.defaults))
         attributes = _.extend({}, defaults, attributes);
 
     this.attributes = {};
@@ -88,21 +88,27 @@ _.extend(window.Api.prototype, {
                 event.trigger('request', jqXHR.responseText, true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                event.trigger('request', errorThrown, false);
+                var text = jqXHR.responseText;
+                if (!_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
+                    text = errorThrown;
+                
+                event.trigger('request', jqXHR.responseText, false);
             }
         });
+
+        return true;
     },
 
     /* serverInformation
      * aks' server for information about the server
      */
-    serverInformation : function (args) {
+    serverInformation : function (callback) {
         var that = this;
         var myCallback = (function (text, success) {
             if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
                 that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
-            if (_.isFunction(args.callback))
-                args.callback(text, success);
+            if (_.isFunction(callback))
+                callback(text, success);
         });
         this.send({
             suffix : 'info',
@@ -124,6 +130,8 @@ _.extend(window.Api.prototype, {
             request : args.userObject,
             callback: _.isFunction(args.callback) ? args.callback : null
         });
+        
+        return true;
     },
 
     /* authUser
@@ -141,6 +149,8 @@ _.extend(window.Api.prototype, {
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
+        
+        return true;
     },
 
     /* getUser
@@ -185,6 +195,8 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
+        
+        return true;
     },
 
     /* listRequests
@@ -212,6 +224,8 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
+        
+        return true;
     },
 
     /* listUsers
@@ -227,6 +241,8 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
+        
+        return true;
     },
 
     /* deleteUser
@@ -241,6 +257,8 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
+        
+        return true;
     },
 
     /* alg
@@ -257,6 +275,8 @@ _.extend(window.Api.prototype, {
             request : args.request,
             callback : _.isFunction(args.callback) ? args.callback : null
         });
+        
+        return true;
     }
 });
 
