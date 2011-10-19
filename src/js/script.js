@@ -9,5 +9,6 @@ $(function() {
 
     window.body = new BodyView();
 
+    window.app.initServer();
     window.app.user.onStartup();
 });

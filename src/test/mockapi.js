@@ -9,6 +9,7 @@ $.mockjaxSettings.log = function(msg) { log(msg); }
  */
 $.mockjax({
     url: "/info",
+    responseTimeout: 500,
     responseText: {
         version: "1.0",
         servertype: "private",
@@ -42,6 +43,9 @@ $.mockjax({
  */
 $.mockjax({
     url: "/registeruser",
+    status: 200,
+    responseTimeout: 200,
+    responseText: "",
     response: function(settings) {
         if (_.isUndefined(settings.data.email) || _.isUndefined(settings.data.password) || _.isUndefined(settings.data.firstname) || _.isUndefined(settings.data.lastname) || _.isUndefined(settings.data.address) || settings.data.email == "" || settings.data.password == "") {
             this.status = 400;
@@ -62,7 +66,7 @@ $.mockjax({
 $.mockjax({
     url: "/authuser",
     responseTimeout: 10,
-    status: 201,
+    status: 200,
     response: function(data) {
         if (!_.isUndefined(data.headers.Authorization) && _.isEqual(data.headers.Authorization, Base64.encode('asd@asd.de:asd'))) {
             this.responseText = {

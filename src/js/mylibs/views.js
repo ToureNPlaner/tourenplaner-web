@@ -228,6 +228,7 @@ window.RegisterView = Backbone.View.extend({
     },
 
     initialize: function() {
+        var that = this;
         this.validator = this.$('form').validate({
             rules: {
                 firstname: "required",
@@ -237,16 +238,14 @@ window.RegisterView = Backbone.View.extend({
                     minlength: 5
                 },
                 repeat_password: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: '#password'
+                    equalTo: '#register #password'
                 },
                 email: {
                     required: true,
                     email: true
                 }
             },
-            showErrors: function(errorMap, errorList) {
+            showErrors: function(errorMap, errorList) {               
                 for (obj in errorList) {
                     $(errorList[obj].element).addClass('error')
                         .removeClass('valid')
@@ -264,8 +263,37 @@ window.RegisterView = Backbone.View.extend({
                         .attr('rel', null).attr('data-content', null)
                         .attr('data-original-title', null);
             },
-            submitHandler: function() {
-                alert('submitted');
+            submitHandler: function(form) {
+                that.loading = new LoadingView();
+                that.loading.show("Sending data");
+                that.$('.error-correct').hide();
+                
+                var user = window.app.user;
+                user.set({
+                    firstname: that.$('#firstname').val(),
+                    lastname: that.$('#lastname').val(),
+                    address: that.$('#address').val(),
+                    email: that.$('#email').val(),
+                    password: that.$('#password').val()
+                });
+                user.register({
+                    success: function() {
+                        that.loading.remove();
+                        that.remove();
+                        new MessageView().show({
+                            title: "Success",
+                            message: "The registration was successful. Please wait until an administrator activates your account."
+                        });
+                    },
+                    error: function(text) {
+                        that.loading.remove();
+                        //TODO: Parse error message and display errors
+                        alert('Error: ' + text);
+                    }
+                });
+            },
+            invalidHandler: function() {
+                that.$('.error-correct').show();
             }
         })
     },
@@ -284,9 +312,9 @@ window.RegisterView = Backbone.View.extend({
     },
 
     onClose: function() {
-        this.$('input').each(function() {
+        this.$('input, textarea').each(function() {
             $(this).val('');
-            $(this).removeClass('error');
+            $(this).removeClass('error valid');
         });
 
         this.$('.alert-message').hide();
@@ -296,5 +324,63 @@ window.RegisterView = Backbone.View.extend({
 
     onRegister: function() {
         this.$('form').submit();
+    }
+});
+
+window.MessageView = Backbone.View.extend({
+   
+    el: $('#message'),
+    
+    events: {
+        "click .modal-footer a.cancel": "remove"
     },
+   
+    render: function() {
+        this.el.modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: false
+        });        
+        return this;
+    },
+    
+    show: function(args) {
+        if (_.isUndefined(args))
+            return;
+        this.title = args.title || "";
+        this.message = args.message || "";
+        
+        this.$('.title').html(this.title);
+        this.$('.message').html(this.message);
+        
+        this.render();
+    },
+    
+    remove: function() {
+        this.el.modal('hide');
+    }
+});
+
+window.LoadingView = Backbone.View.extend({
+   
+    el: $('#loading'),
+   
+    render: function() {
+        this.el.modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: false
+        });
+        return this;
+    },
+    
+    show: function(message) {
+        this.message = message || "";        
+        this.$('.message').html(this.message);        
+        this.render();
+    },
+   
+    remove: function() {
+        this.el.modal('hide');
+    }
 });

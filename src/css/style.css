@@ -1,21 +1,35 @@
 @import "bootstrap-1.3.0.css";
 
-#login, #register {
+#login, #register, #message, #loading {
   display: none;
   width: 470px;
 }
+
 #login .alert-message, #register .alert-message {
   display: none;
 }
 #login label, #register label {
   font-weight: bold;
   width: 150px;
+  padding-right: 5px;
 }
 #login .error, #register .error {
   border: 1px solid red;
 }
 #login .valid, #register .valid {
   border: 1px solid green;
+}
+
+#loading { }
+#loading .loading {
+  padding: 10px;
+  float: left;
+}
+#loading .message {
+  font-weight: bold;
+  line-height: 125px;
+  margin-left: 50px;
+  float: left;
 }
 
 div.popover {

@@ -53,6 +53,22 @@ window.User = Backbone.Model.extend({
 
     isLoggedIn: function() {
         return this.get('login');
+    },
+    
+    register: function(args) {
+        var ret = window.api.registerUser({
+            //TODO: Supply own method to get json without converting to string and back
+            userObject: JSON.parse(JSON.stringify(this)),
+            callback: function(text, success) {
+                if (success && _.isFunction(args.success))
+                    args.success();
+                else if (!success && _.isFunction(args.error))
+                    args.error(text);
+            }
+        });
+        
+        if (!ret && _.isFunction(args.error))
+            args.error('Incorrect arguments');
     }
 
 });
