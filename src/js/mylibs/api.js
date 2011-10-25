@@ -53,7 +53,7 @@ _.extend(window.Api.prototype, {
         var url = "", event = {};
         if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
         if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
-        if(_.isUndefined(reqData.suffix) || _.isNull(reqData.suffix)) return false;
+        if(_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
         reqData.type || (reqData.type = 'GET');
         reqData.request || (reqData.request = {});
 
@@ -107,9 +107,10 @@ _.extend(window.Api.prototype, {
         var myCallback = (function (text, success) {
             if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
                 that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
-            if (_.isFunction(callback))
-                callback(text, success);
+            if (_.isFunction(callback.callback))
+                    callback.callback(text, success);
         });
+        
         this.send({
             suffix : 'info',
             request : '',
@@ -171,6 +172,8 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
+        
+        return true;
     },
 
     /* updateUser
@@ -250,7 +253,7 @@ _.extend(window.Api.prototype, {
      * param: id of user that should be deleted
      */
     deleteUser : function (args) {
-        if(!args || !args.id)
+        if(!args || !args.id || isNaN(args.id))
             return false;
         this.send({
             suffix : 'deleteuser?ID=' + args.id,
