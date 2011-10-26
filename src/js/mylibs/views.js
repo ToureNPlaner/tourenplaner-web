@@ -176,12 +176,45 @@ window.LoginView = Backbone.View.extend({
 
     events: {
         "hidden": "onClose",
-        "click .modal-footer a.login": "onLogin",
+        "click .modal-footer a.login": "onSubmitClick",
         "click .modal-footer a.cancel": "remove"
     },
 
     initialize: function() {
         window.app.user.bind('login', _.bind(this.onLoginSuccess, this));
+        
+        var that = this;
+        this.validator = this.$('form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: "required"
+            },
+            showErrors: function(errorMap, errorList) {
+                for (obj in errorList) {
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', "Error!")
+                        .popover();
+                }
+                this.defaultShowErrors();
+            },
+            errorPlacement: function() { },
+            highlight: function() { },
+            unhighlight: function(elem, error, valid) {
+                $(elem).addClass('valid').removeClass('error')
+                        .attr('rel', null).attr('data-content', null)
+                        .attr('data-original-title', null);
+            },
+            submitHandler: _.bind(this.onLogin, that),
+            invalidHandler: function() {
+                that.$('.error-empty').show();
+            }
+        });
     },
 
     render: function() {
@@ -196,6 +229,10 @@ window.LoginView = Backbone.View.extend({
     remove: function() {
         this.el.modal('hide');
     },
+    
+    onSubmitClick: function() {
+        this.$('form').submit();
+    },
 
     onLogin: function() {
         // Clear old error messages first
@@ -203,11 +240,6 @@ window.LoginView = Backbone.View.extend({
 
         var email = this.$('input#email').val();
         var password = this.$('input#password').val();
-        if (email.length < 1 || password.length < 1) {
-            log('Invalid data');
-            this.$('.error-empty').show();
-            return;
-        }
 
         window.app.user.login(email, password);
     },
@@ -225,6 +257,7 @@ window.LoginView = Backbone.View.extend({
             $(this).val('');
         });
 
+        this.validator.resetForm();
         this.$('.alert-message').hide();
         window.app.navigate('');
     }
@@ -276,35 +309,7 @@ window.RegisterView = Backbone.View.extend({
                         .attr('rel', null).attr('data-content', null)
                         .attr('data-original-title', null);
             },
-            submitHandler: function(form) {
-                that.loading = new LoadingView();
-                that.loading.show("Sending data");
-                that.$('.error-correct').hide();
-                
-                var user = window.app.user;
-                user.set({
-                    firstname: that.$('#firstname').val(),
-                    lastname: that.$('#lastname').val(),
-                    address: that.$('#address').val(),
-                    email: that.$('#email').val(),
-                    password: that.$('#password').val()
-                });
-                user.register({
-                    success: function() {
-                        that.loading.remove();
-                        that.remove();
-                        new MessageView().show({
-                            title: "Success",
-                            message: "The registration was successful. Please wait until an administrator activates your account."
-                        });
-                    },
-                    error: function(text) {
-                        that.loading.remove();
-                        //TODO: Parse error message and display errors
-                        alert('Error: ' + text);
-                    }
-                });
-            },
+            submitHandler: _.bind(this.onSubmit, that),
             invalidHandler: function() {
                 that.$('.error-correct').show();
             }
@@ -333,6 +338,36 @@ window.RegisterView = Backbone.View.extend({
         this.$('.alert-message').hide();
         this.validator.resetForm();
         window.app.navigate('');
+    },
+    
+    onSubmit: function() {
+        this.loading = new LoadingView();
+        this.loading.show("Sending data");
+        this.$('.error-correct').hide();
+                
+        var user = window.app.user;
+        user.set({
+            firstname: this.$('#firstname').val(),
+            lastname: this.$('#lastname').val(),
+            address: this.$('#address').val(),
+            email: this.$('#email').val(),
+            password: this.$('#password').val()
+        });
+        user.register({
+            success: function() {
+                this.loading.remove();
+                this.remove();
+                new MessageView().show({
+                    title: "Success",
+                    message: "The registration was successful. Please wait until an administrator activates your account."
+                });
+            },
+            error: function(text) {
+                this.loading.remove();
+                //TODO: Parse error message and display errors
+                alert('Error: ' + text);
+            }
+        });
     },
 
     onRegister: function() {

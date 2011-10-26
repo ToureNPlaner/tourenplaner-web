@@ -12,6 +12,15 @@ window.Router = Backbone.Router.extend({
     initialize: function(options) {
         this.user = new User();
     },
+    
+    initServer: function() {
+        //TODO: Run a /info query to the server and display a modal loading dialog
+        this.loadingView = new LoadingView().render();
+        
+        window.api.serverInformation();
+        
+        this.loadingView.remove();
+    },
 
     login: function() {
         if (_.isNull(this.loginView) || _.isUndefined(this.loginView))
