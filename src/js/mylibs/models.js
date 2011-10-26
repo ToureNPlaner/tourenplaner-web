@@ -1,3 +1,27 @@
+window.MapModel = Backbone.Model.extend({
+    initialize: function() {
+	this.set({ mapObject : new Map("map") });
+	this.set({ test : "TestString" });
+    },
+
+    setRoute: function(routeString) {
+	this.set({ route : routeString });
+    },
+
+    /* following code will be changed, when more marks needed */
+    setStartMark: function(posInLonLat) {
+        this.set({startMark : posInLonLat});
+    },
+
+    setTargetMark: function(posInLonLat) {
+        this.set({targetMark : posInLonLat});
+    },
+
+    setDataViewText: function(text) {
+	this.set({dataViewText : text});
+    }
+});
+
 window.User = Backbone.Model.extend({
 
     defaults: {

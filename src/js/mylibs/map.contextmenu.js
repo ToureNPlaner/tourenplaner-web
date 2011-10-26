@@ -22,7 +22,7 @@ function setContextMenu() {
 			       var proj = new OpenLayers.Projection("EPSG:4326");
 			       lonlat.transform(map.getProjectionObject(), proj);
 			       
-			       $('#main #sidebar form #start').val(lonlat.lon + "," + lonlat.lat);
+			       window.mapModel.setStartMark(lonlat);
 			       break;
 			       
 		       case "target":
@@ -33,7 +33,7 @@ function setContextMenu() {
 			       var proj = new OpenLayers.Projection("EPSG:4326");
 			       lonlat.transform(map.getProjectionObject(), proj);
 			       
-			       $('#main #sidebar form #target').val(lonlat.lon + "," + lonlat.lat);
+			       window.mapModel.setTargetMark(lonlat);
 			       break;
 		       default:
 			       log("something went wrong with contextMenu! default action.");

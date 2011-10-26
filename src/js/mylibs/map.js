@@ -1,10 +1,4 @@
-/**
- * FILE: Map
- * AUTHOR: Huy Viet Le
- * INFO: Initializes and draws an OpenLayer Map.
- * Provides methods for drawing a route etc.
- * not finished...
- */
+
 function Map(divId) {    
 
     var vectorLayer, markerLayer, divId;
@@ -14,6 +8,7 @@ function Map(divId) {
      * Constructor
      * Draws a Map in the Div named divId.
      */
+    this.draw = function() {
     map = new OpenLayers.Map("map");
     var mapLayer = new OpenLayers.Layer.OSM();
 
@@ -28,7 +23,7 @@ function Map(divId) {
     /* create and add a layer for markers */
     markerLayer = new OpenLayers.Layer.Markers( "Markers" );
     map.addLayer(markerLayer);
-
+}
 
     
     /**
@@ -79,7 +74,28 @@ function Map(divId) {
                 var size = new OpenLayers.Size(21,25);
                 var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
                 var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
-                markerLayer.addMarker(new OpenLayers.Marker(lonlat, icon));
+                var marker = new OpenLayers.Marker(lonlat, icon);
+                marker.events.register('mousedown', marker, function(evt) { 
+			// clone lonlat object of this marker and transform it into epsg-4326			
+			var lonlatClone = this.lonlat.clone(); 
+        		var proj = new OpenLayers.Projection("EPSG:4326");
+        		lonlatClone.transform(map.getProjectionObject(), proj);
+
+			// trigger bind of mapModel to display lonlat in DataViewBox
+			window.mapModel.setDataViewText(lonlatClone.toString());
+                });
+
+		// opacity stuff
+		marker.setOpacity(0.7);
+		marker.events.register('mouseover', marker, function(evt) {
+			this.setOpacity(1.0);
+		});
+
+		marker.events.register('mouseout', marker, function(evt) {
+			this.setOpacity(0.7);
+		});
+
+                markerLayer.addMarker(marker);
             }
             pointList.push(point);
         }
@@ -94,8 +110,9 @@ function Map(divId) {
         vectorLayer.addFeatures(feature);
         map.zoomToExtent(vectorLayer.getDataExtent(), false);
     }
-        
-      
+
+ 
+
       this.getLonLatFromPos = function (posX, posY) {
         var pixel = new OpenLayers.Pixel(posX, posY);
         var lonlat = map.getLonLatFromPixel(pixel);

@@ -59,7 +59,17 @@
 
     <div id="main" role="main">
       <div id="sidebar">
-        <p style="padding: 5px 10px;">Content missing</p>
+        <p style="padding: 5px 10px;">		
+		<form name="route">
+      		   <label for="start">Start:</label><br />
+      		   <input type="text" name="start" id="start" class="ui-widget-content ui-corner-all" /><br />
+      
+      		   <label for="target">Ziel:</label><br />
+      		   <input type="text" name="target" id="target" class="ui-widget-content ui-corner-all" /><br /><br />
+
+        	    <button id="btnGetRoute">Get Route</button>
+			<button id="btnClear">Clear</button>
+    		</form></p>
       </div>
 
       <div id="map"></div>
