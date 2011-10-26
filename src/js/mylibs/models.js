@@ -96,3 +96,12 @@ window.User = Backbone.Model.extend({
     }
 
 });
+
+window.ServerInfo = Backbone.Model.extend({
+    defaults: {
+        version: null,
+        servertype: 'public',
+        sslport: 443,
+        algorithms: []
+    }   
+});

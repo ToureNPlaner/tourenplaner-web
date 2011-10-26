@@ -209,7 +209,7 @@ _.extend(window.Api.prototype, {
      * param: offset of first item
      */
     listRequests : function (args) {
-        if(!args || !args.limit || !args.offset)
+        if(!args || !args.limit || !args.offset || args.offset<0)
             return false;
         if (isNaN(args.id)) {
             this.send({
@@ -237,7 +237,7 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUsers : function (args) {
-        if(!args || !args.limit || !args.offset)
+        if(!args || !args.limit || !args.offset || args.offset<0)
             return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
@@ -276,7 +276,7 @@ _.extend(window.Api.prototype, {
             type : 'POST',
             suffix : 'alg$' + args.alg,
             request : args.request,
-            callback : _.isFunction(args.callback) ? args.callback : null
+            callback : _.isFunction(args.callback) ? args.callback : null 
         });
         
         return true;

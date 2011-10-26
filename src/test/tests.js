@@ -211,7 +211,7 @@ test("/updateUser", 4, function(){
     });
 });
 
-test("/listrequests", 5, function (){
+test("/listrequests", 6, function (){
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
@@ -222,6 +222,7 @@ test("/listrequests", 5, function (){
     ok(!api.listRequests(), 'empty call');
     ok(!api.listRequests({limit: 10}), 'missing offset');
     ok(!api.listRequests({offset: 10}), 'missing limit');
+    ok(!api.listRequests({limit: 2, offset: -1}), 'offset < 0')
     
     stop_until_expected(2);
     api.listRequests({limit: 2,
@@ -242,7 +243,7 @@ test("/listrequests", 5, function (){
     });
 });
 
-test("/listusers", 4, function (){
+test("/listusers", 5, function (){
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
@@ -253,6 +254,7 @@ test("/listusers", 4, function (){
     ok(!api.listUsers(), 'empty call');
     ok(!api.listUsers({limit: 10}), 'missing offset');
     ok(!api.listUsers({offset: 10}), 'missing limit');
+    ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0')
     
     stop_until_expected(1);
     api.listUsers({limit: 1,
@@ -297,7 +299,7 @@ test("/alg", 5, function (){
     
     ok(!api.alg(), 'empty call');
     ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
-// nötig??    ok(!api.alg({request: request, alg: "sp"}), 'missing callback');
+// allgemeiner umgang??    ok(!api.alg({request: request, alg: "sp"}), 'missing callback');
     ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
     
     stop_until_expected(2);
