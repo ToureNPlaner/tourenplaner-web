@@ -29,6 +29,10 @@ window.TopbarView = Backbone.View.extend({
             $(this).css('display', 'block').hide();
         });
     },
+    
+    hideNavigation: function(pub) {
+        this.$('ul').hide();
+    },
 
     hideDropdown: function() {
         this.$('li.menu').removeClass('open');

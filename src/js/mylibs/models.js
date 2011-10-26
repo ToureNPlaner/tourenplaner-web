@@ -1,7 +1,12 @@
 window.MapModel = Backbone.Model.extend({
+    
+    defaults: {
+        mapObject: new Map("map"),
+        test: "TestString"
+    },
+    
     initialize: function() {
-	this.set({ mapObject : new Map("map") });
-	this.set({ test : "TestString" });
+        
     },
 
     setRoute: function(routeString) {
@@ -101,7 +106,35 @@ window.ServerInfo = Backbone.Model.extend({
     defaults: {
         version: null,
         servertype: 'public',
-        sslport: 443,
+        port: 80,
+        ssl: false,
         algorithms: []
-    }   
+    },
+    
+    initialize: function() {
+        
+    },
+    
+    getServerInfo: function(callback) {
+        var that = this;
+        window.api.serverInformation({
+            callback: function(text, success) {
+                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
+                    that.set({'ssl': true, 'port': text.sslport});
+                that.set({
+                   servertype: text.servertype,
+                   version: text.version,
+                   algorithms: text.algorithms
+                });
+                if (_.isFunction(callback))
+                    callback();
+            }
+        });
+        
+    },
+    
+    isPublic: function() {
+        return this.get('servertype') == "public";
+    }
+    
 });

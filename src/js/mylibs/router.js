@@ -14,12 +14,15 @@ window.Router = Backbone.Router.extend({
     },
     
     initServer: function() {
-        //TODO: Run a /info query to the server and display a modal loading dialog
+        var that = this;
         this.loadingView = new LoadingView().render();
         
-        window.api.serverInformation();
-        
-        this.loadingView.remove();
+        window.server = new window.ServerInfo();
+        window.server.getServerInfo(function() {
+            if (window.server.isPublic())
+                window.body.topbar.hideNavigation();
+            that.loadingView.remove();
+        });
     },
 
     login: function() {

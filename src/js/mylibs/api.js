@@ -102,19 +102,17 @@ _.extend(window.Api.prototype, {
     /* serverInformation
      * aks' server for information about the server
      */
-    serverInformation : function (callback) {
-        var that = this;
-        var myCallback = (function (text, success) {
-            if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
-                that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
-            if (_.isFunction(callback.callback))
-                    callback.callback(text, success);
-        });
-        
-        this.send({
+    serverInformation : function (args) {        
+        var that = this;        
+        return this.send({
             suffix : 'info',
-            request : '',
-            callback: myCallback
+            request : {},
+            callback: function (text, success) {
+                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
+                    that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
+                if (_.isFunction(args.callback))
+                        args.callback(text, success);
+            }
         });
     },
 
