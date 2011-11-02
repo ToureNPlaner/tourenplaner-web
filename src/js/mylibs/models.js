@@ -76,8 +76,7 @@ window.User = Backbone.Model.extend({
     
     register: function(args) {
         var ret = window.api.registerUser({
-            //TODO: Supply own method to get json without converting to string and back
-            userObject: JSON.parse(JSON.stringify(this)),
+            userObject: this.toUserobject(),
             callback: function(text, success) {
                 if (success && _.isFunction(args.success))
                     args.success();
@@ -88,6 +87,14 @@ window.User = Backbone.Model.extend({
         
         if (!ret && _.isFunction(args.error))
             args.error('Incorrect arguments');
+    },
+    
+    toUserobject: function() {
+        return this.attributes;
+    },
+    
+    fromUserobject: function(obj) {
+        this.set(obj);
     }
 
 });
@@ -120,7 +127,6 @@ window.ServerInfo = Backbone.Model.extend({
                     callback();
             }
         });
-        
     },
     
     isPublic: function() {

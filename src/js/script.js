@@ -1,7 +1,7 @@
 $(function() {
     window.api = new Api({
-        server: null,    // Only to enable the mock api
-        authRequired: true
+        server: "gerbera.informatik.uni-stuttgart.de",
+        port: 8080
     });
 
     window.app = new Router();

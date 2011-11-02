@@ -9,10 +9,11 @@ $.mockjaxSettings.log = function(msg) { log(msg); }
  */
 $.mockjax({
     url: "/info",
-    responseTimeout: 500,
+    status: 200,
+    responseTimeout: 100,
     responseText: {
         version: "1.0",
-        servertype: "private",
+        servertype: "public",
         sslport: 443,
         algorithms: [
             {
