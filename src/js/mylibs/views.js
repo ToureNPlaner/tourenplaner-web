@@ -73,7 +73,7 @@ window.SidebarView = Backbone.View.extend({
 
     el: $('#main #sidebar'),
 
-    initialize: function() {
+    initialize: function () {
         this.onResize();
 
         $(window).resize(_.bind(this.onResize, this));
@@ -81,16 +81,29 @@ window.SidebarView = Backbone.View.extend({
             handles: 'e'
         })
 
-	window.mapModel.bind("change:startMark", function(model, startMark) {
-		$('#main #sidebar #start').val(startMark.lon + "," + startMark.lat);
-	});
+        window.mapModel.bind("change:startMark", function (model, startMark) {
+            $('#main #sidebar #start').val(startMark.lon + "," + startMark.lat);
+        });
 
-	window.mapModel.bind("change:targetMark", function(model, targetMark) {
-		$('#main #sidebar #target').val(targetMark.lon + "," + targetMark.lat);
-	});
+        window.mapModel.bind("change:targetMark", function (model, targetMark) {
+            $('#main #sidebar #target').val(targetMark.lon + "," + targetMark.lat);
+        });
+        
+        $('#main #sidebar #btnClear').click(function() {
+			var mapObject = window.mapModel.get("mapObject");
+			var markList = window.mapModel.get("markList");
+			markList.removeAllMarks();
+            mapObject.resetMarkers();
+            mapObject.drawMarkers(window.mapModel.get("markList"));
+            window.mapModel.setRoute("");
+		});
+		
+		$('#main #sidebar #btnSend').click(function() {
+			alert("Zu versenden: " + window.mapModel.get("markList").getJSON());
+		});
     },
 
-    onResize: function() {
+    onResize: function () {
         this.el.height($(window).height() - 40);
     }
 });
@@ -99,30 +112,38 @@ window.SidebarView = Backbone.View.extend({
 window.MapView = Backbone.View.extend({
 
     el: $('#main #map'),
-    initialize: function(args) {
+    initialize: function (args) {
         this.onResize(args.sidebar);
         $(window).resize(_.bind(this.onResize, this));
-	// update map size when resize sidebar
-	var resizeUpdater = function(event, ui) {
-		$("#main #map").css('left', ui.size.width);
-		$("#main #map").css('width', "100%");
-		$("#main #map").css('height', "100%");
-		mapObject.refresh();
-	};
-	$("#main #sidebar").bind("resize", resizeUpdater);
+        // update map size when resize sidebar
+        var resizeUpdater = function (event, ui) {
+                $("#main #map").css('left', ui.size.width);
+                $("#main #map").css('width', "100%");
+                $("#main #map").css('height', "100%");
+                mapObject.refresh();
+            };
+        $("#main #sidebar").bind("resize", resizeUpdater);
 
-	var mapObject = window.mapModel.get("mapObject");
-	mapObject.draw();
-	setContextMenu();
+        var mapObject = window.mapModel.get("mapObject");
+        mapObject.draw();
+        setContextMenu();
 
-	window.mapModel.bind("change:route", function(model, route) {
-		mapObject.drawRoute(route);
+		// route have been changed
+        window.mapModel.bind("change:route", function (model, route) {
+			mapObject.resetRoute();
+            mapObject.drawRoute(route);
         });
+        
+        // marks have been changed
+        window.mapModel.bind("change:markList", function(model, markList) {
+			window.mapModel.get("mapObject").resetRoute();
+				alert("markList changed");
+		});
 
         mapObject.refresh();
     },
 
-    onResize: function(sidebar) {
+    onResize: function (sidebar) {
         var width = 0;
         try {
             width = sidebar.el.outerWidth();
@@ -147,16 +168,36 @@ window.DataView = Backbone.View.extend({
         "click span.minmax a": "onMinMax"
     },
 
-    initialize: function() {
+    initialize: function () {
         this.el.resizable({
-           handles: "n, nw, w"
+            handles: "n, nw, w"
         });
-	window.mapModel.bind("change:dataViewText", function(model, text) {
-		$('#main #data .content').text(text);
-	});
+        window.mapModel.bind("change:dataViewText", function (model, marker) {
+            var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.lonlat);
+            $('#main #data .content').html(
+				"<b>Lon:</b> " + lonlat.lon + "<br>" + 
+				"<b>Lat:</b> " + lonlat.lat + "<br>" + 
+				"<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.name + "' />" + "<br>" + 
+				"<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.k + "' />" + "<br>" + 
+				"<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button>"
+			);
+			
+			$('#main #data #dataview #saveMarkAttributes').click(function() {
+				marker.name = $('#main #data #dataview #markerName').val();
+				marker.k = $('#main #data #dataview #markerK').val();
+				alert("Übernommen!");
+				//$('#main #data #dataview #saveMarkAttributes').attr('disabled', 'true');
+			});
+			
+			// DISABLE BUTTON AFTER SAVE
+		/*	$('#main #data #dataview #markerName').focus(function() {
+				$('#main #data #dataview #saveMarkAttributes').attr('disabled', 'false');
+			});*/
+        });
     },
+    
 
-    onMinMax: function() {
+    onMinMax: function () {
         this.el.toggleClass('minimized');
         this.$('.content').toggle();
 
@@ -173,6 +214,7 @@ window.DataView = Backbone.View.extend({
         }
     }
 });
+
 
 window.LoginView = Backbone.View.extend({
 

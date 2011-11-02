@@ -66,9 +66,8 @@
       
       		   <label for="target">Ziel:</label><br />
       		   <input type="text" name="target" id="target" class="ui-widget-content ui-corner-all" /><br /><br />
-
-        	    <button id="btnGetRoute">Get Route</button>
-			<button id="btnClear">Clear</button>
+				<a href="#" id="btnSend" class="btn primary login">Berechnen</a>
+				<a href="#" id="btnClear" class="btn secondary login">Clear</a>
     		</form></p>
       </div>
 
@@ -79,7 +78,7 @@
           <a href="#">_</a>
         </span>
 
-        <div class="content">
+        <div class="content" id="dataview">
           <p style="padding: 5px 10px">No point selected!</p>
         </div>
       </div>
@@ -223,7 +222,8 @@
   <!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script> -->
   <script>jQuery.ui || document.write('<script src="js/libs/jquery-ui-1.8.16.custom.min.js"><\/script>')</script>
 
-  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <!--<script src="http://www.openlayers.org/api/OpenLayers.js"></script>-->
+  <script src="js/libs/OpenLayers.js"></script>
 
 
   <!-- scripts concatenated and minified via build script -->
@@ -241,6 +241,8 @@
   <script src="js/mylibs/views.js"></script>
   <script src="js/mylibs/router.js"></script>
   <script src="js/mylibs/map.contextmenu.js"></script>
+  <script src="js/mylibs/map.marklist.js"></script>
+  <script src="js/mylibs/map.mark.js"></script>
   <script src="js/script.js"></script>
   <!-- end scripts -->
 
