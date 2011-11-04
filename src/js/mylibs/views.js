@@ -30,7 +30,7 @@ window.TopbarView = Backbone.View.extend({
         });
     },
     
-    hideNavigation: function(pub) {
+    hideNavigation: function() {
         this.$('ul').hide();
     },
 
@@ -72,6 +72,11 @@ window.MainView = Backbone.View.extend({
 window.SidebarView = Backbone.View.extend({
 
     el: $('#main #sidebar'),
+    
+    events: {
+        "click #btnClear": "onClear",
+        "click #btnSend": "onSend"
+    },
 
     initialize: function () {
         this.onResize();
@@ -81,26 +86,29 @@ window.SidebarView = Backbone.View.extend({
             handles: 'e'
         })
 
-        window.mapModel.bind("change:startMark", function (model, startMark) {
-            $('#main #sidebar #start').val(startMark.lon + "," + startMark.lat);
-        });
-
-        window.mapModel.bind("change:targetMark", function (model, targetMark) {
-            $('#main #sidebar #target').val(targetMark.lon + "," + targetMark.lat);
-        });
-        
-        $('#main #sidebar #btnClear').click(function() {
-			var mapObject = window.mapModel.get("mapObject");
-			var markList = window.mapModel.get("markList");
-			markList.removeAllMarks();
-            mapObject.resetMarkers();
-            mapObject.drawMarkers(window.mapModel.get("markList"));
-            window.mapModel.setRoute("");
-		});
-		
-		$('#main #sidebar #btnSend').click(function() {
-			alert("Zu versenden: " + window.mapModel.get("markList").getJSON());
-		});
+        window.mapModel.bind("change:startMark", this.onStartMarkChange);
+        window.mapModel.bind("change:targetMark", this.onTargetMarkChange);
+    },
+    
+    onStartMarkChange: function(model, startMark) {
+        this.$('#start').val(startMark.lon + "," + startMark.lat);
+    },
+    
+    onTargetMarkChange: function(model, targetMark) {
+        this.$('#target').val(targetMark.lon + "," + targetMark.lat);
+    },
+    
+    onSend: function() {
+        alert("Zu versenden: " + window.mapModel.get("markList").getJSON());
+    },
+    
+    onClear: function() {
+        var mapObject = window.mapModel.get("mapObject");
+        var markList = window.mapModel.get("markList");
+        markList.removeAllMarks();
+        mapObject.resetMarkers();
+        mapObject.drawMarkers(window.mapModel.get("markList"));
+        window.mapModel.setRoute("");
     },
 
     onResize: function () {
@@ -112,35 +120,31 @@ window.SidebarView = Backbone.View.extend({
 window.MapView = Backbone.View.extend({
 
     el: $('#main #map'),
+    
     initialize: function (args) {
         this.onResize(args.sidebar);
         $(window).resize(_.bind(this.onResize, this));
-        // update map size when resize sidebar
-        var resizeUpdater = function (event, ui) {
-                $("#main #map").css('left', ui.size.width);
-                $("#main #map").css('width', "100%");
-                $("#main #map").css('height', "100%");
-                mapObject.refresh();
-            };
-        $("#main #sidebar").bind("resize", resizeUpdater);
+        args.sidebar.bind("resize", this.onSidebarResize);
 
         var mapObject = window.mapModel.get("mapObject");
         mapObject.draw();
         setContextMenu();
 
-		// route have been changed
-        window.mapModel.bind("change:route", function (model, route) {
-			mapObject.resetRoute();
-            mapObject.drawRoute(route);
-        });
-        
-        // marks have been changed
-        window.mapModel.bind("change:markList", function(model, markList) {
-			window.mapModel.get("mapObject").resetRoute();
-				alert("markList changed");
-		});
+        window.mapModel.bind("change:route", this.onRouteChange);
+        window.mapModel.bind("change:markList", this.onMarkListChange);
 
         mapObject.refresh();
+    },
+    
+    onRouteChange: function(model, route) {
+        var mapObject = window.mapModel.get("mapObject");
+        mapObject.resetRoute();
+        mapObject.drawRoute(route);
+    },
+    
+    onMarkListChange: function(model, markList) {
+        window.mapModel.get("mapObject").resetRoute();
+	alert("markList changed");
     },
 
     onResize: function (sidebar) {
@@ -152,6 +156,13 @@ window.MapView = Backbone.View.extend({
         }
         this.el.height($(window).height() - 40);
         this.el.width($(window).width());
+    },
+    
+    onSidebarResize: function (event, ui) {
+        $("#main #map").css('left', ui.size.width);
+        $("#main #map").css('width', "100%");
+        $("#main #map").css('height', "100%");
+        window.mapModel.get("mapObject").refresh();
     }
 });
 
@@ -172,30 +183,31 @@ window.DataView = Backbone.View.extend({
         this.el.resizable({
             handles: "n, nw, w"
         });
-        window.mapModel.bind("change:dataViewText", function (model, marker) {
-            var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.lonlat);
-            $('#main #data .content').html(
-				"<b>Lon:</b> " + lonlat.lon + "<br>" + 
-				"<b>Lat:</b> " + lonlat.lat + "<br>" + 
-				"<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.name + "' />" + "<br>" + 
-				"<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.k + "' />" + "<br>" + 
-				"<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button>"
-			);
-			
-			$('#main #data #dataview #saveMarkAttributes').click(function() {
-				marker.name = $('#main #data #dataview #markerName').val();
-				marker.k = $('#main #data #dataview #markerK').val();
-				alert("Übernommen!");
-				//$('#main #data #dataview #saveMarkAttributes').attr('disabled', 'true');
-			});
-			
-			// DISABLE BUTTON AFTER SAVE
-		/*	$('#main #data #dataview #markerName').focus(function() {
-				$('#main #data #dataview #saveMarkAttributes').attr('disabled', 'false');
-			});*/
-        });
+        window.mapModel.bind("change:dataViewText", this.onDataViewChange);
     },
     
+    onDataViewChange: function (model, marker) {
+        var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.lonlat);
+        this.$('.content').html(
+            "<b>Lon:</b> " + lonlat.lon + "<br>" + 
+            "<b>Lat:</b> " + lonlat.lat + "<br>" + 
+            "<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.name + "' />" + "<br>" + 
+            "<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.k + "' />" + "<br>" + 
+            "<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button>"
+        );
+        
+        this.$('#dataview #saveMarkAttributes').click(function() {
+                marker.name = $('#main #data #dataview #markerName').val();
+                marker.k = $('#main #data #dataview #markerK').val();
+                alert("Übernommen!");
+                //$('#main #data #dataview #saveMarkAttributes').attr('disabled', 'true');
+        });
+			
+        // DISABLE BUTTON AFTER SAVE
+        /* $('#main #data #dataview #markerName').focus(function() {
+                $('#main #data #dataview #saveMarkAttributes').attr('disabled', 'false');
+        });*/
+    },
 
     onMinMax: function () {
         this.el.toggleClass('minimized');

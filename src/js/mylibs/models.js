@@ -1,19 +1,17 @@
 window.MapModel = Backbone.Model.extend({
-    initialize: function() {
-		this.set({ mapObject : new Map("map") });
-		this.set({ test : "TestString" });
-		
-		
-		this.set({ markList : new MarkList() });
+    
+    defaults: {
+        "mapObject": new Map("map"),
+        "markList" : new MarkList()
     },
 
     setRoute: function(routeString) {
-		this.set({ route : routeString });
+        this.set({ route : routeString });
     },
 
     
     setDataViewMarker: function(marker) {
-		this.set({dataViewText : marker});
+	this.set({dataViewText : marker});
     }
 });
 
