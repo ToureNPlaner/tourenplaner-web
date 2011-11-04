@@ -66,7 +66,6 @@ test("api.send", 5, function() {
     ok(!api.send(), "Empty function call");
     ok(!api.send({}), "Empty object");
 
-// sinn?    ok(!api.send({suffix: "authuser", callback: function() { }}), "Undefined reqData");    
     ok(!api.send({request: {}, callback: function() { }}), "No suffix specified");
     ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
     ok(!api.send({suffix: "authuser", request: {}}), "Empty callback");
@@ -81,7 +80,7 @@ test("/info", 4, function() {
     var ret = tmpApi.serverInformation({
         callback: function(json, success) {
             same(success, true, 'Got some info');
-            same(json.servertype, 'private', 'Servertype was determined');
+            same(json.servertype, 'public', 'Servertype was determined');
             same(json.algorithms[0].pointconstraints[0].type, 'meter', 'Algorithm constraints are ok');
             same(tmpApi.get('ssl'), true, "SSL information read");
             do_start();
@@ -299,7 +298,6 @@ test("/alg", 5, function (){
     
     ok(!api.alg(), 'empty call');
     ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
-// allgemeiner umgang??    ok(!api.alg({request: request, alg: "sp"}), 'missing callback');
     ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
     
     stop_until_expected(2);

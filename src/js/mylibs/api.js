@@ -78,6 +78,7 @@ _.extend(window.Api.prototype, {
             cache: false,
             type: reqData.type,
             accepts: 'json',
+            crossDomain: true,
             data: reqData.request,
             beforeSend: function (jqXHR, settings) {
                 if (that.get('authRequired')) {
@@ -91,7 +92,6 @@ _.extend(window.Api.prototype, {
                 var text = jqXHR.responseText;
                 if (!_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
                     text = errorThrown;
-                
                 event.trigger('request', jqXHR.responseText, false);
             }
         });
