@@ -1,6 +1,6 @@
 function Map(divId) {
 
-    var vectorLayer, markerLayer, divId;
+    var vectorLayer, markerLayer;
 
 	/**
 	 * Initialize and draw map
@@ -9,9 +9,7 @@ function Map(divId) {
         map = new OpenLayers.Map("map", {
             projection: new OpenLayers.Projection("EPSG:4326")
         });
-        var mapLayer = new OpenLayers.Layer.OSM({
-            sphericalMercator: true
-        });
+        var mapLayer = new OpenLayers.Layer.OSM("OSM Tiles", "http://gerbera.informatik.uni-stuttgart.de/osm/tiles/${z}/${x}/${y}.png", {numZoomLevels: 19});
 
         /* add maplayer and set center of the map */
         map.addLayers([mapLayer]);
@@ -28,7 +26,7 @@ function Map(divId) {
 
 
     /**
-     * Resets all Routes drawed in the vectorLayer 
+     * Resets all Routes drawed in the vectorLayer
      */
     this.resetRoute = function () {
         this.vectorLayer.removeAllFeatures();
@@ -41,8 +39,8 @@ function Map(divId) {
     this.resetMarkers = function () {
         this.markerLayer.clearMarkers();
     }
-    
- 
+
+
     /**
      * Forces Map to update itself.
      * Needed, when the div of this map getting resized
@@ -75,7 +73,7 @@ function Map(divId) {
 
             // associate click event
             marker.events.register('mousedown', marker, function (evt) {
-                // clone lonlat object of this marker and transform it into epsg-4326			
+                // clone lonlat object of this marker and transform it into epsg-4326
                 var lonlatClone = this.lonlat.clone();
                 var proj = new OpenLayers.Projection("EPSG:4326");
                 lonlatClone.transform(map.getProjectionObject(), proj);
@@ -108,7 +106,7 @@ function Map(divId) {
      * PARAM: List of Vertices
      */
     this.drawRoute = function (vertexString) {
-        // parse string of vertices 
+        // parse string of vertices
         var vertexList = vertexString.split("],[");
         vertexList[0] = vertexList[0].slice(1);
         vertexList[vertexList.length - 1] = vertexList[vertexList.length - 1].slice(0, vertexList[vertexList.length - 1].length - 1);
@@ -174,4 +172,4 @@ function Map(divId) {
 
         return lonlatClone;
     }
-} 
+}
