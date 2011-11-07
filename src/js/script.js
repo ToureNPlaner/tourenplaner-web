@@ -8,6 +8,8 @@ $(function() {
     Backbone.history.start();
 
     window.mapModel = new MapModel();
+    window.markList = new MarkList();
+    
     window.body = new BodyView();
 
     /* FOR TEST ONLY */
