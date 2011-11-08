@@ -126,7 +126,6 @@ window.MapModel = Backbone.Model.extend({
         });
     },
 
-
     setDataViewMarker: function (marker) {
         this.set({
             dataViewText: marker
@@ -201,12 +200,15 @@ window.User = Backbone.Model.extend({
         var ret = window.api.registerUser({
             userObject: this.toUserobject(),
             callback: function (text, success) {
-                if (success && _.isFunction(args.success)) args.success();
-                else if (!success && _.isFunction(args.error)) args.error(text);
+                if (success && _.isFunction(args.success))
+                    args.success();
+                else if (!success && _.isFunction(args.error))
+                    args.error(text);
             }
         });
 
-        if (!ret && _.isFunction(args.error)) args.error('Incorrect arguments');
+        if (!ret && _.isFunction(args.error))
+            args.error('Incorrect arguments');
     },
 
     toUserobject: function () {
@@ -245,7 +247,10 @@ window.ServerInfo = Backbone.Model.extend({
                     version: text.version,
                     algorithms: text.algorithms
                 });
-                if (_.isFunction(callback)) callback();
+
+                if (_.isFunction(callback))
+                    callback();
+                that.trigger("info-loaded");
             }
         });
     },
