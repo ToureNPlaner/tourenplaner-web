@@ -147,6 +147,12 @@ window.MapView = Backbone.View.extend({
         window.markList.bind("all", this.onMarkListChange);
 
         mapObject.refresh();
+
+        // Move the attribution stuff to a readable position
+        $('.olControlAttribution').css({
+            right: '5px',
+            top: '5px'
+        });
     },
 
     onRouteChange: function (model, route) {
