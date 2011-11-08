@@ -24,7 +24,6 @@ _.extend(window.Map.prototype, {
 
         /* add maplayer and set center of the map */
         this.map.addLayers([mapLayer]);
-        this.map.setCenter(new OpenLayers.LonLat(0, 0), 4);
 
         /* create and add vectorlayer */
         this.vectorLayer = new OpenLayers.Layer.Vector("Vectors");
@@ -33,6 +32,7 @@ _.extend(window.Map.prototype, {
         /* create and add a layer for markers */
         this.markerLayer = new OpenLayers.Layer.Markers("Markers");
         this.map.addLayer(this.markerLayer);
+        this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
     },
 
     /**

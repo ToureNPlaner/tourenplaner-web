@@ -79,6 +79,12 @@ window.MarkList = Backbone.Collection.extend({
     deleteMark: function (mark) {
         this.remove(mark);
     },
+    
+    deleteAllMarks: function() {
+		for (var i = 0; i < this.length; i++) {
+			this.remove(this.at(0));
+		}
+	},
 
     getMarkAtPos: function (pos) {
         return this.at(pos);
@@ -117,7 +123,6 @@ window.MapModel = Backbone.Model.extend({
 
     defaults: {
         "mapObject": new Map("map"),
-        "markList": new MarkList()
     },
 
     setRoute: function (routeString) {

@@ -88,17 +88,7 @@ window.SidebarView = Backbone.View.extend({
             handles: 'e'
         });
 
-        window.mapModel.bind("change:startMark", this.onStartMarkChange);
-        window.mapModel.bind("change:targetMark", this.onTargetMarkChange);
         window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
-    },
-
-    onStartMarkChange: function (model, startMark) {
-        this.$('#start').val(startMark.lon + "," + startMark.lat);
-    },
-
-    onTargetMarkChange: function (model, targetMark) {
-        this.$('#target').val(targetMark.lon + "," + targetMark.lat);
     },
 
     onInfoLoaded: function () {
@@ -117,10 +107,7 @@ window.SidebarView = Backbone.View.extend({
 
     onClear: function () {
         var mapObject = window.mapModel.get("mapObject");
-        var markList = window.mapModel.get("markList");
-        markList.removeAllMarks();
-        mapObject.resetMarkers();
-        mapObject.drawMarkers(window.mapModel.get("markList"));
+        window.markList.deleteAllMarks();
         window.mapModel.setRoute("");
     },
 
@@ -159,8 +146,11 @@ window.MapView = Backbone.View.extend({
         var mapObject = window.mapModel.get("mapObject");
         mapObject.resetMarkers();
         mapObject.drawMarkers(markList);
-        $('#main #sidebar #start').val(window.markList.at(0).get("lonlat"));
-        $('#main #sidebar #target').val(window.markList.at(window.markList.length - 1).get("lonlat"));
+        $('#main #sidebar #start').val(window.markList.at(0).getLonLatAs1984());
+        
+        if (window.markList.length > 1) {
+			$('#main #sidebar #target').val(window.markList.at(window.markList.length - 1).getLonLatAs1984());
+		}
     },
 
     onResize: function (sidebar) {
