@@ -178,14 +178,8 @@ window.MapView = Backbone.View.extend({
         }
 
         this.el.height($(window).height() - 40);
-        this.el.width($(window).width());
-        //this.el.width($(window).width() - $('#main #sidebar').width());
-
-        ////////////////////////////////////7
-        /* this method doesn't work correctly
-         * can't center map div
-         * TO fix..
-         */
+        this.el.width($(window).width() - $('#main #sidebar').width());
+		this.el.css("left", $('#main #sidebar').width());
     },
 
     onSidebarResize: function (event, ui) {
