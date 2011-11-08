@@ -59,16 +59,27 @@
 
     <div id="main" role="main">
       <div id="sidebar">
-        <p style="padding: 5px 10px;">		
-		<form name="route">
-      		   <label for="start">Start:</label><br />
-      		   <input type="text" name="start" id="start" class="ui-widget-content ui-corner-all" /><br />
-      
-      		   <label for="target">Ziel:</label><br />
-      		   <input type="text" name="target" id="target" class="ui-widget-content ui-corner-all" /><br /><br />
-				<a href="#" id="btnSend" class="btn primary login">Berechnen</a>
-				<a href="#" id="btnClear" class="btn secondary login">Clear</a>
-    		</form></p>
+        <div style="padding: 5px 0px;">
+          <form name="route">
+            <label for="algorithms"><h3>Algorithms:</h3></label>
+            <select name="algorithms" id="algorithms">
+              <option value="-1">No algorithms</option>
+            </select>
+
+            <hr style="border-bottom: 1px solid #CCC" />
+
+            <h3>Points:</h3>
+
+            <label for="start">Start:</label><br />
+            <input type="text" name="start" id="start" /><br />
+
+            <label for="target">Ziel:</label><br />
+            <input type="text" name="target" id="target" /><br /><br />
+
+            <a href="#" id="btnSend" class="btn primary">Berechnen</a>
+            <a href="#" id="btnClear" class="btn secondary">Leeren</a>
+          </form>
+        </div>
       </div>
 
       <div id="map"></div>
@@ -188,24 +199,24 @@
       <a href="#/register" class="btn primary register">Register</a>
     </div>
   </div>
-  
+
   <div id="message" class="modal">
     <div class="modal-header">
       <a href="#" class="close">x</a>
       <h3 class="title">Title</h3>
     </div>
-    
+
     <div class="modal-body">
       <div class="message">
         Message
       </div>
     </div>
-    
+
     <div class="modal-footer">
       <a href="#" class="btn primary cancel">Okay</a>
     </div>
   </div>
-  
+
   <div id="loading" class="modal">
     <div class="body">
       <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>
@@ -223,7 +234,7 @@
   <script>jQuery.ui || document.write('<script src="js/libs/jquery-ui-1.8.16.custom.min.js"><\/script>')</script>
 
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-  
+
 
 
   <!-- scripts concatenated and minified via build script -->

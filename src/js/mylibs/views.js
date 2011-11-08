@@ -86,10 +86,11 @@ window.SidebarView = Backbone.View.extend({
         $(window).resize(_.bind(this.onResize, this));
         this.el.resizable({
             handles: 'e'
-        })
+        });
 
         window.mapModel.bind("change:startMark", this.onStartMarkChange);
         window.mapModel.bind("change:targetMark", this.onTargetMarkChange);
+        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
     },
 
     onStartMarkChange: function (model, startMark) {
@@ -98,6 +99,16 @@ window.SidebarView = Backbone.View.extend({
 
     onTargetMarkChange: function (model, targetMark) {
         this.$('#target').val(targetMark.lon + "," + targetMark.lat);
+    },
+
+    onInfoLoaded: function () {
+        var algorithms = window.server.get('algorithms');
+        var $algorithms = this.$('#algorithms');
+
+        $algorithms.children().remove();
+        for (i in algorithms) {
+            $algorithms.append('<option value="'+i+'">'+algorithms[i].name+'</option>');
+        }
     },
 
     onSend: function () {
@@ -206,9 +217,9 @@ window.DataView = Backbone.View.extend({
             window.markList.moveMark(marker, pos);
             alert("Übernommen!");
         });
-        
+
         $('#main #data #dataview #deleteMark').click(function() {
-		    window.markList.deleteMark(marker);	
+		    window.markList.deleteMark(marker);
 		});
     },
 
@@ -229,7 +240,6 @@ window.DataView = Backbone.View.extend({
         }
     }
 });
-
 
 window.LoginView = Backbone.View.extend({
 
@@ -440,7 +450,8 @@ window.MessageView = Backbone.View.extend({
     },
 
     show: function (args) {
-        if (_.isUndefined(args)) return;
+        if (_.isUndefined(args))
+            return;
         this.title = args.title || "";
         this.message = args.message || "";
 

@@ -11,13 +11,13 @@ window.Router = Backbone.Router.extend({
 
     initialize: function(options) {
         this.user = new User();
+        window.server = new ServerInfo();
     },
-    
+
     initServer: function() {
         var that = this;
         this.loadingView = new LoadingView().render();
-        
-        window.server = new window.ServerInfo();
+
         window.server.getServerInfo(function() {
             if (window.server.isPublic())
                 window.body.topbar.hideNavigation();
