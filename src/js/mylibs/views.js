@@ -97,12 +97,20 @@ window.SidebarView = Backbone.View.extend({
 
         $algorithms.children().remove();
         for (i in algorithms) {
-            $algorithms.append('<option value="'+i+'">'+algorithms[i].name+'</option>');
+            $algorithms.append('<option value="'+algorithms[i].urlsuffix+'">'+algorithms[i].name+'</option>');
         }
     },
 
     onSend: function () {
-        alert("Zu versenden: " + window.markList.getJSON());
+        window.api.alg({
+            alg: this.$('#algorithms').val(),
+            request: window.markList.getJSON(),
+            callback: function(text, success) {
+                if (success) {
+                    window.mapModel.set({route: text});
+                }
+            }
+        });
     },
 
     onClear: function () {
@@ -134,6 +142,12 @@ window.MapView = Backbone.View.extend({
         window.markList.bind("all", this.onMarkListChange);
 
         mapObject.refresh();
+
+        // Move the attribution stuff to a readable position
+        $('.olControlAttribution').css({
+            right: '5px',
+            top: '5px'
+        });
     },
 
     onRouteChange: function (model, route) {
