@@ -93,13 +93,13 @@ _.extend(window.Map.prototype, {
             });
 
             // opacity stuff
-            marker.setOpacity(0.9);
+            marker.setOpacity(0.7);
             marker.events.register('mouseover', marker, function (evt) {
                 this.setOpacity(1.0);
             });
 
             marker.events.register('mouseout', marker, function (evt) {
-                this.setOpacity(0.9);
+                this.setOpacity(0.7);
             });
 
             this.markerLayer.addMarker(marker);
@@ -113,17 +113,13 @@ _.extend(window.Map.prototype, {
      */
     drawRoute: function (vertexString) {
         // parse string of vertices 
-        var vertexList = vertexString.split("],[");
-        vertexList[0] = vertexList[0].slice(1);
-        vertexList[vertexList.length - 1] = vertexList[vertexList.length - 1].slice(0, vertexList[vertexList.length - 1].length - 1);
-
         var pointList = [];
-        // Iterate over the list of vertices to create a list of Pointobjects
-        for (var i = 0; i < vertexList.length; i++) {
-            var splitted = vertexList[i].split(",");
-            var lonlat = new OpenLayers.LonLat(splitted[0], splitted[1]);
+        for (var i = 0; i < vertexString.points.length; i++) {
+            // transform points
+            var p = vertexString.points[i];
+            var lonlat = new OpenLayers.LonLat(p.ln, p.lt);
             var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-            // get right projection
+
             var proj = new OpenLayers.Projection("EPSG:4326");
             lonlat.transform(proj, this.map.getProjectionObject());
             point.transform(proj, this.map.getProjectionObject());
@@ -140,7 +136,7 @@ _.extend(window.Map.prototype, {
                 window.markList.setStartMark(mark);
             }
 
-            if (i != 0 && i == vertexList.length - 1) {
+            if (i != 0 && i == vertexString.points.length - 1) {
                 var mark = new Mark();
                 mark.set({
                     name: "TargetMark"
@@ -164,7 +160,7 @@ _.extend(window.Map.prototype, {
             strokeWidth: 2.5
         });
         this.vectorLayer.addFeatures(feature);
-        this.map.zoomToExtent(this.vectorLayer.getDataExtent(), false);
+        this.map.zoomToExtent(this.markerLayer.getDataExtent());
     },
 
     getLonLatFromPos: function (posX, posY) {

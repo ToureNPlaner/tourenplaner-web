@@ -97,7 +97,7 @@ window.SidebarView = Backbone.View.extend({
 
         $algorithms.children().remove();
         for (i in algorithms) {
-            $algorithms.append('<option value="'+algorithms[i].urlsuffix+'">'+algorithms[i].name+'</option>');
+            $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + algorithms[i].name + '</option>');
         }
     },
 
@@ -105,9 +105,11 @@ window.SidebarView = Backbone.View.extend({
         window.api.alg({
             alg: this.$('#algorithms').val(),
             request: window.markList.getJSON(),
-            callback: function(text, success) {
+            callback: function (text, success) {
                 if (success) {
-                    window.mapModel.set({route: text});
+                    window.mapModel.set({
+                        route: text
+                    });
                 }
             }
         });
@@ -161,10 +163,10 @@ window.MapView = Backbone.View.extend({
         mapObject.resetMarkers();
         mapObject.drawMarkers(markList);
         $('#main #sidebar #start').val(window.markList.at(0).getLonLatAs1984());
-        
+
         if (window.markList.length > 1) {
-			$('#main #sidebar #target').val(window.markList.at(window.markList.length - 1).getLonLatAs1984());
-		}
+            $('#main #sidebar #target').val(window.markList.at(window.markList.length - 1).getLonLatAs1984());
+        }
     },
 
     onResize: function (sidebar) {
@@ -174,8 +176,16 @@ window.MapView = Backbone.View.extend({
         } catch (e) {
             width = window.body.main.sidebar.el.outerWidth();
         }
+
         this.el.height($(window).height() - 40);
         this.el.width($(window).width());
+        //this.el.width($(window).width() - $('#main #sidebar').width());
+
+        ////////////////////////////////////7
+        /* this method doesn't work correctly
+         * can't center map div
+         * TO fix..
+         */
     },
 
     onSidebarResize: function (event, ui) {
@@ -222,9 +232,9 @@ window.DataView = Backbone.View.extend({
             alert("Übernommen!");
         });
 
-        $('#main #data #dataview #deleteMark').click(function() {
-		    window.markList.deleteMark(marker);
-		});
+        $('#main #data #dataview #deleteMark').click(function () {
+            window.markList.deleteMark(marker);
+        });
     },
 
     onMinMax: function () {
@@ -454,8 +464,7 @@ window.MessageView = Backbone.View.extend({
     },
 
     show: function (args) {
-        if (_.isUndefined(args))
-            return;
+        if (_.isUndefined(args)) return;
         this.title = args.title || "";
         this.message = args.message || "";
 
