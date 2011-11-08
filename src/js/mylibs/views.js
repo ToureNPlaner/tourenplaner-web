@@ -162,11 +162,19 @@ window.MapView = Backbone.View.extend({
         var mapObject = window.mapModel.get("mapObject");
         mapObject.resetMarkers();
         mapObject.drawMarkers(markList);
-        $('#main #sidebar #start').val(window.markList.at(0).getLonLatAs1984());
 
-        if (window.markList.length > 1) {
-            $('#main #sidebar #target').val(window.markList.at(window.markList.length - 1).getLonLatAs1984());
+        if (window.markList.getStartMark() != null) {
+            $('#main #sidebar #start').val(window.markList.getStartMark().getLonLatAs1984());
+        } else {
+            $('#main #sidebar #start').val("");
         }
+
+        if (window.markList.getTargetMark() != null) {
+            $('#main #sidebar #target').val(window.markList.getTargetMark().getLonLatAs1984());
+        } else {
+            $('#main #sidebar #target').val("");
+        }
+
     },
 
     onResize: function (sidebar) {
@@ -179,7 +187,7 @@ window.MapView = Backbone.View.extend({
 
         this.el.height($(window).height() - 40);
         this.el.width($(window).width() - $('#main #sidebar').width());
-		this.el.css("left", $('#main #sidebar').width());
+        this.el.css("left", $('#main #sidebar').width());
     },
 
     onSidebarResize: function (event, ui) {
@@ -228,6 +236,7 @@ window.DataView = Backbone.View.extend({
 
         $('#main #data #dataview #deleteMark').click(function () {
             window.markList.deleteMark(marker);
+            $('#main #data .content').html("No Mark selected");
         });
     },
 

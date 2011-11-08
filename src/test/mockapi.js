@@ -284,10 +284,14 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
+            var a = Math.random() * 90;
+            var b = Math.random() * 90;
+            var c = Math.random() * 90;
+            var d = Math.random() * 90;
             this.responseText = {
                 points: [
-                    {lt: -9.5123, ln: 8.12},
-                    {lt: 4.3432, ln: -76.3}
+                    {lt: a, ln: b},
+                    {lt: c, ln: d}
                 ],
                 misc: {
                     distance: 100,

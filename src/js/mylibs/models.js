@@ -1,9 +1,9 @@
 window.Mark = Backbone.Model.extend({
     defaults: {
         name: "Marker",
-        position: -1,
         lonlat: null,
-        k: ""
+        k: "",
+        type: 0 // 1 = startMark, 2 = targetMark
     },
 
     initialize: function () {
@@ -38,28 +38,52 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     setStartMark: function (mark) {
-        if (this.length > 1) {
-            var toRemove = this.at(0);
-            this.remove(toRemove);
+        if (this.length > 0 && (this.at(0).get("type") == 1)) {
+            this.remove(this.at(0), {silent: true});
         }
+        
+        mark.set({type: 1});
+        
         this.add(mark, {
             at: 0
         });
     },
+    
+    getStartMark: function (mark) {
+		var ret = null;
+		if (this.length > 0 && (this.at(0).get("type") == 1)) {
+            ret = this.at(0);
+        }
+        
+        return ret;
+	},
 
     setTargetMark: function (mark) {
-        if (this.length > 1) {
-            var toRemove = this.at(this.length - 1);
+        if (this.length > 0 && (this.at(this.length - 1).get("type") == 2)) {
+            var toRemove = this.at(this.length - 1, {silent: true});
             this.remove(toRemove);
         }
+        
+        mark.set({type:2});
+        
         this.add(mark);
     },
+
+    getTargetMark: function (mark) {
+		var ret = null;
+        if (this.length > 0 && (this.at(this.length - 1).get("type") == 2)) {
+            var ret = this.at(this.length - 1);
+        }
+        
+        return ret;
+	},
 
     appendMark: function (mark) {
         var at = this.length - 1;
         if (at < 0) {
             at = 0;
         }
+        
         this.add(mark, {
             at: at
         });

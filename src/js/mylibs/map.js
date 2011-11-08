@@ -69,9 +69,9 @@ _.extend(window.Map.prototype, {
 
             // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
             var iconPath = 'img/mark.png';
-            if (i == 0) {
+            if (mark.get("type") == 1) {
                 iconPath = 'img/startmark.png';
-            } else if (i == markList.length - 1 && i > 0) {
+            } else if (mark.get("type") == 2) {
                 iconPath = 'img/targetmark.png';
             }
             var icon = new OpenLayers.Icon(iconPath, size, offset);
