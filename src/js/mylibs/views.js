@@ -110,10 +110,16 @@ window.SidebarView = Backbone.View.extend({
                 title: 'Error',
                 message: 'No algorithm selected.'
             });
+        //TODO: Use algorithm info for this
+        } else if (window.markList.length < 2) {
+            new MessageView().show({
+               title: 'Error',
+               message: 'Not enough points defined.'
+            });
         } else {        
             window.api.alg({
                 alg: this.$('#algorithms').val(),
-                request: window.markList.getJSON(),
+                points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {
                         window.mapModel.set({

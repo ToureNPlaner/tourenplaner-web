@@ -54,6 +54,7 @@ _.extend(window.Api.prototype, {
         if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
         if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
         if(_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
+        if(_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
         reqData.type || (reqData.type = 'GET');
         reqData.request || (reqData.request = {});
 
@@ -78,8 +79,11 @@ _.extend(window.Api.prototype, {
             cache: false,
             type: reqData.type,
             accepts: 'json',
+            dataType: 'json',
+            contentType: 'application/json',
             crossDomain: true,
-            data: reqData.request,
+            data: JSON.stringify(reqData.request),
+            processData: reqData.process,
             beforeSend: function (jqXHR, settings) {
                 if (that.get('authRequired')) {
                     settings.headers = { Authorization: that.get('authAsBase64') };
@@ -268,12 +272,17 @@ _.extend(window.Api.prototype, {
      * param: request contains problem instance (format as alg specification)
      */
     alg : function (args) {
-        if(!args || !args.alg || !args.request)
+        if(!args || !args.alg || !args.points)
             return false;
         this.send({
             type : 'POST',
             suffix : 'alg$' + args.alg,
-            request : args.request,
+            request : {
+                version: args.version || 1,
+                points: args.points,
+                constraints: args.constraints || {}                
+            },
+            process: false,
             callback : _.isFunction(args.callback) ? args.callback : null 
         });
         

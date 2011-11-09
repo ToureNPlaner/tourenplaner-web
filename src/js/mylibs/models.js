@@ -21,13 +21,12 @@ window.Mark = Backbone.Model.extend({
         }
     },
 
-    getJSON: function () {
-        var s = {
+    toJSON: function () {
+        return {
             "lt": this.getLonLatAs1984().lat,
             "ln": this.getLonLatAs1984().lon,
             "k": this.get("k")
         };
-        return JSON.stringify(s);
     }
 });
 
@@ -51,13 +50,13 @@ window.MarkList = Backbone.Collection.extend({
     },
     
     getStartMark: function (mark) {
-		var ret = null;
-		if (this.length > 0 && (this.at(0).get("type") == 1)) {
+        var ret = null;
+        if (this.length > 0 && (this.at(0).get("type") == 1)) {
             ret = this.at(0);
         }
         
         return ret;
-	},
+    },
 
     setTargetMark: function (mark) {
         if (this.length > 0 && (this.at(this.length - 1).get("type") == 2)) {
@@ -125,16 +124,11 @@ window.MarkList = Backbone.Collection.extend({
         return ret;
     },
 
-    getJSON: function () {
-        var ret = "[";
-        var comma = ",";
+    toJSON: function () {
+        var ret = [];
         for (var i = 0; i < this.length; i++) {
-            if (i == this.length - 1) {
-                comma = "";
-            }
-            ret += this.at(i).getJSON() + comma;
+            ret.push(this.at(i).toJSON());
         }
-        ret += "]";
 
         return ret;
     }
