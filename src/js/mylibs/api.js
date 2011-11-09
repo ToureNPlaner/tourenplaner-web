@@ -276,7 +276,7 @@ _.extend(window.Api.prototype, {
             return false;
         this.send({
             type : 'POST',
-            suffix : 'alg$' + args.alg,
+            suffix : 'alg' + args.alg,
             request : {
                 version: args.version || 1,
                 points: args.points,
