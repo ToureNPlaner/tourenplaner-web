@@ -95,7 +95,7 @@ window.SidebarView = Backbone.View.extend({
         var algorithms = window.server.get('algorithms');
         var $algorithms = this.$('#algorithms');
         
-        if (algorithms && algorithms.length > 0) {
+        if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
             for (i in algorithms) {
                 $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + algorithms[i].name + '</option>');

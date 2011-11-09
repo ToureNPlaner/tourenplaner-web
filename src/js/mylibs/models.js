@@ -17,6 +17,7 @@ window.Mark = Backbone.Model.extend({
         } else {
             // error!
             log("Fehler in Markmodel");
+            return null;
         }
     },
 
@@ -144,7 +145,7 @@ window.MarkList = Backbone.Collection.extend({
 window.MapModel = Backbone.Model.extend({
 
     defaults: {
-        "mapObject": new Map("map"),
+        "mapObject": new Map("map")
     },
 
     setRoute: function (routeString) {
@@ -175,7 +176,8 @@ window.User = Backbone.Model.extend({
                 dec = Base64.decode(cookie);
                 decarr = dec.split(':');
                 log(dec, decarr);
-                if (decarr.length == 2) return this.login(decarr[0], decarr[1]);
+                if (decarr.length == 2)
+                    return this.login(decarr[0], decarr[1]);
             } catch (e) {
                 log('Invalid cookie', cookie);
             }
@@ -184,6 +186,7 @@ window.User = Backbone.Model.extend({
 
         //TODO: Add ssl: true if ssl is enabled on this server
         $.cookie('tourenplaner', cookie);
+        return cookie == null;
     },
 
     login: function (email, password) {
@@ -262,17 +265,24 @@ window.ServerInfo = Backbone.Model.extend({
         var that = this;
         window.api.serverInformation({
             callback: function (text, success) {
-                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport)) that.set({
-                    'ssl': true,
-                    'port': text.sslport
-                });
+                var obj = text;
+                if (_.isString(obj))
+                    obj = JSON.parse(obj);
+
+                if (!_.isNaN(obj.sslport) && !_.isUndefined(obj.sslport)) {
+                    that.set({
+                        'ssl': true,
+                        'port': obj.sslport
+                    });
+                }
                 that.set({
-                    servertype: text.servertype,
-                    version: text.version,
-                    algorithms: text.algorithms
+                    servertype: obj.servertype,
+                    version: obj.version,
+                    algorithms: obj.algorithms
                 });
 
-                if (_.isFunction(callback)) callback();
+                if (_.isFunction(callback))
+                    callback();
                 that.trigger("info-loaded");
             }
         });
