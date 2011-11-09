@@ -80,7 +80,7 @@ _.extend(window.Api.prototype, {
             type: reqData.type,
             accepts: 'json',
             dataType: 'json',
-            contentType: 'application/json',
+            contentType: 'application/json; charset="utf-8"',
             crossDomain: true,
             data: JSON.stringify(reqData.request),
             processData: reqData.process,
