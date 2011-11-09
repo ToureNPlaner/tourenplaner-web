@@ -105,9 +105,7 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     deleteAllMarks: function () {
-        for (var i = 0; i < this.length; i++) {
-            this.remove(this.at(0));
-        }
+        this.reset(null);
     },
 
     getMarkAtPos: function (pos) {
@@ -128,7 +126,7 @@ window.MarkList = Backbone.Collection.extend({
 
     getJSON: function () {
         var ret = "[";
-        var comma = "";
+        var comma = ",";
         for (var i = 0; i < this.length; i++) {
             if (i == this.length - 1) {
                 comma = "";

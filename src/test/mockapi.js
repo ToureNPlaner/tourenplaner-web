@@ -291,7 +291,8 @@ $.mockjax({
             this.responseText = {
                 points: [
                     {lt: a, ln: b},
-                    {lt: c, ln: d}
+                    {lt: c, ln: d},
+                    {lt: 48.8485554, ln: 9.418236}
                 ],
                 misc: {
                     distance: 100,
