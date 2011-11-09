@@ -94,25 +94,35 @@ window.SidebarView = Backbone.View.extend({
     onInfoLoaded: function () {
         var algorithms = window.server.get('algorithms');
         var $algorithms = this.$('#algorithms');
-
-        $algorithms.children().remove();
-        for (i in algorithms) {
-            $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + algorithms[i].name + '</option>');
+        
+        if (algorithms && algorithms.length > 0) {
+            $algorithms.children().remove();
+            for (i in algorithms) {
+                $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + algorithms[i].name + '</option>');
+            }
         }
     },
 
     onSend: function () {
-        window.api.alg({
-            alg: this.$('#algorithms').val(),
-            request: window.markList.getJSON(),
-            callback: function (text, success) {
-                if (success) {
-                    window.mapModel.set({
-                        route: text
-                    });
+        var alg = this.$('#algorithms').val();
+        if (_.isUndefined(alg) || _.isEmpty(alg))  {
+            new MessageView().show({
+                title: 'Error',
+                message: 'No algorithm selected.'
+            });
+        } else {        
+            window.api.alg({
+                alg: this.$('#algorithms').val(),
+                request: window.markList.getJSON(),
+                callback: function (text, success) {
+                    if (success) {
+                        window.mapModel.set({
+                            route: text
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
     },
 
     onClear: function () {
