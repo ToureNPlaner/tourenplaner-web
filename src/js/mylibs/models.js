@@ -260,16 +260,18 @@ window.ServerInfo = Backbone.Model.extend({
 
     getServerInfo: function (callback) {
         var that = this;
+        
         window.api.serverInformation({
             callback: function (text, success) {
-                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport)) that.set({
+                var jsonObj = jQuery.parseJSON(text);
+                if (!_.isNaN(jsonObj.sslport) && !_.isUndefined(jsonObj.sslport)) that.set({
                     'ssl': true,
-                    'port': text.sslport
+                    'port': jsonObj.sslport
                 });
                 that.set({
-                    servertype: text.servertype,
-                    version: text.version,
-                    algorithms: text.algorithms
+                    servertype: jsonObj.servertype,
+                    version: jsonObj.version,
+                    algorithms: jsonObj.algorithms
                 });
 
                 if (_.isFunction(callback)) callback();
