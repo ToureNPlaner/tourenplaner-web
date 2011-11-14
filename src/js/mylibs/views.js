@@ -92,6 +92,7 @@ window.SidebarView = Backbone.View.extend({
         window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
         window.markList.bind("add", _.bind(this.onMarkAdded, this));
         window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
+        window.markList.bind("reset", _.bind(this.onListReset, this));
     },
 
     onInfoLoaded: function () {
@@ -128,6 +129,11 @@ window.SidebarView = Backbone.View.extend({
             this.$('#marks').html('No points defined!');
 
         this._sortMarks();
+    },
+
+    onListReset: function () {
+        this.marks = [];
+        this.$('#marks').html('No points defined');
     },
 
     onSend: function () {
