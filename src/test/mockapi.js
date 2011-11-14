@@ -284,15 +284,15 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
-            var a = Math.random() * 90;
-            var b = Math.random() * 90;
-            var c = Math.random() * 90;
-            var d = Math.random() * 90;
+            var a = Math.floor(Math.random() * 90 * 1e7);
+            var b = Math.floor(Math.random() * 90 * 1e7);
+            var c = Math.floor(Math.random() * 90 * 1e7);
+            var d = Math.floor(Math.random() * 90 * 1e7);
             this.responseText = {
                 points: [
                     {lt: a, ln: b},
                     {lt: c, ln: d},
-                    {lt: 48.8485554, ln: 9.418236}
+                    {lt: 488485554, ln: 94182360}
                 ],
                 misc: {
                     distance: 100,
