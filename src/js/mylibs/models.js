@@ -22,9 +22,10 @@ window.Mark = Backbone.Model.extend({
     },
 
     toJSON: function () {
+        // We're using ints here instead of floats for performance improvements (Java is a bit slow)
         return {
-            "lt": this.getLonLatAs1984().lat,
-            "ln": this.getLonLatAs1984().lon,
+            "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
+            "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
             "k": this.get("k")
         };
     }

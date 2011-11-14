@@ -114,10 +114,14 @@ _.extend(window.Map.prototype, {
     drawRoute: function (vertexString) {
         // parse string of vertices 
         var pointList = [];
+        
+        if (_.isString(vertexString))
+            vertexString = JSON.parse(vertexString);
+        
         for (var i = 0; i < vertexString.points.length; i++) {
             // transform points
             var p = vertexString.points[i];
-            var lonlat = new OpenLayers.LonLat(p.ln, p.lt);
+            var lonlat = new OpenLayers.LonLat(p.ln / 1e7, p.lt / 1e7);
             var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
 
             var proj = new OpenLayers.Projection("EPSG:4326");
