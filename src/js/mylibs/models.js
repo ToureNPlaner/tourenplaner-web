@@ -1,6 +1,6 @@
 window.Mark = Backbone.Model.extend({
     defaults: {
-        name: "Marker",
+        name: "",
         lonlat: null,
         k: "",
         position: 99999

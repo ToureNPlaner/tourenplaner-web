@@ -304,6 +304,8 @@ window.DataView = Backbone.View.extend({
     }
 });
 
+var _markerNameSuffix = "A";
+
 window.MarkView = Backbone.View.extend({
 
     parent: $('#marks'),
@@ -313,10 +315,16 @@ window.MarkView = Backbone.View.extend({
     initialize: function (model) {
         this.model = model;
         this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a></div>');
+
+        this.name = this.model.get('name');
+        if (_.isEmpty(this.name)) {
+            this.name = "Marker " + _markerNameSuffix;
+            _markerNameSuffix = String.fromCharCode(_markerNameSuffix.charCodeAt(0) + 1);
+        }
     },
 
     render: function () {
-        this.parent.append(this.template({cid: this.model.cid, name: this.model.get('name')}));
+        this.parent.append(this.template({cid: this.model.cid, name: this.name}));
         this.el = $('#mark_'+this.model.cid);
 
         this.$('a.view').click(_.bind(this.onClick, this));
