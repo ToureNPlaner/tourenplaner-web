@@ -16,7 +16,7 @@ function setContextMenu(map) {
                 "lonlat": lonlat
             });
             mark.set({
-                "name": "Startknoten"
+                "name": "Startmark"
             });
 
             window.markList.setStartMark(mark);
@@ -44,7 +44,7 @@ function setContextMenu(map) {
                 "lonlat": lonlat
             });
             mark.set({
-                "name": "Zielknoten"
+                "name": "Targetmark"
             });
 
             window.markList.setTargetMark(mark);
