@@ -3,7 +3,7 @@ window.Mark = Backbone.Model.extend({
         name: "Marker",
         lonlat: null,
         k: "",
-        type: 0 // 1 = startMark, 2 = targetMark
+        position: 99999
     },
 
     initialize: function () {
@@ -38,55 +38,55 @@ window.MarkList = Backbone.Collection.extend({
 
     },
 
-    setStartMark: function (mark) {
-        if (this.length > 0 && (this.at(0).get("type") == 1)) {
-            this.remove(this.at(0), {silent: true});
-        }
-        
-        mark.set({type: 1});
-        
-        this.add(mark, {
-            at: 0
-        });
+    comparator: function (mark) {
+        return mark.get('position');
     },
-    
+
+    setStartMark: function (mark) {
+        if (mark.get('position') == 0)
+            return;
+
+        for (var i = 0; i < this.length; ++i)
+            this.at(i).set({position: this.at(i).get('position') + 1});
+
+        mark.set({position: 0});
+        if (!this.getByCid(mark.cid))
+            this.add(mark);
+
+        this.sort();
+    },
+
     getStartMark: function (mark) {
-        var ret = null;
-        if (this.length > 0 && (this.at(0).get("type") == 1)) {
-            ret = this.at(0);
-        }
-        
-        return ret;
+        if (this.length > 0)
+            return this.at(0);
+        return null;
     },
 
     setTargetMark: function (mark) {
-        if (this.length > 0 && (this.at(this.length - 1).get("type") == 2)) {
-            var toRemove = this.at(this.length - 1, {silent: true});
-            this.remove(toRemove);
+        if (mark.get('position') < this.length - 1) {
+            var oldpos = mark.get('position')
+            mark.set({position: this.length - 1});
+
+            for (var i = oldpos + 1; i < this.length; ++i)
+                this.at(i).set({position: this.at(i).get('position')});
+
+            this.sort();
+        } else if (mark.get('position') >= this.length) {
+            this.appendMark(mark);
         }
-        
-        mark.set({type:2});
-        
-        this.add(mark);
+
     },
 
     getTargetMark: function (mark) {
-		var ret = null;
-        if (this.length > 0 && (this.at(this.length - 1).get("type") == 2)) {
-            var ret = this.at(this.length - 1);
-        }
-        
-        return ret;
+		if (this.length > 1)
+            return this.at(this.length - 1);
+        return null;
 	},
 
     appendMark: function (mark) {
-        var at = this.length - 1;
-        if (at < 0) {
-            at = 0;
-        }
-        
+        mark.set({position: this.length});
         this.add(mark, {
-            at: at
+            at: this.length
         });
     },
 
@@ -96,21 +96,20 @@ window.MarkList = Backbone.Collection.extend({
 
     moveMark: function (mark, pos) {
         this.remove(mark);
+        mark.set('position', pos);
         this.add(mark, {
             at: pos
         });
     },
 
     deleteMark: function (mark) {
+        for (var i = mark.get('position') + 1; i < this.length; ++i)
+            this.at(i).set({position: this.at(i).get('position') - 1});
         this.remove(mark);
     },
 
     deleteAllMarks: function () {
         this.reset(null);
-    },
-
-    getMarkAtPos: function (pos) {
-        return this.at(pos);
     },
 
     getMarkByLonLat: function (lonlat) {
@@ -258,7 +257,7 @@ window.ServerInfo = Backbone.Model.extend({
 
     getServerInfo: function (callback) {
         var that = this;
-        
+
         window.api.serverInformation({
             callback: function (text, success) {
                 var obj = text;

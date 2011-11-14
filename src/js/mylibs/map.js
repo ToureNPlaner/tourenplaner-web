@@ -69,9 +69,9 @@ _.extend(window.Map.prototype, {
 
             // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
             var iconPath = 'img/mark.png';
-            if (mark.get("type") == 1) {
+            if (i == 0) {
                 iconPath = 'img/startmark.png';
-            } else if (mark.get("type") == 2) {
+            } else if (i == markList.length - 1) {
                 iconPath = 'img/targetmark.png';
             }
             var icon = new OpenLayers.Icon(iconPath, size, offset);
@@ -81,7 +81,7 @@ _.extend(window.Map.prototype, {
 
             // associate click event
             marker.events.register('mousedown', marker, function (evt) {
-                // clone lonlat object of this marker and transform it into epsg-4326			
+                // clone lonlat object of this marker and transform it into epsg-4326
                 var lonlatClone = this.lonlat.clone();
                 var proj = new OpenLayers.Projection("EPSG:4326");
                 lonlatClone.transform(this.map.getProjectionObject(), proj);
@@ -112,12 +112,12 @@ _.extend(window.Map.prototype, {
      * PARAM: List of Vertices
      */
     drawRoute: function (vertexString) {
-        // parse string of vertices 
+        // parse string of vertices
         var pointList = [];
-        
+
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
-        
+
         for (var i = 0; i < vertexString.points.length; i++) {
             // transform points
             var p = vertexString.points[i];
