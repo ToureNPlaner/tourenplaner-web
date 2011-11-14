@@ -320,6 +320,8 @@ window.MarkView = Backbone.View.extend({
         if (_.isEmpty(this.name)) {
             this.name = "Marker " + _markerNameSuffix;
             _markerNameSuffix = String.fromCharCode(_markerNameSuffix.charCodeAt(0) + 1);
+            if (_markerNameSuffix.charCodeAt(0) > 90)
+                _markerNameSuffix = "A";
         }
     },
 
