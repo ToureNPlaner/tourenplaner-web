@@ -505,7 +505,7 @@ window.MessageView = Backbone.View.extend({
 
 window.LoadingView = Backbone.View.extend({
 
-    //el: $('#loading'),
+    el: $('#loading'),
 
     render: function () {
         this.el.modal({
