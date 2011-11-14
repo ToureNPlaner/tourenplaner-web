@@ -131,7 +131,7 @@ _.extend(window.Map.prototype, {
             if (i == 0) {
                 var mark = new Mark();
                 mark.set({
-                    name: "Startpunkt"
+                    name: "Startmark"
                 });
                 mark.set({
                     lonlat: lonlat
@@ -143,7 +143,7 @@ _.extend(window.Map.prototype, {
             if (i != 0 && i == vertexString.points.length - 1) {
                 var mark = new Mark();
                 mark.set({
-                    name: "TargetMark"
+                    name: "Targetmark"
                 });
                 mark.set({
                     lonlat: lonlat

@@ -1,8 +1,6 @@
 /**
  * Binds contextmenu to map.
  */
-document.write('<ul id="myMenu" class="contextMenu"><li><a href="#start">Setze Startpunkt</a></li><li><a href="#mark">Füge Punkt hinzu</a></li><li><a href="#target">Setze Zielpunkt</a></li></ul>');
-
 function setContextMenu(map) {
     $("#main #map").contextMenu({
         menu: 'myMenu'
