@@ -312,17 +312,24 @@ window.MarkView = Backbone.View.extend({
 
     initialize: function (model) {
         this.model = model;
+        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a></div>');
     },
 
     render: function () {
-        this.parent.append('<div id="mark_' + this.model.cid +'" class="mark">'+this.model.get('name')+'</p>');
+        this.parent.append(this.template({cid: this.model.cid, name: this.model.get('name')}));
         this.el = $('#mark_'+this.model.cid);
+
+        this.$('a.view').click(_.bind(this.onClick, this));
 
         return this;
     },
 
     remove: function () {
         this.el.remove();
+    },
+
+    onClick: function () {
+        window.mapModel.setDataViewMarker(this.model);
     }
 });
 
