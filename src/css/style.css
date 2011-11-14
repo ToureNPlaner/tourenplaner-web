@@ -56,6 +56,17 @@ div.popover {
 #main #sidebar form {
   padding-left: 15px;
 }
+#main #sidebar #marks {
+  padding: 10px 0;
+}
+#main #sidebar #marks .mark {
+  padding: 10px 5px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+#main #sidebar #marks .mark:first-child {
+  border-top: 1px solid #ccc;
+}
 
 #main #map {
   float: right;
