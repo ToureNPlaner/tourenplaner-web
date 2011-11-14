@@ -170,7 +170,6 @@ window.SidebarView = Backbone.View.extend({
     
     _sortMarks: function () {
         this.marks = _.sortBy(this.marks, function (view) {
-            log(view.model.get('name'), window.markList.indexOfMark(view.model));
             return window.markList.indexOfMark(view.model);
         });
         
@@ -261,7 +260,6 @@ window.DataView = Backbone.View.extend({
 
     onDataViewChange: function (model, marker) {
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-        //$('#main #data .content').html("<b>Lon:</b> " + lonlat.lon + "<br>" + "<b>Lat:</b> " + lonlat.lat + "<br>" + "<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.get("name") + "' />" + "<br>" + "<b>Position:</b> " + "<input type='text' id='markerPos' value='" + window.markList.indexOfMark(marker) + "' />" + "<br>" + "<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.get("k") + "' />" + "<br>" + "<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button><button id='deleteMark' class='btn secondary'>Löschen</button>");
 	this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
 				"<div class='clearfix'><label for='lat'><b>Lat:</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
 				"<div class='clearfix'><label for='markerName'><b>Name:</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
