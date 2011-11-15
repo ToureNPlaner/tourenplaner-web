@@ -33,9 +33,32 @@ _.extend(window.Map.prototype, {
         this.map.addLayer(this.vectorLayer);
 
         /* create and add a layer for markers */
-        this.markerLayer = new OpenLayers.Layer.Markers("Markers");
+        this.markerLayer = new OpenLayers.Layer.Vector("Markers");
         this.map.addLayer(this.markerLayer);
         this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
+
+        var that = this;
+        var selectFeature = new OpenLayers.Control.SelectFeature(this.markerLayer, {
+            hover: true,
+            callbacks: {
+                click: function (feature) {
+                    window.mapModel.setDataViewMarker(feature.data.mark);
+                },
+                clickout: function () {
+                    //window.mapModel.setDataViewMarker(null);
+                },
+                over: function (feature) {
+                    feature.style.graphicOpacity = 1;
+                    this.layer.drawFeature(feature);
+                },
+                out: function (feature) {
+                    feature.style.graphicOpacity = 0.7;
+                    this.layer.drawFeature(feature);
+                }
+            }
+        });
+        this.map.addControl(selectFeature);
+        selectFeature.activate();
     },
 
     /**
@@ -49,7 +72,7 @@ _.extend(window.Map.prototype, {
      * Reset all Markers drawed in markerLayer
      */
     resetMarkers: function () {
-        this.markerLayer.clearMarkers();
+        this.markerLayer.removeAllFeatures();
     },
 
     /**
@@ -68,44 +91,21 @@ _.extend(window.Map.prototype, {
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
             var size = new OpenLayers.Size(21, 25);
-            var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
 
             // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
             var iconPath = 'img/mark.png';
-            if (mark.get("type") == 1) {
+            if (i == 0) {
                 iconPath = 'img/startmark.png';
-            } else if (mark.get("type") == 2) {
+            } else if (i == markList.length - 1) {
                 iconPath = 'img/targetmark.png';
             }
-            var icon = new OpenLayers.Icon(iconPath, size, offset);
 
-
-            var marker = new OpenLayers.Marker(mark.get("lonlat"), icon);
-
-            // associate click event
-            marker.events.register('mousedown', marker, function (evt) {
-                // clone lonlat object of this marker and transform it into epsg-4326			
-                var lonlatClone = this.lonlat.clone();
-                var proj = new OpenLayers.Projection("EPSG:4326");
-                lonlatClone.transform(this.map.getProjectionObject(), proj);
-
-                var mark = markList.getMarkByLonLat(this.lonlat);
-
-                // trigger bind of mapModel to display lonlat in DataViewBox
-                window.mapModel.setDataViewMarker(mark);
-            });
-
-            // opacity stuff
-            marker.setOpacity(0.7);
-            marker.events.register('mouseover', marker, function (evt) {
-                this.setOpacity(1.0);
-            });
-
-            marker.events.register('mouseout', marker, function (evt) {
-                this.setOpacity(0.7);
-            });
-
-            this.markerLayer.addMarker(marker);
+            var feature = new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Point(mark.get('lonlat').lon, mark.get('lonlat').lat),
+                {mark: mark},
+                {externalGraphic: iconPath, graphicHeight: size.h, graphicWidth: size.w, graphicXOffset: -(size.w/2), graphicYOffset: -size.h, graphicOpacity: 0.7 }
+            );
+            this.markerLayer.addFeatures(feature);
         }
     },
 
@@ -115,12 +115,12 @@ _.extend(window.Map.prototype, {
      * PARAM: List of Vertices
      */
     drawRoute: function (vertexString) {
-        // parse string of vertices 
+        // parse string of vertices
         var pointList = [];
-        
+
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
-        
+
         for (var i = 0; i < vertexString.points.length; i++) {
             // transform points
             var p = vertexString.points[i];
