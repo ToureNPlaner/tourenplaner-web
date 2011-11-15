@@ -133,7 +133,14 @@ window.SidebarView = Backbone.View.extend({
 
     onListReset: function () {
         this.marks = [];
-        this.$('#marks').html('No points defined');
+
+        if (window.markList.length == 0) {
+            this.$('#marks').html('No points defined');
+        } else {
+            for (var i = 0; i < window.markList.length; ++i)
+                this.marks.push(window.markList.at(i));
+            this._sortMarks();
+        }
     },
 
     onSend: function () {
