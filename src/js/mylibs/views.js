@@ -137,7 +137,6 @@ window.SidebarView = Backbone.View.extend({
         if (window.markList.length == 0) {
             this.$('#marks').html('No points defined');
         } else {
-            _markerNameSuffix = "A";
             for (var i = 0; i < window.markList.length; ++i)
                 this.marks.push(new MarkView(window.markList.at(i)));
             this._sortMarks();
@@ -333,6 +332,7 @@ window.MarkView = Backbone.View.extend({
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
             this.name = "Marker " + _markerNameSuffix;
+            this.model.set({name: this.name});
             _markerNameSuffix = String.fromCharCode(_markerNameSuffix.charCodeAt(0) + 1);
             if (_markerNameSuffix.charCodeAt(0) > 90)
                 _markerNameSuffix = "A";
