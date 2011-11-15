@@ -210,220 +210,114 @@ jQuery.cookie = function (key, value, options) {
     return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
 };
 
+/**
+ * jQuery plugin for Pretty looking right click context menu.
+ *
+ * Requires popup.js and popup.css to be included in your page. And jQuery, obviously.
+ *
+ * Usage:
+ *
+ *   $('.something').contextPopup({
+ *     title: 'Some title',
+ *     items: [
+ *       {label:'My Item', icon:'/some/icon1.png', action:function() { alert('hi'); }},
+ *       {label:'Item #2', icon:'/some/icon2.png', action:function() { alert('yo'); }},
+ *       null, // divider
+ *       {label:'Blahhhh', icon:'/some/icon3.png', action:function() { alert('bye'); }},
+ *     ]
+ *   });
+ *
+ * Icon needs to be 16x16. I recommend the Fugue icon set from: http://p.yusukekamiyamane.com/
+ *
+ * - Joe Walnes, 2011 http://joewalnes.com/
+ *   https://github.com/joewalnes/jquery-simple-context-menu
+ *
+ * MIT License: https://github.com/joewalnes/jquery-simple-context-menu/blob/master/LICENSE.txt
+ */
+jQuery.fn.contextPopup = function(menuData) {
+	// Define default settings
+	var settings = {
+		contextMenuClass: 'contextMenuPlugin',
+		gutterLineClass: 'gutterLine',
+		headerClass: 'header',
+		seperatorClass: 'divider',
+		title: '',
+        action: '',
+		items: []
+	};
 
+	// merge them
+	$.extend(settings, menuData);
 
-// jQuery Context Menu Plugin
-//
-// Version 1.01
-//
-// Cory S.N. LaViska
-// A Beautiful Site (http://abeautifulsite.net/)
-//
-// More info: http://abeautifulsite.net/2008/09/jquery-context-menu-plugin/
-//
-// Terms of Use
-//
-// This plugin is dual-licensed under the GNU General Public License
-//   and the MIT License and is copyright A Beautiful Site, LLC.
-//
-// create menu in html as a list
-if(jQuery)( function() {
-    $.extend($.fn, {
-
-        contextMenu: function(o, callback) {
-            // Defaults
-                        if( o.menu == undefined ) return false;
-         if( o.inSpeed == undefined ) o.inSpeed = 150;
-         if( o.outSpeed == undefined ) o.outSpeed = 75;
-         // 0 needs to be -1 for expected results (no fade)
-         if( o.inSpeed == 0 ) o.inSpeed = -1;
-         if( o.outSpeed == 0 ) o.outSpeed = -1;
-         // Loop each context menu
-         $(this).each( function() {
-             var el = $(this);
-             var offset = $(el).offset();
-             // Add contextMenu class
-             $('#' + o.menu).addClass('contextMenu');
-             // Simulate a true right click
-             $(this).mousedown( function(e) {
-                 var evt = e;
-                 evt.stopPropagation();
-                 $(this).mouseup( function(e) {
-                     e.stopPropagation();
-                     var srcElement = $(this);
-                     $(this).unbind('mouseup');
-                     if( evt.button == 2 ) {
-                         // Hide context menus that may be showing
-                                                    $(".contextMenu").hide();
-                                                    // Get this context menu
-                                                    var menu = $('#' + o.menu);
-
-                                                    if( $(el).hasClass('disabled') ) return false;
-
-                  // Detect mouse position
-                                                    var d = {}, x, y;
-                                                    if( self.innerHeight ) {
-                                                        d.pageYOffset = self.pageYOffset;
-                                                        d.pageXOffset = self.pageXOffset;
-                                                        d.innerHeight = self.innerHeight;
-                                                        d.innerWidth = self.innerWidth;
-                                                    } else if( document.documentElement &&
-                                                        document.documentElement.clientHeight ) {
-                                                        d.pageYOffset = document.documentElement.scrollTop;
-                                                    d.pageXOffset = document.documentElement.scrollLeft;
-                                                    d.innerHeight = document.documentElement.clientHeight;
-                                                    d.innerWidth = document.documentElement.clientWidth;
-                                                        } else if( document.body ) {
-                                                            d.pageYOffset = document.body.scrollTop;
-                                                            d.pageXOffset = document.body.scrollLeft;
-                                                            d.innerHeight = document.body.clientHeight;
-                                                            d.innerWidth = document.body.clientWidth;
-                                                        }
-                                                                                    (e.pageX) ? x = e.pageX : x = e.clientX + d.scrollLeft;
-                                                                                    (e.pageY) ? y = e.pageY : y = e.clientY + d.scrollTop;
-
-                                                                                    // Show the menu
-                                                                                    $(document).unbind('click');
-                                                                                    $(menu).css({ top: y, left: x }).fadeIn(o.inSpeed);
-                                                                                    // Hover events
-                                                                                    $(menu).find('A').mouseover( function() {
-                                                                                        $(menu).find('LI.hover').removeClass('hover');
-                                                                                        $(this).parent().addClass('hover');
-                                                                                    }).mouseout( function() {
-                                                                                        $(menu).find('LI.hover').removeClass('hover');
-                                                                                    });
-
-                                                                                        // Keyboard
-                                                                                        $(document).keypress( function(e) {
-                                                                                            switch( e.keyCode ) {
-                                                                                                case 38: // up
-                                        if( $(menu).find('LI.hover').size() == 0 ) {
-                                            $(menu).find('LI:last').addClass('hover');
-                                        } else {
-                                            $(menu).find('LI.hover').removeClass('hover').prevAll('LI:not(.disabled)').eq(0).addClass('hover');
-                                            if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:last').addClass('hover');
-                                        }
-                                                                            break;
-                                                                                                case 40: // down
-                                        if( $(menu).find('LI.hover').size() == 0 ) {
-                                            $(menu).find('LI:first').addClass('hover');
-                                        } else {
-                                            $(menu).find('LI.hover').removeClass('hover').nextAll('LI:not(.disabled)').eq(0).addClass('hover');
-                                            if( $(menu).find('LI.hover').size() == 0 ) $(menu).find('LI:first').addClass('hover');
-                                        }
-                                                                            break;
-                                                                                                case 13: // enter
-                                        $(menu).find('LI.hover A').trigger('click');
-                                        break;
-                                                                                                case 27: // esc
-                                        $(document).trigger('click');
-                                        break
-                                                                                            }
-                                                                                        });
-
-                                                                                        // When items are selected
-                                                                                        $('#' + o.menu).find('A').unbind('click');
-                                                                                        $('#' + o.menu).find('LI:not(.disabled) A').click( function() {
-                                                                                            $(document).unbind('click').unbind('keypress');
-                                                                                            $(".contextMenu").hide();
-                                                                                            // Callback
-                                                                                            if( callback ) callback( $(this).attr('href').substr(1), $(srcElement), {x: x - offset.left, y: y - offset.top, docX: x, docY: y} );
-                                                                                                                  return false;
-                                                                                        });
-
-                                                                                        // Hide bindings
-                                                                                        setTimeout( function() { // Delay for Mozilla
-                                                                                                                        $(document).click( function() {
-                                                                                                                            $(document).unbind('click').unbind('keypress');
-                                                                                                                            $(menu).fadeOut(o.outSpeed);
-                                                                                                                            return false;
-                                                                                                                        });
-                     }, 0);
-                 }
-             });
-         });
-
-// Disable text selection
-if( $.browser.mozilla ) {
-    $('#' + o.menu).each( function() { $(this).css({ 'MozUserSelect' : 'none' }); });
-    } else if( $.browser.msie ) {
-        $('#' + o.menu).each( function() { $(this).bind('selectstart.disableTextSelect', function() { return false; }); });
-    } else {
-        $('#' + o.menu).each(function() { $(this).bind('mousedown.disableTextSelect', function() { return false; }); });
+  // Build popup menu HTML
+  function createMenu(e) {
+	var menu = $('<ul class="' + settings.contextMenuClass + '"><div class="' + settings.gutterLineClass + '"></div></ul>')
+      .appendTo(document.body);
+    if (settings.title) {
+      $('<li class="' + settings.headerClass + '"></li>').text(settings.title).appendTo(menu);
     }
-                    // Disable browser context menu (requires both selectors to work in IE/Safari + FF/Chrome)
-                                    $(el).add($('UL.contextMenu')).bind('contextmenu', function() { return false; });
-
-});
-            return $(this);
-        },
-
-        // Disable context menu items on the fly
-        disableContextMenuItems: function(o) {
-            if( o == undefined ) {
-                // Disable all
-                                $(this).find('LI').addClass('disabled');
-                                                return( $(this) );
-            }
-                        $(this).each( function() {
-                            if( o != undefined ) {
-                                var d = o.split(',');
-                        for( var i = 0; i < d.length; i++ ) {
-                            $(this).find('A[href="' + d[i] + '"]').parent().addClass('disabled');
-
-                        }
-                            }
-                        });
-                                    return( $(this) );
-        },
-
-        // Enable context menu items on the fly
-        enableContextMenuItems: function(o) {
-            if( o == undefined ) {
-                // Enable all
-                                $(this).find('LI.disabled').removeClass('disabled');
-                                                return( $(this) );
-            }
-                        $(this).each( function() {
-                            if( o != undefined ) {
-                                var d = o.split(',');
-                        for( var i = 0; i < d.length; i++ ) {
-                            $(this).find('A[href="' + d[i] + '"]').parent().removeClass('disabled');
-
-                        }
-                            }
-                        });
-                                    return( $(this) );
-        },
-
-        // Disable context menu(s)
-        disableContextMenu: function() {
-            $(this).each( function() {
-                $(this).addClass('disabled');
-            });
-            return( $(this) );
-        },
-
-        // Enable context menu(s)
-        enableContextMenu: function() {
-            $(this).each( function() {
-                $(this).removeClass('disabled');
-            });
-            return( $(this) );
-        },
-
-        // Destroy context menu(s)
-        destroyContextMenu: function() {
-            // Destroy specified context menus
-                        $(this).each( function() {
-                            // Disable action
-                                            $(this).unbind('mousedown').unbind('mouseup');
-                        });
-                                    return( $(this) );
+	///////// CUSTOM CODE /////////////
+	var items = settings.items;
+	if (_.isFunction(settings.items))
+		items = settings.items(e);
+		
+    items.forEach(function(item) {
+	///////// END CUSTOM //////////////
+      if (item) {
+        var rowCode = '<li><a href="#"><span></span></a></li>';
+        // if(item.icon)
+        //   rowCode += '<img>';
+        // rowCode +=  '<span></span></a></li>';
+        var row = $(rowCode).appendTo(menu);
+        if(item.icon){
+          var icon = $('<img>');
+          icon.attr('src', item.icon);
+          icon.insertBefore(row.find('span'));
         }
-
+        row.find('span').text(item.label);
+        if (item.action) {
+          row.find('a').click(function(){ item.action(e); });
+        }
+      } else {
+        $('<li class="' + settings.seperatorClass + '"></li>').appendTo(menu);
+      }
     });
-})(jQuery);
+    menu.find('.' + settings.headerClass ).text(settings.title);
+    return menu;
+  }
+
+  function showMenu(e) {
+    // Create and show menu
+    var menu = createMenu(e)
+      .show()
+      .css({zIndex:1000001, left:e.pageX + 5 /* nudge to the right, so the pointer is covering the title */, top:e.pageY})
+      .bind('contextmenu', function() { return false; });
+
+    // Cover rest of page with invisible div that when clicked will cancel the popup.
+    var bg = $('<div></div>')
+      .css({left:0, top:0, width:'100%', height:'100%', position:'absolute', zIndex:1000000})
+      .appendTo(document.body)
+      .bind('contextmenu click', function() {
+        // If click or right click anywhere else on page: remove clean up.
+        bg.remove();
+        menu.remove();
+        return false;
+      });
+
+    // When clicking on a link in menu: clean up (in addition to handlers on link already)
+    menu.find('a').click(function() {
+      bg.remove();
+      menu.remove();
+    });
+
+    // Cancel event, so real browser popup doesn't appear.
+    return false;
+  }
+
+  // On contextmenu event (right click)
+  this.bind('contextmenu', showMenu);
+  return this;
+};
 
 /* =========================================================
  * bootstrap-modal.js v1.3.0

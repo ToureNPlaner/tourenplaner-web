@@ -39,7 +39,6 @@ _.extend(window.Map.prototype, {
             hover: true,
             callbacks: {
                 click: function (feature) {
-                    log (feature);
                     window.mapModel.setDataViewMarker(feature.data.mark);
                 },
                 clickout: function () {
