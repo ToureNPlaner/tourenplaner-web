@@ -15,9 +15,12 @@ _.extend(window.Map.prototype, {
      * Initialize and draw map
      */
     draw: function () {
+        OpenLayers.ImgPath = "img/openlayers/";
         this.map = new OpenLayers.Map("map", {
             projection: new OpenLayers.Projection("EPSG:4326")
         });
+        
+        
         var mapLayer = new OpenLayers.Layer.OSM("OSM Tiles", "http://gerbera.informatik.uni-stuttgart.de/osm/tiles/${z}/${x}/${y}.png", {
             numZoomLevels: 19
         });
