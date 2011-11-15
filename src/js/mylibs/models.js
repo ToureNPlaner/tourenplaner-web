@@ -133,7 +133,7 @@ window.MarkList = Backbone.Collection.extend({
      */
     _moveAllMarks: function (from, direction) {
         for (var i = from; i < this.length; ++i)
-            this.at(i).set({position: this.at(i).get('position') + 1 * direction);
+            this.at(i).set({position: this.at(i).get('position') + 1 * direction});
     }
 });
 
