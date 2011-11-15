@@ -6,10 +6,6 @@ window.Mark = Backbone.Model.extend({
         position: 99999
     },
 
-    initialize: function () {
-
-    },
-
     getLonLatAs1984: function () {
         var lonlat = this.get("lonlat");
         if (lonlat != null) {
@@ -32,28 +28,26 @@ window.Mark = Backbone.Model.extend({
 });
 
 window.MarkList = Backbone.Collection.extend({
+
     model: Mark,
-
-    initialize: function () {
-
-    },
 
     comparator: function (mark) {
         return mark.get('position');
     },
 
     setStartMark: function (mark) {
-        if (mark.get('position') == 0)
+        if (mark.get('position') == 0) {
             return;
-
-        for (var i = 0; i < this.length; ++i)
-            this.at(i).set({position: this.at(i).get('position') + 1});
-
-        mark.set({position: 0});
-        if (!this.getByCid(mark.cid))
+        } else if (mark.get('position') >= this.length) {
+            this._moveAllMarks(0, 1);
+            mark.set({position: 0});
             this.add(mark);
-
-        this.sort();
+        } else {
+            for (var i = 0; i < mark.get('position'); ++i)
+                this.at(i).set({position: this.at(i).get('position') + 1});
+            mark.set({position: 0});
+            this.sort();
+        }
     },
 
     getStartMark: function (mark) {
@@ -67,9 +61,7 @@ window.MarkList = Backbone.Collection.extend({
             var oldpos = mark.get('position')
             mark.set({position: this.length - 1});
 
-            for (var i = oldpos + 1; i < this.length; ++i)
-                this.at(i).set({position: this.at(i).get('position')});
-
+            this._moveAllMarks(oldpos + 1, -1);
             this.sort();
         } else if (mark.get('position') >= this.length) {
             this.appendMark(mark);
@@ -95,16 +87,16 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     moveMark: function (mark, pos) {
-        this.remove(mark);
-        mark.set('position', pos);
+        this.deleteMark(mark);
+        mark.set({position: pos});
+        this._moveAllMarks(pos, 1);
         this.add(mark, {
             at: pos
         });
     },
 
     deleteMark: function (mark) {
-        for (var i = mark.get('position') + 1; i < this.length; ++i)
-            this.at(i).set({position: this.at(i).get('position') - 1});
+        this._moveAllMarks(mark.get('position') + 1, -1);
         this.remove(mark);
     },
 
@@ -131,6 +123,17 @@ window.MarkList = Backbone.Collection.extend({
         }
 
         return ret;
+    },
+
+    /**
+     * Move the position of all marks +1 or -1
+     *
+     * @param from The starting index
+     * @param direction -1 or 1
+     */
+    _moveAllMarks: function (from, direction) {
+        for (var i = from; i < this.length; ++i)
+            this.at(i).set({position: this.at(i).get('position') + 1 * direction);
     }
 });
 

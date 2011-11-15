@@ -38,8 +38,6 @@ function editMarker(action, marker) {
     };
 }
 
-
-
 /**
  * Binds contextmenu to map.
  */
