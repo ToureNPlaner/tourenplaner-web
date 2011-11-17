@@ -1,11 +1,11 @@
 $(function() {
-   /*window.api = new Api({
+    window.api = new Api({
         server: "gerbera.informatik.uni-stuttgart.de",
         port: 8080
-    });*/
-    window.api = new Api({
-        server: null
     });
+    /*window.api = new Api({
+        server: null
+    }); */
     window.app = new Router();
     Backbone.history.start();
 

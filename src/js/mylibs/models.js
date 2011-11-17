@@ -22,6 +22,7 @@ window.Mark = Backbone.Model.extend({
         return {
             "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
             "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
+            "name": this.get("name"),
             "k": this.get("k")
         };
     }

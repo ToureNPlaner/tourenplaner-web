@@ -131,29 +131,7 @@ _.extend(window.Map.prototype, {
             lonlat.transform(proj, this.map.getProjectionObject());
             point.transform(proj, this.map.getProjectionObject());
 
-            if (i == 0) {
-                var mark = new Mark();
-                mark.set({
-                    name: "Startmark"
-                });
-                mark.set({
-                    lonlat: lonlat
-                });
-
-                window.markList.setStartMark(mark);
-            }
-
-            if (i != 0 && i == vertexString.points.length - 1) {
-                var mark = new Mark();
-                mark.set({
-                    name: "Targetmark"
-                });
-                mark.set({
-                    lonlat: lonlat
-                });
-
-                window.markList.setTargetMark(mark);
-            }
+            //TODO: Check points?
 
             pointList.push(point);
         }

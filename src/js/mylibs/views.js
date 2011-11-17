@@ -274,12 +274,7 @@ window.DataView = Backbone.View.extend({
     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-<<<<<<< HEAD
 	this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
-=======
-        //$('#main #data .content').html("<b>Lon:</b> " + lonlat.lon + "<br>" + "<b>Lat:</b> " + lonlat.lat + "<br>" + "<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.get("name") + "' />" + "<br>" + "<b>Position:</b> " + "<input type='text' id='markerPos' value='" + window.markList.indexOfMark(marker) + "' />" + "<br>" + "<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.get("k") + "' />" + "<br>" + "<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button><button id='deleteMark' class='btn secondary'>Löschen</button>");
-        this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
->>>>>>> 0b6c7f955961daf16ff69047aed9eff6094e0ea0
 				"<div class='clearfix'><label for='lat'><b>Lat:</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
 				"<div class='clearfix'><label for='markerName'><b>Name:</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
 				"<div class='clearfix'><label for='markerPos'><b>Position:</b></label><input value='"+marker.get("position")+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
