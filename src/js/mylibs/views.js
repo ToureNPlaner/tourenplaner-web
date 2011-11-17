@@ -135,6 +135,7 @@ window.SidebarView = Backbone.View.extend({
         this.marks = [];
 
         if (window.markList.length == 0) {
+            _markerNameSuffix = "A";
             this.$('#marks').html('No points defined');
         } else {
             for (var i = 0; i < window.markList.length; ++i)

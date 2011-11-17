@@ -48,16 +48,16 @@ function setContextMenu(map) {
             var feature = window.mapModel.get('mapObject').markerLayer.getFeatureFromEvent(evt);
             if (feature) {
                 return [
-                    {label: 'Set as Startmarker', action: function (evt) { editMarker('start', feature); }},
-                    {label: 'Set as Endmarker', action: function (evt) { editMarker('end', feature); }},
+                    {label: 'Set as Startmarker', icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
+                    {label: 'Set as Endmarker', icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},
                     null,
                     {label: "Delete", action: function (evt) { editMarker('delete', feature) }}
                 ];
             } else {
                 return [
-                    {label: "Add Startmarker", action: function (evt) { addMarker("start", evt); }},
-                    {label: "Add Marker", action: function (evt) {  addMarker("mark", evt); }},
-                    {label: "Add Endmarker", action: function (evt) { addMarker("target", evt); }}
+                    {label: "Add Startmarker", icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
+                    {label: "Add Marker", icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }},
+                    {label: "Add Endmarker", icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }}
                 ];
             }
         }
