@@ -92,12 +92,13 @@ window.SidebarView = Backbone.View.extend({
         window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
         window.markList.bind("add", _.bind(this.onMarkAdded, this));
         window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
+        window.markList.bind("reset", _.bind(this.onListReset, this));
     },
 
     onInfoLoaded: function () {
         var algorithms = window.server.get('algorithms');
         var $algorithms = this.$('#algorithms');
-        
+
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
             for (i in algorithms) {
@@ -105,29 +106,41 @@ window.SidebarView = Backbone.View.extend({
             }
         }
     },
-    
+
     onMarkAdded: function (model, collection, options) {
         if (this.marks.length == 0)
             this.$('#marks').html('');
-        
+
         var view = new MarkView(model).render();
         this.marks.push(view);
         model.set({view: view});
-        
+
         this._sortMarks();
     },
-    
+
     onMarkRemoved: function (model, collection) {
-        model.get('view').remove();
         for (i in this.marks) {
-            if (this.marks[i] === model)
-                this.marks.splice(i, 1);            
+            if (_.isEqual(this.marks[i].cid, model.get('view').cid))
+                this.marks.splice(i, 1);
         }
-        
+        model.get('view').remove();
+
         if (this.marks.length == 0)
             this.$('#marks').html('No points defined!');
-            
+
         this._sortMarks();
+    },
+
+    onListReset: function () {
+        this.marks = [];
+
+        if (window.markList.length == 0) {
+            this.$('#marks').html('No points defined');
+        } else {
+            for (var i = 0; i < window.markList.length; ++i)
+                this.marks.push(new MarkView(window.markList.at(i)));
+            this._sortMarks();
+        }
     },
 
     onSend: function () {
@@ -143,7 +156,7 @@ window.SidebarView = Backbone.View.extend({
                title: 'Error',
                message: 'Not enough points defined.'
             });
-        } else {        
+        } else {
             window.api.alg({
                 alg: this.$('#algorithms').val(),
                 points: window.markList.toJSON(),
@@ -167,12 +180,12 @@ window.SidebarView = Backbone.View.extend({
     onResize: function () {
         this.el.height($(window).height() - 40);
     },
-    
+
     _sortMarks: function () {
         this.marks = _.sortBy(this.marks, function (view) {
             return window.markList.indexOfMark(view.model);
         });
-        
+
         this.$('#marks').html('');
         for (i in this.marks)
             this.marks[i].render();
@@ -259,28 +272,34 @@ window.DataView = Backbone.View.extend({
     },
 
     onDataViewChange: function (model, marker) {
+        var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
+<<<<<<< HEAD
 	this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
+=======
+        //$('#main #data .content').html("<b>Lon:</b> " + lonlat.lon + "<br>" + "<b>Lat:</b> " + lonlat.lat + "<br>" + "<b>Name:</b> " + "<input type='text' id='markerName' value='" + marker.get("name") + "' />" + "<br>" + "<b>Position:</b> " + "<input type='text' id='markerPos' value='" + window.markList.indexOfMark(marker) + "' />" + "<br>" + "<b>k:</b> " + "<input type='text' id='markerK' value='" + marker.get("k") + "' />" + "<br>" + "<button id='saveMarkAttributes' class='btn primary'>Übernehmen</button><button id='deleteMark' class='btn secondary'>Löschen</button>");
+        this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
+>>>>>>> 0b6c7f955961daf16ff69047aed9eff6094e0ea0
 				"<div class='clearfix'><label for='lat'><b>Lat:</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
 				"<div class='clearfix'><label for='markerName'><b>Name:</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
-				"<div class='clearfix'><label for='markerPos'><b>Position:</b></label><input value='"+window.markList.indexOfMark(marker)+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
+				"<div class='clearfix'><label for='markerPos'><b>Position:</b></label><input value='"+marker.get("position")+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
 				"<div class='clearfix'><label for='markerK'><b>k:</b></label><input value='"+marker.get("k")+"' type='text' name='markerK' id='markerK' /></div>"+
 				"<div class='clearfix'><label for='saveMarkAttributes' /><button id='saveMarkAttributes' class='btn primary'>Übernehmen</button><button id='deleteMark' class='btn secondary'>Löschen</button></div>"+
 				"<div class='clearfix'>");
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
-                name: this.$('#dataview #markerName').val()
+                name: that.$('#dataview #markerName').val()
             });
             marker.set({
-                k: this.$('#dataview #markerK').val()
+                k: that.$('#dataview #markerK').val()
             });
-            var pos = this.$('#dataview #markerPos').val();
+            var pos = that.$('#dataview #markerPos').val();
             window.markList.moveMark(marker, pos);
         });
 
         this.$('#dataview #deleteMark').click(function () {
             window.markList.deleteMark(marker);
-            this.$('.content').html("No Mark selected");
+            that.$('.content').html("No Mark selected");
         });
     },
 
@@ -302,25 +321,43 @@ window.DataView = Backbone.View.extend({
     }
 });
 
+var _markerNameSuffix = "A";
+
 window.MarkView = Backbone.View.extend({
-   
-    parent: $('#marks'),    
+
+    parent: $('#marks'),
     el: null,
     model: null,
-    
+
     initialize: function (model) {
         this.model = model;
+        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a></div>');
+
+        this.name = this.model.get('name');
+        if (_.isEmpty(this.name)) {
+            this.name = "Marker " + _markerNameSuffix;
+            this.model.set({name: this.name});
+            _markerNameSuffix = String.fromCharCode(_markerNameSuffix.charCodeAt(0) + 1);
+            if (_markerNameSuffix.charCodeAt(0) > 90)
+                _markerNameSuffix = "A";
+        }
     },
-   
+
     render: function () {
-        this.parent.append('<div id="mark_' + this.model.cid +'" class="mark">'+this.model.get('name')+'</p>');
+        this.parent.append(this.template({cid: this.model.cid, name: this.name}));
         this.el = $('#mark_'+this.model.cid);
-    
+
+        this.$('a.view').click(_.bind(this.onClick, this));
+
         return this;
     },
-    
+
     remove: function () {
         this.el.remove();
+    },
+
+    onClick: function () {
+        window.mapModel.setDataViewMarker(this.model);
     }
 });
 
