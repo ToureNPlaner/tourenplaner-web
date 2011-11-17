@@ -60,21 +60,27 @@
       <div id="sidebar">
         <div style="padding: 5px 0px;">
           <form name="route">
-            <label for="algorithms"><h3>Algorithms:</h3></label>
-            <select name="algorithms" id="algorithms">
-              <option value="">No algorithms</option>
-            </select>
-
-            <hr style="border-bottom: 1px solid #CCC" />
-
-            <h3>Points:</h3>
-
-            <div id="marks">
-              No points defined!
+            <div class="container">
+              <h3>Algorithms:</h3>
+              <select name="algorithms" id="algorithms">
+                <option value="">No algorithms</option>
+              </select>
             </div>
 
-            <a href="#" id="btnSend" class="btn primary">Calculate Route</a>
-            <a href="#" id="btnClear" class="btn secondary">Clear</a>
+            <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>
+            
+            <div class="container">
+              <h3>Points:</h3>
+  
+              <div id="marks">
+                No points defined!
+              </div>
+            </div>
+            
+            <div class="container">
+              <a href="#" id="btnSend" class="btn primary">Calculate Route</a>
+              <a href="#" id="btnClear" class="btn secondary">Clear</a>
+            </div>
           </form>
         </div>
       </div>

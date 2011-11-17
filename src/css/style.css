@@ -58,6 +58,7 @@ div.popover {
 }
 #main #sidebar #marks {
   padding: 10px 0;
+  overflow-y: auto;
 }
 #main #sidebar #marks .mark {
   padding: 10px 5px;

@@ -179,7 +179,13 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onResize: function () {
+        var $cont = this.$('.container');
+        // 76 = 40 (header) + Padding (sidebar) + 11(hr) + 20 (padding #marks)
+        var height = $(window).height() - 76 - $cont.first().height() - $cont.last().height() - $cont.next().next().children('h3').height();
+        log(height);
+        
         this.el.height($(window).height() - 40);
+        this.$('#marks').css('max-height', height + 'px');
     },
 
     _sortMarks: function () {
