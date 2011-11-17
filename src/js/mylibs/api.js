@@ -82,7 +82,7 @@ _.extend(window.Api.prototype, {
             dataType: 'json',
             contentType: 'application/json; charset="utf-8"',
             crossDomain: true,
-            data: JSON.stringify(reqData.request),
+            data: reqData.type == 'POST' ? JSON.stringify(reqData.request) : reqData.request,
             processData: reqData.process,
             beforeSend: function (jqXHR, settings) {
                 if (that.get('authRequired')) {
