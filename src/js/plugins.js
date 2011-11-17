@@ -287,10 +287,24 @@ jQuery.fn.contextPopup = function(menuData) {
   }
 
   function showMenu(e) {
-    // Create and show menu
     var menu = createMenu(e)
-      .show()
-      .css({zIndex:1000001, left:e.pageX + 5 /* nudge to the right, so the pointer is covering the title */, top:e.pageY})
+      .show();
+    
+    var position = {
+        left: e.pageX + 5, /* nudge to the right, so the pointer is covering the title */
+        top: e.pageY
+    };
+
+    if (position.top + menu.height() >= $(window).height())
+        position.top -= menu.height();
+        
+    if (position.left + menu.width() >= $(window).width())
+        position.left -= menu.width();
+    
+    
+    // Create and show menu
+    
+    menu.css({zIndex:1000001, left: position.left , top: position.top})
       .bind('contextmenu', function() { return false; });
 
     // Cover rest of page with invisible div that when clicked will cancel the popup.
