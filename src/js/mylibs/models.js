@@ -264,6 +264,8 @@ window.ServerInfo = Backbone.Model.extend({
 
         window.api.serverInformation({
             callback: function (text, success) {
+                if (!success)
+                    return;
                 var obj = text;
                 if (_.isString(obj))
                     obj = JSON.parse(obj);
