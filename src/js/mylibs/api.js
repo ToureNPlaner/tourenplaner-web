@@ -16,7 +16,7 @@ _.extend(window.Api.prototype, {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
         server : 'localhost', // url of the server
-        port : '8081', // port on which the server listens
+        port : 8081, // port on which the server listens
         ssl : false,
         error : {"errorid": "EBADCALL",
                 "message": "Request couldn't be sent",
@@ -90,13 +90,20 @@ _.extend(window.Api.prototype, {
                 }
             },
             success: function (data, textStatus, jqXHR) {
-                event.trigger('request', jqXHR.responseText, true);
+            	var obj = jqXHR.responseText;
+                if (_.isString(obj))
+                    obj = JSON.parse(obj);
+                event.trigger('request', obj, true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText;
                 if (!_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
                     text = errorThrown;
-                event.trigger('request', jqXHR.responseText, false);
+                
+            	var obj = text;
+                if (_.isString(obj))
+                    obj = JSON.parse(obj);
+                event.trigger('request', obj, false);
             }
         });
 
@@ -112,7 +119,8 @@ _.extend(window.Api.prototype, {
             suffix : 'info',
             request : {},
             callback: function (text, success) {
-                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
+            	if(text.servertype == "private")
+//                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
                     that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
                 if (_.isFunction(args.callback))
                         args.callback(text, success);
@@ -272,16 +280,13 @@ _.extend(window.Api.prototype, {
      * param: request contains problem instance (format as alg specification)
      */
     alg : function (args) {
-        if(!args || !args.alg || !args.points)
+        if(!args || !args.alg || !args.request)
             return false;
+
         this.send({
             type : 'POST',
             suffix : 'alg' + args.alg,
-            request : {
-                version: args.version || 1,
-                points: args.points,
-                constraints: args.constraints || {}                
-            },
+            request : args.request,
             process: false,
             callback : _.isFunction(args.callback) ? args.callback : null 
         });

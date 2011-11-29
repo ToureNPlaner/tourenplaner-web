@@ -5,7 +5,7 @@ $(function() {
     });
     /*window.api = new Api({
         server: null
-    }); */
+    });*/
     window.app = new Router();
     Backbone.history.start();
 

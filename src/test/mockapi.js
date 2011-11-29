@@ -14,7 +14,7 @@ $.mockjax({
     responseText: {
         version: "1.0",
         servertype: "public",
-        sslport: 443,
+        sslport: 8081,
         algorithms: [
             {
                 version: 2,
@@ -48,13 +48,18 @@ $.mockjax({
     responseTimeout: 200,
     responseText: "",
     response: function(settings) {
-        if (_.isUndefined(settings.data.email) || _.isUndefined(settings.data.password) || _.isUndefined(settings.data.firstname) || _.isUndefined(settings.data.lastname) || _.isUndefined(settings.data.address) || settings.data.email == "" || settings.data.password == "") {
+        var obj = settings.data;
+       	if (_.isString(obj))
+       	 	obj = JSON.parse(obj);
+        if (_.isUndefined(obj.email) || _.isUndefined(obj.password) || _.isUndefined(obj.firstname) || _.isUndefined(obj.lastname) || _.isUndefined(obj.address) || obj.email == "" || obj.password == "") {
             this.status = 400;
             this.responseText = {
                 errorid: "ENOTVALID",
                 message: "Validation error",
                 details: "Empty argument"
             };
+        } else{
+	        this.responseText = {}
         }
     }
 });
@@ -145,12 +150,15 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
+    		var obj = data.data;
+    	   	if (_.isString(obj))
+    	   	 	obj = JSON.parse(obj);
             this.responseText = {
-                username: data.data.username,
-                password: data.data.password,
-                email: data.data.email,
-                firstname: data.data.firstname,
-                lastname: data.data.lastname,
+                username: obj.username,
+                password: obj.password,
+                email: obj.email,
+                firstname: obj.firstname,
+                lastname: obj.lastname,
                 admin: false,
                 active: true
             };
@@ -167,12 +175,15 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
+    		var obj = data.data;
+    	   	if (_.isString(obj))
+    	   	 	obj = JSON.parse(obj);
             this.responseText = {
-                username: data.data.username,
-                password: data.data.password,
-                email: data.data.email,
-                firstname: data.data.firstname,
-                lastname: data.data.lastname,
+                username: obj.username,
+                password: obj.password,
+                email: obj.email,
+                firstname: obj.firstname,
+                lastname: obj.lastname,
                 admin: false,
                 active: true
             };
@@ -275,12 +286,12 @@ $.mockjax({
 
 
 /**
- * Mocks the /alg$sp function on the server.
+ * Mocks the /algsp function on the server.
  *
  * Returns alg response.
  */
 $.mockjax({
-    url: "/alg$sp",
+    url: "/algsp",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -299,5 +310,16 @@ $.mockjax({
                     apx: 0.5
                 }
             };
+    }
+});/**
+ * Mocks the /alg function on the server. For no algorithm chosen.
+ *
+ * Returns failure response.
+ */
+$.mockjax({
+    url: "/alg",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
     }
 });

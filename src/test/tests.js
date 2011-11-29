@@ -82,7 +82,7 @@ test("/info", 4, function() {
             same(success, true, 'Got some info');
             same(json.servertype, 'public', 'Servertype was determined');
             same(json.algorithms[0].pointconstraints[0].type, 'meter', 'Algorithm constraints are ok');
-            same(tmpApi.get('ssl'), true, "SSL information read");
+            same(tmpApi.get('port'), 8081, "SSL information read");
             do_start();
         }
     });
@@ -294,12 +294,13 @@ test("/alg", 5, function (){
             {lt: -54.3, ln: 1.23}
         ],
         constraints: {t: 100}
-    };
+    }
     
     ok(!api.alg(), 'empty call');
     ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
     ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
     
+
     stop_until_expected(2);
     api.alg({request: request,
             alg: "sp",
@@ -308,7 +309,6 @@ test("/alg", 5, function (){
                   do_start();
               }
     });
-        
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
@@ -322,5 +322,4 @@ test("/alg", 5, function (){
                   do_start();
               }
     });
-    
 });
