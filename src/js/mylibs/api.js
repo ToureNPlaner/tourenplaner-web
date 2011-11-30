@@ -18,6 +18,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
+	realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
                 "message": "Request couldn't be sent",
                 "details": "Your Request contains syntactical mistakes"
@@ -86,7 +87,7 @@ _.extend(window.Api.prototype, {
             processData: reqData.process,
             beforeSend: function (jqXHR, settings) {
                 if (that.get('authRequired')) {
-                    settings.headers = { Authorization: that.get('authAsBase64') };
+                    settings.headers = { Authorization: that.get('realm') + ' ' + that.get('authAsBase64') };
                 }
             },
             success: function (data, textStatus, jqXHR) {
@@ -114,7 +115,7 @@ _.extend(window.Api.prototype, {
      * aks' server for information about the server
      */
     serverInformation : function (args) {        
-        var that = this;        
+        var that = this;
         return this.send({
             suffix : 'info',
             request : {},
