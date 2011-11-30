@@ -59,7 +59,7 @@ _.extend(window.Api.prototype, {
         reqData.request || (reqData.request = {});
 
         if (!_.isNull(this.get('server')) && !_.isUndefined(this.get('server'))) {
-            url +=  this.get('ssl') ? 'https://' : 'http://' +
+            url +=  (this.get('ssl') ? 'https://' : 'http://') +
                     this.get('server') + ':' +
                     (!_.isNaN(this.get('port')) ? this.get('port') : 80);
         }
