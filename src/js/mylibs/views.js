@@ -243,6 +243,7 @@ window.MapView = Backbone.View.extend({
         var mapObject = window.mapModel.get("mapObject");
         mapObject.resetRoute();
         mapObject.drawRoute(route);
+        mapObject.zoomToRoute();
     },
 
     onMarkListChange: function (model, markList) {

@@ -4,8 +4,8 @@ window.Map = function (divId) {
 
 _.extend(window.Map.prototype, {
     map: null,
-    vectorLayer: null,
-    markerLayer: null,
+    dataLayer: null,
+    currentRouteString: null,
 
     getMap: function () {
         return this.map;
@@ -28,17 +28,13 @@ _.extend(window.Map.prototype, {
         /* add maplayer and set center of the map */
         this.map.addLayers([mapLayer]);
 
-        /* create and add vectorlayer */
-        this.vectorLayer = new OpenLayers.Layer.Vector("Vectors");
-        this.map.addLayer(this.vectorLayer);
-
         /* create and add a layer for markers */
-        this.markerLayer = new OpenLayers.Layer.Vector("Markers");
-        this.map.addLayer(this.markerLayer);
+        this.dataLayer = new OpenLayers.Layer.Vector("Markers");
+        this.map.addLayer(this.dataLayer);
         this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
 
         var that = this;
-        var selectFeature = new OpenLayers.Control.SelectFeature(this.markerLayer, {
+        var selectFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
             hover: true,
             callbacks: {
                 click: function (feature) {
@@ -65,14 +61,22 @@ _.extend(window.Map.prototype, {
      * Resets all Routes drawed in the vectorLayer
      */
     resetRoute: function () {
-        this.vectorLayer.removeAllFeatures();
+        // - remove all features (route and markers)
+    	// - then draw markers back
+    	this.currentRouteString = null;
+        this.dataLayer.removeAllFeatures();
+        
+        this.drawMarkers();
     },
 
     /**
-     * Reset all Markers drawed in markerLayer
+     * Reset all Markers drawed in dataLayer
      */
     resetMarkers: function () {
-        this.markerLayer.removeAllFeatures();
+    	// - remove all features (route and markers)
+    	// - then draw route back
+        this.dataLayer.removeAllFeatures();
+        this.drawRoute(this.currentRouteString);
     },
 
     /**
@@ -105,7 +109,7 @@ _.extend(window.Map.prototype, {
                 {mark: mark},
                 {externalGraphic: iconPath, graphicHeight: size.h, graphicWidth: size.w, graphicXOffset: -(size.w/2), graphicYOffset: -size.h, graphicOpacity: 0.7 }
             );
-            this.markerLayer.addFeatures(feature);
+            this.dataLayer.addFeatures(feature);
         }
     },
 
@@ -115,6 +119,10 @@ _.extend(window.Map.prototype, {
      * PARAM: List of Vertices
      */
     drawRoute: function (vertexString) {
+    	// exit, when there is nothing to parse
+    	if (vertexString == null || vertexString == undefined || vertexString.length == 0) 
+    		return;
+    
         // parse string of vertices
         var pointList = [];
 
@@ -144,8 +152,18 @@ _.extend(window.Map.prototype, {
             strokeOpacity: 1.7,
             strokeWidth: 2.5
         });
-        this.vectorLayer.addFeatures(feature);
-        this.map.zoomToExtent(this.markerLayer.getDataExtent());
+        this.dataLayer.addFeatures(feature);       
+        this.currentRouteString = vertexString;
+    },
+    
+    
+    /**
+     * Zoom into map, so that the whole route is visible
+     */
+    zoomToRoute: function() {
+    	if (this.dataLayer.getDataExtent() != null) {
+    		this.map.zoomToExtent(this.dataLayer.getDataExtent());
+    	}
     },
 
     getLonLatFromPos: function (posX, posY) {
