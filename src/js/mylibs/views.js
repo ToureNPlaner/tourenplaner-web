@@ -184,7 +184,7 @@ window.SidebarView = Backbone.View.extend({
         // 76 = 40 (header) + Padding (sidebar) + 11(hr) + 20 (padding #marks)
         var height = $(window).height() - 76 - $cont.first().height() - $cont.last().height() - $cont.next().next().children('h3').height();
         log(height);
-        
+
         this.el.height($(window).height() - 40);
         this.$('#marks').css('max-height', height + 'px');
     },
@@ -334,7 +334,7 @@ window.MarkView = Backbone.View.extend({
 
     initialize: function (model) {
         this.model = model;
-        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a></div>');
+        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>');
 
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
@@ -347,7 +347,13 @@ window.MarkView = Backbone.View.extend({
     },
 
     render: function () {
-        this.parent.append(this.template({cid: this.model.cid, name: this.name}));
+        var position = '';
+        if (this.model.get('position') == 0)
+            position = '(Start)';
+        else if (this.model.get('position') == window.markList.length - 1)
+            position = '(Target)';
+
+        this.parent.append(this.template({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
 
         this.$('a.view').click(_.bind(this.onClick, this));
