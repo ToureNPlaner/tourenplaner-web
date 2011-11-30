@@ -275,7 +275,6 @@ window.ServerInfo = Backbone.Model.extend({
                         'ssl': true,
                         'port': obj.sslport
                     });
-                    // TODO: make login in visible in topbar
                 }
                 that.set({
                     servertype: obj.servertype,

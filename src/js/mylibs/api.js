@@ -274,6 +274,22 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
+	/* nearestNabour
+	 * sends request for nearest nabour to server
+	 * param: points list of points
+	 */
+	nearestNabour : function (args) {
+		if(!args || !args.points)
+			return false;
+		this.send({
+			suffix : 'nns',
+			request : args.points,
+			callback : _.isFunction(args.callback) ? args.callback : null
+		});
+		
+		return true;
+	},
+
     /* alg
      * sends algorithm calculation request
      * use params request or one for each request element

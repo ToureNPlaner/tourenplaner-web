@@ -39,7 +39,6 @@ window.TopbarView = Backbone.View.extend({
     },
 
     showDropdown: function () {
-    	alert("yeah");
         this.$('li.menu').toggleClass('open');
         return false; // Return false stops the click event from propagating (for example to the body event)
     },
