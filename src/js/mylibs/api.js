@@ -58,7 +58,7 @@ _.extend(window.Api.prototype, {
         reqData.type || (reqData.type = 'GET');
         reqData.request || (reqData.request = {});
 
-        if (!_.isNull(this.get('server')) && !_.isUndefined('server')) {
+        if (!_.isNull(this.get('server')) && !_.isUndefined(this.get('server'))) {
             url +=  this.get('ssl') ? 'https://' : 'http://' +
                     this.get('server') + ':' +
                     (!_.isNaN(this.get('port')) ? this.get('port') : 80);
@@ -276,17 +276,31 @@ _.extend(window.Api.prototype, {
 
     /* alg
      * sends algorithm calculation request
+     * use params request or one for each request element
      * param: alg shortname of desired alg
      * param: request contains problem instance (format as alg specification)
+     * param: points, version, constraints as alg spec
      */
     alg : function (args) {
-        if(!args || !args.alg || !args.request)
+		var thisrequest;
+        if(!args || !args.alg)
             return false;
-
+		
+		// use given request or make own
+		if(args.request)
+			thisrequest = args.request;
+		else{
+			if(!args.points) return false;
+			thisrequest = {
+		        version: args.version || 1,
+		        points: args.points,
+		        constraints: args.constraints || {}
+            }
+		}
         this.send({
             type : 'POST',
             suffix : 'alg' + args.alg,
-            request : args.request,
+            request : thisrequest,
             process: false,
             callback : _.isFunction(args.callback) ? args.callback : null 
         });

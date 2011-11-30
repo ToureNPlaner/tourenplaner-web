@@ -182,7 +182,7 @@ window.User = Backbone.Model.extend({
             cookie = null;
         }
 
-        //TODO: Add ssl: true if ssl is enabled on this server
+        //TODO: Add ssl: true if ssl is enabled on this server // i think thats done by ServerInfo
         $.cookie('tourenplaner', cookie);
         return cookie == null;
     },
@@ -275,6 +275,7 @@ window.ServerInfo = Backbone.Model.extend({
                         'ssl': true,
                         'port': obj.sslport
                     });
+                    // TODO: make login in visible in topbar
                 }
                 that.set({
                     servertype: obj.servertype,
