@@ -90,6 +90,11 @@ window.SidebarView = Backbone.View.extend({
             handles: 'e'
         });
 
+        this.$('#marks').sortable({
+            update: _.bind(this.onMarkListSortUpdate, this)
+        });
+        this.$('#marks').disableSelection();
+
         window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
         window.markList.bind("add", _.bind(this.onMarkAdded, this));
         window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
@@ -130,6 +135,14 @@ window.SidebarView = Backbone.View.extend({
             this.$('#marks').html('No points defined!');
 
         this._sortMarks();
+    },
+
+    onMarkListSortUpdate: function (event, ui) {
+        var mark = ui.item;
+        var cid = mark.attr('id').split('_')[1];
+
+        var markModel = window.markList.getByCid(cid);
+        window.markList.moveMark(markModel, mark.index());
     },
 
     onListReset: function () {

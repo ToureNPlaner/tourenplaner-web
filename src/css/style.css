@@ -106,5 +106,9 @@ div.popover {
   margin-left: 20px;
 }
 .topbar ul li.menu, .topbar ul li.user {
-    display: none;
+  display: none;
+}
+
+.ui-sortable-helper {
+  border-top: 1px solid #ccc;
 }
