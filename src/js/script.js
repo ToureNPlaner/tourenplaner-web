@@ -1,5 +1,5 @@
 $(function() {
-    window.api = new Api({
+   window.api = new Api({
         server: "gerbera.informatik.uni-stuttgart.de",
         port: 8080
     });
