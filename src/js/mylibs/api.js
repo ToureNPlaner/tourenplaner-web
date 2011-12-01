@@ -98,13 +98,15 @@ _.extend(window.Api.prototype, {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText;
-                if (!_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
+                if (_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
                     text = errorThrown;
-                
-            	var obj = text;
-                if (_.isString(obj))
-                    obj = JSON.parse(obj);
-                event.trigger('request', obj, false);
+
+                if (_.isString(text))
+                    text = JSON.parse(text);
+                event.trigger('request', text, false);
+
+                // Also display an error message for the user
+                new MessageView().show({title: "Error", message: text});
             }
         });
 
@@ -114,7 +116,7 @@ _.extend(window.Api.prototype, {
     /* serverInformation
      * aks' server for information about the server
      */
-    serverInformation : function (args) {        
+    serverInformation : function (args) {
         var that = this;
         return this.send({
             suffix : 'info',
@@ -142,7 +144,7 @@ _.extend(window.Api.prototype, {
             request : args.userObject,
             callback: _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -161,7 +163,7 @@ _.extend(window.Api.prototype, {
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -183,7 +185,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -209,7 +211,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -238,7 +240,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -255,7 +257,7 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -271,7 +273,7 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -286,7 +288,7 @@ _.extend(window.Api.prototype, {
 		var thisrequest;
         if(!args || !args.alg)
             return false;
-		
+
 		// use given request or make own
 		if(args.request)
 			thisrequest = args.request;
@@ -303,9 +305,9 @@ _.extend(window.Api.prototype, {
             suffix : 'alg' + args.alg,
             request : thisrequest,
             process: false,
-            callback : _.isFunction(args.callback) ? args.callback : null 
+            callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     }
 });
