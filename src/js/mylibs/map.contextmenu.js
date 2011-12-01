@@ -45,8 +45,10 @@ function setContextMenu(map) {
     $('#main #map').contextPopup({
         title: "Markers",
         items: function (evt) {
-            var feature = window.mapModel.get('mapObject').markerLayer.getFeatureFromEvent(evt);
-            if (feature) {
+            var feature = window.mapModel.get('mapObject').dataLayer.getFeatureFromEvent(evt);
+            
+            // if it's a marker
+            if (feature && (feature.attributes.mark != undefined)) {
                 return [
                     {label: 'Set as Startmarker', icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
                     {label: 'Set as Endmarker', icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},

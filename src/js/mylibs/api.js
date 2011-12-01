@@ -18,6 +18,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
+	realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
                 "message": "Request couldn't be sent",
                 "details": "Your Request contains syntactical mistakes"
@@ -86,7 +87,7 @@ _.extend(window.Api.prototype, {
             processData: reqData.process,
             beforeSend: function (jqXHR, settings) {
                 if (that.get('authRequired')) {
-                    settings.headers = { Authorization: that.get('authAsBase64') };
+                    settings.headers = { Authorization: that.get('realm') + ' ' + that.get('authAsBase64') };
                 }
             },
             success: function (data, textStatus, jqXHR) {
@@ -97,13 +98,15 @@ _.extend(window.Api.prototype, {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText;
-                if (!_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
+                if (_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
                     text = errorThrown;
-                
-            	var obj = text;
-                if (_.isString(obj))
-                    obj = JSON.parse(obj);
-                event.trigger('request', obj, false);
+
+                if (_.isString(text))
+                    text = JSON.parse(text);
+                event.trigger('request', text, false);
+
+                // Also display an error message for the user
+                new MessageView().show({title: "Error", message: text});
             }
         });
 
@@ -113,8 +116,8 @@ _.extend(window.Api.prototype, {
     /* serverInformation
      * aks' server for information about the server
      */
-    serverInformation : function (args) {        
-        var that = this;        
+    serverInformation : function (args) {
+        var that = this;
         return this.send({
             suffix : 'info',
             request : {},
@@ -141,7 +144,7 @@ _.extend(window.Api.prototype, {
             request : args.userObject,
             callback: _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -160,7 +163,7 @@ _.extend(window.Api.prototype, {
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -182,7 +185,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -208,7 +211,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -237,7 +240,7 @@ _.extend(window.Api.prototype, {
                 callback : _.isFunction(args.callback) ? args.callback : null
             });
         }
-        
+
         return true;
     },
 
@@ -254,7 +257,7 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -270,7 +273,7 @@ _.extend(window.Api.prototype, {
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     },
 
@@ -301,7 +304,7 @@ _.extend(window.Api.prototype, {
 		var thisrequest;
         if(!args || !args.alg)
             return false;
-		
+
 		// use given request or make own
 		if(args.request)
 			thisrequest = args.request;
@@ -318,9 +321,9 @@ _.extend(window.Api.prototype, {
             suffix : 'alg' + args.alg,
             request : thisrequest,
             process: false,
-            callback : _.isFunction(args.callback) ? args.callback : null 
+            callback : _.isFunction(args.callback) ? args.callback : null
         });
-        
+
         return true;
     }
 });
