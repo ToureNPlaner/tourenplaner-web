@@ -18,7 +18,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
-		realm : 'Tourenplaner',//'Basic',//
+		realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
                  "message": "Bad request",
                  "details": "While the request an error has occurred"
@@ -50,6 +50,7 @@ _.extend(window.Api.prototype, {
      */
     send : function (reqData) {
         var url = "", event = {};
+        var c = reqData.callback;
         if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
         if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
         if(_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
@@ -282,11 +283,11 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-	/* nearestNabour
-	 * sends request for nearest nabour to server
+	/* nearestNeighbour
+	 * sends request for nearest neighbour to server
 	 * param: points list of points
 	 */
-	nearestNabour : function (args) {
+	nearestNeighbour : function (args) {
 		if(!args || !args.points)
 			return false;
 		this.send({

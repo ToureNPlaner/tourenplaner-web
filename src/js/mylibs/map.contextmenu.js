@@ -4,8 +4,8 @@ function addMarker(action, evt) {
     var mark = new Mark({
         "lonlat": lonlat
     });
-    // get nearest nabour
-    window.api.nearestNabour({
+    // get nearest neighbour
+    window.api.nearestNeighbour({
     	points: lonlat,
     	callback: function(text, success){
     		if(success){
