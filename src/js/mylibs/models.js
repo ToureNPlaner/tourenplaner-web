@@ -261,7 +261,6 @@ window.ServerInfo = Backbone.Model.extend({
 
     getServerInfo: function (callback) {
         var that = this;
-
         window.api.serverInformation({
             callback: function (text, success) {
                 if (!success)

@@ -18,10 +18,10 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
-	realm : 'Tourenplaner',
+		realm : 'Tourenplaner',//'Basic',//
         error : {"errorid": "EBADCALL",
-                "message": "Request couldn't be sent",
-                "details": "Your Request contains syntactical mistakes"
+                 "message": "Bad request",
+                 "details": "While the request an error has occurred"
                }
     },
 
@@ -90,19 +90,24 @@ _.extend(window.Api.prototype, {
             },
             success: function (data, textStatus, jqXHR) {
             	var obj = jqXHR.responseText;
-            	
                 if (_.isString(obj))
                     obj = JSON.parse(obj);
                 event.trigger('request', obj, true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                var text = jqXHR.responseText;
-                if (_.isUndefined(jqXHR.responseText) || jqXHR.responseText == "")
-                    text = errorThrown;
-
-                if (_.isString(text)){
-                    text = JSON.parse(text);
+                var text = jqXHR.responseText || "";
+                
+                // use simple error if response is empty
+                if(text == ""){
+                	if(errorThrown != "")
+	                	text = errorThrown;
+	                else
+	                	// if everything is empty use standard error
+	                	text = that.get('error').message + "<br />" + that.get('error').details;
                 }
+                else
+                	text = JSON.parse(text);
+
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
