@@ -48,8 +48,6 @@ _.extend(window.Api.prototype, {
      *          .request String that contains the request.
      *          .callback function should be called when done.
      */
-
-
     send : function (reqData) {
         var url = "", event = {};
         if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
@@ -92,17 +90,19 @@ _.extend(window.Api.prototype, {
             },
             success: function (data, textStatus, jqXHR) {
             	var obj = jqXHR.responseText;
+            	
                 if (_.isString(obj))
                     obj = JSON.parse(obj);
                 event.trigger('request', obj, true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText;
-                if (_.isUndefined(jqXHR.responseText) || jqXHR.responseText === "")
+                if (_.isUndefined(jqXHR.responseText) || jqXHR.responseText == "")
                     text = errorThrown;
 
-                if (_.isString(text))
+                if (_.isString(text)){
                     text = JSON.parse(text);
+                }
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user

@@ -4,24 +4,37 @@ function addMarker(action, evt) {
     var mark = new Mark({
         "lonlat": lonlat
     });
+    // get nearest nabour
+    window.api.nearestNabour({
+    	points: lonlat,
+    	callback: function(text, success){
+    		if(success){
+				mark.set({points: text.points});
+			}
+			else{
+				log("Nearest Nabour Search wasn't successful. No points updated");
+			}
+			switch (action) {
+				// alert selected point as lonlat
+			case "start":
+				window.markList.setStartMark(mark);
+				alert("lonlat: "+mark.get("lonlat"));
+				break;
 
-    switch (action) {
-        // alert selected point as lonlat
-    case "start":
-        window.markList.setStartMark(mark);
-        break;
+			case "mark":
+				window.markList.appendMark(mark);
+				break;
 
-    case "mark":
-        window.markList.appendMark(mark);
-        break;
+			case "target":
+				window.markList.setTargetMark(mark);
+				break;
 
-    case "target":
-        window.markList.setTargetMark(mark);
-        break;
-
-    default:
-        log("Something went wrong with contextMenu! This is the default action.");
-    };
+			default:
+				log("Something went wrong with contextMenu! This is the default action.");
+			};
+			
+		}
+    });
 }
 
 function editMarker(action, marker) {
