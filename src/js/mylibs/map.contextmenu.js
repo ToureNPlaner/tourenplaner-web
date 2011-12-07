@@ -6,10 +6,10 @@ function addMarker(action, evt) {
     });
     // get nearest neighbour
     window.api.nearestNeighbour({
-    	points: lonlat,
+    	points: "["+lonlat+"]",
     	callback: function(text, success){
     		if(success){
-				mark.set({points: text.points});
+				mark.set({points: text.points[0]});
 			}
 			else{
 				log("Nearest Nabour Search wasn't successful. No points updated");

@@ -113,6 +113,7 @@ _.extend(window.Api.prototype, {
 
                 // Also display an error message for the user
                 new MessageView().show({title: "Error", message: text});
+                
             }
         });
 
