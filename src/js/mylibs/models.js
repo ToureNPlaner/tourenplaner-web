@@ -164,8 +164,11 @@ window.User = Backbone.Model.extend({
     defaults: {
         login: false
     },
+    
+    initialize: function () {
+        window.server.bind("info-loaded", _.bind(this.onStartup, this));
+    },
 
-    /** Don't use initialize here because it gets called too early */
     onStartup: function () {
         var cookie = $.cookie('tourenplaner');
         if (cookie && !_.isUndefined(cookie)) {
@@ -182,14 +185,13 @@ window.User = Backbone.Model.extend({
             cookie = null;
         }
 
-        //TODO: Add ssl: true if ssl is enabled on this server // i think thats done by ServerInfo
         $.cookie('tourenplaner', cookie);
         return cookie == null;
     },
 
     login: function (email, password) {
         var that = this;
-        window.api.authUser({
+        return window.api.authUser({
             email: email,
             password: password,
             callback: function (text, success) {

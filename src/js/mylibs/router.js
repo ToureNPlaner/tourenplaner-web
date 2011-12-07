@@ -9,9 +9,9 @@ window.Router = Backbone.Router.extend({
         "/route/:id":    "request"   // #/route/7
     },
 
-    initialize: function(options) {
-        this.user = new User();
+    initialize: function(options) {        
         window.server = new ServerInfo();
+        this.user = new User();
     },
 
     initServer: function() {

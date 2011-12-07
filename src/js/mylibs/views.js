@@ -416,7 +416,7 @@ window.LoginView = Backbone.View.extend({
             unhighlight: function (elem, error, valid) {
                 $(elem).addClass('valid').removeClass('error').attr('rel', null).attr('data-content', null).attr('data-original-title', null);
             },
-            submitHandler: _.bind(this.onLogin, that),
+            submitHandler: _.bind(that.onLogin, that),
             invalidHandler: function () {
                 that.$('.error-empty').show();
             }
@@ -441,6 +441,9 @@ window.LoginView = Backbone.View.extend({
     },
 
     onLogin: function () {
+        this.loading = new LoadingView();
+        this.loading.show("Logging in");
+
         // Clear old error messages first
         this.$('.alert-message').hide();
 
@@ -451,6 +454,9 @@ window.LoginView = Backbone.View.extend({
     },
 
     onLoginSuccess: function (success) {
+        if (!_.isUndefined(this.loading) && !_.isNull(this.loading))
+            this.loading.remove();
+        
         if (success) {
             this.remove();
         } else if (this.el.css('display') !== 'none') {
