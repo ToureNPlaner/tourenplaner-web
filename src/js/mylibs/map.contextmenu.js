@@ -6,10 +6,11 @@ function addMarker(action, evt) {
     });
     // get nearest neighbour
     window.api.nearestNeighbour({
-    	points: "["+lonlat+"]",
+    	points: lonlat,
     	callback: function(text, success){
     		if(success){
-				mark.set({points: text.points[0]});
+    			mark.get('lonlat').lon = text.points[0].ln;
+    			mark.get('lonlat').lat = text.points[0].lt;
 			}
 			else{
 				log("Nearest Nabour Search wasn't successful. No points updated");
@@ -18,7 +19,6 @@ function addMarker(action, evt) {
 				// alert selected point as lonlat
 			case "start":
 				window.markList.setStartMark(mark);
-				alert("lonlat: "+mark.get("lonlat"));
 				break;
 
 			case "mark":
