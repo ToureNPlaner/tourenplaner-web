@@ -311,7 +311,9 @@ $.mockjax({
                 }
             };
     }
-});/**
+});
+
+/**
  * Mocks the /alg function on the server. For no algorithm chosen.
  *
  * Returns failure response.
@@ -321,5 +323,19 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
+    }
+});
+
+/**
+ * Mocks the /nns function on the server.
+ *
+ * Returns the given point as the nearest neighbor.
+ */
+$.mockjax({
+    url: "/nns",
+    responseTimeout: 10,
+    status: 200,
+    response: function (data) {
+        this.responseText = JSON.parse(data.data);
     }
 });

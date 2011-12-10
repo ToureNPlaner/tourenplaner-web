@@ -12,27 +12,26 @@ function addMarker(action, evt) {
     			mark.get('lonlat').lon = text.points[0].ln;
     			mark.get('lonlat').lat = text.points[0].lt;
 			}
-			else{
+			else
 				log("Nearest Nabour Search wasn't successful. No points updated");
-			}
 			switch (action) {
 				// alert selected point as lonlat
-			case "start":
-				window.markList.setStartMark(mark);
-				break;
+                case "start":
+                    window.markList.setStartMark(mark);
+                    break;
+                    
+                case "mark":
+                    window.markList.appendMark(mark);
+                    break;
 
-			case "mark":
-				window.markList.appendMark(mark);
-				break;
+                case "target":
+                    window.markList.setTargetMark(mark);
+                    break;
 
-			case "target":
-				window.markList.setTargetMark(mark);
-				break;
-
-			default:
-				log("Something went wrong with contextMenu! This is the default action.");
+                default:
+                    log("Something went wrong with contextMenu! This is the default action.");
 			};
-			
+
 		}
     });
 }
@@ -56,23 +55,23 @@ function editMarker(action, marker) {
  */
 function setContextMenu(map) {
     $('#main #map').contextPopup({
-        title: "Markers",
+        title: $._("Markers"),
         items: function (evt) {
             var feature = window.mapModel.get('mapObject').dataLayer.getFeatureFromEvent(evt);
-            
+
             // if it's a marker
-            if (feature && (feature.attributes.mark != undefined)) {
+            if (feature && !_.isUndefined(feature.attributes.mark)) {
                 return [
-                    {label: 'Set as Startmarker', icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
-                    {label: 'Set as Endmarker', icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},
+                    {label: $._('Set as Startmarker'), icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
+                    {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},
                     null,
-                    {label: "Delete", action: function (evt) { editMarker('delete', feature) }}
+                    {label: $._("Delete"), action: function (evt) { editMarker('delete', feature) }}
                 ];
             } else {
                 return [
-                    {label: "Add Startmarker", icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
-                    {label: "Add Marker", icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }},
-                    {label: "Add Endmarker", icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }}
+                    {label: $._("Add Startmarker"), icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
+                    {label: $._("Add Marker"), icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }},
+                    {label: $._("Add Endmarker"), icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }}
                 ];
             }
         }
