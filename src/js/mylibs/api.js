@@ -294,7 +294,7 @@ _.extend(window.Api.prototype, {
             type: 'POST',
 			request : {
                 version: 1,
-                points: args.points
+                points: _.isArray(args.points) ? args.points : [args.points]
             },
 			callback : _.isFunction(args.callback) ? args.callback : null
 		});
