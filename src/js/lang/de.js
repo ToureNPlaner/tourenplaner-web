@@ -1,0 +1,1 @@
+var i18n = {"Set as Startmarker": "Als Start markieren", "Add Endmarker": "Endmarkierung hinzuf\u00fcgen", "Add Marker": "Markierung hinzuf\u00fcgen", "Add Startmarker": "Startmarkierung hinzuf\u00fcgen", "Set as Endmarker": "Als Ziel markieren", "Markers": "Markierungen", "Delete": "L\u00f6schen"};

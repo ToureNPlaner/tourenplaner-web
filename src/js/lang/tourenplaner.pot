@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-10 16:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: map.contextmenu.js:57
+msgid "Markers"
+msgstr ""
+
+#: map.contextmenu.js:64
+msgid "Set as Startmarker"
+msgstr ""
+
+#: map.contextmenu.js:65
+msgid "Set as Endmarker"
+msgstr ""
+
+#: map.contextmenu.js:67
+msgid "Delete"
+msgstr ""
+
+#: map.contextmenu.js:71
+msgid "Add Startmarker"
+msgstr ""
+
+#: map.contextmenu.js:72
+msgid "Add Marker"
+msgstr ""
+
+#: map.contextmenu.js:73
+msgid "Add Endmarker"
+msgstr ""

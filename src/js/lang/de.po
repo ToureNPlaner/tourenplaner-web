@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ToureNPlaner 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-10 16:17+0100\n"
+"PO-Revision-Date: 2011-12-10 16:18+0100\n"
+"Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-KeywordsList: $._\n"
+
+#: js/mylibs/map.contextmenu.js:57
+msgid "Markers"
+msgstr "Markierungen"
+
+#: js/mylibs/map.contextmenu.js:64
+msgid "Set as Startmarker"
+msgstr "Als Start markieren"
+
+#: js/mylibs/map.contextmenu.js:65
+msgid "Set as Endmarker"
+msgstr "Als Ziel markieren"
+
+#: js/mylibs/map.contextmenu.js:67
+msgid "Delete"
+msgstr "Löschen"
+
+#: js/mylibs/map.contextmenu.js:71
+msgid "Add Startmarker"
+msgstr "Startmarkierung hinzufügen"
+
+#: js/mylibs/map.contextmenu.js:72
+msgid "Add Marker"
+msgstr "Markierung hinzufügen"
+
+#: js/mylibs/map.contextmenu.js:73
+msgid "Add Endmarker"
+msgstr "Endmarkierung hinzufügen"
+
