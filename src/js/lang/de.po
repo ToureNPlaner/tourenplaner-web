@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 16:52+0100\n"
-"PO-Revision-Date: 2011-12-10 16:56+0100\n"
+"POT-Creation-Date: 2011-12-10 17:54+0100\n"
+"PO-Revision-Date: 2011-12-10 17:54+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -106,24 +106,28 @@ msgid "Target"
 msgstr "Ziel"
 
 #: views.js:413
-#: views.js:520
-#: views.js:591
+#: views.js:519
+#: views.js:589
 msgid "Error!"
 msgstr "Fehler!"
 
-#: views.js:453
+#: views.js:452
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:567
+#: views.js:565
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:583
+#: views.js:581
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:584
+#: views.js:582
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
+
+#: router.js:19
+msgid "Loading server informations"
+msgstr "Lade Serverinformationen"
 

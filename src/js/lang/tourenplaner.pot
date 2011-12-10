@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 16:52+0100\n"
+"POT-Creation-Date: 2011-12-10 17:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,24 +101,28 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#: views.js:413 views.js:520 views.js:591
+#: views.js:413 views.js:519 views.js:589
 msgid "Error!"
 msgstr ""
 
-#: views.js:453
+#: views.js:452
 msgid "Logging in"
 msgstr ""
 
-#: views.js:567
+#: views.js:565
 msgid "Sending data"
 msgstr ""
 
-#: views.js:583
+#: views.js:581
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:584
+#: views.js:582
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."
+msgstr ""
+
+#: router.js:19
+msgid "Loading server informations"
 msgstr ""

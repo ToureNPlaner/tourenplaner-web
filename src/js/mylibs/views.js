@@ -449,8 +449,7 @@ window.LoginView = Backbone.View.extend({
     },
 
     onLogin: function () {
-        this.loading = new LoadingView();
-        this.loading.show($._("Logging in"));
+        this.loading = new LoadingView($._('Logging in')).render();
 
         // Clear old error messages first
         this.$('.alert-message').hide();
@@ -563,8 +562,7 @@ window.RegisterView = Backbone.View.extend({
     },
 
     onSubmit: function () {
-        this.loading = new LoadingView();
-        this.loading.show($._("Sending data"));
+        this.loading = new LoadingView($._("Sending data")).render();
         this.$('.error-correct').hide();
 
         var user = window.app.user;
@@ -637,7 +635,23 @@ window.LoadingView = Backbone.View.extend({
 
     el: $('#loading'),
 
+    initialize: function (message) {
+        this.message = message;
+    },
+
     render: function () {
+        if (this.el.length() == 0) {
+            document.write('<div id="loading" class="modal"></div>');
+            this.el = $('#loading');
+        }
+
+        var template =  '<div class="body">' +
+                            '<div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>' +
+                            '<div class="message"><%=message%></div>' +
+                        '</div>';
+
+        this.el.html(_.template(template, {message: this.message}));
+
         this.el.modal({
             show: true,
             backdrop: 'static',
@@ -646,13 +660,8 @@ window.LoadingView = Backbone.View.extend({
         return this;
     },
 
-    show: function (message) {
-        this.message = message || "";
-        this.$('.message').html(this.message);
-        this.render();
-    },
-
     remove: function () {
         this.el.modal('hide');
+        this.el.remove();
     }
 });

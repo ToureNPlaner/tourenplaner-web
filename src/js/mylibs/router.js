@@ -9,14 +9,14 @@ window.Router = Backbone.Router.extend({
         "/route/:id":    "request"   // #/route/7
     },
 
-    initialize: function(options) {        
+    initialize: function(options) {
         window.server = new ServerInfo();
         this.user = new User();
     },
 
     initServer: function() {
         var that = this;
-        this.loadingView = new LoadingView().render();
+        this.loadingView = new LoadingView($._('Loading server informations')).render();
 
         window.server.getServerInfo(function() {
             if (window.server.isPublic())
