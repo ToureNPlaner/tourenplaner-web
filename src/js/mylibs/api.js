@@ -21,7 +21,7 @@ _.extend(window.Api.prototype, {
 		realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
                  "message": "Bad request",
-                 "details": "While the request an error has occurred"
+                 "details": "Request wasn't successful'"
                }
     },
 
@@ -290,8 +290,8 @@ _.extend(window.Api.prototype, {
 		if(!args || !args.points)
 			return false;
 		this.send({
-			suffix : 'nns',
-            type: 'POST',
+			suffix : 'algnnl',
+            type : 'POST',
 			request : {
                 version: 1,
                 points: _.isArray(args.points) ? args.points : [args.points]
