@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 16:17+0100\n"
-"PO-Revision-Date: 2011-12-10 16:18+0100\n"
+"POT-Creation-Date: 2011-12-10 16:52+0100\n"
+"PO-Revision-Date: 2011-12-10 16:56+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -19,31 +19,111 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-KeywordsList: $._\n"
 
-#: js/mylibs/map.contextmenu.js:57
+#: map.contextmenu.js:57
 msgid "Markers"
 msgstr "Markierungen"
 
-#: js/mylibs/map.contextmenu.js:64
+#: map.contextmenu.js:64
 msgid "Set as Startmarker"
 msgstr "Als Start markieren"
 
-#: js/mylibs/map.contextmenu.js:65
+#: map.contextmenu.js:65
 msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
-#: js/mylibs/map.contextmenu.js:67
+#: map.contextmenu.js:67
+#: views.js:302
 msgid "Delete"
 msgstr "Löschen"
 
-#: js/mylibs/map.contextmenu.js:71
+#: map.contextmenu.js:71
 msgid "Add Startmarker"
 msgstr "Startmarkierung hinzufügen"
 
-#: js/mylibs/map.contextmenu.js:72
+#: map.contextmenu.js:72
 msgid "Add Marker"
 msgstr "Markierung hinzufügen"
 
-#: js/mylibs/map.contextmenu.js:73
+#: map.contextmenu.js:73
 msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
+
+#: views.js:152
+msgid "No points defined"
+msgstr "Keine Punkte definiert"
+
+#: views.js:164
+#: views.js:170
+msgid "Error"
+msgstr "Fehler"
+
+#: views.js:165
+msgid "No algorithm selected."
+msgstr "Kein Algorithmus ausgewählt."
+
+#: views.js:171
+msgid "Not enough points defined."
+msgstr "Nicht genug Punkte definiert."
+
+#: views.js:297
+msgid "Lon"
+msgstr "Breite"
+
+#: views.js:298
+msgid "Lat"
+msgstr "Höhe"
+
+#: views.js:299
+msgid "Name"
+msgstr "Name"
+
+#: views.js:300
+msgid "Position"
+msgstr "Position:"
+
+#: views.js:302
+msgid "Apply"
+msgstr "Übernehmen"
+
+#: views.js:317
+msgid "No Mark selected"
+msgstr "Keine Markierung ausgewählt"
+
+#: views.js:327
+msgid "Data"
+msgstr "Daten"
+
+#: views.js:353
+msgid "Marker"
+msgstr "Markierung"
+
+#: views.js:364
+msgid "Start"
+msgstr "Start"
+
+#: views.js:366
+msgid "Target"
+msgstr "Ziel"
+
+#: views.js:413
+#: views.js:520
+#: views.js:591
+msgid "Error!"
+msgstr "Fehler!"
+
+#: views.js:453
+msgid "Logging in"
+msgstr "Anmeldung läuft"
+
+#: views.js:567
+msgid "Sending data"
+msgstr "Daten werden gesendet"
+
+#: views.js:583
+msgid "Registration successful"
+msgstr "Registrierung erfolgreich"
+
+#: views.js:584
+msgid "The registration was successful. Please wait until an administrator activates your account."
+msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 

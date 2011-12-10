@@ -149,7 +149,7 @@ window.SidebarView = Backbone.View.extend({
 
         if (window.markList.length == 0) {
             _markerNameSuffix = "A";
-            this.$('#marks').html('No points defined');
+            this.$('#marks').html($._('No points defined'));
         } else {
             for (var i = 0; i < window.markList.length; ++i)
                 this.marks.push(new MarkView(window.markList.at(i)));
@@ -161,14 +161,14 @@ window.SidebarView = Backbone.View.extend({
         var alg = this.$('#algorithms').val();
         if (_.isUndefined(alg) || _.isEmpty(alg))  {
             new MessageView().show({
-                title: 'Error',
-                message: 'No algorithm selected.'
+                title: $._('Error'),
+                message: $._('No algorithm selected.')
             });
         //TODO: Use algorithm info for this
         } else if (window.markList.length < 2) {
             new MessageView().show({
-               title: 'Error',
-               message: 'Not enough points defined.'
+               title: $._('Error'),
+               message: $._('Not enough points defined.')
             });
         } else {
             window.api.alg({
@@ -195,7 +195,6 @@ window.SidebarView = Backbone.View.extend({
         var $cont = this.$('.container');
         // 76 = 40 (header) + Padding (sidebar) + 11(hr) + 20 (padding #marks)
         var height = $(window).height() - 76 - $cont.first().height() - $cont.last().height() - $cont.next().next().children('h3').height();
-        log(height);
 
         this.el.height($(window).height() - 40);
         this.$('#marks').css('max-height', height + 'px');
@@ -295,12 +294,12 @@ window.DataView = Backbone.View.extend({
     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-	this.$('.content').html( "<div class='clearfix'><label for='lon'><b>Lon:</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
-				"<div class='clearfix'><label for='lat'><b>Lat:</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
-				"<div class='clearfix'><label for='markerName'><b>Name:</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
-				"<div class='clearfix'><label for='markerPos'><b>Position:</b></label><input value='"+marker.get("position")+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
+        this.$('.content').html( "<div class='clearfix'><label for='lon'><b>" + $._('Lon') + ":</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
+				"<div class='clearfix'><label for='lat'><b>" + $._('Lat') + ":</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
+				"<div class='clearfix'><label for='markerName'><b>" + $._('Name') + ":</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
+				"<div class='clearfix'><label for='markerPos'><b>" + $._('Position') + ":</b></label><input value='"+marker.get("position")+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
 				"<div class='clearfix'><label for='markerK'><b>k:</b></label><input value='"+marker.get("k")+"' type='text' name='markerK' id='markerK' /></div>"+
-				"<div class='clearfix'><label for='saveMarkAttributes' /><button id='saveMarkAttributes' class='btn primary'>Übernehmen</button><button id='deleteMark' class='btn secondary'>Löschen</button></div>"+
+				"<div class='clearfix'><label for='saveMarkAttributes' /><button id='saveMarkAttributes' class='btn primary'>" + $._('Apply') + "</button><button id='deleteMark' class='btn secondary'>" + $._('Delete') + "</button></div>"+
 				"<div class='clearfix'>");
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
@@ -315,7 +314,7 @@ window.DataView = Backbone.View.extend({
 
         this.$('#dataview #deleteMark').click(function () {
             window.markList.deleteMark(marker);
-            that.$('.content').html("No Mark selected");
+            that.$('.content').html($._("No Mark selected"));
         });
     },
 
@@ -325,7 +324,7 @@ window.DataView = Backbone.View.extend({
 
         var link = this.$('.minmax a');
         if (link.html() === '_') {
-            link.html('Daten');
+            link.html($._('Data'));
 
             this.oldStyle = this.el.attr('style');
             this.el.attr('style', '');
@@ -351,7 +350,7 @@ window.MarkView = Backbone.View.extend({
 
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
-            this.name = "Marker " + _markerNameSuffix;
+            this.name = $._("Marker") + " " + _markerNameSuffix;
             this.model.set({name: this.name});
             _markerNameSuffix = String.fromCharCode(_markerNameSuffix.charCodeAt(0) + 1);
             if (_markerNameSuffix.charCodeAt(0) > 90)
@@ -362,9 +361,9 @@ window.MarkView = Backbone.View.extend({
     render: function () {
         var position = '';
         if (this.model.get('position') == 0)
-            position = '(Start)';
+            position = '(' + $._('Start') + ')';
         else if (this.model.get('position') == window.markList.length - 1)
-            position = '(Target)';
+            position = '(' + $._('Target') + ')';
 
         this.parent.append(this.template({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
@@ -407,14 +406,23 @@ window.LoginView = Backbone.View.extend({
             },
             showErrors: function (errorMap, errorList) {
                 for (obj in errorList) {
-                    $(errorList[obj].element).addClass('error').removeClass('valid').attr('rel', 'popover').attr('data-content', errorList[obj].message).attr('data-original-title', "Error!").popover();
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', $._("Error!"))
+                        .popover();
                 }
                 this.defaultShowErrors();
             },
             errorPlacement: function () {},
             highlight: function () {},
             unhighlight: function (elem, error, valid) {
-                $(elem).addClass('valid').removeClass('error').attr('rel', null).attr('data-content', null).attr('data-original-title', null);
+                $(elem).addClass('valid')
+                    .removeClass('error')
+                    .attr('rel', null)
+                    .attr('data-content', null)
+                    .attr('data-original-title', null);
             },
             submitHandler: _.bind(that.onLogin, that),
             invalidHandler: function () {
@@ -442,7 +450,7 @@ window.LoginView = Backbone.View.extend({
 
     onLogin: function () {
         this.loading = new LoadingView();
-        this.loading.show("Logging in");
+        this.loading.show($._("Logging in"));
 
         // Clear old error messages first
         this.$('.alert-message').hide();
@@ -456,7 +464,7 @@ window.LoginView = Backbone.View.extend({
     onLoginSuccess: function (success) {
         if (!_.isUndefined(this.loading) && !_.isNull(this.loading))
             this.loading.remove();
-        
+
         if (success) {
             this.remove();
         } else if (this.el.css('display') !== 'none') {
@@ -505,14 +513,23 @@ window.RegisterView = Backbone.View.extend({
             },
             showErrors: function (errorMap, errorList) {
                 for (obj in errorList) {
-                    $(errorList[obj].element).addClass('error').removeClass('valid').attr('rel', 'popover').attr('data-content', errorList[obj].message).attr('data-original-title', "Error!").popover();
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', $._("Error!"))
+                        .popover();
                 }
                 this.defaultShowErrors();
             },
             errorPlacement: function () {},
             highlight: function () {},
             unhighlight: function (elem, error, valid) {
-                $(elem).addClass('valid').removeClass('error').attr('rel', null).attr('data-content', null).attr('data-original-title', null);
+                $(elem).addClass('valid')
+                    .removeClass('error')
+                    .attr('rel', null)
+                    .attr('data-content', null)
+                    .attr('data-original-title', null);
             },
             submitHandler: _.bind(this.onSubmit, that),
             invalidHandler: function () {
@@ -547,7 +564,7 @@ window.RegisterView = Backbone.View.extend({
 
     onSubmit: function () {
         this.loading = new LoadingView();
-        this.loading.show("Sending data");
+        this.loading.show($._("Sending data"));
         this.$('.error-correct').hide();
 
         var user = window.app.user;
@@ -563,14 +580,17 @@ window.RegisterView = Backbone.View.extend({
                 this.loading.remove();
                 this.remove();
                 new MessageView().show({
-                    title: "Success",
-                    message: "The registration was successful. Please wait until an administrator activates your account."
+                    title: $._("Registration successful"),
+                    message: $._("The registration was successful. Please wait until an administrator activates your account.")
                 });
             },
             error: function (text) {
                 this.loading.remove();
                 //TODO: Parse error message and display errors
-                alert('Error: ' + text);
+                new MessageView().show({
+                   title: $._('Error!'),
+                   message: text
+                });
             }
         });
     },

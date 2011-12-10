@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 16:27+0100\n"
+"POT-Creation-Date: 2011-12-10 16:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Set as Endmarker"
 msgstr ""
 
-#: map.contextmenu.js:67
+#: map.contextmenu.js:67 views.js:302
 msgid "Delete"
 msgstr ""
 
@@ -43,4 +43,82 @@ msgstr ""
 
 #: map.contextmenu.js:73
 msgid "Add Endmarker"
+msgstr ""
+
+#: views.js:152
+msgid "No points defined"
+msgstr ""
+
+#: views.js:164 views.js:170
+msgid "Error"
+msgstr ""
+
+#: views.js:165
+msgid "No algorithm selected."
+msgstr ""
+
+#: views.js:171
+msgid "Not enough points defined."
+msgstr ""
+
+#: views.js:297
+msgid "Lon"
+msgstr ""
+
+#: views.js:298
+msgid "Lat"
+msgstr ""
+
+#: views.js:299
+msgid "Name"
+msgstr ""
+
+#: views.js:300
+msgid "Position"
+msgstr ""
+
+#: views.js:302
+msgid "Apply"
+msgstr ""
+
+#: views.js:317
+msgid "No Mark selected"
+msgstr ""
+
+#: views.js:327
+msgid "Data"
+msgstr ""
+
+#: views.js:353
+msgid "Marker"
+msgstr ""
+
+#: views.js:364
+msgid "Start"
+msgstr ""
+
+#: views.js:366
+msgid "Target"
+msgstr ""
+
+#: views.js:413 views.js:520 views.js:591
+msgid "Error!"
+msgstr ""
+
+#: views.js:453
+msgid "Logging in"
+msgstr ""
+
+#: views.js:567
+msgid "Sending data"
+msgstr ""
+
+#: views.js:583
+msgid "Registration successful"
+msgstr ""
+
+#: views.js:584
+msgid ""
+"The registration was successful. Please wait until an administrator "
+"activates your account."
 msgstr ""
