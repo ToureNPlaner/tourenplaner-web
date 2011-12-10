@@ -33,7 +33,7 @@ for srcfile in args:
 
 	po = polib.pofile(srcfile, autodetect_encoding=False, encoding="utf-8", wrapwidth=-1)
 	for entry in po:
-		if entry.obsolete or entry.msgstr == '' or entry.msgstr == entry.msgid:
+		if entry.obsolete or entry.msgstr == '':
 			continue
 
 		xlate_map[entry.msgid] = entry.msgstr;
