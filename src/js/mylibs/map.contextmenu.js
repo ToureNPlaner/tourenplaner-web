@@ -6,33 +6,32 @@ function addMarker(action, evt) {
     });
     // get nearest neighbour
     window.api.nearestNeighbour({
-    	points: "["+lonlat+"]",
+    	points: lonlat,
     	callback: function(text, success){
-    		if(success){
+    		if(success)
 				mark.set({points: text.points[0]});
-			}
-			else{
+			else
 				log("Nearest Nabour Search wasn't successful. No points updated");
-			}
+
 			switch (action) {
 				// alert selected point as lonlat
-			case "start":
-				window.markList.setStartMark(mark);
-				alert("lonlat: "+mark.get("lonlat"));
-				break;
+                case "start":
+                    window.markList.setStartMark(mark);
+                    alert("lonlat: "+mark.get("lonlat"));
+                    break;
 
-			case "mark":
-				window.markList.appendMark(mark);
-				break;
+                case "mark":
+                    window.markList.appendMark(mark);
+                    break;
 
-			case "target":
-				window.markList.setTargetMark(mark);
-				break;
+                case "target":
+                    window.markList.setTargetMark(mark);
+                    break;
 
-			default:
-				log("Something went wrong with contextMenu! This is the default action.");
+                default:
+                    log("Something went wrong with contextMenu! This is the default action.");
 			};
-			
+
 		}
     });
 }
@@ -59,7 +58,7 @@ function setContextMenu(map) {
         title: "Markers",
         items: function (evt) {
             var feature = window.mapModel.get('mapObject').dataLayer.getFeatureFromEvent(evt);
-            
+
             // if it's a marker
             if (feature && (feature.attributes.mark != undefined)) {
                 return [

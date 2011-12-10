@@ -97,23 +97,22 @@ _.extend(window.Api.prototype, {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText || "";
-                
+
                 // use simple error if response is empty
-                if(text == ""){
-                	if(errorThrown != "")
+                if(text === "") {
+                	if(errorThrown !== "")
 	                	text = errorThrown;
 	                else
-	                	// if everything is empty use standard error
-	                	text = that.get('error').message + "<br />" + that.get('error').details;
-                }
-                else
+	                	text = that.get('error').message + "<br />" + that.get('error').details; // if everything is empty use standard error
+                } else {
                 	text = JSON.parse(text);
+                }
 
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
                 new MessageView().show({title: "Error", message: text});
-                
+
             }
         });
 
@@ -130,10 +129,9 @@ _.extend(window.Api.prototype, {
             request : {},
             callback: function (text, success) {
             	if(text.servertype == "private")
-//                if (!_.isNaN(text.sslport) && !_.isUndefined(text.sslport))
                     that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
                 if (_.isFunction(args.callback))
-                        args.callback(text, success);
+                    args.callback(text, success);
             }
         });
     },
@@ -293,10 +291,14 @@ _.extend(window.Api.prototype, {
 			return false;
 		this.send({
 			suffix : 'nns',
-			request : args.points,
+            type: 'POST',
+			request : {
+                version: 1,
+                points: args.points
+            },
 			callback : _.isFunction(args.callback) ? args.callback : null
 		});
-		
+
 		return true;
 	},
 
