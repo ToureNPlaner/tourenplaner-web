@@ -160,16 +160,16 @@ window.SidebarView = Backbone.View.extend({
     onSend: function () {
         var alg = this.$('#algorithms').val();
         if (_.isUndefined(alg) || _.isEmpty(alg))  {
-            new MessageView().show({
+            new MessageView({
                 title: $._('Error'),
                 message: $._('No algorithm selected.')
-            });
+            }).render();
         //TODO: Use algorithm info for this
         } else if (window.markList.length < 2) {
-            new MessageView().show({
+            new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
-            });
+            }).render();
         } else {
             window.api.alg({
                 alg: this.$('#algorithms').val(),
@@ -577,18 +577,18 @@ window.RegisterView = Backbone.View.extend({
             success: function () {
                 this.loading.remove();
                 this.remove();
-                new MessageView().show({
+                new MessageView({
                     title: $._("Registration successful"),
                     message: $._("The registration was successful. Please wait until an administrator activates your account.")
-                });
+                }).render();
             },
             error: function (text) {
                 this.loading.remove();
                 //TODO: Parse error message and display errors
-                new MessageView().show({
+                new MessageView({
                    title: $._('Error!'),
                    message: text
-                });
+                }).render();
             }
         });
     },
@@ -602,11 +602,32 @@ window.MessageView = Backbone.View.extend({
 
     el: $('#message'),
 
-    events: {
-        "click .modal-footer a.cancel": "remove"
+    initialize: function (args) {
+        args = args || {};
+        this.title = args.title || "";
+        this.message = args.message || "";
     },
 
     render: function () {
+        if (this.el.length == 0) {
+            $('body').append('<div id="message" class="modal"></div>');
+            this.el = $('#message');
+        }
+
+        var template = '<div class="modal-header">\
+                            <a href="#" class="close">x</a>\
+                            <h3 class="title"><%=title%></h3>\
+                        </div>\
+                        <div class="modal-body">\
+                          <div class="message"><%=message%></div>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#" class="btn primary cancel">'+$._('Close')+'</a>\
+                        </div>';
+
+        this.el.html(_.template(template, {title: this.title, message: this.message}));
+        this.$('.modal-footer a.cancel').click(_.bind(this.remove, this));
+
         this.el.modal({
             show: true,
             backdrop: 'static',
@@ -615,19 +636,9 @@ window.MessageView = Backbone.View.extend({
         return this;
     },
 
-    show: function (args) {
-        if (_.isUndefined(args)) return;
-        this.title = args.title || "";
-        this.message = args.message || "";
-
-        this.$('.title').html(this.title);
-        this.$('.message').html(this.message);
-
-        this.render();
-    },
-
     remove: function () {
         this.el.modal('hide');
+        this.el.remove();
     }
 });
 
@@ -640,15 +651,16 @@ window.LoadingView = Backbone.View.extend({
     },
 
     render: function () {
-        if (this.el.length() == 0) {
-            document.write('<div id="loading" class="modal"></div>');
+        log(this.el);
+        if (this.el.length === 0) {
+            $('body').append('<div id="loading" class="modal"></div>');
             this.el = $('#loading');
         }
 
-        var template =  '<div class="body">' +
-                            '<div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>' +
-                            '<div class="message"><%=message%></div>' +
-                        '</div>';
+        var template =  '<div class="body">\
+                            <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>\
+                            <div class="message"><%=message%></div>\
+                        </div>';
 
         this.el.html(_.template(template, {message: this.message}));
 

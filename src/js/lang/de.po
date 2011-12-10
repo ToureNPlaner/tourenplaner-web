@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 17:54+0100\n"
-"PO-Revision-Date: 2011-12-10 17:54+0100\n"
+"POT-Creation-Date: 2011-12-10 18:37+0100\n"
+"PO-Revision-Date: 2011-12-10 18:38+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -18,6 +18,12 @@ msgstr ""
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-KeywordsList: $._\n"
+
+#: api.js:114
+#: views.js:164
+#: views.js:170
+msgid "Error"
+msgstr "Fehler"
 
 #: map.contextmenu.js:57
 msgid "Markers"
@@ -48,14 +54,13 @@ msgstr "Markierung hinzufügen"
 msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
 
+#: router.js:19
+msgid "Loading server informations"
+msgstr "Lade Serverinformationen"
+
 #: views.js:152
 msgid "No points defined"
 msgstr "Keine Punkte definiert"
-
-#: views.js:164
-#: views.js:170
-msgid "Error"
-msgstr "Fehler"
 
 #: views.js:165
 msgid "No algorithm selected."
@@ -127,7 +132,7 @@ msgstr "Registrierung erfolgreich"
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 
-#: router.js:19
-msgid "Loading server informations"
-msgstr "Lade Serverinformationen"
+#: views.js:628
+msgid "Close"
+msgstr "Schließen"
 

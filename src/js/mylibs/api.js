@@ -111,7 +111,7 @@ _.extend(window.Api.prototype, {
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
-                new MessageView().show({title: "Error", message: text});
+                new MessageView({title: $._("Error"), message: text}).render();
 
             }
         });

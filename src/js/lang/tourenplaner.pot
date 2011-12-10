@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 17:54+0100\n"
+"POT-Creation-Date: 2011-12-10 18:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: api.js:114 views.js:164 views.js:170
+msgid "Error"
+msgstr ""
 
 #: map.contextmenu.js:57
 msgid "Markers"
@@ -45,12 +49,12 @@ msgstr ""
 msgid "Add Endmarker"
 msgstr ""
 
-#: views.js:152
-msgid "No points defined"
+#: router.js:19
+msgid "Loading server informations"
 msgstr ""
 
-#: views.js:164 views.js:170
-msgid "Error"
+#: views.js:152
+msgid "No points defined"
 msgstr ""
 
 #: views.js:165
@@ -123,6 +127,6 @@ msgid ""
 "activates your account."
 msgstr ""
 
-#: router.js:19
-msgid "Loading server informations"
+#: views.js:625
+msgid "Close"
 msgstr ""
