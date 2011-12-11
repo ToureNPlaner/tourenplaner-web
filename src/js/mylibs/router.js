@@ -26,9 +26,7 @@ window.Router = Backbone.Router.extend({
     },
 
     login: function() {
-        if (_.isNull(this.loginView) || _.isUndefined(this.loginView))
-            this.loginView = new LoginView();
-        this.loginView.render();
+        new LoginView().render();
     },
 
     logout: function() {
@@ -38,9 +36,7 @@ window.Router = Backbone.Router.extend({
     },
 
     register: function() {
-        if (_.isNull(this.registerView) || _.isUndefined(this.registerView))
-            this.registerView = new RegisterView();
-        this.registerView.render();
+        new RegisterView().render();
     },
 
     settings: function() {

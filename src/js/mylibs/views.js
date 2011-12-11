@@ -388,7 +388,7 @@ window.LoginView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "onClose",
+        "hidden": "remove",
         "click .modal-footer a.login": "onSubmitClick",
         "click .modal-footer a.cancel": "remove"
     },
@@ -444,8 +444,11 @@ window.LoginView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).modal('hide');
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+
         $(this.el).remove();
+        window.app.navigate('');
     },
 
     onSubmitClick: function () {
@@ -473,16 +476,6 @@ window.LoginView = Backbone.View.extend({
         } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
             this.$('.error-correct').show();
         }
-    },
-
-    onClose: function () {
-        this.$('input').each(function () {
-            $(this).val('');
-        });
-
-        this.validator.resetForm();
-        this.$('.alert-message').hide();
-        window.app.navigate('');
     }
 });
 
@@ -492,7 +485,7 @@ window.RegisterView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "onClose",
+        "hidden": "remove",
         "click .modal-footer a.register": "onRegister",
         "click .modal-footer a.cancel": "remove"
     },
@@ -552,18 +545,10 @@ window.RegisterView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).modal('hide');
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+
         $(this.el).remove();
-    },
-
-    onClose: function () {
-        this.$('input, textarea').each(function () {
-            $(this).val('');
-            $(this).removeClass('error valid');
-        });
-
-        this.$('.alert-message').hide();
-        this.validator.resetForm();
         window.app.navigate('');
     },
 
@@ -610,6 +595,7 @@ window.MessageView = Backbone.View.extend({
     className: 'modal',
 
     events: {
+        "hidden": "remove",
         "click .modal-footer a.cancel" : "remove"
     },
 
@@ -631,7 +617,9 @@ window.MessageView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).modal('hide');
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+
         $(this.el).remove();
     }
 });
