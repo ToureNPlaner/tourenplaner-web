@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 18:25+0100\n"
+"POT-Creation-Date: 2011-12-11 18:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,55 @@ msgstr ""
 msgid "Loading server informations"
 msgstr ""
 
-#: templates.js:11
+#: templates.js:5
+msgid "Registration"
+msgstr ""
+
+#: templates.js:9 templates.js:12 views.js:413 views.js:522 views.js:591
+msgid "Error!"
+msgstr ""
+
+#: templates.js:9
+msgid "Please fill out all fields."
+msgstr ""
+
+#: templates.js:12
+msgid "There were errors in the form."
+msgstr ""
+
+#: templates.js:16
+msgid "First name"
+msgstr ""
+
+#: templates.js:22
+msgid "Last name"
+msgstr ""
+
+#: templates.js:28
+msgid "Address"
+msgstr ""
+
+#: templates.js:34
+msgid "Email"
+msgstr ""
+
+#: templates.js:40
+msgid "Password"
+msgstr ""
+
+#: templates.js:46
+msgid "Repeat Password"
+msgstr ""
+
+#: templates.js:54
+msgid "Cancel"
+msgstr ""
+
+#: templates.js:55
+msgid "Register"
+msgstr ""
+
+#: templates.js:66
 msgid "Close"
 msgstr ""
 
@@ -109,23 +157,19 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#: views.js:413 views.js:519 views.js:589
-msgid "Error!"
-msgstr ""
-
 #: views.js:452
 msgid "Logging in"
 msgstr ""
 
-#: views.js:565
+#: views.js:567
 msgid "Sending data"
 msgstr ""
 
-#: views.js:581
+#: views.js:583
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:582
+#: views.js:584
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."

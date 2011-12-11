@@ -484,7 +484,8 @@ window.LoginView = Backbone.View.extend({
 
 window.RegisterView = Backbone.View.extend({
 
-    el: $('#register'),
+    id: 'register',
+    className: 'modal',
 
     events: {
         "hidden": "onClose",
@@ -492,7 +493,9 @@ window.RegisterView = Backbone.View.extend({
         "click .modal-footer a.cancel": "remove"
     },
 
-    initialize: function () {
+    render: function () {
+        $(this.el).html(_.template(templates.registerView));
+
         var that = this;
         this.validator = this.$('form').validate({
             rules: {
@@ -534,11 +537,9 @@ window.RegisterView = Backbone.View.extend({
             invalidHandler: function () {
                 that.$('.error-correct').show();
             }
-        })
-    },
+        });
 
-    render: function () {
-        this.el.modal({
+        $(this.el).modal({
             show: true,
             backdrop: 'static',
             keyboard: true
@@ -547,7 +548,8 @@ window.RegisterView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.el.modal('hide');
+        $(this.el).modal('hide');
+        $(this.el).remove();
     },
 
     onClose: function () {
@@ -600,7 +602,12 @@ window.RegisterView = Backbone.View.extend({
 
 window.MessageView = Backbone.View.extend({
 
-    el: $('#message'),
+    id: 'message',
+    className: 'modal',
+
+    events: {
+        "click .modal-footer a.cancel" : "remove"
+    },
 
     initialize: function (args) {
         args = args || {};
@@ -609,15 +616,9 @@ window.MessageView = Backbone.View.extend({
     },
 
     render: function () {
-        if (this.el.length == 0) {
-            $('body').append('<div id="message" class="modal"></div>');
-            this.el = $('#message');
-        }
+        $(this.el).html(_.template(templates.messageView, {title: this.title, message: this.message}));
 
-        this.el.html(_.template(templates.messageView, {title: this.title, message: this.message}));
-        this.$('.modal-footer a.cancel').click(_.bind(this.remove, this));
-
-        this.el.modal({
+        $(this.el).modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -626,29 +627,24 @@ window.MessageView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.el.modal('hide');
-        this.el.remove();
+        $(this.el).modal('hide');
+        $(this.el).remove();
     }
 });
 
 window.LoadingView = Backbone.View.extend({
 
-    el: $('#loading'),
+    id: 'loading',
+    className: 'modal',
 
     initialize: function (message) {
         this.message = message;
     },
 
     render: function () {
-        log(this.el);
-        if (this.el.length === 0) {
-            $('body').append('<div id="loading" class="modal"></div>');
-            this.el = $('#loading');
-        }
+        $(this.el).html(_.template(templates.loadingView, {message: this.message}));
 
-        this.el.html(_.template(templates.loadingView, {message: this.message}));
-
-        this.el.modal({
+        $(this.el).modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -657,7 +653,7 @@ window.LoadingView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.el.modal('hide');
-        this.el.remove();
+        $(this.el).modal('hide');
+        $(this.el).remove();
     }
 });
