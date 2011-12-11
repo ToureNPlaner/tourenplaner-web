@@ -74,7 +74,8 @@ $.mockjax({
     responseTimeout: 10,
     status: 200,
     response: function(data) {
-        if (!_.isUndefined(data.headers.Authorization) && _.isEqual(data.headers.Authorization, Base64.encode('asd@asd.de:asd'))) {
+        var login = data.headers.Authorization.split(' ')[1];
+        if (_.isEqual(login, Base64.encode('asd@asd.de:asd'))) {
             this.responseText = {
                 username: 'asd',
                 password: 'asd',

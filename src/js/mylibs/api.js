@@ -111,8 +111,12 @@ _.extend(window.Api.prototype, {
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
-                new MessageView({title: $._("Error"), message: text}).render();
-
+                if (!reqData.silent) {
+                    var message = text;
+                    if (!_.isString(text))
+                        message = text.message + ': ' + text.details;
+                    new MessageView({title: $._("Error"), message: message}).render();
+                }
             }
         });
 
@@ -165,6 +169,7 @@ _.extend(window.Api.prototype, {
         this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
 
         this.send({
+            silent: true,
             suffix: 'authuser',
             callback: _.isFunction(args.callback) ? args.callback : null
         });
