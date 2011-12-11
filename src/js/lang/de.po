@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 18:37+0100\n"
-"PO-Revision-Date: 2011-12-10 18:38+0100\n"
+"POT-Creation-Date: 2011-12-11 18:25+0100\n"
+"PO-Revision-Date: 2011-12-11 18:26+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -25,38 +25,42 @@ msgstr ""
 msgid "Error"
 msgstr "Fehler"
 
-#: map.contextmenu.js:57
+#: map.contextmenu.js:58
 msgid "Markers"
 msgstr "Markierungen"
 
-#: map.contextmenu.js:64
+#: map.contextmenu.js:65
 msgid "Set as Startmarker"
 msgstr "Als Start markieren"
 
-#: map.contextmenu.js:65
+#: map.contextmenu.js:66
 msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
-#: map.contextmenu.js:67
+#: map.contextmenu.js:68
 #: views.js:302
 msgid "Delete"
 msgstr "Löschen"
 
-#: map.contextmenu.js:71
+#: map.contextmenu.js:72
 msgid "Add Startmarker"
 msgstr "Startmarkierung hinzufügen"
 
-#: map.contextmenu.js:72
+#: map.contextmenu.js:73
 msgid "Add Marker"
 msgstr "Markierung hinzufügen"
 
-#: map.contextmenu.js:73
+#: map.contextmenu.js:74
 msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
 
 #: router.js:19
 msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
+
+#: templates.js:11
+msgid "Close"
+msgstr "Schließen"
 
 #: views.js:152
 msgid "No points defined"
@@ -131,8 +135,4 @@ msgstr "Registrierung erfolgreich"
 #: views.js:582
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
-
-#: views.js:628
-msgid "Close"
-msgstr "Schließen"
 

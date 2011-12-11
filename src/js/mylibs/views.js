@@ -614,18 +614,7 @@ window.MessageView = Backbone.View.extend({
             this.el = $('#message');
         }
 
-        var template = '<div class="modal-header">\
-                            <a href="#" class="close">x</a>\
-                            <h3 class="title"><%=title%></h3>\
-                        </div>\
-                        <div class="modal-body">\
-                          <div class="message"><%=message%></div>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#" class="btn primary cancel">'+$._('Close')+'</a>\
-                        </div>';
-
-        this.el.html(_.template(template, {title: this.title, message: this.message}));
+        this.el.html(_.template(templates.messageView, {title: this.title, message: this.message}));
         this.$('.modal-footer a.cancel').click(_.bind(this.remove, this));
 
         this.el.modal({
@@ -657,12 +646,7 @@ window.LoadingView = Backbone.View.extend({
             this.el = $('#loading');
         }
 
-        var template =  '<div class="body">\
-                            <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>\
-                            <div class="message"><%=message%></div>\
-                        </div>';
-
-        this.el.html(_.template(template, {message: this.message}));
+        this.el.html(_.template(templates.loadingView, {message: this.message}));
 
         this.el.modal({
             show: true,

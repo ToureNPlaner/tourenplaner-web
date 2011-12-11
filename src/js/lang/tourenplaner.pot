@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 18:39+0100\n"
+"POT-Creation-Date: 2011-12-11 18:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,36 +21,40 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: map.contextmenu.js:57
+#: map.contextmenu.js:58
 msgid "Markers"
 msgstr ""
 
-#: map.contextmenu.js:64
+#: map.contextmenu.js:65
 msgid "Set as Startmarker"
 msgstr ""
 
-#: map.contextmenu.js:65
+#: map.contextmenu.js:66
 msgid "Set as Endmarker"
 msgstr ""
 
-#: map.contextmenu.js:67 views.js:302
+#: map.contextmenu.js:68 views.js:302
 msgid "Delete"
 msgstr ""
 
-#: map.contextmenu.js:71
+#: map.contextmenu.js:72
 msgid "Add Startmarker"
 msgstr ""
 
-#: map.contextmenu.js:72
+#: map.contextmenu.js:73
 msgid "Add Marker"
 msgstr ""
 
-#: map.contextmenu.js:73
+#: map.contextmenu.js:74
 msgid "Add Endmarker"
 msgstr ""
 
 #: router.js:19
 msgid "Loading server informations"
+msgstr ""
+
+#: templates.js:11
+msgid "Close"
 msgstr ""
 
 #: views.js:152
@@ -125,8 +129,4 @@ msgstr ""
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."
-msgstr ""
-
-#: views.js:625
-msgid "Close"
 msgstr ""
