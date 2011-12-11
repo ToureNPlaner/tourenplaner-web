@@ -2,5 +2,6 @@ api.js
 map.contextmenu.js
 router.js
 templates.js
+strings.js
 views.js
 
