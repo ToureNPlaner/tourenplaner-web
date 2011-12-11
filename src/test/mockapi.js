@@ -333,7 +333,7 @@ $.mockjax({
  * Returns the given point as the nearest neighbor.
  */
 $.mockjax({
-    url: "/nns",
+    url: "/algnnl",
     responseTimeout: 10,
     status: 200,
     response: function (data) {
