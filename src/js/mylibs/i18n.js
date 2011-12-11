@@ -1,4 +1,5 @@
 var available_langs = ['en', 'de'];
+var default_lang = 'en';
 
 // Determine language from browser variable
 var lang = navigator.language || navigator.browserLanguage;
@@ -8,12 +9,12 @@ if ($.inArray(lang, available_langs) === -1) {
     if (lang.length > 2 && $.inArray(lang.substr(0, 2), available_langs) >= 0) {
         lang = lang.substring(0, 2);
     } else {
-        lang = 'en';
+        lang = default_lang;
     }
 }
 
 log('Loading language:', lang);
-if (lang === 'en') {
+if (lang === default_lang) {
     var i18n = {};
 } else {
     document.write('<script src="js/lang/' + lang + '.js"><\/script>');
@@ -29,7 +30,7 @@ function gettext(key) {
     if (i18n[key] && i18n[key].length > 0) {
         return i18n[key];
     } else {
-        lang === 'en' || log('Unknown translation key:', key);
+        lang === default_lang || log('Unknown translation key:', key);
         return key;
     }
 }
