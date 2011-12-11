@@ -116,7 +116,7 @@ window.SidebarView = Backbone.View.extend({
         if (this.marks.length == 0)
             this.$('#marks').html('');
 
-        var view = new MarkView(model).render();
+        var view = new MarkView({model: model}).render();
         this.marks.push(view);
         model.set({view: view});
 
@@ -152,7 +152,7 @@ window.SidebarView = Backbone.View.extend({
             this.$('#marks').html($._('No points defined'));
         } else {
             for (var i = 0; i < window.markList.length; ++i)
-                this.marks.push(new MarkView(window.markList.at(i)));
+                this.marks.push(new MarkView({model: window.markList.at(i)}));
             this._sortMarks();
         }
     },
@@ -344,8 +344,7 @@ window.MarkView = Backbone.View.extend({
     el: null,
     model: null,
 
-    initialize: function (model) {
-        this.model = model;
+    initialize: function () {
         this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>');
 
         this.name = this.model.get('name');
