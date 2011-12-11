@@ -332,13 +332,7 @@ window.DataView = Backbone.View.extend({
     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-        this.$('.content').html( "<div class='clearfix'><label for='lon'><b>" + $._('Lon') + ":</b></label><input size='10' value='"+lonlat.lon+"' type='text' name='lon' id='lon' disabled='disabled' /></div>"+
-				"<div class='clearfix'><label for='lat'><b>" + $._('Lat') + ":</b></label><input size='10' value='"+lonlat.lat+"' type='text' name='lat' id='lat' disabled='disabled' /></div>"+
-				"<div class='clearfix'><label for='markerName'><b>" + $._('Name') + ":</b></label><input value='"+marker.get("name")+"' type='text' name='markerName' id='markerName' /></div>"+
-				"<div class='clearfix'><label for='markerPos'><b>" + $._('Position') + ":</b></label><input value='"+marker.get("position")+"' type='text' name='markerPos' id='markerPos' /></div></div>"+
-				"<div class='clearfix'><label for='markerK'><b>k:</b></label><input value='"+marker.get("k")+"' type='text' name='markerK' id='markerK' /></div>"+
-				"<div class='clearfix'><label for='saveMarkAttributes' /><button id='saveMarkAttributes' class='btn primary'>" + $._('Apply') + "</button><button id='deleteMark' class='btn secondary'>" + $._('Delete') + "</button></div>"+
-				"<div class='clearfix'>");
+        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker}));
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
                 name: that.$('#dataview #markerName').val()

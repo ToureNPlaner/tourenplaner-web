@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 20:53+0100\n"
+"POT-Creation-Date: 2011-12-11 21:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,35 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: api.js:114 views.js:188 views.js:194
+#: api.js:118 views.js:188 views.js:194
 msgid "Error"
 msgstr ""
 
-#: map.contextmenu.js:58
+#: map.contextmenu.js:62
 msgid "Markers"
 msgstr ""
 
-#: map.contextmenu.js:65
+#: map.contextmenu.js:69
 msgid "Set as Startmarker"
 msgstr ""
 
-#: map.contextmenu.js:66
+#: map.contextmenu.js:70
 msgid "Set as Endmarker"
 msgstr ""
 
-#: map.contextmenu.js:68 views.js:340
+#: map.contextmenu.js:72 templates.js:55
 msgid "Delete"
 msgstr ""
 
-#: map.contextmenu.js:72
+#: map.contextmenu.js:76
 msgid "Add Startmarker"
 msgstr ""
 
-#: map.contextmenu.js:73
+#: map.contextmenu.js:77
 msgid "Add Marker"
 msgstr ""
 
-#: map.contextmenu.js:74
+#: map.contextmenu.js:78
 msgid "Add Endmarker"
 msgstr ""
 
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Loading server informations"
 msgstr ""
 
-#: templates.js:7 templates.js:52 templates.js:78
+#: templates.js:7 templates.js:60 templates.js:86
 msgid "Login"
 msgstr ""
 
-#: templates.js:8 templates.js:133
+#: templates.js:8 templates.js:141
 msgid "Register"
 msgstr ""
 
@@ -105,56 +105,76 @@ msgstr ""
 msgid "No point selected!"
 msgstr ""
 
-#: templates.js:56 templates.js:59 templates.js:87 templates.js:90
-#: views.js:454 views.js:555 views.js:616
+#: templates.js:50
+msgid "Lon"
+msgstr ""
+
+#: templates.js:51
+msgid "Lat"
+msgstr ""
+
+#: templates.js:52
+msgid "Name"
+msgstr ""
+
+#: templates.js:53
+msgid "Position"
+msgstr ""
+
+#: templates.js:55
+msgid "Apply"
+msgstr ""
+
+#: templates.js:64 templates.js:67 templates.js:95 templates.js:98
+#: views.js:448 views.js:549 views.js:610
 msgid "Error!"
 msgstr ""
 
-#: templates.js:56 templates.js:87
+#: templates.js:64 templates.js:95
 msgid "Please fill out all fields."
 msgstr ""
 
-#: templates.js:59
+#: templates.js:67
 msgid "The email or password you entered was incorrect."
 msgstr ""
 
-#: templates.js:63 templates.js:112
+#: templates.js:71 templates.js:120
 msgid "Email"
 msgstr ""
 
-#: templates.js:69 templates.js:118
+#: templates.js:77 templates.js:126
 msgid "Password"
 msgstr ""
 
-#: templates.js:77 templates.js:132
+#: templates.js:85 templates.js:140
 msgid "Cancel"
 msgstr ""
 
-#: templates.js:83
+#: templates.js:91
 msgid "Registration"
 msgstr ""
 
-#: templates.js:90
+#: templates.js:98
 msgid "There were errors in the form."
 msgstr ""
 
-#: templates.js:94
+#: templates.js:102
 msgid "First name"
 msgstr ""
 
-#: templates.js:100
+#: templates.js:108
 msgid "Last name"
 msgstr ""
 
-#: templates.js:106
+#: templates.js:114
 msgid "Address"
 msgstr ""
 
-#: templates.js:124
+#: templates.js:132
 msgid "Repeat Password"
 msgstr ""
 
-#: templates.js:144
+#: templates.js:152
 msgid "Close"
 msgstr ""
 
@@ -170,59 +190,39 @@ msgstr ""
 msgid "Not enough points defined."
 msgstr ""
 
-#: views.js:335
-msgid "Lon"
-msgstr ""
-
-#: views.js:336
-msgid "Lat"
-msgstr ""
-
-#: views.js:337
-msgid "Name"
-msgstr ""
-
-#: views.js:338
-msgid "Position"
-msgstr ""
-
-#: views.js:340
-msgid "Apply"
-msgstr ""
-
-#: views.js:355
+#: views.js:349
 msgid "No Mark selected"
 msgstr ""
 
-#: views.js:365
+#: views.js:359
 msgid "Data"
 msgstr ""
 
-#: views.js:389
+#: views.js:383
 msgid "Marker"
 msgstr ""
 
-#: views.js:400
+#: views.js:394
 msgid "Start"
 msgstr ""
 
-#: views.js:402
+#: views.js:396
 msgid "Target"
 msgstr ""
 
-#: views.js:495
+#: views.js:489
 msgid "Logging in"
 msgstr ""
 
-#: views.js:592
+#: views.js:586
 msgid "Sending data"
 msgstr ""
 
-#: views.js:608
+#: views.js:602
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:609
+#: views.js:603
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."

@@ -47,6 +47,14 @@ templates.dataView = '<span class="minmax">\
                         <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
                       </div>';
 
+templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('Lon') + ':</b></label><input size="10" value="<%=lonlat.lon%>" type="text" name="lon" id="lon" disabled="disabled" /></div>\
+				<div class="clearfix"><label for="lat"><b>' + $._('Lat') + ':</b></label><input size="10" value="<%=lonlat.lat%>" type="text" name="lat" id="lat" disabled="disabled" /></div>\
+				<div class="clearfix"><label for="markerName"><b>' + $._('Name') + ':</b></label><input value="<%=marker.get("name")%>" type="text" name="markerName" id="markerName" /></div>\
+				<div class="clearfix"><label for="markerPos"><b>' + $._('Position') + ':</b></label><input value="<%=marker.get("position")%>" type="text" name="markerPos" id="markerPos" /></div></div>\
+				<div class="clearfix"><label for="markerK"><b>k:</b></label><input value="<%=marker.get("k")%>" type="text" name="markerK" id="markerK" /></div>\
+				<div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>\
+				<div class="clearfix">';
+
 templates.loginView = '<div class="modal-header">\
                         <a href="#" class="close">x</a>\
                         <h3>' + $._('Login') + '</h3>\
