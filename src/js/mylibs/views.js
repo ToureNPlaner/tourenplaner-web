@@ -6,8 +6,8 @@ window.BodyView = Backbone.View.extend({
     },
 
     initialize: function () {
-        this.topbar = new TopbarView();
-        this.main = new MainView();
+        this.topbar = new TopbarView().render();
+        this.main = new MainView().render();
     },
 
     onBodyClick: function () {
@@ -17,7 +17,8 @@ window.BodyView = Backbone.View.extend({
 
 window.TopbarView = Backbone.View.extend({
 
-    el: $('header'),
+    tagName: 'header',
+    className: 'topbar',
 
     events: {
         "click a.menu": "showDropdown"
@@ -25,9 +26,16 @@ window.TopbarView = Backbone.View.extend({
 
     initialize: function () {
         window.app.user.bind('login', this.onLogin, this);
+    },
+
+    render: function () {
+        $(this.el).html(_.template(templates.topbarView));
+        $('#container').append(this.el);
+
         this.$('ul li.menu, ul li.user').each(function () {
             $(this).css('display', 'block').hide();
         });
+        return this;
     },
 
     hideNavigation: function () {
@@ -60,20 +68,27 @@ window.TopbarView = Backbone.View.extend({
 
 window.MainView = Backbone.View.extend({
 
-    el: $('#main'),
+    id: 'main',
+    attributes: {
+        role: 'main'
+    },
 
-    initialize: function () {
-        this.sidebar = new SidebarView();
+    render: function () {
+        $('#container').append(this.el);
+
+        this.sidebar = new SidebarView().render();
         this.map = new MapView({
             sidebar: this.sidebar
-        });
-        this.data = new DataView();
+        }).render();
+        this.data = new DataView().render();
+
+        return this;
     }
 });
 
 window.SidebarView = Backbone.View.extend({
 
-    el: $('#main #sidebar'),
+    id: 'sidebar',
 
     events: {
         "click #btnClear": "onClear",
@@ -82,10 +97,22 @@ window.SidebarView = Backbone.View.extend({
 
     initialize: function () {
         this.marks = [];
-        this.onResize();
 
         $(window).resize(_.bind(this.onResize, this));
-        this.el.resizable({
+
+        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
+        window.markList.bind("add", _.bind(this.onMarkAdded, this));
+        window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
+        window.markList.bind("reset", _.bind(this.onListReset, this));
+    },
+
+    render: function () {
+        $(this.el).html(_.template(templates.sidebarView));
+        $('#main').append(this.el);
+
+        this.onResize();
+
+        $(this.el).resizable({
             handles: 'e'
         });
 
@@ -94,10 +121,7 @@ window.SidebarView = Backbone.View.extend({
         });
         this.$('#marks').disableSelection();
 
-        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
-        window.markList.bind("add", _.bind(this.onMarkAdded, this));
-        window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
-        window.markList.bind("reset", _.bind(this.onListReset, this));
+        return this;
     },
 
     onInfoLoaded: function () {
@@ -196,7 +220,7 @@ window.SidebarView = Backbone.View.extend({
         // 76 = 40 (header) + Padding (sidebar) + 11(hr) + 20 (padding #marks)
         var height = $(window).height() - 76 - $cont.first().height() - $cont.last().height() - $cont.next().next().children('h3').height();
 
-        this.el.height($(window).height() - 40);
+        $(this.el).height($(window).height() - 40);
         this.$('#marks').css('max-height', height + 'px');
     },
 
@@ -214,20 +238,24 @@ window.SidebarView = Backbone.View.extend({
 
 window.MapView = Backbone.View.extend({
 
-    el: $('#main #map'),
+    id: 'map',
 
     initialize: function (args) {
-        this.onResize(args.sidebar);
         $(window).resize(_.bind(this.onResize, this));
         args.sidebar.bind("resize", this.onSidebarResize);
+
+        window.mapModel.bind("change:route", this.onRouteChange);
+        window.markList.bind("all", this.onMarkListChange);
+    },
+
+    render: function () {
+        $('#main').append(this.el);
+
+        this.onResize(this.options.sidebar);
 
         var mapObject = window.mapModel.get("mapObject");
         mapObject.draw();
         setContextMenu();
-
-        window.mapModel.bind("change:route", this.onRouteChange);
-        window.markList.bind("all", this.onMarkListChange);
-
         mapObject.refresh();
 
         // Move the attribution stuff to a readable position
@@ -235,6 +263,8 @@ window.MapView = Backbone.View.extend({
             right: '5px',
             top: '5px'
         });
+
+        return this;
     },
 
     onRouteChange: function (model, route) {
@@ -253,14 +283,14 @@ window.MapView = Backbone.View.extend({
     onResize: function (sidebar) {
         var width = 0;
         try {
-            width = sidebar.el.outerWidth();
+            width = $(sidebar.el).outerWidth();
         } catch (e) {
-            width = window.body.main.sidebar.el.outerWidth();
+            width = $(window.body.main.sidebar.el).outerWidth();
         }
 
-        this.el.height($(window).height() - 40);
-        this.el.width($(window).width() - $('#main #sidebar').width());
-        this.el.css("left", $('#main #sidebar').width());
+        $(this.el).height($(window).height() - 40);
+        $(this.el).width($(window).width() - $('#main #sidebar').width());
+        $(this.el).css("left", $('#main #sidebar').width());
     },
 
     onSidebarResize: function (event, ui) {
@@ -273,7 +303,7 @@ window.MapView = Backbone.View.extend({
 
 window.DataView = Backbone.View.extend({
 
-    el: $('#main #data'),
+    id: 'data',
 
     /**
      * Used to save the old size (before minimizing). Using this, we can restore the old size.
@@ -285,10 +315,18 @@ window.DataView = Backbone.View.extend({
     },
 
     initialize: function () {
-        this.el.resizable({
+        window.mapModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
+    },
+
+    render: function () {
+        $(this.el).html(_.template(templates.dataView));
+        $('#main').append(this.el);
+
+        $(this.el).resizable({
             handles: "n, nw, w"
         });
-        window.mapModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
+
+        return this;
     },
 
     onDataViewChange: function (model, marker) {
@@ -340,7 +378,6 @@ var _markerNameSuffix = "A";
 
 window.MarkView = Backbone.View.extend({
 
-    parent: $('#marks'),
     el: null,
     model: null,
 
@@ -364,7 +401,7 @@ window.MarkView = Backbone.View.extend({
         else if (this.model.get('position') == window.markList.length - 1)
             position = '(' + $._('Target') + ')';
 
-        this.parent.append(this.template({cid: this.model.cid, name: this.name, position: position}));
+        $('#marks').append(this.template({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
 
         this.$('a.view').click(_.bind(this.onClick, this));
@@ -373,7 +410,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.el.remove();
+        $(this.el).remove();
     },
 
     onClick: function () {

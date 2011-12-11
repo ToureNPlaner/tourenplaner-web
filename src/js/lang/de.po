@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 19:01+0100\n"
-"PO-Revision-Date: 2011-12-11 19:01+0100\n"
+"POT-Creation-Date: 2011-12-11 20:53+0100\n"
+"PO-Revision-Date: 2011-12-11 20:54+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Poedit-KeywordsList: $._\n"
 
 #: api.js:114
-#: views.js:164
-#: views.js:170
+#: views.js:188
+#: views.js:194
 msgid "Error"
 msgstr "Fehler"
 
@@ -38,7 +38,7 @@ msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
 #: map.contextmenu.js:68
-#: views.js:302
+#: views.js:340
 msgid "Delete"
 msgstr "Löschen"
 
@@ -58,142 +58,188 @@ msgstr "Endmarkierung hinzufügen"
 msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
 
-#: templates.js:5
-#: templates.js:31
+#: templates.js:7
+#: templates.js:52
+#: templates.js:78
 msgid "Login"
 msgstr "Login"
 
-#: templates.js:9
-#: templates.js:12
-#: templates.js:40
-#: templates.js:43
-#: views.js:418
-#: views.js:526
-#: views.js:595
-msgid "Error!"
-msgstr "Fehler!"
-
-#: templates.js:9
-#: templates.js:40
-msgid "Please fill out all fields."
-msgstr "Bitte füllen Sie alle Felder aus."
-
-#: templates.js:12
-msgid "The email or password you entered was incorrect."
-msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
-
-#: templates.js:16
-#: templates.js:65
-msgid "Email"
-msgstr "Email"
-
-#: templates.js:22
-#: templates.js:71
-msgid "Password"
-msgstr "Passwort"
-
-#: templates.js:30
-#: templates.js:85
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: templates.js:36
-msgid "Registration"
-msgstr "Registrierung"
-
-#: templates.js:43
-msgid "There were errors in the form."
-msgstr "Es traten Fehler im Formular auf."
-
-#: templates.js:47
-msgid "First name"
-msgstr "Vorname"
-
-#: templates.js:53
-msgid "Last name"
-msgstr "Nachname"
-
-#: templates.js:59
-msgid "Address"
-msgstr "Adresse"
-
-#: templates.js:77
-msgid "Repeat Password"
-msgstr "Passwort wiederholen"
-
-#: templates.js:86
+#: templates.js:8
+#: templates.js:133
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates.js:97
+#: templates.js:11
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: templates.js:13
+msgid "Usersettings"
+msgstr "Benutzereinstellungen"
+
+#: templates.js:14
+msgid "Billing"
+msgstr "Rechnungen"
+
+#: templates.js:16
+msgid "Logout"
+msgstr "Logout"
+
+#: templates.js:26
+msgid "Algorithms"
+msgstr "Algorithmen"
+
+#: templates.js:28
+msgid "No algorithms"
+msgstr "Keine Algorithmen"
+
+#: templates.js:33
+msgid "Points"
+msgstr "Punkte"
+
+#: templates.js:34
+msgid "No points defined!"
+msgstr "Keine Punkte definiert!"
+
+#: templates.js:37
+msgid "Calculate Route"
+msgstr "Route berechnen"
+
+#: templates.js:38
+msgid "Clear"
+msgstr "Leeren"
+
+#: templates.js:47
+msgid "No point selected!"
+msgstr "Kein Punkt ausgewählt!"
+
+#: templates.js:56
+#: templates.js:59
+#: templates.js:87
+#: templates.js:90
+#: views.js:454
+#: views.js:555
+#: views.js:616
+msgid "Error!"
+msgstr "Fehler!"
+
+#: templates.js:56
+#: templates.js:87
+msgid "Please fill out all fields."
+msgstr "Bitte füllen Sie alle Felder aus."
+
+#: templates.js:59
+msgid "The email or password you entered was incorrect."
+msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
+
+#: templates.js:63
+#: templates.js:112
+msgid "Email"
+msgstr "Email"
+
+#: templates.js:69
+#: templates.js:118
+msgid "Password"
+msgstr "Passwort"
+
+#: templates.js:77
+#: templates.js:132
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: templates.js:83
+msgid "Registration"
+msgstr "Registrierung"
+
+#: templates.js:90
+msgid "There were errors in the form."
+msgstr "Es traten Fehler im Formular auf."
+
+#: templates.js:94
+msgid "First name"
+msgstr "Vorname"
+
+#: templates.js:100
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates.js:106
+msgid "Address"
+msgstr "Adresse"
+
+#: templates.js:124
+msgid "Repeat Password"
+msgstr "Passwort wiederholen"
+
+#: templates.js:144
 msgid "Close"
 msgstr "Schließen"
 
-#: views.js:152
+#: views.js:176
 msgid "No points defined"
 msgstr "Keine Punkte definiert"
 
-#: views.js:165
+#: views.js:189
 msgid "No algorithm selected."
 msgstr "Kein Algorithmus ausgewählt."
 
-#: views.js:171
+#: views.js:195
 msgid "Not enough points defined."
 msgstr "Nicht genug Punkte definiert."
 
-#: views.js:297
+#: views.js:335
 msgid "Lon"
 msgstr "Breite"
 
-#: views.js:298
+#: views.js:336
 msgid "Lat"
 msgstr "Höhe"
 
-#: views.js:299
+#: views.js:337
 msgid "Name"
 msgstr "Name"
 
-#: views.js:300
+#: views.js:338
 msgid "Position"
 msgstr "Position:"
 
-#: views.js:302
+#: views.js:340
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: views.js:317
+#: views.js:355
 msgid "No Mark selected"
 msgstr "Keine Markierung ausgewählt"
 
-#: views.js:327
+#: views.js:365
 msgid "Data"
 msgstr "Daten"
 
-#: views.js:353
+#: views.js:389
 msgid "Marker"
 msgstr "Markierung"
 
-#: views.js:364
+#: views.js:400
 msgid "Start"
 msgstr "Start"
 
-#: views.js:366
+#: views.js:402
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:456
+#: views.js:495
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:571
+#: views.js:592
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:587
+#: views.js:608
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:588
+#: views.js:609
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 

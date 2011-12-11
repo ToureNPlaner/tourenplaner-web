@@ -1,5 +1,52 @@
 window.templates = window.templates || {};
 
+templates.topbarView = '<div class="fill">\
+                            <div class="container">\
+                              <h3><a href="#">ToureNPlaner</a></h3>\
+                              <ul class="nav secondary-nav private-server">\
+                                <li class="login-link"><a href="#/login">' + $._('Login') + '</a></li>\
+                                <li class="register-link"><a href="#/register">' + $._('Register') + '</a></li>\
+                                <li class="user"><a href="#" onclick="return false;"></a></li>\
+                                <li class="menu">\
+                                  <a class="menu" href="#">' + $._('Settings') + '</a>\
+                                  <ul class="menu-dropdown">\
+                                    <li><a href="#/settings">' + $._('Usersettings') + '</a></li>\
+                                    <li><a href="#/billing">' + $._('Billing') + '</a></li>\
+                                    <li class="divider"></li>\
+                                    <li><a href="#/logout">' + $._('Logout') + '</a></li>\
+                                  </ul>\
+                                </li>\
+                              </ul>\
+                            </div>\
+                        </div>';
+
+templates.sidebarView = '<div style="padding: 5px 0px;">\
+                            <form name="route">\
+                              <div class="container">\
+                                <h3>' + $._('Algorithms') + ':</h3>\
+                                <select name="algorithms" id="algorithms">\
+                                  <option value="">' + $._('No algorithms') + '</option>\
+                                </select>\
+                              </div>\
+                              <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
+                              <div class="container">\
+                                <h3>' + $._('Points') + ':</h3>\
+                                <div id="marks">' + $._('No points defined!') + '</div>\
+                              </div>\
+                              <div class="container">\
+                                <a href="#" id="btnSend" class="btn primary">' + $._('Calculate Route') + '</a>\
+                                <a href="#" id="btnClear" class="btn secondary">' + $._('Clear') + '</a>\
+                              </div>\
+                            </form>\
+                         </div>';
+
+templates.dataView = '<span class="minmax">\
+                        <a href="#">_</a>\
+                      </span>\
+                      <div class="content" id="dataview">\
+                        <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
+                      </div>';
+
 templates.loginView = '<div class="modal-header">\
                         <a href="#" class="close">x</a>\
                         <h3>' + $._('Login') + '</h3>\
