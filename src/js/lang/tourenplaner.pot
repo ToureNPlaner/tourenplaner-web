@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 18:46+0100\n"
+"POT-Creation-Date: 2011-12-11 19:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,55 +53,64 @@ msgstr ""
 msgid "Loading server informations"
 msgstr ""
 
-#: templates.js:5
-msgid "Registration"
+#: templates.js:5 templates.js:31
+msgid "Login"
 msgstr ""
 
-#: templates.js:9 templates.js:12 views.js:413 views.js:522 views.js:591
+#: templates.js:9 templates.js:12 templates.js:40 templates.js:43 views.js:418
+#: views.js:526 views.js:595
 msgid "Error!"
 msgstr ""
 
-#: templates.js:9
+#: templates.js:9 templates.js:40
 msgid "Please fill out all fields."
 msgstr ""
 
 #: templates.js:12
-msgid "There were errors in the form."
+msgid "The email or password you entered was incorrect."
 msgstr ""
 
-#: templates.js:16
-msgid "First name"
-msgstr ""
-
-#: templates.js:22
-msgid "Last name"
-msgstr ""
-
-#: templates.js:28
-msgid "Address"
-msgstr ""
-
-#: templates.js:34
+#: templates.js:16 templates.js:65
 msgid "Email"
 msgstr ""
 
-#: templates.js:40
+#: templates.js:22 templates.js:71
 msgid "Password"
 msgstr ""
 
-#: templates.js:46
-msgid "Repeat Password"
-msgstr ""
-
-#: templates.js:54
+#: templates.js:30 templates.js:85
 msgid "Cancel"
 msgstr ""
 
-#: templates.js:55
+#: templates.js:36
+msgid "Registration"
+msgstr ""
+
+#: templates.js:43
+msgid "There were errors in the form."
+msgstr ""
+
+#: templates.js:47
+msgid "First name"
+msgstr ""
+
+#: templates.js:53
+msgid "Last name"
+msgstr ""
+
+#: templates.js:59
+msgid "Address"
+msgstr ""
+
+#: templates.js:77
+msgid "Repeat Password"
+msgstr ""
+
+#: templates.js:86
 msgid "Register"
 msgstr ""
 
-#: templates.js:66
+#: templates.js:97
 msgid "Close"
 msgstr ""
 
@@ -157,19 +166,19 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#: views.js:452
+#: views.js:456
 msgid "Logging in"
 msgstr ""
 
-#: views.js:567
+#: views.js:571
 msgid "Sending data"
 msgstr ""
 
-#: views.js:583
+#: views.js:587
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:584
+#: views.js:588
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."

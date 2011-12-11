@@ -1,5 +1,36 @@
 window.templates = window.templates || {};
 
+templates.loginView = '<div class="modal-header">\
+                        <a href="#" class="close">x</a>\
+                        <h3>' + $._('Login') + '</h3>\
+                       </div>\
+                       <div class="modal-body">\
+                        <div class="alert-message error error-empty">\
+                          <p><strong>' + $._('Error!') + '</strong> ' + $._('Please fill out all fields.') + '</p>\
+                        </div>\
+                        <div class="alert-message error error-correct">\
+                          <p><strong>' + $._('Error!') + '</strong> ' + $._('The email or password you entered was incorrect.') + '</p>\
+                        </div>\
+                        <form name="login" method="post" action="#/login">\
+                          <div class="clearfix">\
+                            <label for="email">' + $._('Email') + ':</label>\
+                            <div class="input">\
+                              <input type="text" name="email" id="email" />\
+                            </div>\
+                          </div>\
+                          <div class="clearfix">\
+                            <label for="password">' + $._('Password') + ':</label>\
+                            <div class="input">\
+                              <input type="password" name="password" id="password" />\
+                            </div>\
+                          </div>\
+                        </form>\
+                       </div>\
+                       <div class="modal-footer">\
+                        <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
+                        <a href="#/login" class="btn primary login">' + $._('Login') + '</a>\
+                       </div>';
+
 templates.registerView = '  <div class="modal-header">\
                               <a href="#" class="close">x</a>\
                               <h3>' + $._('Registration') + '</h3>\

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 18:46+0100\n"
-"PO-Revision-Date: 2011-12-11 18:48+0100\n"
+"POT-Creation-Date: 2011-12-11 19:01+0100\n"
+"PO-Revision-Date: 2011-12-11 19:01+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -59,58 +59,73 @@ msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
 
 #: templates.js:5
-msgid "Registration"
-msgstr "Registrierung"
+#: templates.js:31
+msgid "Login"
+msgstr "Login"
 
 #: templates.js:9
 #: templates.js:12
-#: views.js:413
-#: views.js:522
-#: views.js:591
+#: templates.js:40
+#: templates.js:43
+#: views.js:418
+#: views.js:526
+#: views.js:595
 msgid "Error!"
 msgstr "Fehler!"
 
 #: templates.js:9
+#: templates.js:40
 msgid "Please fill out all fields."
 msgstr "Bitte füllen Sie alle Felder aus."
 
 #: templates.js:12
-msgid "There were errors in the form."
-msgstr "Es traten Fehler im Formular auf."
+msgid "The email or password you entered was incorrect."
+msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
 
 #: templates.js:16
-msgid "First name"
-msgstr "Vorname"
-
-#: templates.js:22
-msgid "Last name"
-msgstr "Nachname"
-
-#: templates.js:28
-msgid "Address"
-msgstr "Adresse"
-
-#: templates.js:34
+#: templates.js:65
 msgid "Email"
 msgstr "Email"
 
-#: templates.js:40
+#: templates.js:22
+#: templates.js:71
 msgid "Password"
 msgstr "Passwort"
 
-#: templates.js:46
-msgid "Repeat Password"
-msgstr "Passwort wiederholen"
-
-#: templates.js:54
+#: templates.js:30
+#: templates.js:85
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates.js:55
+#: templates.js:36
+msgid "Registration"
+msgstr "Registrierung"
+
+#: templates.js:43
+msgid "There were errors in the form."
+msgstr "Es traten Fehler im Formular auf."
+
+#: templates.js:47
+msgid "First name"
+msgstr "Vorname"
+
+#: templates.js:53
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates.js:59
+msgid "Address"
+msgstr "Adresse"
+
+#: templates.js:77
+msgid "Repeat Password"
+msgstr "Passwort wiederholen"
+
+#: templates.js:86
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates.js:66
+#: templates.js:97
 msgid "Close"
 msgstr "Schließen"
 
@@ -166,19 +181,19 @@ msgstr "Start"
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:452
+#: views.js:456
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:567
+#: views.js:571
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:583
+#: views.js:587
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:584
+#: views.js:588
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 

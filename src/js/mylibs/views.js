@@ -384,7 +384,8 @@ window.MarkView = Backbone.View.extend({
 
 window.LoginView = Backbone.View.extend({
 
-    el: $('#login'),
+    id: 'login',
+    className: 'modal',
 
     events: {
         "hidden": "onClose",
@@ -394,6 +395,10 @@ window.LoginView = Backbone.View.extend({
 
     initialize: function () {
         window.app.user.bind('login', _.bind(this.onLoginSuccess, this));
+    },
+
+    render: function () {
+        $(this.el).html(_.template(templates.loginView));
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -429,10 +434,8 @@ window.LoginView = Backbone.View.extend({
                 that.$('.error-empty').show();
             }
         });
-    },
 
-    render: function () {
-        this.el.modal({
+        $(this.el).modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -441,7 +444,8 @@ window.LoginView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.el.modal('hide');
+        $(this.el).modal('hide');
+        $(this.el).remove();
     },
 
     onSubmitClick: function () {
@@ -466,7 +470,7 @@ window.LoginView = Backbone.View.extend({
 
         if (success) {
             this.remove();
-        } else if (this.el.css('display') !== 'none') {
+        } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
             this.$('.error-correct').show();
         }
     },
