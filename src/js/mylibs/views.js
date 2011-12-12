@@ -58,9 +58,13 @@ window.TopbarView = Backbone.View.extend({
             this.$('li.user a').html(user.get('firstname') + ' ' + user.get('lastname'));
             this.$('li.user, li.menu').show();
             this.$('li.login-link, li.register-link').hide();
+
+            if (user.get('admin'))
+                this.$('li.menu ul li.admin').show();
         } else {
             this.$('li.user, li.menu').hide();
             this.$('li.login-link, li.register-link').show();
+            this.$('li.menu ul li.admin').hide();
         }
     }
 

@@ -11,6 +11,7 @@ templates.topbarView = '<div class="fill">\
                                   <a class="menu" href="#">' + $._('Settings') + '</a>\
                                   <ul class="menu-dropdown">\
                                     <li><a href="#/settings">' + $._('Usersettings') + '</a></li>\
+                                    <li class="admin"><a href="#/admin">' + $._('Administration') + '</a></li>\
                                     <li><a href="#/billing">' + $._('Billing') + '</a></li>\
                                     <li class="divider"></li>\
                                     <li><a href="#/logout">' + $._('Logout') + '</a></li>\
