@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 16:52+0100\n"
+"POT-Creation-Date: 2011-12-11 21:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,107 +17,216 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: map.contextmenu.js:57
-msgid "Markers"
-msgstr ""
-
-#: map.contextmenu.js:64
-msgid "Set as Startmarker"
-msgstr ""
-
-#: map.contextmenu.js:65
-msgid "Set as Endmarker"
-msgstr ""
-
-#: map.contextmenu.js:67 views.js:302
-msgid "Delete"
-msgstr ""
-
-#: map.contextmenu.js:71
-msgid "Add Startmarker"
-msgstr ""
-
-#: map.contextmenu.js:72
-msgid "Add Marker"
-msgstr ""
-
-#: map.contextmenu.js:73
-msgid "Add Endmarker"
-msgstr ""
-
-#: views.js:152
-msgid "No points defined"
-msgstr ""
-
-#: views.js:164 views.js:170
+#: api.js:118 views.js:188 views.js:194
 msgid "Error"
 msgstr ""
 
-#: views.js:165
-msgid "No algorithm selected."
+#: map.contextmenu.js:62
+msgid "Markers"
 msgstr ""
 
-#: views.js:171
-msgid "Not enough points defined."
+#: map.contextmenu.js:69
+msgid "Set as Startmarker"
 msgstr ""
 
-#: views.js:297
+#: map.contextmenu.js:70
+msgid "Set as Endmarker"
+msgstr ""
+
+#: map.contextmenu.js:72 templates.js:55
+msgid "Delete"
+msgstr ""
+
+#: map.contextmenu.js:76
+msgid "Add Startmarker"
+msgstr ""
+
+#: map.contextmenu.js:77
+msgid "Add Marker"
+msgstr ""
+
+#: map.contextmenu.js:78
+msgid "Add Endmarker"
+msgstr ""
+
+#: router.js:19
+msgid "Loading server informations"
+msgstr ""
+
+#: templates.js:7 templates.js:59 templates.js:85
+msgid "Login"
+msgstr ""
+
+#: templates.js:8 templates.js:140
+msgid "Register"
+msgstr ""
+
+#: templates.js:11
+msgid "Settings"
+msgstr ""
+
+#: templates.js:13
+msgid "Usersettings"
+msgstr ""
+
+#: templates.js:14
+msgid "Billing"
+msgstr ""
+
+#: templates.js:16
+msgid "Logout"
+msgstr ""
+
+#: templates.js:26
+msgid "Algorithms"
+msgstr ""
+
+#: templates.js:28
+msgid "No algorithms"
+msgstr ""
+
+#: templates.js:33
+msgid "Points"
+msgstr ""
+
+#: templates.js:34
+msgid "No points defined!"
+msgstr ""
+
+#: templates.js:37
+msgid "Calculate Route"
+msgstr ""
+
+#: templates.js:38
+msgid "Clear"
+msgstr ""
+
+#: templates.js:47
+msgid "No point selected!"
+msgstr ""
+
+#: templates.js:50
 msgid "Lon"
 msgstr ""
 
-#: views.js:298
+#: templates.js:51
 msgid "Lat"
 msgstr ""
 
-#: views.js:299
+#: templates.js:52
 msgid "Name"
 msgstr ""
 
-#: views.js:300
+#: templates.js:53
 msgid "Position"
 msgstr ""
 
-#: views.js:302
+#: templates.js:55
 msgid "Apply"
 msgstr ""
 
-#: views.js:317
-msgid "No Mark selected"
-msgstr ""
-
-#: views.js:327
-msgid "Data"
-msgstr ""
-
-#: views.js:353
-msgid "Marker"
-msgstr ""
-
-#: views.js:364
-msgid "Start"
-msgstr ""
-
-#: views.js:366
-msgid "Target"
-msgstr ""
-
-#: views.js:413 views.js:520 views.js:591
+#: templates.js:63 templates.js:66 templates.js:94 templates.js:97
+#: views.js:448 views.js:549 views.js:610
 msgid "Error!"
 msgstr ""
 
-#: views.js:453
+#: templates.js:63 templates.js:94
+msgid "Please fill out all fields."
+msgstr ""
+
+#: templates.js:66
+msgid "The email or password you entered was incorrect."
+msgstr ""
+
+#: templates.js:70 templates.js:119
+msgid "Email"
+msgstr ""
+
+#: templates.js:76 templates.js:125
+msgid "Password"
+msgstr ""
+
+#: templates.js:84 templates.js:139
+msgid "Cancel"
+msgstr ""
+
+#: templates.js:90
+msgid "Registration"
+msgstr ""
+
+#: templates.js:97
+msgid "There were errors in the form."
+msgstr ""
+
+#: templates.js:101
+msgid "First name"
+msgstr ""
+
+#: templates.js:107
+msgid "Last name"
+msgstr ""
+
+#: templates.js:113
+msgid "Address"
+msgstr ""
+
+#: templates.js:131
+msgid "Repeat Password"
+msgstr ""
+
+#: templates.js:151
+msgid "Close"
+msgstr ""
+
+#: strings.js:1
+msgid "Shortest Path"
+msgstr ""
+
+#: views.js:176
+msgid "No points defined"
+msgstr ""
+
+#: views.js:189
+msgid "No algorithm selected."
+msgstr ""
+
+#: views.js:195
+msgid "Not enough points defined."
+msgstr ""
+
+#: views.js:349
+msgid "No Mark selected"
+msgstr ""
+
+#: views.js:359
+msgid "Data"
+msgstr ""
+
+#: views.js:383
+msgid "Marker"
+msgstr ""
+
+#: views.js:394
+msgid "Start"
+msgstr ""
+
+#: views.js:396
+msgid "Target"
+msgstr ""
+
+#: views.js:489
 msgid "Logging in"
 msgstr ""
 
-#: views.js:567
+#: views.js:586
 msgid "Sending data"
 msgstr ""
 
-#: views.js:583
+#: views.js:602
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:584
+#: views.js:603
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."

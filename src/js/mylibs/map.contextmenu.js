@@ -11,7 +11,7 @@ function addMarker(action, evt) {
     	callback: function(text, success){
     		if(success){
     			var tempLon = text.points[0].ln / 1e7;
-    			var tempLat = text.points[0].lt / 1e7
+    			var tempLat = text.points[0].lt / 1e7;
     			var mark_center = new OpenLayers.LonLat(tempLon,tempLat);
     			var p1984 = new OpenLayers.Projection("EPSG:4326");
 				var pMap = new OpenLayers.Projection("EPSG:3857");
@@ -20,12 +20,13 @@ function addMarker(action, evt) {
 			}
 			else
 				log("Nearest Nabour Search wasn't successful. No points updated");
+
 			switch (action) {
 				// alert selected point as lonlat
                 case "start":
                     window.markList.setStartMark(mark);
                     break;
-                    
+
                 case "mark":
                     window.markList.appendMark(mark);
                     break;

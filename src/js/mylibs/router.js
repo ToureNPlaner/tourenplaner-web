@@ -9,14 +9,14 @@ window.Router = Backbone.Router.extend({
         "/route/:id":    "request"   // #/route/7
     },
 
-    initialize: function(options) {        
+    initialize: function(options) {
         window.server = new ServerInfo();
         this.user = new User();
     },
 
     initServer: function() {
         var that = this;
-        this.loadingView = new LoadingView().render();
+        this.loadingView = new LoadingView($._('Loading server informations')).render();
 
         window.server.getServerInfo(function() {
             if (window.server.isPublic())
@@ -26,9 +26,7 @@ window.Router = Backbone.Router.extend({
     },
 
     login: function() {
-        if (_.isNull(this.loginView) || _.isUndefined(this.loginView))
-            this.loginView = new LoginView();
-        this.loginView.render();
+        new LoginView().render();
     },
 
     logout: function() {
@@ -38,9 +36,7 @@ window.Router = Backbone.Router.extend({
     },
 
     register: function() {
-        if (_.isNull(this.registerView) || _.isUndefined(this.registerView))
-            this.registerView = new RegisterView();
-        this.registerView.render();
+        new RegisterView().render();
     },
 
     settings: function() {
