@@ -290,7 +290,7 @@ _.extend(window.Api.prototype, {
 		if(!args || !args.points)
 			return false;
 		this.send({
-			suffix : 'algnnl',
+			suffix : 'algnns',
             type : 'POST',
 			request : {
                 version: 1,
@@ -313,7 +313,6 @@ _.extend(window.Api.prototype, {
 		var thisrequest;
         if(!args || !args.alg)
             return false;
-
 		// use given request or make own
 		if(args.request)
 			thisrequest = args.request;

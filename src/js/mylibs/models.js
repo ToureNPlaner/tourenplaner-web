@@ -140,7 +140,7 @@ window.MarkList = Backbone.Collection.extend({
 
 
 
-window.MapModel = Backbone.Model.extend({
+window.	MapModel = Backbone.Model.extend({
 
     defaults: {
         "mapObject": new Map("map")

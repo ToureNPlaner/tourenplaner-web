@@ -20,7 +20,6 @@ _.extend(window.Map.prototype, {
             projection: new OpenLayers.Projection("EPSG:4326")
         });
         
-        
         var mapLayer = new OpenLayers.Layer.OSM("OSM Tiles", "http://gerbera.informatik.uni-stuttgart.de/osm/tiles/${z}/${x}/${y}.png", {
             numZoomLevels: 19
         });

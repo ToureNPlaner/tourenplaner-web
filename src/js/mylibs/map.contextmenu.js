@@ -4,13 +4,19 @@ function addMarker(action, evt) {
     var mark = new Mark({
         "lonlat": lonlat
     });
+    var pointString = mark.toJSON();
     // get nearest neighbour
     window.api.nearestNeighbour({
-    	points: lonlat,
+    	points: pointString,
     	callback: function(text, success){
     		if(success){
-    			mark.get('lonlat').lon = text.points[0].ln;
-    			mark.get('lonlat').lat = text.points[0].lt;
+    			var tempLon = text.points[0].ln / 1e7;
+    			var tempLat = text.points[0].lt / 1e7
+    			var mark_center = new OpenLayers.LonLat(tempLon,tempLat);
+    			var p1984 = new OpenLayers.Projection("EPSG:4326");
+				var pMap = new OpenLayers.Projection("EPSG:3857");
+    			mark_center.transform(p1984,pMap);
+    			mark.set({'lonlat':mark_center});
 			}
 			else
 				log("Nearest Nabour Search wasn't successful. No points updated");
