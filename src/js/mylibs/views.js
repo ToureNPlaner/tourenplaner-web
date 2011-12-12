@@ -131,7 +131,8 @@ window.SidebarView = Backbone.View.extend({
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
             for (i in algorithms) {
-                $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
+                if (!algorithms[i].hidden)
+                    $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
             }
         }
     },
