@@ -112,7 +112,6 @@ _.extend(window.Map.prototype, {
         }
     },
 
-
     /**
      * Draws the route defined by list of vertices
      * PARAM: List of Vertices
@@ -180,6 +179,13 @@ _.extend(window.Map.prototype, {
         var lonlatClone = lonlat.clone();
         lonlatClone.transform(this.map.getProjectionObject(), proj);
 
+        return lonlatClone;
+    },
+    
+    transformFrom1984: function (lonlat) {
+    	var proj = new OpenLayers.Projection("EPSG:4326");
+        var lonlatClone = lonlat.clone();
+        lonlatClone.transform(proj, this.map.getProjectionObject());
         return lonlatClone;
     }
 });

@@ -21,10 +21,7 @@ function addMarker(action, evt) {
         default:
             log("Something went wrong with contextMenu! This is the default action.");
 	};
-//	var test = JSON.stringify(mark.get('lonlat'));
 	mark.findNearestNeighbour();
-//	test += "<br>"+JSON.stringify(mark.get('lonlat'));
-//	new MessageView({title: $._("Error"), message: test}).render();
 }
 
 function editMarker(action, marker) {

@@ -18,13 +18,16 @@ window.Mark = Backbone.Model.extend({
     },
     
     setLonLatWith1984: function (lon,lat){
-    	var tempLon = lon / 1e7;
-    	var tempLat = lat / 1e7;
-    	var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-    	var p1984 = new OpenLayers.Projection("EPSG:4326");
-		var pMap = new OpenLayers.Projection("EPSG:3857");
- 		tempLonLat.transform(p1984,pMap);
-    	this.set({'lonlat':tempLonLat});
+		if(lon != null && lat != null){
+    		var tempLon = lon / 1e7;
+    		var tempLat = lat / 1e7;
+			var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+    		var newLonLat = window.mapModel.get("mapObject").transformFrom1984(tempLonLat);
+			this.set({'lonlat':newLonLat});
+		} else {
+            // error!
+            log("Fehler in Markmodel");
+        }
     },
 
     toJSON: function () {
