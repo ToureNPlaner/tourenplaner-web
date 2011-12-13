@@ -16,6 +16,16 @@ window.Mark = Backbone.Model.extend({
             return null;
         }
     },
+    
+    setLonLatWith1984: function (lon,lat){
+    	var tempLon = lon / 1e7;
+    	var tempLat = lat / 1e7;
+    	var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+    	var p1984 = new OpenLayers.Projection("EPSG:4326");
+		var pMap = new OpenLayers.Projection("EPSG:3857");
+ 		tempLonLat.transform(p1984,pMap);
+    	this.set({'lonlat':tempLonLat});
+    },
 
     toJSON: function () {
         // We're using ints here instead of floats for performance improvements (Java is a bit slow)
@@ -25,6 +35,23 @@ window.Mark = Backbone.Model.extend({
             "name": this.get("name"),
             "k": this.get("k")
         };
+    },
+    
+    findNearestNeighbour: function (){
+    	var that = this;
+        // get nearest neighbour
+        var point = this.toJSON();
+		window.api.nearestNeighbour({
+			points: point,
+			callback: function(text, success){
+				if(success){
+					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
+				}
+				else
+					log("Nearest Nabour Search wasn't successful. No points updated");
+			}
+		});
+		window.mapModel.get("mapObject").drawMarkers();
     }
 });
 
@@ -140,7 +167,7 @@ window.MarkList = Backbone.Collection.extend({
 
 
 
-window.	MapModel = Backbone.Model.extend({
+window.MapModel = Backbone.Model.extend({
 
     defaults: {
         "mapObject": new Map("map")
