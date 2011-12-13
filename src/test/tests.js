@@ -69,7 +69,7 @@ test("api.send", 5, function() {
     ok(!api.send({request: {}, callback: function() { }}), "No suffix specified");
     ok(!api.send({suffix: "", request: {}, callback: function() { }}), "Empty suffix");
     ok(!api.send({suffix: "authuser", request: {}}), "Empty callback");
-})
+});
 
 test("/info", 4, function() {
     var tmpApi = new Api({
