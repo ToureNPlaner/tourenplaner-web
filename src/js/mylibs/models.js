@@ -66,7 +66,7 @@ window.Mark = Backbone.Model.extend({
 		window.api.nearestNeighbour({
 			points: point,
 			callback: function(text, success){
-				if(success){
+				if(success && (!isNaN(text.way[0].ln) && !isNaN(text.way[0].lt))){
 					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
 				}
 				else

@@ -364,7 +364,6 @@ test("/alg", 6, function (){
 //    api.alg({request: requestMissPoints,
 //        	alg: "sp",
 //           	callback: function(json, success){
-//           		alert("hier");
 //               	same(success, false, "route calculated with request param (missing points)");
 //               	do_start();
 //           	}
