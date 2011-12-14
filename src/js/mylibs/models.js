@@ -16,16 +16,86 @@ window.Mark = Backbone.Model.extend({
             return null;
         }
     },
+    
+    setLonLatWith1984: function (lon,lat){
+		if(lon != null && lat != null){
+    		var tempLon = lon / 1e7;
+    		var tempLat = lat / 1e7;
+			var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+    		var newLonLat = window.mapModel.get("mapObject").transformFrom1984(tempLonLat);
+			this.set({'lonlat':newLonLat});
+		} else {
+            // error!
+            log("Fehler in Markmodel");
+        }
+    },
 
     toJSON: function () {
         // We're using ints here instead of floats for performance improvements (Java is a bit slow)
-        return {
+        
+        var json = {
             "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
             "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
             "name": this.get("name"),
             "k": this.get("k")
         };
+        
+        // get all pointconstraints for currently selected algorithm
+        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+        
+        if (pointconstraints != null) {
+			for (var i = 0; i < pointconstraints.length; i++) {
+				var key = pointconstraints[i].name;
+				
+				if (this.get(key) != undefined) {
+					json[key] = this.get(key);
+				} else {
+					// what if it is undefined? write "" or let View (onSend)
+					// check before sending to server?
+				}
+			}
+		}
+		
+		return json;
+    },
+    
+    findNearestNeighbour: function (){
+    	var that = this;
+        // get nearest neighbour
+        var point = this.toJSON();
+		window.api.nearestNeighbour({
+			points: point,
+			callback: function(text, success){
+				if(success){
+					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
+				}
+				else
+					log("Nearest Nabour Search wasn't successful. No points updated");
+			}
+		});
+		window.mapModel.get("mapObject").drawMarkers();
     }
+});
+
+window.PointConstraint = Backbone.Model.extend({
+
+   defaults: {
+      name: "",
+      type: "",
+      minValue: 0,
+      maxvalue: 0,
+      value: 0
+   },
+   
+   toJSON: function() {
+      return {
+         "name": this.get("name"),
+         "type": this.get("type"),
+         "min": this.get("minvalue"),
+         "max": this.get("maxValue")
+      };
+   }
+
 });
 
 window.MarkList = Backbone.Collection.extend({
@@ -140,7 +210,7 @@ window.MarkList = Backbone.Collection.extend({
 
 
 
-window.	MapModel = Backbone.Model.extend({
+window.MapModel = Backbone.Model.extend({
 
     defaults: {
         "mapObject": new Map("map")
@@ -292,6 +362,13 @@ window.ServerInfo = Backbone.Model.extend({
 
     isPublic: function () {
         return this.get('servertype') == "public";
-    }
+    },
+    
+    
+    // maybe this is not the correct place for this method.
+    // will be moved later.
+    getCurrentAlgorithm: function() {
+		return window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
+	}
 
 });
