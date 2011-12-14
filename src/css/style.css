@@ -105,7 +105,7 @@ div.popover {
 .topbar h3 a {
   margin-left: 20px;
 }
-.topbar ul li.menu, .topbar ul li.user {
+.topbar ul li.menu, .topbar ul li.user, .topbar ul li.menu ul li.admin {
   display: none;
 }
 

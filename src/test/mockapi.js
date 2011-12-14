@@ -32,6 +32,14 @@ $.mockjax({
                     minPoints: 2,
                     sourceIsTarget: false
                 }
+            },
+            {
+                version: 1,
+                hidden: true,
+                name: 'Hidden Algorithm',
+                urlsuffix: 'hidden',
+                pointconstraints: [],
+                constraints: {}
             }
         ]
     }

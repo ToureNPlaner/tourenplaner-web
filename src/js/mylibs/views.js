@@ -58,9 +58,13 @@ window.TopbarView = Backbone.View.extend({
             this.$('li.user a').html(user.get('firstname') + ' ' + user.get('lastname'));
             this.$('li.user, li.menu').show();
             this.$('li.login-link, li.register-link').hide();
+
+            if (user.get('admin'))
+                this.$('li.menu ul li.admin').show();
         } else {
             this.$('li.user, li.menu').hide();
             this.$('li.login-link, li.register-link').show();
+            this.$('li.menu ul li.admin').hide();
         }
     }
 
@@ -131,7 +135,8 @@ window.SidebarView = Backbone.View.extend({
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
             for (i in algorithms) {
-                $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
+                if (!algorithms[i].hidden)
+                    $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
             }
         }
     },
@@ -189,7 +194,7 @@ window.SidebarView = Backbone.View.extend({
                 message: $._('No algorithm selected.')
             }).render();
         //TODO: Use algorithm info for this
-        } else if (window.markList.length < 2) {
+        } else if (window.markList.length < window.server.getCurrentAlgorithm().constraints.minPoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
@@ -332,14 +337,45 @@ window.DataView = Backbone.View.extend({
     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker}));
+        // get all pointconstraints for currently selected algorithm
+        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+        
+        // add fields to edit pointconstraints
+        var constraintsHtml = "";
+        for (var i = 0; i < pointconstraints.length; i++) {
+			var key = pointconstraints[i].name;
+			
+			var value = "";
+			if (marker.get(key) != undefined) {
+				value = marker.get(key);
+			}
+			
+			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
+		}
+
+        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));		
+
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
                 name: that.$('#dataview #markerName').val()
             });
-            marker.set({
-                k: that.$('#dataview #markerK').val()
-            });
+
+			if (pointconstraints != null) {
+				for (var i = 0; i < pointconstraints.length; i++) {
+					var key = pointconstraints[i].name;
+					// marker.set({key : value}) doesnt use the value of key.
+					// instead the keys name will be "key". 
+					// so this is used as an alternative:
+					if (that.$('#dataview #pc_' + key).val() != "") {
+						marker.attributes[key] = that.$('#dataview #pc_' + key).val();
+					} else {
+						// if nothing is written in to that pointconstraint, then set
+						// it to undefined, so we can later check if it's set or not.
+						marker.attributes[key] = undefined;
+					}
+				}
+			}
+            
             var pos = that.$('#dataview #markerPos').val();
             window.markList.moveMark(marker, pos);
         });

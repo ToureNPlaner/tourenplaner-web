@@ -5,12 +5,13 @@ window.Router = Backbone.Router.extend({
         "/logout":       "logout",   // #/logout
         "/register":     "register", // #/register
         "/settings":     "settings", // #/settings
+        "/admin":        "admin",    // #/admin
         "/billing":      "billing",  // #/billing
         "/route/:id":    "request"   // #/route/7
     },
 
     initialize: function(options) {
-        window.server = new ServerInfo();
+        //window.server = new ServerInfo();
         this.user = new User();
     },
 
@@ -40,6 +41,10 @@ window.Router = Backbone.Router.extend({
     },
 
     settings: function() {
+        alert('To be implemented');
+    },
+
+    admin: function() {
         alert('To be implemented');
     },
 
