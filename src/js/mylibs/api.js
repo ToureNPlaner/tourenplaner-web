@@ -50,7 +50,6 @@ _.extend(window.Api.prototype, {
      */
     send : function (reqData) {
         var url = "", event = {};
-        var c = reqData.callback;
         if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
         if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
         if(_.isUndefined(reqData.suffix) || !reqData.suffix) return false;

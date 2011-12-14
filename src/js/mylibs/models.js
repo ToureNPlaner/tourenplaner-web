@@ -234,7 +234,7 @@ window.User = Backbone.Model.extend({
     defaults: {
         login: false
     },
-    
+
     initialize: function () {
         window.server.bind("info-loaded", _.bind(this.onStartup, this));
     },
@@ -305,7 +305,8 @@ window.User = Backbone.Model.extend({
             }
         });
 
-        if (!ret && _.isFunction(args.error)) args.error('Incorrect arguments');
+        if (!ret && _.isFunction(args.error))
+            args.error('Incorrect arguments');
     },
 
     toUserobject: function () {
