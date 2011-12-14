@@ -10,7 +10,7 @@ window.Router = Backbone.Router.extend({
     },
 
     initialize: function(options) {
-        window.server = new ServerInfo();
+        //window.server = new ServerInfo();
         this.user = new User();
     },
 

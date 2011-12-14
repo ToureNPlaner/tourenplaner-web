@@ -189,7 +189,7 @@ window.SidebarView = Backbone.View.extend({
                 message: $._('No algorithm selected.')
             }).render();
         //TODO: Use algorithm info for this
-        } else if (window.markList.length < 2) {
+        } else if (window.markList.length < window.server.getCurrentAlgorithm().constraints.minPoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
@@ -332,14 +332,45 @@ window.DataView = Backbone.View.extend({
     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
-        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker}));
+        // get all pointconstraints for currently selected algorithm
+        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+        
+        // add fields to edit pointconstraints
+        var constraintsHtml = "";
+        for (var i = 0; i < pointconstraints.length; i++) {
+			var key = pointconstraints[i].name;
+			
+			var value = "";
+			if (marker.get(key) != undefined) {
+				value = marker.get(key);
+			}
+			
+			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
+		}
+
+        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));		
+
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
                 name: that.$('#dataview #markerName').val()
             });
-            marker.set({
-                k: that.$('#dataview #markerK').val()
-            });
+
+			if (pointconstraints != null) {
+				for (var i = 0; i < pointconstraints.length; i++) {
+					var key = pointconstraints[i].name;
+					// marker.set({key : value}) doesnt use the value of key.
+					// instead the keys name will be "key". 
+					// so this is used as an alternative:
+					if (that.$('#dataview #pc_' + key).val() != "") {
+						marker.attributes[key] = that.$('#dataview #pc_' + key).val();
+					} else {
+						// if nothing is written in to that pointconstraint, then set
+						// it to undefined, so we can later check if it's set or not.
+						marker.attributes[key] = undefined;
+					}
+				}
+			}
+            
             var pos = that.$('#dataview #markerPos').val();
             window.markList.moveMark(marker, pos);
         });

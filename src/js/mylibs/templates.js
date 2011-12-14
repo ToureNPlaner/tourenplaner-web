@@ -51,7 +51,8 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('
                              <div class="clearfix"><label for="lat"><b>' + $._('Lat') + ':</b></label><input size="10" value="<%=lonlat.lat%>" type="text" name="lat" id="lat" disabled="disabled" /></div>\
                              <div class="clearfix"><label for="markerName"><b>' + $._('Name') + ':</b></label><input value="<%=marker.get("name")%>" type="text" name="markerName" id="markerName" /></div>\
                              <div class="clearfix"><label for="markerPos"><b>' + $._('Position') + ':</b></label><input value="<%=marker.get("position")%>" type="text" name="markerPos" id="markerPos" /></div></div>\
-                             <div class="clearfix"><label for="markerK"><b>k:</b></label><input value="<%=marker.get("k")%>" type="text" name="markerK" id="markerK" /></div>\
+                             Constraints\
+                             <%=constraintsHtml%>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 
 templates.loginView = '<div class="modal-header">\
