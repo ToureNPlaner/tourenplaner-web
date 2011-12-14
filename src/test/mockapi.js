@@ -13,8 +13,8 @@ $.mockjax({
     responseTimeout: 100,
     responseText: {
         version: "1.0",
-        servertype: "public",
-        sslport: 8081,
+        servertype: "private",
+        sslport: 1515,
         algorithms: [
             {
                 version: 2,

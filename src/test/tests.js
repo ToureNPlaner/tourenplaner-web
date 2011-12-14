@@ -71,7 +71,7 @@ test("api.send", 5, function() {
     ok(!api.send({suffix: "authuser", request: {}}), "Empty callback");
 });
 
-test("/info", 4, function() {
+test("/info", 5, function() {
     var tmpApi = new Api({
         server: null
     });
@@ -80,43 +80,10 @@ test("/info", 4, function() {
     var ret = tmpApi.serverInformation({
         callback: function(json, success) {
             same(success, true, 'Got some info');
-            same(json.servertype, 'public', 'Servertype was determined');
+            same(json.servertype, 'private', 'Servertype was determined. Is Private');
             same(json.algorithms[0].pointconstraints[0].type, 'meter', 'Algorithm constraints are ok');
-            same(tmpApi.get('port'), 8081, "SSL information read");
-            do_start();
-        }
-    });
-    //TODO: Add more tests
-});
-
-test("/authuser", 5, function() {
-    ok(!api.authUser(), 'Empy function call');
-    ok(!api.authUser({}), 'Empty object');
-
-    stop_until_expected(3);
-    api.authUser({
-        email: 'asd@asd.de',
-        password: 'asd',
-        callback: function(text, success) {
-            same(success, true, 'Login working for asd@asd.de:asd');
-            do_start();
-        }
-    });
-
-    api.authUser({
-        email: 'bsd@asd.de',
-        password: 'asd',
-        callback: function(text, success) {
-            same(success, false, "Login not working for bsd@asd.de:asd");
-            do_start();
-        }
-    });
-
-    api.authUser({
-        email: 'asd@asd.de',
-        password: 'bsd',
-        callback: function(text, success) {
-            same(success, false, 'Login not working for asd@asd.de:bsd');
+            same(tmpApi.get('authRequired'), true, "SSL information read");
+            same(tmpApi.get('port'), 1515, "SSL-Port information read");
             do_start();
         }
     });
@@ -148,6 +115,40 @@ test("/registeruser", 4, function() {
         userObject: testuser,
         callback: function(text, success) {
             same(success, false, "Empty email address");
+            do_start();
+        }
+    });
+});
+
+test("/authuser", 6, function() {
+    ok(!api.authUser(), 'Empy function call');
+    ok(!api.authUser({}), 'Empty object');
+
+    stop_until_expected(3);
+    api.authUser({
+        email: 'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success) {
+            same(success, true, 'Login working for asd@asd.de:asd');
+            same(api.get('authAsBase64'), 'YXNkQGFzZC5kZTphc2Q=', 'Base64String');
+            do_start();
+        }
+    });
+
+    api.authUser({
+        email: 'bsd@asd.de',
+        password: 'asd',
+        callback: function(text, success) {
+            same(success, false, "Login not working for bsd@asd.de:asd");
+            do_start();
+        }
+    });
+
+    api.authUser({
+        email: 'asd@asd.de',
+        password: 'bsd',
+        callback: function(text, success) {
+            same(success, false, 'Login not working for asd@asd.de:bsd');
             do_start();
         }
     });
@@ -210,7 +211,7 @@ test("/updateUser", 4, function(){
     });
 });
 
-test("/listrequests", 6, function (){
+test("/listrequests", 9, function (){
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
@@ -221,7 +222,10 @@ test("/listrequests", 6, function (){
     ok(!api.listRequests(), 'empty call');
     ok(!api.listRequests({limit: 10}), 'missing offset');
     ok(!api.listRequests({offset: 10}), 'missing limit');
-    ok(!api.listRequests({limit: 2, offset: -1}), 'offset < 0')
+    ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
+    ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
+    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(2);
     api.listRequests({limit: 2,
@@ -242,7 +246,7 @@ test("/listrequests", 6, function (){
     });
 });
 
-test("/listusers", 5, function (){
+test("/listusers", 8, function (){
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
@@ -253,7 +257,10 @@ test("/listusers", 5, function (){
     ok(!api.listUsers(), 'empty call');
     ok(!api.listUsers({limit: 10}), 'missing offset');
     ok(!api.listUsers({offset: 10}), 'missing limit');
-    ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0')
+    ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
+    ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
+    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(1);
     api.listUsers({limit: 1,
@@ -286,7 +293,29 @@ test("/deleteuser", 4, function (){
     });
 });
 
-test("/alg", 5, function (){
+
+//test("/algnns", 4, function (){
+//    api.authUser({
+//        email:'asd@asd.de',
+//        password: 'asd',
+//        callback: function(text, success){
+//        }
+//    });
+//    
+//    ok(!api.deleteUser(), 'empty call');
+//    ok(!api.deleteUser({callback: function(){ }}), 'missing id');
+//    ok(!api.deleteUser({id: "r94",callback: function(){ }}), 'id ("r94") is not a number');
+//    
+//    stop_until_expected(1);
+//    api.deleteUser({id: 94,
+//                  callback: function(json, success){
+//                      same(success, true, "user deleted");
+//                      do_start();
+//                  }
+//    });
+//});
+
+test("/alg", 6, function (){
     var request = {
         version: 1,
         points: [
@@ -295,20 +324,51 @@ test("/alg", 5, function (){
         ],
         constraints: {t: 100}
     }
+    var requestMissPoints = {
+        version: 1,
+        constraints: {t: 100}
+    }
     
     ok(!api.alg(), 'empty call');
     ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
     ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
     
 
-    stop_until_expected(2);
-    api.alg({request: request,
+    stop_until_expected(3);
+    api.alg({version: request.version,
+    		points: request.points,
+    		constraints: request.constraints,
             alg: "sp",
               callback: function(json, success){
-                  same(success, true, "route calculated without auth");
+                  same(success, true, "route calculated withseperate parameter");
                   do_start();
               }
     });
+// macht ganze testsuite kaputt
+//    api.alg({version: request.version,
+//    		constraints: request.constraints,
+//            alg: "sp",
+//              callback: function(json, success){
+//                  same(success, false, "missing points");
+//                  do_start();
+//              }
+//    });
+    api.alg({request: request,
+        alg: "sp",
+           callback: function(json, success){
+               same(success, true, "route calculated with request param");
+               do_start();
+           }
+    });
+// macht ganze testsuite kaputt
+//    api.alg({request: requestMissPoints,
+//        	alg: "sp",
+//           	callback: function(json, success){
+//           		alert("hier");
+//               	same(success, false, "route calculated with request param (missing points)");
+//               	do_start();
+//           	}
+//    });
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
