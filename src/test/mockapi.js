@@ -345,9 +345,11 @@ $.mockjax({
     responseTimeout: 10,
     status: 200,
     response: function (data) {
-        var tmp = JSON.parse(data.data);
-        tmp.ln *= 1e7;
-        tmp.lt *= 1e7;
+        var arr = JSON.parse(data.data)
+        var tmp = { way: [] };
+        for (i in arr.points)
+            tmp.way.push(arr.points[i]);
+
         this.responseText = tmp;
     }
 });

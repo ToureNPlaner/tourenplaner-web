@@ -16,7 +16,7 @@ window.Mark = Backbone.Model.extend({
             return null;
         }
     },
-    
+
     setLonLatWith1984: function (lon,lat){
 		if(lon != null && lat != null){
     		var tempLon = lon / 1e7;
@@ -32,21 +32,21 @@ window.Mark = Backbone.Model.extend({
 
     toJSON: function () {
         // We're using ints here instead of floats for performance improvements (Java is a bit slow)
-        
+
         var json = {
             "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
             "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
             "name": this.get("name"),
             "k": this.get("k")
         };
-        
+
         // get all pointconstraints for currently selected algorithm
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
-        
+
         if (pointconstraints != null) {
 			for (var i = 0; i < pointconstraints.length; i++) {
 				var key = pointconstraints[i].name;
-				
+
 				if (this.get(key) != undefined) {
 					json[key] = this.get(key);
 				} else {
@@ -55,10 +55,10 @@ window.Mark = Backbone.Model.extend({
 				}
 			}
 		}
-		
+
 		return json;
     },
-    
+
     findNearestNeighbour: function (){
     	var that = this;
         // get nearest neighbour
@@ -66,7 +66,7 @@ window.Mark = Backbone.Model.extend({
 		window.api.nearestNeighbour({
 			points: point,
 			callback: function(text, success){
-				if(success && (!isNaN(text.way[0].ln) && !isNaN(text.way[0].lt))){
+				if(success && (!_.isUndefined(text.way) && !_.isNaN(text.way[0].ln) && !_.isNaN(text.way[0].lt))){
 					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
 				}
 				else
@@ -86,7 +86,7 @@ window.PointConstraint = Backbone.Model.extend({
       maxvalue: 0,
       value: 0
    },
-   
+
    toJSON: function() {
       return {
          "name": this.get("name"),
@@ -364,8 +364,8 @@ window.ServerInfo = Backbone.Model.extend({
     isPublic: function () {
         return this.get('servertype') == "public";
     },
-    
-    
+
+
     // maybe this is not the correct place for this method.
     // will be moved later.
     getCurrentAlgorithm: function() {
