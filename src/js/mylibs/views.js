@@ -460,7 +460,8 @@ window.LoginView = Backbone.View.extend({
     events: {
         "hidden": "remove",
         "click .modal-footer a.login": "onSubmitClick",
-        "click .modal-footer a.cancel": "remove"
+        "click .modal-footer a.cancel": "remove",
+        "keydown": "onKeydown"
     },
 
     initialize: function () {
@@ -525,6 +526,11 @@ window.LoginView = Backbone.View.extend({
         this.$('form').submit();
     },
 
+    onKeydown: function (evt) {
+        if (evt.keyCode == '13') // Return pressed
+            this.$('.modal-footer a.login').click();
+    },
+
     onLogin: function () {
         this.loading = new LoadingView($._('Logging in')).render();
 
@@ -557,7 +563,8 @@ window.RegisterView = Backbone.View.extend({
     events: {
         "hidden": "remove",
         "click .modal-footer a.register": "onRegister",
-        "click .modal-footer a.cancel": "remove"
+        "click .modal-footer a.cancel": "remove",
+        "keydown": "onKeydown"
     },
 
     render: function () {
@@ -656,6 +663,11 @@ window.RegisterView = Backbone.View.extend({
 
     onRegister: function () {
         this.$('form').submit();
+    },
+
+    onKeydown: function (evt) {
+        if (!$(evt.target).is('textarea') && evt.keyCode == '13')
+            this.$('.modal-footer a.register').click();
     }
 });
 
@@ -712,7 +724,7 @@ window.AdminView = Backbone.View.extend({
 
         window.app.navigate('/admin');
         return false;
-    },
+    }
 });
 
 window.AdminUsersView = Backbone.View.extend({
