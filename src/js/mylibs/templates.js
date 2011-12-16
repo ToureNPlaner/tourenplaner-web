@@ -141,6 +141,21 @@ templates.registerView = '  <div class="modal-header">\
                               <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
                               <a href="#/register" class="btn primary register">' + $._('Register') + '</a>\
                             </div>';
+                                
+                                
+templates.adminView =  '<div class="modal-header">\
+                            <a href="#" class="close">x</a>\
+                            <h3 class="title">' + $._('Administration') + '</h3>\
+                        </div>\
+                        <div class="modal-body">\
+                            <%=content%>\
+                        </div>\
+                        <div class="modal-footer">\
+                            <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
+                        </div>';
+
+templates.adminMainView =  '<a href="#/admin/users">' + $._('Users') + '</a><br />\
+                            <a href="#/admin/requests">' + $._('Requests') + '</a><br />';
 
 templates.messageView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\

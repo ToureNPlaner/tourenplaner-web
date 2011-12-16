@@ -93,6 +93,10 @@ div.popover {
   display: none;
 }
 
+#admin .modal-body {
+  height: 400px;
+}
+
 .container {
   width: auto;
 }

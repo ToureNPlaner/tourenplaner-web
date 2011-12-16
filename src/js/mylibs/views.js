@@ -655,6 +655,79 @@ window.RegisterView = Backbone.View.extend({
     }
 });
 
+window.AdminView = Backbone.View.extend({
+   
+    id: 'admin',
+    className: 'modal',
+   
+    events: {
+        "hidden": "remove",
+        "click .cancel": "remove"
+    },
+    
+    render: function () {
+        var content = _.template(templates.adminMainView);
+        
+        $(this.el).html(_.template(templates.adminView, {content: content()}));
+        $(this.el).modal({
+            show: true,
+            keyboard: true,
+            backdrop: 'static'
+        });
+        
+        return this;
+    },
+    
+    remove: function () {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+        if (_.isFunction(this.options.remove))
+            this.options.remove();
+        $(this.el).remove();
+        window.app.navigate('');
+    },
+    
+    setContent: function (content) {
+        if (!_.isNull(this.content) && !_.isUndefined(this.content))
+            this.content.remove();
+        
+        this.$('.modal-body').html(content.el);
+        this.content = content;
+    }
+});
+
+window.AdminUsersView = Backbone.View.extend({
+   
+    id: 'admin-users',
+   
+    render: function () {
+        $(this.el).html("Bla Blub");
+        this.options.parent.setContent(this);
+        
+        return this;
+    },
+    
+    remove: function () {
+        $(this.el).remove();
+    }
+});
+
+window.AdminRequestsView = Backbone.View.extend({
+   
+    id: 'admin-requests',
+   
+    render: function () {
+        $(this.el).html("Bla Blub");
+        this.options.parent.setContent(this);
+        
+        return this;
+    },
+    
+    remove: function () {
+        $(this.el).remove();
+    }
+});
+
 window.MessageView = Backbone.View.extend({
 
     id: 'message',
