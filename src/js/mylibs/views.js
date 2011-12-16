@@ -29,7 +29,7 @@ window.TopbarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.topbarView));
+        $(this.el).html(templates.topbarView);
         $('#container').append(this.el);
 
         this.$('ul li.menu, ul li.user').each(function () {
@@ -111,7 +111,7 @@ window.SidebarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.sidebarView));
+        $(this.el).html(templates.sidebarView);
         $('#main').append(this.el);
 
         this.onResize();
@@ -324,7 +324,7 @@ window.DataView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.dataView));
+        $(this.el).html(templates.dataView);
         $('#main').append(this.el);
 
         $(this.el).resizable({
@@ -339,21 +339,21 @@ window.DataView = Backbone.View.extend({
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
-        
+
         // add fields to edit pointconstraints
         var constraintsHtml = "";
         for (var i = 0; i < pointconstraints.length; i++) {
 			var key = pointconstraints[i].name;
-			
+
 			var value = "";
 			if (marker.get(key) != undefined) {
 				value = marker.get(key);
 			}
-			
+
 			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
 		}
 
-        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));		
+        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));
 
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
@@ -364,7 +364,7 @@ window.DataView = Backbone.View.extend({
 				for (var i = 0; i < pointconstraints.length; i++) {
 					var key = pointconstraints[i].name;
 					// marker.set({key : value}) doesnt use the value of key.
-					// instead the keys name will be "key". 
+					// instead the keys name will be "key".
 					// so this is used as an alternative:
 					if (that.$('#dataview #pc_' + key).val() != "") {
 						marker.attributes[key] = that.$('#dataview #pc_' + key).val();
@@ -375,7 +375,7 @@ window.DataView = Backbone.View.extend({
 					}
 				}
 			}
-            
+
             var pos = that.$('#dataview #markerPos').val();
             window.markList.moveMark(marker, pos);
         });
@@ -412,7 +412,7 @@ window.MarkView = Backbone.View.extend({
     model: null,
 
     initialize: function () {
-        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>');
+        this.template = _.template(templates.markView);
 
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
@@ -464,7 +464,7 @@ window.LoginView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.loginView));
+        $(this.el).html(templates.loginView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -557,7 +557,7 @@ window.RegisterView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.registerView));
+        $(this.el).html(templates.registerView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -656,28 +656,28 @@ window.RegisterView = Backbone.View.extend({
 });
 
 window.AdminView = Backbone.View.extend({
-   
+
     id: 'admin',
     className: 'modal',
-   
+
     events: {
         "hidden": "remove",
         "click .cancel": "remove"
     },
-    
+
     render: function () {
-        var content = _.template(templates.adminMainView);
-        
+        var content = templates.adminMainView;
+
         $(this.el).html(_.template(templates.adminView, {content: content()}));
         $(this.el).modal({
             show: true,
             keyboard: true,
             backdrop: 'static'
         });
-        
+
         return this;
     },
-    
+
     remove: function () {
         if ($(this.el).modal(true).isShown)
             $(this.el).modal('hide');
@@ -686,43 +686,43 @@ window.AdminView = Backbone.View.extend({
         $(this.el).remove();
         window.app.navigate('');
     },
-    
+
     setContent: function (content) {
         if (!_.isNull(this.content) && !_.isUndefined(this.content))
             this.content.remove();
-        
+
         this.$('.modal-body').html(content.el);
         this.content = content;
     }
 });
 
 window.AdminUsersView = Backbone.View.extend({
-   
+
     id: 'admin-users',
-   
+
     render: function () {
         $(this.el).html("Bla Blub");
         this.options.parent.setContent(this);
-        
+
         return this;
     },
-    
+
     remove: function () {
         $(this.el).remove();
     }
 });
 
 window.AdminRequestsView = Backbone.View.extend({
-   
+
     id: 'admin-requests',
-   
+
     render: function () {
         $(this.el).html("Bla Blub");
         this.options.parent.setContent(this);
-        
+
         return this;
     },
-    
+
     remove: function () {
         $(this.el).remove();
     }

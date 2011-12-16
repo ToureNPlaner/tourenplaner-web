@@ -56,6 +56,8 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('
                              <%=constraintsHtml%>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 
+templates.markView = '<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>';
+
 templates.loginView = '<div class="modal-header">\
                         <a href="#" class="close">x</a>\
                         <h3>' + $._('Login') + '</h3>\
@@ -141,8 +143,8 @@ templates.registerView = '  <div class="modal-header">\
                               <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
                               <a href="#/register" class="btn primary register">' + $._('Register') + '</a>\
                             </div>';
-                                
-                                
+
+
 templates.adminView =  '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
                             <h3 class="title">' + $._('Administration') + '</h3>\
