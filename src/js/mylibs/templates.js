@@ -48,10 +48,10 @@ templates.dataView = '<span class="minmax">\
                         <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
                       </div>';
 
-templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('Lon') + ':</b></label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="lat"><b>' + $._('Lat') + ':</b></label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="markerName"><b>' + $._('Name') + ':</b></label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
-                             <div class="clearfix"><label for="markerPos"><b>' + $._('Position') + ':</b></label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
+templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon') + ':</label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
+                             <div class="clearfix"><label for="lat">' + $._('Lat') + ':</label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
+                             <div class="clearfix"><label for="markerName">' + $._('Name') + ':</label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
+                             <div class="clearfix"><label for="markerPos">' + $._('Position') + ':</label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
                              {{#constraints}}\
                                 <h4>Constraints</h4>\
                                 {{{constraintsHtml}}}\

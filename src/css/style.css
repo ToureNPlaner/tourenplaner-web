@@ -95,6 +95,9 @@ div.popover {
 #main #data .content div:last-child {
   margin-top: 10px;
 }
+#main #data .content label {
+  font-weight: bold;
+}
 
 #admin .modal-body {
   height: 400px;
