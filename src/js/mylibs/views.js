@@ -353,7 +353,13 @@ window.DataView = Backbone.View.extend({
 			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
 		}
 
-        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));
+        var data = {
+            lonlat:  lonlat,
+            marker: marker.toJSON(),
+            constraints: !_.isEmpty(constraintsHtml),
+            constraintsHtml: constraintsHtml
+        };
+        this.$('.content').html(templates.dataViewContent(data));
 
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
@@ -382,7 +388,7 @@ window.DataView = Backbone.View.extend({
 
         this.$('#dataview #deleteMark').click(function () {
             window.markList.deleteMark(marker);
-            that.$('.content').html($._("No Mark selected"));
+            that.$('.content').html($._("No point selected!"));
         });
     },
 
@@ -412,8 +418,6 @@ window.MarkView = Backbone.View.extend({
     model: null,
 
     initialize: function () {
-        this.template = _.template(templates.markView);
-
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
             this.name = $._("Marker") + " " + _markerNameSuffix;
@@ -431,7 +435,7 @@ window.MarkView = Backbone.View.extend({
         else if (this.model.get('position') == window.markList.length - 1)
             position = '(' + $._('Target') + ')';
 
-        $('#marks').append(this.template({cid: this.model.cid, name: this.name, position: position}));
+        $('#marks').append(templates.markView({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
 
         this.$('a.view').click(_.bind(this.onClick, this));
@@ -440,7 +444,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).remove();
+        this.el.remove();
     },
 
     onClick: function () {
@@ -668,7 +672,7 @@ window.AdminView = Backbone.View.extend({
     render: function () {
         var content = templates.adminMainView;
 
-        $(this.el).html(_.template(templates.adminView, {content: content()}));
+        $(this.el).html(templates.adminView({content: content}));
         $(this.el).modal({
             show: true,
             keyboard: true,
@@ -745,7 +749,7 @@ window.MessageView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.messageView, {title: this.title, message: this.message}));
+        $(this.el).html(templates.messageView({title: this.title, message: this.message}));
 
         $(this.el).modal({
             show: true,
@@ -773,7 +777,7 @@ window.LoadingView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.loadingView, {message: this.message}));
+        $(this.el).html(templates.loadingView({message: this.message}));
 
         $(this.el).modal({
             show: true,

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-16 15:18+0100\n"
-"PO-Revision-Date: 2011-12-16 15:19+0100\n"
+"POT-Creation-Date: 2011-12-16 17:01+0100\n"
+"PO-Revision-Date: 2011-12-16 17:01+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -38,7 +38,7 @@ msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
 #: map.contextmenu.js:56
-#: templates.js:57
+#: templates.js:60
 msgid "Delete"
 msgstr "Löschen"
 
@@ -59,13 +59,13 @@ msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
 
 #: templates.js:7
-#: templates.js:61
-#: templates.js:87
+#: templates.js:68
+#: templates.js:94
 msgid "Login"
 msgstr "Login"
 
 #: templates.js:8
-#: templates.js:142
+#: templates.js:149
 msgid "Register"
 msgstr "Registrieren"
 
@@ -78,7 +78,7 @@ msgid "Usersettings"
 msgstr "Benutzereinstellungen"
 
 #: templates.js:14
-#: templates.js:148
+#: templates.js:155
 msgid "Administration"
 msgstr "Administration"
 
@@ -115,6 +115,7 @@ msgid "Clear"
 msgstr "Leeren"
 
 #: templates.js:48
+#: views.js:391
 msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
@@ -134,78 +135,78 @@ msgstr "Name"
 msgid "Position"
 msgstr "Position"
 
-#: templates.js:57
+#: templates.js:60
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: templates.js:65
-#: templates.js:68
-#: templates.js:96
-#: templates.js:99
-#: views.js:484
-#: views.js:585
-#: views.js:646
+#: templates.js:72
+#: templates.js:75
+#: templates.js:103
+#: templates.js:106
+#: views.js:488
+#: views.js:589
+#: views.js:650
 msgid "Error!"
 msgstr "Fehler!"
 
-#: templates.js:65
-#: templates.js:96
+#: templates.js:72
+#: templates.js:103
 msgid "Please fill out all fields."
 msgstr "Bitte füllen Sie alle Felder aus."
 
-#: templates.js:68
+#: templates.js:75
 msgid "The email or password you entered was incorrect."
 msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
 
-#: templates.js:72
-#: templates.js:121
+#: templates.js:79
+#: templates.js:128
 msgid "Email"
 msgstr "Email"
 
-#: templates.js:78
-#: templates.js:127
+#: templates.js:85
+#: templates.js:134
 msgid "Password"
 msgstr "Passwort"
 
-#: templates.js:86
-#: templates.js:141
+#: templates.js:93
+#: templates.js:148
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates.js:92
+#: templates.js:99
 msgid "Registration"
 msgstr "Registrierung"
 
-#: templates.js:99
+#: templates.js:106
 msgid "There were errors in the form."
 msgstr "Es traten Fehler im Formular auf."
 
-#: templates.js:103
+#: templates.js:110
 msgid "First name"
 msgstr "Vorname"
 
-#: templates.js:109
+#: templates.js:116
 msgid "Last name"
 msgstr "Nachname"
 
-#: templates.js:115
+#: templates.js:122
 msgid "Address"
 msgstr "Adresse"
 
-#: templates.js:133
+#: templates.js:140
 msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
-#: templates.js:154
-#: templates.js:168
+#: templates.js:161
+#: templates.js:176
 msgid "Close"
 msgstr "Schließen"
 
-#: templates.js:157
+#: templates.js:165
 msgid "Users"
 msgstr "Benutzer"
 
-#: templates.js:158
+#: templates.js:166
 msgid "Requests"
 msgstr "Anfragen"
 
@@ -233,39 +234,37 @@ msgstr "Kein Algorithmus ausgewählt."
 msgid "Not enough points defined."
 msgstr "Nicht genug Punkte definiert."
 
-#: views.js:385
-msgid "No Mark selected"
-msgstr "Keine Markierung ausgewählt"
-
-#: views.js:395
+#: views.js:401
 msgid "Data"
 msgstr "Daten"
 
-#: views.js:419
+#: views.js:423
 msgid "Marker"
 msgstr "Markierung"
 
-#: views.js:430
+#: views.js:434
 msgid "Start"
 msgstr "Start"
 
-#: views.js:432
+#: views.js:436
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:525
+#: views.js:529
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:622
+#: views.js:626
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:638
+#: views.js:642
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:639
+#: views.js:643
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 
+#~ msgid "No Mark selected"
+#~ msgstr "Keine Markierung ausgewählt"

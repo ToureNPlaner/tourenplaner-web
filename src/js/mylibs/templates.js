@@ -48,15 +48,20 @@ templates.dataView = '<span class="minmax">\
                         <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
                       </div>';
 
-templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('Lon') + ':</b></label><input size="10" value="<%=lonlat.lon%>" type="text" name="lon" id="lon" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="lat"><b>' + $._('Lat') + ':</b></label><input size="10" value="<%=lonlat.lat%>" type="text" name="lat" id="lat" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="markerName"><b>' + $._('Name') + ':</b></label><input value="<%=marker.get("name")%>" type="text" name="markerName" id="markerName" /></div>\
-                             <div class="clearfix"><label for="markerPos"><b>' + $._('Position') + ':</b></label><input value="<%=marker.get("position")%>" type="text" name="markerPos" id="markerPos" /></div></div>\
-                             Constraints\
-                             <%=constraintsHtml%>\
+templates.dataViewContent = '<div class="clearfix"><label for="lon"><b>' + $._('Lon') + ':</b></label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
+                             <div class="clearfix"><label for="lat"><b>' + $._('Lat') + ':</b></label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
+                             <div class="clearfix"><label for="markerName"><b>' + $._('Name') + ':</b></label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
+                             <div class="clearfix"><label for="markerPos"><b>' + $._('Position') + ':</b></label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
+                             {{#constraints}}\
+                                <h4>Constraints</h4>\
+                                {{{constraintsHtml}}}\
+                             {{/constraints}}\
+                             </div>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
+templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
-templates.markView = '<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>';
+templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';
+templates.markView = Handlebars.compile(templates.markView);
 
 templates.loginView = '<div class="modal-header">\
                         <a href="#" class="close">x</a>\
@@ -150,27 +155,30 @@ templates.adminView =  '<div class="modal-header">\
                             <h3 class="title">' + $._('Administration') + '</h3>\
                         </div>\
                         <div class="modal-body">\
-                            <%=content%>\
+                            {{{content}}}\
                         </div>\
                         <div class="modal-footer">\
                             <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                         </div>';
+templates.adminView = Handlebars.compile(templates.adminView);
 
 templates.adminMainView =  '<a href="#/admin/users">' + $._('Users') + '</a><br />\
                             <a href="#/admin/requests">' + $._('Requests') + '</a><br />';
 
 templates.messageView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
-                            <h3 class="title"><%=title%></h3>\
+                            <h3 class="title">{{title}}</h3>\
                          </div>\
                          <div class="modal-body">\
-                          <div class="message"><%=message%></div>\
+                          <div class="message">{{message}}</div>\
                          </div>\
                          <div class="modal-footer">\
                           <a href="#" class="btn primary cancel">'+$._('Close')+'</a>\
                          </div>';
+templates.messageView = Handlebars.compile(templates.messageView);
 
 templates.loadingView = '<div class="body">\
                             <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>\
-                            <div class="message"><%=message%></div>\
+                            <div class="message">{{message}}</div>\
                          </div>';
+templates.loadingView = Handlebars.compile(templates.loadingView);

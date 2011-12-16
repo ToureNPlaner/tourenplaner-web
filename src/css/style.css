@@ -92,6 +92,9 @@ div.popover {
 #main #data .minimize {
   display: none;
 }
+#main #data .content div:last-child {
+  margin-top: 10px;
+}
 
 #admin .modal-body {
   height: 400px;
