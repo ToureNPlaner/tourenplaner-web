@@ -260,7 +260,7 @@ jQuery.fn.contextPopup = function(menuData) {
 	var items = settings.items;
 	if (_.isFunction(settings.items))
 		items = settings.items(e);
-		
+
     items.forEach(function(item) {
 	///////// END CUSTOM //////////////
       if (item) {
@@ -289,7 +289,7 @@ jQuery.fn.contextPopup = function(menuData) {
   function showMenu(e) {
     var menu = createMenu(e)
       .show();
-    
+
     var position = {
         left: e.pageX + 5, /* nudge to the right, so the pointer is covering the title */
         top: e.pageY
@@ -297,13 +297,13 @@ jQuery.fn.contextPopup = function(menuData) {
 
     if (position.top + menu.height() >= $(window).height())
         position.top -= menu.height();
-        
+
     if (position.left + menu.width() >= $(window).width())
         position.left -= menu.width();
-    
-    
+
+
     // Create and show menu
-    
+
     menu.css({zIndex:1000001, left: position.left , top: position.top})
       .bind('contextmenu', function() { return false; });
 
@@ -334,7 +334,7 @@ jQuery.fn.contextPopup = function(menuData) {
 };
 
 /* =========================================================
- * bootstrap-modal.js v1.3.0
+ * bootstrap-modal.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#modal
  * =========================================================
  * Copyright 2011 Twitter, Inc.
@@ -355,13 +355,14 @@ jQuery.fn.contextPopup = function(menuData) {
 
 !function( $ ){
 
+  "use strict"
 
  /* CSS TRANSITION SUPPORT (https://gist.github.com/373874)
   * ======================================================= */
 
-    var transitionEnd;
+  var transitionEnd
 
-    $(document).ready(function () {
+  $(document).ready(function () {
 
     $.support.transition = (function () {
       var thisBody = document.body || document.documentElement
@@ -374,30 +375,27 @@ jQuery.fn.contextPopup = function(menuData) {
     if ( $.support.transition ) {
       transitionEnd = "TransitionEnd"
       if ( $.browser.webkit ) {
-        transitionEnd = "webkitTransitionEnd"
+      	transitionEnd = "webkitTransitionEnd"
       } else if ( $.browser.mozilla ) {
-        transitionEnd = "transitionend"
+      	transitionEnd = "transitionend"
       } else if ( $.browser.opera ) {
-        transitionEnd = "oTransitionEnd"
+      	transitionEnd = "oTransitionEnd"
       }
     }
 
-    });
+  })
+
 
  /* MODAL PUBLIC CLASS DEFINITION
   * ============================= */
 
   var Modal = function ( content, options ) {
-    this.settings = $.extend({}, $.fn.modal.defaults)
+    this.settings = $.extend({}, $.fn.modal.defaults, options)
     this.$element = $(content)
       .delegate('.close', 'click.modal', $.proxy(this.hide, this))
 
-    if ( options ) {
-      $.extend( this.settings, options )
-
-      if ( options.show ) {
-        this.show()
-      }
+    if ( this.settings.show ) {
+      this.show()
     }
 
     return this
@@ -416,17 +414,22 @@ jQuery.fn.contextPopup = function(menuData) {
 
         escape.call(this)
         backdrop.call(this, function () {
+          var transition = $.support.transition && that.$element.hasClass('fade')
+
           that.$element
             .appendTo(document.body)
             .show()
 
-          if ($.support.transition && that.$element.hasClass('fade')) {
+          if (transition) {
             that.$element[0].offsetWidth // force reflow
           }
 
-          that.$element
-            .addClass('in')
-            .trigger('shown')
+          that.$element.addClass('in')
+
+          transition ?
+            that.$element.one(transitionEnd, function () { that.$element.trigger('shown') }) :
+            that.$element.trigger('shown')
+
         })
 
         return this
@@ -434,6 +437,10 @@ jQuery.fn.contextPopup = function(menuData) {
 
     , hide: function (e) {
         e && e.preventDefault()
+
+        if ( !this.isShown ) {
+          return this
+        }
 
         var that = this
         this.isShown = false
@@ -444,17 +451,9 @@ jQuery.fn.contextPopup = function(menuData) {
           .trigger('hide')
           .removeClass('in')
 
-        function removeElement () {
-          that.$element
-            .hide()
-            .trigger('hidden')
-
-          backdrop.call(that)
-        }
-
         $.support.transition && this.$element.hasClass('fade') ?
-          this.$element.one(transitionEnd, removeElement) :
-          removeElement()
+          hideWithTransition.call(this) :
+          hideModal.call(this)
 
         return this
       }
@@ -464,6 +463,28 @@ jQuery.fn.contextPopup = function(menuData) {
 
  /* MODAL PRIVATE METHODS
   * ===================== */
+
+  function hideWithTransition() {
+    // firefox drops transitionEnd events :{o
+    var that = this
+      , timeout = setTimeout(function () {
+          that.$element.unbind(transitionEnd)
+          hideModal.call(that)
+        }, 500)
+
+    this.$element.one(transitionEnd, function () {
+      clearTimeout(timeout)
+      hideModal.call(that)
+    })
+  }
+
+  function hideModal (that) {
+    this.$element
+      .hide()
+      .trigger('hidden')
+
+    backdrop.call(this)
+  }
 
   function backdrop ( callback ) {
     var that = this
@@ -491,17 +512,18 @@ jQuery.fn.contextPopup = function(menuData) {
     } else if ( !this.isShown && this.$backdrop ) {
       this.$backdrop.removeClass('in')
 
-      function removeElement() {
-        that.$backdrop.remove()
-        that.$backdrop = null
-      }
-
       $.support.transition && this.$element.hasClass('fade')?
-        this.$backdrop.one(transitionEnd, removeElement) :
-        removeElement()
+        this.$backdrop.one(transitionEnd, $.proxy(removeBackdrop, this)) :
+        removeBackdrop.call(this)
+
     } else if ( callback ) {
        callback()
     }
+  }
+
+  function removeBackdrop() {
+    this.$backdrop.remove()
+    this.$backdrop = null
   }
 
   function escape() {
@@ -555,7 +577,7 @@ jQuery.fn.contextPopup = function(menuData) {
   $.fn.modal.defaults = {
     backdrop: false
   , keyboard: false
-  , show: true
+  , show: false
   }
 
 
@@ -573,7 +595,7 @@ jQuery.fn.contextPopup = function(menuData) {
 }( window.jQuery || window.ender );
 
 /* ==========================================================
- * bootstrap-twipsy.js v1.3.0
+ * bootstrap-twipsy.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#twipsy
  * Adapted from the original jQuery.tipsy by Jason Frame
  * ==========================================================
@@ -594,6 +616,8 @@ jQuery.fn.contextPopup = function(menuData) {
 
 
 !function( $ ) {
+
+  "use strict"
 
  /* CSS TRANSITION SUPPORT (https://gist.github.com/373874)
   * ======================================================= */
@@ -644,7 +668,7 @@ jQuery.fn.contextPopup = function(menuData) {
         , $tip
         , tp
 
-      if (this.getTitle() && this.enabled) {
+      if (this.hasContent() && this.enabled) {
         $tip = this.tip()
         this.setContent()
 
@@ -717,6 +741,10 @@ jQuery.fn.contextPopup = function(menuData) {
       }
     }
 
+  , hasContent: function () {
+      return this.getTitle()
+    }
+
   , getTitle: function() {
       var title
         , $e = this.$element
@@ -737,7 +765,7 @@ jQuery.fn.contextPopup = function(menuData) {
 
   , tip: function() {
       if (!this.$tip) {
-        this.$tip = $('<div class="twipsy" />').html('<div class="twipsy-arrow"></div><div class="twipsy-inner"></div>')
+        this.$tip = $('<div class="twipsy" />').html(this.options.template)
       }
       return this.$tip
     }
@@ -868,16 +896,17 @@ jQuery.fn.contextPopup = function(menuData) {
   , offset: 0
   , title: 'title'
   , trigger: 'hover'
+  , template: '<div class="twipsy-arrow"></div><div class="twipsy-inner"></div>'
   }
 
   $.fn.twipsy.elementOptions = function(ele, options) {
-    return $.metadata ? $.extend({}, options, $(ele).metadata()) : options
+    return $.extend({}, options, $(ele).data())
   }
 
 }( window.jQuery || window.ender );
 
 /* ===========================================================
- * bootstrap-popover.js v1.3.0
+ * bootstrap-popover.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#popover
  * ===========================================================
  * Copyright 2011 Twitter, Inc.
@@ -898,6 +927,8 @@ jQuery.fn.contextPopup = function(menuData) {
 
 !function( $ ) {
 
+ "use strict"
+
   var Popover = function ( element, options ) {
     this.$element = $(element)
     this.options = options
@@ -917,13 +948,17 @@ jQuery.fn.contextPopup = function(menuData) {
       $tip[0].className = 'popover'
     }
 
+  , hasContent: function () {
+      return this.getTitle() || this.getContent()
+    }
+
   , getContent: function () {
       var content
        , $e = this.$element
        , o = this.options
 
       if (typeof this.options.content == 'string') {
-        content = $e.attr(o.content)
+        content = this.options.content
       } else if (typeof this.options.content == 'function') {
         content = this.options.content.call(this.$element[0])
       }
@@ -933,7 +968,7 @@ jQuery.fn.contextPopup = function(menuData) {
   , tip: function() {
       if (!this.$tip) {
         this.$tip = $('<div class="popover" />')
-          .html('<div class="arrow"></div><div class="inner"><h3 class="title"></h3><div class="content"><p></p></div></div>')
+          .html(this.options.template)
       }
       return this.$tip
     }
@@ -950,6 +985,9 @@ jQuery.fn.contextPopup = function(menuData) {
     return this
   }
 
-  $.fn.popover.defaults = $.extend({} , $.fn.twipsy.defaults, { content: 'data-content', placement: 'right'})
+  $.fn.popover.defaults = $.extend({} , $.fn.twipsy.defaults, {
+    placement: 'right'
+  , template: '<div class="arrow"></div><div class="inner"><h3 class="title"></h3><div class="content"><p></p></div></div>'
+  })
 
 }( window.jQuery || window.ender );
