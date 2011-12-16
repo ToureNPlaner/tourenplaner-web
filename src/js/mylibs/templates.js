@@ -158,6 +158,7 @@ templates.adminView =  '<div class="modal-header">\
                             {{{content}}}\
                         </div>\
                         <div class="modal-footer">\
+                            <a href="#" class="btn secondary back">' + $._('Back') + '</a>\
                             <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                         </div>';
 templates.adminView = Handlebars.compile(templates.adminView);

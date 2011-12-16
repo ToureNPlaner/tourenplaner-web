@@ -100,7 +100,11 @@ div.popover {
 }
 
 #admin .modal-body {
-  height: 400px;
+  height: 300px;
+}
+#admin .modal-footer a.btn.back {
+  display: none;
+  float: left;
 }
 
 .container {

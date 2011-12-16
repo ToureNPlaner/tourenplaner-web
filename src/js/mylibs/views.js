@@ -666,7 +666,8 @@ window.AdminView = Backbone.View.extend({
 
     events: {
         "hidden": "remove",
-        "click .cancel": "remove"
+        "click .cancel": "remove",
+        "click .back": "onBack"
     },
 
     render: function () {
@@ -695,9 +696,23 @@ window.AdminView = Backbone.View.extend({
         if (!_.isNull(this.content) && !_.isUndefined(this.content))
             this.content.remove();
 
+        if (this.$('.modal-footer a.btn.back').css('display') === 'none')
+            this.$('.modal-footer a.btn.back').show();
+
         this.$('.modal-body').html(content.el);
         this.content = content;
-    }
+    },
+
+    onBack: function () {
+        this.content.remove();
+        this.content = null;
+
+        this.$('.modal-body').html(templates.adminMainView);
+        this.$('.modal-footer a.btn.back').hide();
+
+        window.app.navigate('/admin');
+        return false;
+    },
 });
 
 window.AdminUsersView = Backbone.View.extend({
