@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-16 17:01+0100\n"
-"PO-Revision-Date: 2011-12-16 17:01+0100\n"
+"POT-Creation-Date: 2011-12-17 14:50+0100\n"
+"PO-Revision-Date: 2011-12-17 14:51+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -143,9 +143,9 @@ msgstr "Übernehmen"
 #: templates.js:75
 #: templates.js:103
 #: templates.js:106
-#: views.js:488
-#: views.js:589
-#: views.js:650
+#: views.js:496
+#: views.js:622
+#: views.js:683
 msgid "Error!"
 msgstr "Fehler!"
 
@@ -198,15 +198,19 @@ msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
 #: templates.js:161
-#: templates.js:176
+msgid "Back"
+msgstr "Zurück"
+
+#: templates.js:162
+#: templates.js:177
 msgid "Close"
 msgstr "Schließen"
 
-#: templates.js:165
+#: templates.js:166
 msgid "Users"
 msgstr "Benutzer"
 
-#: templates.js:166
+#: templates.js:167
 msgid "Requests"
 msgstr "Anfragen"
 
@@ -250,19 +254,55 @@ msgstr "Start"
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:529
+#: views.js:485
+#: views.js:486
+#: views.js:612
+#: views.js:613
+msgid "Please enter a valid email address"
+msgstr "Bitte geben Sie eine gültige Emailadresse an"
+
+#: views.js:488
+msgid "Please enter your password"
+msgstr "Bitte geben Sie ihr Passwort an"
+
+#: views.js:542
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:626
+#: views.js:600
+msgid "Please enter your firstname"
+msgstr "Bitte geben Sie ihren Vornamen an"
+
+#: views.js:601
+msgid "Please enter your lastname"
+msgstr "Bitte geben Sie ihren Nachnamen an"
+
+#: views.js:603
+msgid "Please provide a password"
+msgstr "Bitte geben Sie ein Passwort an"
+
+#: views.js:604
+#: views.js:608
+msgid "Enter at least 5 characters"
+msgstr "Geben Sie mindestens 5 Zeichen ein"
+
+#: views.js:607
+msgid "Please repeat your password"
+msgstr "Bitte geben Sie ihr Password erneut an"
+
+#: views.js:609
+msgid "Enter the same password as above"
+msgstr "Geben Sie dasselbe Passwort wie oben an"
+
+#: views.js:659
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:642
+#: views.js:675
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:643
+#: views.js:676
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 

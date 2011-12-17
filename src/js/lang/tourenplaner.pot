@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-16 17:01+0100\n"
+"POT-Creation-Date: 2011-12-17 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,7 +130,7 @@ msgid "Apply"
 msgstr ""
 
 #: templates.js:72 templates.js:75 templates.js:103 templates.js:106
-#: views.js:488 views.js:589 views.js:650
+#: views.js:496 views.js:622 views.js:683
 msgid "Error!"
 msgstr ""
 
@@ -178,15 +178,19 @@ msgstr ""
 msgid "Repeat Password"
 msgstr ""
 
-#: templates.js:161 templates.js:176
+#: templates.js:161
+msgid "Back"
+msgstr ""
+
+#: templates.js:162 templates.js:177
 msgid "Close"
 msgstr ""
 
-#: templates.js:165
+#: templates.js:166
 msgid "Users"
 msgstr ""
 
-#: templates.js:166
+#: templates.js:167
 msgid "Requests"
 msgstr ""
 
@@ -230,19 +234,51 @@ msgstr ""
 msgid "Target"
 msgstr ""
 
-#: views.js:529
+#: views.js:485 views.js:486 views.js:612 views.js:613
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: views.js:488
+msgid "Please enter your password"
+msgstr ""
+
+#: views.js:542
 msgid "Logging in"
 msgstr ""
 
-#: views.js:626
+#: views.js:600
+msgid "Please enter your firstname"
+msgstr ""
+
+#: views.js:601
+msgid "Please enter your lastname"
+msgstr ""
+
+#: views.js:603
+msgid "Please provide a password"
+msgstr ""
+
+#: views.js:604 views.js:608
+msgid "Enter at least 5 characters"
+msgstr ""
+
+#: views.js:607
+msgid "Please repeat your password"
+msgstr ""
+
+#: views.js:609
+msgid "Enter the same password as above"
+msgstr ""
+
+#: views.js:659
 msgid "Sending data"
 msgstr ""
 
-#: views.js:642
+#: views.js:675
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:643
+#: views.js:676
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."

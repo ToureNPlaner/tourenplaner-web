@@ -480,6 +480,13 @@ window.LoginView = Backbone.View.extend({
                 },
                 password: "required"
             },
+            messages: {
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
+                },
+                password: $._('Please enter your password')
+            },
             showErrors: function (errorMap, errorList) {
                 for (obj in errorList) {
                     $(errorList[obj].element).addClass('error')
@@ -580,11 +587,30 @@ window.RegisterView = Backbone.View.extend({
                     minlength: 5
                 },
                 repeat_password: {
+                    required: true,
+                    minlength: 5,
                     equalTo: '#register #password'
                 },
                 email: {
                     required: true,
                     email: true
+                }
+            },
+            messages: {
+                firstname: $._('Please enter your firstname'),
+                lastname: $._('Please enter your lastname'),
+                password: {
+                    required: $._('Please provide a password'),
+                    minlength: $._('Enter at least 5 characters')
+                },
+                repeat_password: {
+                    required: $._('Please repeat your password'),
+                    minlength: $._('Enter at least 5 characters'),
+                    equalTo: $._('Enter the same password as above')
+                },
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
                 }
             },
             showErrors: function (errorMap, errorList) {
