@@ -50,10 +50,10 @@ _.extend(window.Api.prototype, {
      */
     send : function (reqData) {
         var url = "", event = {};
-        if(_.isUndefined(reqData) || _.isNull(reqData)) return false;
-        if(_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
-        if(_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
-        if(_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
+        if (_.isUndefined(reqData) || _.isNull(reqData)) return false;
+        if (_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
+        if (_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
+        if (_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
         reqData.type || (reqData.type = 'GET');
         reqData.request || (reqData.request = {});
 
@@ -98,7 +98,7 @@ _.extend(window.Api.prototype, {
                 var text = jqXHR.responseText || "";
 
                 // use simple error if response is empty
-                if(text === "") {
+                if (text === "") {
                 	if(errorThrown !== "")
 	                	text = errorThrown;
 	                else
@@ -144,7 +144,7 @@ _.extend(window.Api.prototype, {
      * param: userObject containing info about user
      */
     registerUser: function (args) {
-        if(!args || !args.userObject)
+        if (!args || !args.userObject)
             return false;
         this.send({
             type : 'POST',
@@ -181,20 +181,15 @@ _.extend(window.Api.prototype, {
      * param: id of requested user, null for own data
      */
     getUser : function (args) {
-        if (!args.id || _.isNaN(args.id)) {
-            this.send({
-                suffix : 'getuser',
-                request : '',
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        } else {
-            this.send({
-                suffix : 'getuser?ID=' + args.id,
-                request : '',
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        }
+        var suffix = 'getuser';
+        if (args.id && !_.isNaN(args.id))
+            suffix += '?ID=' + args.id;
 
+        this.send({
+            suffix : suffix,
+            request : '',
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
         return true;
     },
 
@@ -203,23 +198,19 @@ _.extend(window.Api.prototype, {
      * param: id of user you want to change, null if to change own
      */
     updateUser : function (args) {
-        if(!args || !args.userObject)
+        if (!args || !args.userObject)
             return false;
-        if (!args.id || _.isNaN(args.id)) {
-            this.send({
-                type : 'POST',
-                suffix : 'updateuser',
-                request : args.userObject,
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        } else {
-            this.send({
-                type : 'POST',
-                suffix : 'updateuser?ID=' + args.id,
-                request : args.userObject,
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        }
+
+        var suffix = 'updateuser';
+        if (args.id && !_.isNaN(args.id))
+            suffix += '?ID=' + args.id;
+
+        this.send({
+            type : 'POST',
+            suffix : suffix,
+            request : args.userObject,
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
 
         return true;
     },
@@ -231,24 +222,19 @@ _.extend(window.Api.prototype, {
      * param: offset of first item
      */
     listRequests : function (args) {
-        if(!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
-        if (isNaN(args.id)) {
-            this.send({
-                type : 'POST',
-                suffix : 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset,
-                request : '',
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        } else {
-            this.send({
-                type : 'POST',
-                suffix : 'listrequests?ID=' + args.id +
-                         '&Limit=' + args.limit + '&Offset=' + args.offset,
-                request : '',
-                callback : _.isFunction(args.callback) ? args.callback : null
-            });
-        }
+
+        var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
+        if (args.id && !_.isNaN(args.id))
+            suffix += '&ID=' + args.id;
+
+        this.send({
+            type : 'POST',
+            suffix : suffix,
+            request : '',
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
 
         return true;
     },
@@ -259,7 +245,7 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUsers : function (args) {
-        if(!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
@@ -275,7 +261,7 @@ _.extend(window.Api.prototype, {
      * param: id of user that should be deleted
      */
     deleteUser : function (args) {
-        if(!args || !args.id || isNaN(args.id))
+        if (!args || !args.id || isNaN(args.id))
             return false;
         this.send({
             suffix : 'deleteuser?ID=' + args.id,
@@ -291,7 +277,7 @@ _.extend(window.Api.prototype, {
 	 * param: points list of points
 	 */
 	nearestNeighbour : function (args) {
-		if(!args || !args.points)
+		if (!args || !args.points)
 			return false;
 		this.send({
 			suffix : 'algnns',
@@ -314,18 +300,18 @@ _.extend(window.Api.prototype, {
      * param: points, version, constraints as alg spec
      */
     alg : function (args) {
-		var thisrequest;
-        if(!args || !args.alg)
+		var thisrequest = {};
+        if (!args || !args.alg)
             return false;
 		// use given request or make own
-		if(args.request){
+		if (args.request) {
 			if(!args.request.points)
 				return false;
 			else
 				thisrequest = args.request;
-		}
-		else{
-			if(!args.points) return false;
+		} else {
+			if(!args.points)
+                return false;
 			thisrequest = {
 		        version: args.version || 1,
 		        points: args.points,
