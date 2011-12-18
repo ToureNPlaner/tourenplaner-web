@@ -78,7 +78,7 @@ templates.loginView = '<div class="modal-header">\
                           <div class="clearfix">\
                             <label for="email">' + $._('Email') + ':</label>\
                             <div class="input">\
-                              <input type="text" name="email" id="email" />\
+                              <input type="text" name="email" id="email" autofocus />\
                             </div>\
                           </div>\
                           <div class="clearfix">\
@@ -109,7 +109,7 @@ templates.registerView = '  <div class="modal-header">\
                                 <div class="clearfix">\
                                   <label for="firstname">' + $._('First name') + ': </label>\
                                   <div class="input">\
-                                    <input type="text" name="firstname" id="firstname" />\
+                                    <input type="text" name="firstname" id="firstname" autofocus />\
                                   </div>\
                                 </div>\
                                 <div class="clearfix">\
