@@ -113,8 +113,7 @@ $.mockjax({
     url: "/getuser",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 username: 'asd',
                 password: 'asd',
                 email: 'asd@asd.de',
@@ -122,8 +121,6 @@ $.mockjax({
                 lastname: 'Lustig',
                 admin: true,
                 active: true
-            }
-
     }
 });
 
@@ -136,8 +133,7 @@ $.mockjax({
     url: "/getuser?ID=42",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 username: 'qwe',
                 password: 'qwe',
                 email: 'qwe@ewq.de',
@@ -145,7 +141,6 @@ $.mockjax({
                 lastname: 'Duck',
                 admin: false,
                 active: true
-            }
     }
 });
 
@@ -208,8 +203,7 @@ $.mockjax({
     url: "/listrequests?Limit=2&Offset=3",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     timestamp: 1234567890,
@@ -226,7 +220,6 @@ $.mockjax({
                     response: {Route:[[28.1427,20.1567],[89.1427,1.0847],
                     [17.1978,86.1487],[3.1427,90.1487],[42.5927,129.4667]]}
                 }]
-            };
     }
 });
 
@@ -239,8 +232,7 @@ $.mockjax({
     url: "/listrequests?ID=1024&Limit=1&Offset=1032",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     timestamp: 1234567890,
@@ -250,7 +242,6 @@ $.mockjax({
                     response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
                     [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
                 }]
-            };
     }
 });
 
@@ -263,8 +254,7 @@ $.mockjax({
     url: "/listusers?Limit=1&Offset=3",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     email: "max.mustermann@online.de",
@@ -275,7 +265,6 @@ $.mockjax({
                     admin: false,
                     active: true
                 }]
-            };
     }
 });
 
@@ -284,9 +273,7 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     response: function(data) {
-            this.responseText = {
-                number: 10,
-                requests: [{
+            var user = {
                     userid: 1,
                     email: "max.mustermann@online.de",
                     password: "1234",
@@ -295,7 +282,11 @@ $.mockjax({
                     address: "Musterstrasse 10, 12345 Musterstadt",
                     admin: false,
                     active: true
-                }]
+            };
+
+            this.responseText = {
+                number: 10,
+                requests: [user, user, user, user, user, user, user, user, user, user]
             };
     }
 });
@@ -308,10 +299,7 @@ $.mockjax({
     url: "/deleteuser?ID=94",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
-            };
-    }
+    responseText: {}
 });
 
 
@@ -352,8 +340,7 @@ $.mockjax({
     url: "/alg",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-    }
+    responseText: {}
 });
 
 /**
