@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-17 14:50+0100\n"
+"POT-Creation-Date: 2011-12-19 00:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,8 +49,12 @@ msgstr ""
 msgid "Add Endmarker"
 msgstr ""
 
-#: router.js:22
+#: router.js:21
 msgid "Loading server informations"
+msgstr ""
+
+#: router.js:56
+msgid "Loading user informations"
 msgstr ""
 
 #: templates.js:7 templates.js:68 templates.js:94
@@ -142,7 +146,7 @@ msgstr ""
 msgid "The email or password you entered was incorrect."
 msgstr ""
 
-#: templates.js:79 templates.js:128
+#: templates.js:79 templates.js:128 templates.js:171
 msgid "Email"
 msgstr ""
 
@@ -182,16 +186,32 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: templates.js:162 templates.js:177
+#: templates.js:162 templates.js:206
 msgid "Close"
 msgstr ""
 
-#: templates.js:166
-msgid "Users"
+#: templates.js:169
+msgid "First Name"
 msgstr ""
 
-#: templates.js:167
-msgid "Requests"
+#: templates.js:170
+msgid "Last Name"
+msgstr ""
+
+#: templates.js:172
+msgid "Activated"
+msgstr ""
+
+#: templates.js:173
+msgid "Actions"
+msgstr ""
+
+#: templates.js:191
+msgid "Previous"
+msgstr ""
+
+#: templates.js:193
+msgid "Next"
 msgstr ""
 
 #: strings.js:1

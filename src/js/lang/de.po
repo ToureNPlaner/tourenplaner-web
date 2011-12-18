@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-17 14:50+0100\n"
-"PO-Revision-Date: 2011-12-17 14:51+0100\n"
+"POT-Creation-Date: 2011-12-19 00:36+0100\n"
+"PO-Revision-Date: 2011-12-19 00:36+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -54,9 +54,13 @@ msgstr "Markierung hinzufügen"
 msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
 
-#: router.js:22
+#: router.js:21
 msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
+
+#: router.js:56
+msgid "Loading user informations"
+msgstr "Lade Benutzerinformationen"
 
 #: templates.js:7
 #: templates.js:68
@@ -160,6 +164,7 @@ msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
 
 #: templates.js:79
 #: templates.js:128
+#: templates.js:171
 msgid "Email"
 msgstr "Email"
 
@@ -202,17 +207,33 @@ msgid "Back"
 msgstr "Zurück"
 
 #: templates.js:162
-#: templates.js:177
+#: templates.js:206
 msgid "Close"
 msgstr "Schließen"
 
-#: templates.js:166
-msgid "Users"
-msgstr "Benutzer"
+#: templates.js:169
+msgid "First Name"
+msgstr "Vorname"
 
-#: templates.js:167
-msgid "Requests"
-msgstr "Anfragen"
+#: templates.js:170
+msgid "Last Name"
+msgstr "Nachname"
+
+#: templates.js:172
+msgid "Activated"
+msgstr "Aktiviert"
+
+#: templates.js:173
+msgid "Actions"
+msgstr "Aktionen"
+
+#: templates.js:191
+msgid "Previous"
+msgstr "Zurück"
+
+#: templates.js:193
+msgid "Next"
+msgstr "Weiter"
 
 #: strings.js:1
 msgid "Shortest Path"
@@ -305,6 +326,12 @@ msgstr "Registrierung erfolgreich"
 #: views.js:676
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
+
+#~ msgid "Users"
+#~ msgstr "Benutzer"
+
+#~ msgid "Requests"
+#~ msgstr "Anfragen"
 
 #~ msgid "No Mark selected"
 #~ msgstr "Keine Markierung ausgewählt"

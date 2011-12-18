@@ -166,11 +166,11 @@ templates.adminView = Handlebars.compile(templates.adminView);
 templates.adminMainView =  '<table class="zebra-striped">\
                                 <thead>\
                                     <th>#</th>\
-                                    <th>First Name</th>\
-                                    <th>Last Name</th>\
-                                    <th>Email</th>\
-                                    <th>Activated</th>\
-                                    <th>Actions</th>\
+                                    <th>' + $._('First Name') + '</th>\
+                                    <th>' + $._('Last Name') + '</th>\
+                                    <th>' + $._('Email') + '</th>\
+                                    <th>' + $._('Activated') + '</th>\
+                                    <th>' + $._('Actions') + '</th>\
                                 </thead>\
                                 <tbody>\
                                 </tbody>\
@@ -188,9 +188,9 @@ templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
 
 templates.paginationView = '<div class="pagination">\
                                 <ul>\
-                                    <li class="prev disabled"><a href="#">&larr; Previous</a></li>\
+                                    <li class="prev disabled"><a href="#">&larr; ' + $._('Previous') + '</a></li>\
                                     {{{pages}}}\
-                                    <li class="next disabled"><a href="#">Next &rarr;</a></li>\
+                                    <li class="next disabled"><a href="#">' + $._('Next') + ' &rarr;</a></li>\
                                 </ul>\
                             </div>';
 templates.paginationView = Handlebars.compile(templates.paginationView);
