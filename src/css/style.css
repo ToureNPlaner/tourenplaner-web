@@ -99,8 +99,15 @@ div.popover {
   font-weight: bold;
 }
 
+#admin {
+  width: 800px;
+}
 #admin .modal-body {
-  height: 300px;
+  height: 475px;
+}
+#admin .modal-body table {
+  max-width: 780px;
+  height: 250px;
 }
 #admin .modal-footer a.btn.back {
   display: none;

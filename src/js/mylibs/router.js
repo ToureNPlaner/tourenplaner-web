@@ -6,10 +6,9 @@ window.Router = Backbone.Router.extend({
         "/register":     "register", // #/register
         "/settings":     "settings", // #/settings
         "/admin":        "admin",    // #/admin
-        "/admin/users":  "adminUsers", // #/admin/users
-        "/admin/requests": "adminRequests", // #/admin/requests
+        "/admin/user/:id":  "adminUser", // #/admin/user/42
         "/billing":      "billing",  // #/billing
-        "/route/:id":    "request"   // #/route/7
+        "/route/:id":    "request"   // #/route/42
     },
 
     initialize: function(options) {
@@ -49,17 +48,18 @@ window.Router = Backbone.Router.extend({
     admin: function() {
         this.adminView = new AdminView({remove: _.bind(this.onAdminRemove, this)}).render();
     },
-    
-    adminUsers: function () {
+
+    adminUser: function(id) {
         if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
             this.admin();
-        new AdminUsersView({parent: this.adminView}).render();
-    },
-    
-    adminRequests: function () {
-        if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
-            this.admin();
-        new AdminRequestsView({parent: this.adminView}).render();
+
+        this.loadingView = new LoadingView($._('Loading user informations')).render();
+
+        var that = this;
+        var model = new User().load(id, function () {
+            that.adminView.setContent(new AdminUserView({model: model}).render());
+            that.loadingView.remove();
+        });
     },
 
     billing: function() {
@@ -69,7 +69,7 @@ window.Router = Backbone.Router.extend({
     request: function(id) {
         alert('To be implemented');
     },
-    
+
     onAdminRemove: function () {
         log("onAdminRemove");
         this.admin = null;

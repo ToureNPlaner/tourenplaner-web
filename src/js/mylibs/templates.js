@@ -163,8 +163,37 @@ templates.adminView =  '<div class="modal-header">\
                         </div>';
 templates.adminView = Handlebars.compile(templates.adminView);
 
-templates.adminMainView =  '<a href="#/admin/users">' + $._('Users') + '</a><br />\
-                            <a href="#/admin/requests">' + $._('Requests') + '</a><br />';
+templates.adminMainView =  '<table class="zebra-striped">\
+                                <thead>\
+                                    <th>#</th>\
+                                    <th>First Name</th>\
+                                    <th>Last Name</th>\
+                                    <th>Email</th>\
+                                    <th>Activated</th>\
+                                    <th>Actions</th>\
+                                </thead>\
+                                <tbody>\
+                                </tbody>\
+                            </table>';
+
+templates.adminTableRowView = '<tr>\
+                                <td>{{user.userid}}</td>\
+                                <td>{{user.firstname}}</td>\
+                                <td>{{user.lastname}}</td>\
+                                <td>{{user.email}}</td>\
+                                <td>{{user.active}}</td>\
+                                <td>None</td>\
+                              </tr>';
+templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
+
+templates.paginationView = '<div class="pagination">\
+                                <ul>\
+                                    <li class="prev disabled"><a href="#">&larr; Previous</a></li>\
+                                    {{{pages}}}\
+                                    <li class="next disabled"><a href="#">Next &rarr;</a></li>\
+                                </ul>\
+                            </div>';
+templates.paginationView = Handlebars.compile(templates.paginationView);
 
 templates.messageView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\

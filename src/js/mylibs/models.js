@@ -309,6 +309,24 @@ window.User = Backbone.Model.extend({
             args.error('Incorrect arguments');
     },
 
+    load: function (id, callback) {
+        if (!app.user.get('admin'))
+            return app.user;
+
+        var that = this;
+        api.getUser({
+            id: id,
+            callback: function (text, success) {
+                if (success) {
+                    that.set(text);
+                    callback();
+                }
+            }
+        });
+
+        return this;
+    },
+
     toUserobject: function () {
         return this.attributes;
     },
