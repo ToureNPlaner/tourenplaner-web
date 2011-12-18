@@ -109,6 +109,9 @@ div.popover {
   max-width: 780px;
   height: 250px;
 }
+#admin .modal-body .pagination {
+  margin: 0 auto;
+}
 #admin .modal-footer a.btn.back {
   display: none;
   float: left;

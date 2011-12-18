@@ -771,6 +771,8 @@ window.AdminView = Backbone.View.extend({
                     }
 
                     that.$('.modal-body').append(templates.paginationView({pages: html}));
+                    that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
+
                     if (page !== 1)
                         that.$('.pagination li').first().removeClass('disabled');
                     if (page !== pages)
