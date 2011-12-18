@@ -279,6 +279,27 @@ $.mockjax({
     }
 });
 
+$.mockjax({
+    url: "/listusers?Limit=10&Offset=0",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            this.responseText = {
+                number: 10,
+                requests: [{
+                    userid: 1,
+                    email: "max.mustermann@online.de",
+                    password: "1234",
+                    firstname: "Max",
+                    lastname: "Mustermann",
+                    address: "Musterstrasse 10, 12345 Musterstadt",
+                    admin: false,
+                    active: true
+                }]
+            };
+    }
+});
+
 
 /**
  * Mocks the /deleteuser?ID=94 function on the server.

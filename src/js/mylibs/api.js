@@ -245,7 +245,7 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUsers : function (args) {
-        if (!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) || _.isNaN(args.offset) || _.isNaN(args.limit) || args.offset<0 || args.limit<0)
             return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
