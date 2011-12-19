@@ -113,8 +113,7 @@ $.mockjax({
     url: "/getuser",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 username: 'asd',
                 password: 'asd',
                 email: 'asd@asd.de',
@@ -122,8 +121,6 @@ $.mockjax({
                 lastname: 'Lustig',
                 admin: true,
                 active: true
-            }
-
     }
 });
 
@@ -136,8 +133,7 @@ $.mockjax({
     url: "/getuser?ID=42",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 username: 'qwe',
                 password: 'qwe',
                 email: 'qwe@ewq.de',
@@ -145,7 +141,6 @@ $.mockjax({
                 lastname: 'Duck',
                 admin: false,
                 active: true
-            }
     }
 });
 
@@ -208,8 +203,7 @@ $.mockjax({
     url: "/listrequests?Limit=2&Offset=3",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     timestamp: 1234567890,
@@ -226,7 +220,6 @@ $.mockjax({
                     response: {Route:[[28.1427,20.1567],[89.1427,1.0847],
                     [17.1978,86.1487],[3.1427,90.1487],[42.5927,129.4667]]}
                 }]
-            };
     }
 });
 
@@ -236,11 +229,10 @@ $.mockjax({
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?ID=1024&Limit=1&Offset=1032",
+    url: "/listrequests?Limit=1&Offset=1032&ID=1024",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     timestamp: 1234567890,
@@ -250,7 +242,6 @@ $.mockjax({
                     response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
                     [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
                 }]
-            };
     }
 });
 
@@ -263,8 +254,7 @@ $.mockjax({
     url: "/listusers?Limit=1&Offset=3",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
+    responseText: {
                 number: 100,
                 requests: [{
                     email: "max.mustermann@online.de",
@@ -275,6 +265,29 @@ $.mockjax({
                     admin: false,
                     active: true
                 }]
+    }
+});
+
+$.mockjax({
+    url: "/listusers?Limit=10&Offset=0",
+    responseTimeout: 10,
+    status: 201,
+    response: function(data) {
+            var user = {
+                    userid: 1,
+                    email: "max.mustermann@online.de",
+                    password: "1234",
+                    firstname: "Max",
+                    lastname: "Mustermann",
+                    address: "Musterstrasse 10, 12345 Musterstadt",
+                    admin: false,
+                    active: true
+            };
+            var user2 = _.extend({}, user, {active: false, userid: 2});
+
+            this.responseText = {
+                number: 10,
+                requests: [user, user, user2, user, user, user, user2, user, user, user]
             };
     }
 });
@@ -287,10 +300,7 @@ $.mockjax({
     url: "/deleteuser?ID=94",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-            this.responseText = {
-            };
-    }
+    responseText: {}
 });
 
 
@@ -331,8 +341,7 @@ $.mockjax({
     url: "/alg",
     responseTimeout: 10,
     status: 201,
-    response: function(data) {
-    }
+    responseText: {}
 });
 
 /**
@@ -345,9 +354,11 @@ $.mockjax({
     responseTimeout: 10,
     status: 200,
     response: function (data) {
-        var tmp = JSON.parse(data.data);
-        tmp.ln *= 1e7;
-        tmp.lt *= 1e7;
+        var arr = JSON.parse(data.data)
+        var tmp = { way: [] };
+        for (i in arr.points)
+            tmp.way.push(arr.points[i]);
+
         this.responseText = tmp;
     }
 });

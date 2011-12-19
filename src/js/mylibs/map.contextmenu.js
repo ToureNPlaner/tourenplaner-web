@@ -1,5 +1,5 @@
 function addMarker(action, evt) {
-    var pixel = new OpenLayers.Pixel(evt.layerX, evt.layerY);
+    var pixel = new OpenLayers.Pixel(evt.pageX, evt.pageY);
     var lonlat = window.mapModel.get("mapObject").getMap().getLonLatFromPixel(pixel);
     var mark = new Mark({
         "lonlat": lonlat
@@ -9,7 +9,7 @@ function addMarker(action, evt) {
 	    case "start":
 			window.markList.setStartMark(mark);
 			break;
-			
+
         case "mark":
             window.markList.appendMark(mark);
             break;

@@ -1,11 +1,11 @@
-@import "bootstrap-1.3.0.css";
+@import "bootstrap-1.4.0.css";
 
 #login, #register, #message, #loading {
   display: none;
   width: 470px;
 }
 
-#login .alert-message, #register .alert-message {
+#login .alert-message, #register .alert-message, #admin-user .alert-message {
   display: none;
 }
 #login label, #register label {
@@ -13,10 +13,10 @@
   width: 150px;
   padding-right: 5px;
 }
-#login .error, #register .error {
+#login .error, #register .error, #admin-user .error {
   border: 1px solid red;
 }
-#login .valid, #register .valid {
+#login .valid, #register .valid, #admin-user .valid {
   border: 1px solid green;
 }
 
@@ -91,6 +91,41 @@ div.popover {
 }
 #main #data .minimize {
   display: none;
+}
+#main #data .content div:last-child {
+  margin-top: 10px;
+}
+#main #data .content label {
+  font-weight: bold;
+}
+
+#admin {
+  width: 800px;
+}
+#admin table {
+  max-width: 780px;
+  height: 250px;
+}
+#admin table td.center {
+  text-align: center;
+}
+#admin table td a {
+  padding: 0 5px;
+}
+#admin .pagination {
+  margin: 0 auto;
+}
+#admin a.btn.back {
+  display: none;
+  float: left;
+}
+#admin-user {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#login a.btn.register {
+  float: left;
 }
 
 .container {

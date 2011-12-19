@@ -16,7 +16,7 @@ window.Mark = Backbone.Model.extend({
             return null;
         }
     },
-    
+
     setLonLatWith1984: function (lon,lat){
 		if(lon != null && lat != null){
     		var tempLon = lon / 1e7;
@@ -32,21 +32,21 @@ window.Mark = Backbone.Model.extend({
 
     toJSON: function () {
         // We're using ints here instead of floats for performance improvements (Java is a bit slow)
-        
+
         var json = {
             "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
             "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
             "name": this.get("name"),
             "k": this.get("k")
         };
-        
+
         // get all pointconstraints for currently selected algorithm
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
-        
+
         if (pointconstraints != null) {
 			for (var i = 0; i < pointconstraints.length; i++) {
 				var key = pointconstraints[i].name;
-				
+
 				if (this.get(key) != undefined) {
 					json[key] = this.get(key);
 				} else {
@@ -55,10 +55,10 @@ window.Mark = Backbone.Model.extend({
 				}
 			}
 		}
-		
+
 		return json;
     },
-    
+
     findNearestNeighbour: function (){
     	var that = this;
         // get nearest neighbour
@@ -66,7 +66,7 @@ window.Mark = Backbone.Model.extend({
 		window.api.nearestNeighbour({
 			points: point,
 			callback: function(text, success){
-				if(success && (!isNaN(text.way[0].ln) && !isNaN(text.way[0].lt))){
+				if(success && (!_.isUndefined(text.way) && !_.isNaN(text.way[0].ln) && !_.isNaN(text.way[0].lt))){
 					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
 				}
 				else
@@ -86,7 +86,7 @@ window.PointConstraint = Backbone.Model.extend({
       maxvalue: 0,
       value: 0
    },
-   
+
    toJSON: function() {
       return {
          "name": this.get("name"),
@@ -238,13 +238,12 @@ window.User = Backbone.Model.extend({
     },
 
     onStartup: function () {
-        var cookie = $.cookie('tourenplaner');
+        var cookie = $.store('tourenplaner');
         if (cookie && !_.isUndefined(cookie)) {
             var dec, decarr;
             try {
                 dec = Base64.decode(cookie);
                 decarr = dec.split(':');
-                log(dec, decarr);
                 if (decarr.length == 2)
                     return this.login(decarr[0], decarr[1]);
             } catch (e) {
@@ -252,9 +251,7 @@ window.User = Backbone.Model.extend({
             }
             cookie = null;
         }
-
-        $.cookie('tourenplaner', cookie);
-        return cookie == null;
+        $.store('tourenplaner', cookie);
     },
 
     login: function (email, password) {
@@ -264,7 +261,7 @@ window.User = Backbone.Model.extend({
             password: password,
             callback: function (text, success) {
                 if (success) {
-                    $.cookie('tourenplaner', Base64.encode(email + ':' + password), {
+                    $.store('tourenplaner', Base64.encode(email + ':' + password), {
                         expires: 7,
                         path: '/'
                     });
@@ -275,7 +272,7 @@ window.User = Backbone.Model.extend({
 
                     log('Login successful');
                 } else {
-                    $.cookie('tourenplaner', null);
+                    $.store('tourenplaner', null);
                 }
                 that.trigger('login', success);
             }
@@ -283,7 +280,7 @@ window.User = Backbone.Model.extend({
     },
 
     logout: function () {
-        $.cookie('tourenplaner', null);
+        $.store('tourenplaner', null);
         this.set({
             login: false
         });
@@ -307,6 +304,38 @@ window.User = Backbone.Model.extend({
             args.error('Incorrect arguments');
     },
 
+    update: function (args) {
+        var ret = window.api.updateUser({
+            id: this.get('userid'),
+            userObject: this.toUserobject(),
+            callback: function (text, success) {
+                if (success && _.isFunction(args.success)) args.success();
+                else if (!success && _.isFunction(args.error)) args.error(text);
+            }
+        });
+
+        if (!ret && _.isFunction(args.error))
+            args.error('Incorrect arguments');
+    },
+
+    load: function (id, callback) {
+        if (!app.user.get('admin'))
+            return app.user;
+
+        var that = this;
+        api.getUser({
+            id: id,
+            callback: function (text, success) {
+                if (success) {
+                    that.set(text);
+                    callback();
+                }
+            }
+        });
+
+        return this;
+    },
+
     toUserobject: function () {
         return this.attributes;
     },
@@ -319,6 +348,7 @@ window.User = Backbone.Model.extend({
 
 window.ServerInfo = Backbone.Model.extend({
     defaults: {
+        loaded: false,
         version: null,
         servertype: 'public',
         port: 80,
@@ -347,14 +377,15 @@ window.ServerInfo = Backbone.Model.extend({
                     });
                 }
                 that.set({
+                    loaded: true,
                     servertype: obj.servertype,
                     version: obj.version,
                     algorithms: obj.algorithms
                 });
 
+                that.trigger("info-loaded");
                 if (_.isFunction(callback))
                     callback();
-                that.trigger("info-loaded");
             }
         });
     },
@@ -362,8 +393,11 @@ window.ServerInfo = Backbone.Model.extend({
     isPublic: function () {
         return this.get('servertype') == "public";
     },
-    
-    
+
+    isLoaded: function () {
+        return this.get('loaded');
+    },
+
     // maybe this is not the correct place for this method.
     // will be moved later.
     getCurrentAlgorithm: function() {

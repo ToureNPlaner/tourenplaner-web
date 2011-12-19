@@ -29,7 +29,7 @@ window.TopbarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.topbarView));
+        $(this.el).html(templates.topbarView);
         $('#container').append(this.el);
 
         this.$('ul li.menu, ul li.user').each(function () {
@@ -57,13 +57,11 @@ window.TopbarView = Backbone.View.extend({
         if (user.isLoggedIn()) {
             this.$('li.user a').html(user.get('firstname') + ' ' + user.get('lastname'));
             this.$('li.user, li.menu').show();
-            this.$('li.login-link, li.register-link').hide();
 
             if (user.get('admin'))
                 this.$('li.menu ul li.admin').show();
         } else {
             this.$('li.user, li.menu').hide();
-            this.$('li.login-link, li.register-link').show();
             this.$('li.menu ul li.admin').hide();
         }
     }
@@ -111,7 +109,7 @@ window.SidebarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.sidebarView));
+        $(this.el).html(templates.sidebarView);
         $('#main').append(this.el);
 
         this.onResize();
@@ -324,7 +322,7 @@ window.DataView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.dataView));
+        $(this.el).html(templates.dataView);
         $('#main').append(this.el);
 
         $(this.el).resizable({
@@ -339,21 +337,27 @@ window.DataView = Backbone.View.extend({
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
-        
+
         // add fields to edit pointconstraints
         var constraintsHtml = "";
         for (var i = 0; i < pointconstraints.length; i++) {
 			var key = pointconstraints[i].name;
-			
+
 			var value = "";
 			if (marker.get(key) != undefined) {
 				value = marker.get(key);
 			}
-			
+
 			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
 		}
 
-        this.$('.content').html(_.template(templates.dataViewContent, {lonlat:  lonlat, marker: marker, constraintsHtml: constraintsHtml}));		
+        var data = {
+            lonlat:  lonlat,
+            marker: marker.toJSON(),
+            constraints: !_.isEmpty(constraintsHtml),
+            constraintsHtml: constraintsHtml
+        };
+        this.$('.content').html(templates.dataViewContent(data));
 
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
@@ -364,7 +368,7 @@ window.DataView = Backbone.View.extend({
 				for (var i = 0; i < pointconstraints.length; i++) {
 					var key = pointconstraints[i].name;
 					// marker.set({key : value}) doesnt use the value of key.
-					// instead the keys name will be "key". 
+					// instead the keys name will be "key".
 					// so this is used as an alternative:
 					if (that.$('#dataview #pc_' + key).val() != "") {
 						marker.attributes[key] = that.$('#dataview #pc_' + key).val();
@@ -375,14 +379,14 @@ window.DataView = Backbone.View.extend({
 					}
 				}
 			}
-            
+
             var pos = that.$('#dataview #markerPos').val();
             window.markList.moveMark(marker, pos);
         });
 
         this.$('#dataview #deleteMark').click(function () {
             window.markList.deleteMark(marker);
-            that.$('.content').html($._("No Mark selected"));
+            that.$('.content').html($._("No point selected!"));
         });
     },
 
@@ -412,8 +416,6 @@ window.MarkView = Backbone.View.extend({
     model: null,
 
     initialize: function () {
-        this.template = _.template('<div id="mark_<%=cid%>" class="mark"><a href="#" class="view"><%=name%></a> <%=position%></div>');
-
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
             this.name = $._("Marker") + " " + _markerNameSuffix;
@@ -431,7 +433,7 @@ window.MarkView = Backbone.View.extend({
         else if (this.model.get('position') == window.markList.length - 1)
             position = '(' + $._('Target') + ')';
 
-        $('#marks').append(this.template({cid: this.model.cid, name: this.name, position: position}));
+        $('#marks').append(templates.markView({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
 
         this.$('a.view').click(_.bind(this.onClick, this));
@@ -440,7 +442,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).remove();
+        this.el.remove();
     },
 
     onClick: function () {
@@ -454,9 +456,9 @@ window.LoginView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "remove",
         "click .modal-footer a.login": "onSubmitClick",
-        "click .modal-footer a.cancel": "remove"
+        "click .modal-footer a.register": "onRegisterClick",
+        "keydown": "onKeydown"
     },
 
     initialize: function () {
@@ -464,7 +466,7 @@ window.LoginView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.loginView));
+        $(this.el).html(templates.loginView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -474,6 +476,13 @@ window.LoginView = Backbone.View.extend({
                     email: true
                 },
                 password: "required"
+            },
+            messages: {
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
+                },
+                password: $._('Please enter your password')
             },
             showErrors: function (errorMap, errorList) {
                 for (obj in errorList) {
@@ -510,15 +519,23 @@ window.LoginView = Backbone.View.extend({
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
-
+        $(this.el).modal('hide');
         $(this.el).remove();
-        window.app.navigate('');
+        if (window.location.hash === '#/login')
+            window.app.navigate('');
     },
 
     onSubmitClick: function () {
         this.$('form').submit();
+    },
+
+    onRegisterClick: function () {
+        this.remove();
+    },
+
+    onKeydown: function (evt) {
+        if (evt.keyCode == '13') // Return pressed
+            this.$('.modal-footer a.login').click();
     },
 
     onLogin: function () {
@@ -542,7 +559,7 @@ window.LoginView = Backbone.View.extend({
         } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
             this.$('.error-correct').show();
         }
-    }
+    },
 });
 
 window.RegisterView = Backbone.View.extend({
@@ -551,13 +568,14 @@ window.RegisterView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "remove",
+        "click .modal-header a.close": "onRemove",
         "click .modal-footer a.register": "onRegister",
-        "click .modal-footer a.cancel": "remove"
+        "click .modal-footer a.cancel": "onRemove",
+        "keydown": "onKeydown"
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.registerView));
+        $(this.el).html(templates.registerView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -569,11 +587,30 @@ window.RegisterView = Backbone.View.extend({
                     minlength: 5
                 },
                 repeat_password: {
+                    required: true,
+                    minlength: 5,
                     equalTo: '#register #password'
                 },
                 email: {
                     required: true,
                     email: true
+                }
+            },
+            messages: {
+                firstname: $._('Please enter your firstname'),
+                lastname: $._('Please enter your lastname'),
+                password: {
+                    required: $._('Please provide a password'),
+                    minlength: $._('Enter at least 5 characters')
+                },
+                repeat_password: {
+                    required: $._('Please repeat your password'),
+                    minlength: $._('Enter at least 5 characters'),
+                    equalTo: $._('Enter the same password as above')
+                },
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
                 }
             },
             showErrors: function (errorMap, errorList) {
@@ -596,7 +633,7 @@ window.RegisterView = Backbone.View.extend({
                     .attr('data-content', null)
                     .attr('data-original-title', null);
             },
-            submitHandler: _.bind(this.onSubmit, that),
+            submitHandler: _.bind(that.onSubmit, that),
             invalidHandler: function () {
                 that.$('.error-correct').show();
             }
@@ -605,15 +642,14 @@ window.RegisterView = Backbone.View.extend({
         $(this.el).modal({
             show: true,
             backdrop: 'static',
-            keyboard: true
+            keyboard: false
         });
+        $(this.el).undelegate('.close', 'click.modal');
         return this;
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
-
+        $(this.el).modal('hide');
         $(this.el).remove();
         window.app.navigate('');
     },
@@ -652,6 +688,327 @@ window.RegisterView = Backbone.View.extend({
 
     onRegister: function () {
         this.$('form').submit();
+    },
+
+    onRemove: function () {
+        this.remove();
+        window.app.navigate('/login', true);
+    },
+
+    onKeydown: function (evt) {
+        if (!$(evt.target).is('textarea') && evt.keyCode == '13')
+            this.$('.modal-footer a.register').click();
+    }
+});
+
+window.AdminView = Backbone.View.extend({
+
+    id: 'admin',
+    className: 'modal',
+
+    events: {
+        "hidden": "remove",
+        "click .cancel": "remove",
+        "click .back": "onBack"
+    },
+
+    render: function () {
+        var content = templates.adminMainView;
+
+        $(this.el).html(templates.adminView({content: content}));
+        $(this.el).modal({
+            show: true,
+            keyboard: true,
+            backdrop: 'static'
+        });
+
+        this.renderMainView();
+
+        return this;
+    },
+
+    renderMainView: function () {
+        if (_.isUndefined(this.position)) {
+            this.position = {
+                limit: 10,
+                offset: 0
+            };
+        }
+
+        loadingView = new LoadingView('Loading table data').render();
+
+        var that = this;
+        api.listUsers({
+            limit: this.position.limit,
+            offset: this.position.offset,
+            callback: function (text, success) {
+                if (success) {
+                    var page = (that.position.offset / that.position.limit) + 1;
+                    var pages = text.number / that.position.limit;
+
+                    // Update table
+                    that.$('tbody').html('');
+                    for (i in text.requests)
+                        that.$('tbody').append(templates.adminTableRowView({user: text.requests[i]}));
+
+                    that.$('tbody a.activate').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onActivateClick, that, text.requests[i]));
+                    });
+                    that.$('tbody a.delete').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onDeleteClick, that, text.requests[i]));
+                    });
+                    that.$('tbody a.edit').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
+                    });
+
+                    // Update pagination
+                    that.$('.pagination').remove();
+                    var html = '', nums = [];
+                    if (pages > 6) {
+                        nums = _.range(1, 4);
+                        nums.push('...');
+                        nums = nums.concat(_.range(pages - 2, pages + 1))
+                    } else if (pages > 1) {
+                        nums = _.range(1, pages + 1);
+                    } else {
+                        nums = [1];
+                    }
+
+                    for (i in nums) {
+                        html += '<li';
+                        if (nums[i] === page)
+                            html += ' class="active"';
+                        else if (!_.isNumber(nums[i]))
+                            html += ' class="disabled"';
+                        html += '><a href="#">' + nums[i] + '</a></li>';
+                    }
+
+                    that.$('.modal-body').append(templates.paginationView({pages: html}));
+                    that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
+
+                    if (page !== 1)
+                        that.$('.pagination li').first().removeClass('disabled');
+                    if (page !== pages)
+                        that.$('.pagination li').last().removeClass('disabled');
+
+                    // Add events
+                    that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
+                    that.$('.pagination li a').last().click(_.bind(that.onNext, that));
+                    that.$('.pagination li a').each(function () {
+                        var page = parseInt($(this).html());
+                        if (_.isNumber(page))
+                            $(this).click(_.bind(that.onPage, that, page));
+                    });
+                }
+                loadingView.remove();
+            }
+        });
+    },
+
+    remove: function () {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+        if (_.isFunction(this.options.remove))
+            this.options.remove();
+        $(this.el).remove();
+        window.app.navigate('');
+    },
+
+    setContent: function (content) {
+        if (!_.isNull(this.content) && !_.isUndefined(this.content))
+            this.content.remove();
+
+        if (this.$('.modal-footer a.btn.back').css('display') === 'none')
+            this.$('.modal-footer a.btn.back').show();
+
+        this.$('.modal-body').html(content.el);
+        this.content = content;
+    },
+
+    onBack: function () {
+        this.content.remove();
+        this.content = null;
+
+        this.$('.modal-body').html(templates.adminMainView);
+        this.renderMainView(),
+        this.$('.modal-footer a.btn.back').hide();
+
+        window.app.navigate('/admin');
+        return false;
+    },
+
+    onPrev: function () {
+        if (this.position.offset === 0)
+            return false;
+        else if (this.position.offset - this.position.limit < 0)
+            this.position.offset = 0;
+        else
+            this.position.offset -= this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onNext: function () {
+        this.position.offset += this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onPage: function (page) {
+        this.position.offset = this.position.limit * (page - 1);
+
+        this.renderMainView();
+        return false;
+    },
+
+    onActivateClick: function (user) {
+        user.active = true;
+
+        var that = this;
+        api.updateUser({
+            id: user.userid,
+            userObject: user,
+            callback: function (text, success) {
+                that.renderMainView();
+            }
+        });
+        return false;
+    },
+
+    onDeleteClick: function (user) {
+        if (confirm($._('Do you really want to delete the user?'))) {
+            var that = this;
+            api.deleteUser({
+                id: user.userid,
+                callback: function (text, success) {
+                    that.renderMainView();
+                }
+            });
+        }
+        return false;
+    },
+
+    onEditClick: function (user) {
+        if (Modernizr.sessionstorage)
+            sessionStorage.setItem('edit-user', JSON.stringify(user));
+
+        window.app.navigate('/admin/user/' + user.userid, true);
+        return false;
+    }
+});
+
+window.AdminUserView = Backbone.View.extend({
+
+    id: 'admin-user',
+
+    events: {
+        "click a.save": "onSubmitClick"
+    },
+
+    render: function () {
+        $(this.el).html(templates.adminUserView({user: this.model.toJSON()}));
+
+        var that = this;
+        this.validator = this.$('form').validate({
+            rules: {
+                firstname: "required",
+                lastname: "required",
+                password: {
+                    minlength: 5
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                firstname: $._('Please enter a firstname'),
+                lastname: $._('Please enter a lastname'),
+                password: {
+                    minlength: $._('Enter at least 5 characters')
+                },
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
+                }
+            },
+            showErrors: function (errorMap, errorList) {
+                for (obj in errorList) {
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', $._("Error!"))
+                        .popover();
+                }
+                this.defaultShowErrors();
+            },
+            errorPlacement: function () {},
+            highlight: function () {},
+            unhighlight: function (elem, error, valid) {
+                $(elem).addClass('valid')
+                    .removeClass('error')
+                    .attr('rel', null)
+                    .attr('data-content', null)
+                    .attr('data-original-title', null);
+            },
+            submitHandler: _.bind(that.onSubmit, that),
+            invalidHandler: function () {
+                that.$('.error-correct').show();
+            }
+        });
+
+        return this;
+    },
+
+    remove: function () {
+        $(this.el).remove();
+    },
+
+    onSubmitClick: function () {
+        this.$('form').submit();
+        return false;
+    },
+
+    onSubmit: function () {
+        var loading = new LoadingView($._("Sending data")).render();
+        this.$('.error-correct').hide();
+
+        var user = this.model;
+        user.set({
+            firstname: this.$('#firstname').val(),
+            lastname: this.$('#lastname').val(),
+            address: this.$('#address').val(),
+            email: this.$('#email').val(),
+            active: this.$('#active').val(),
+            admin: this.$('#administrator').val()
+        });
+        if (this.$('#password').val() != '')
+            user.set({password: this.$('#password').val()});
+
+        user.update({
+            success: function () {
+                loading.remove();
+                window.app.adminView.onBack();
+                new MessageView({
+                    title: $._("Update successful"),
+                    message: $._("The user was updated successfully")
+                }).render();
+            },
+            error: function (text) {
+                loading.remove();
+                //TODO: Parse error message and display errors
+                new MessageView({
+                   title: $._('Error!'),
+                   message: text
+                }).render();
+            }
+        });
     }
 });
 
@@ -672,7 +1029,7 @@ window.MessageView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.messageView, {title: this.title, message: this.message}));
+        $(this.el).html(templates.messageView({title: this.title, message: this.message}));
 
         $(this.el).modal({
             show: true,
@@ -700,7 +1057,7 @@ window.LoadingView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(_.template(templates.loadingView, {message: this.message}));
+        $(this.el).html(templates.loadingView({message: this.message}));
 
         $(this.el).modal({
             show: true,

@@ -224,7 +224,7 @@ test("/listrequests", 9, function (){
     ok(!api.listRequests({offset: 10}), 'missing limit');
     ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
     ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
-    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: "e", offset: 10}), 'limit NaN');
     ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(2);
@@ -259,7 +259,7 @@ test("/listusers", 8, function (){
     ok(!api.listUsers({offset: 10}), 'missing limit');
     ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
     ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
-    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: "e", offset: 10}), 'limit NaN');
     ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(1);
