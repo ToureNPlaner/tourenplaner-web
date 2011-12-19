@@ -210,6 +210,20 @@ jQuery.cookie = function (key, value, options) {
     return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
 };
 
+jQuery.store = function (key, value, options) {
+	if (Modernizr.localstorage) {
+		if (arguments.length == 1) {
+			return localStorage.getItem(key);
+		} else if (value === null) {
+			return localStorage.removeItem(key);
+		} else {
+			return localStorage.setItem(key, value);
+		}
+	} else {
+		return $.cookie(key, value, options);
+	}
+};
+
 /**
  * jQuery plugin for Pretty looking right click context menu.
  *

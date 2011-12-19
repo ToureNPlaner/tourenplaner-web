@@ -240,7 +240,7 @@ window.User = Backbone.Model.extend({
     },
 
     onStartup: function () {
-        var cookie = $.cookie('tourenplaner');
+        var cookie = $.store('tourenplaner');
         if (cookie && !_.isUndefined(cookie)) {
             var dec, decarr;
             try {
@@ -253,7 +253,7 @@ window.User = Backbone.Model.extend({
             }
             cookie = null;
         }
-        $.cookie('tourenplaner', cookie);
+        $.store('tourenplaner', cookie);
     },
 
     login: function (email, password) {
@@ -263,7 +263,7 @@ window.User = Backbone.Model.extend({
             password: password,
             callback: function (text, success) {
                 if (success) {
-                    $.cookie('tourenplaner', Base64.encode(email + ':' + password), {
+                    $.store('tourenplaner', Base64.encode(email + ':' + password), {
                         expires: 7,
                         path: '/'
                     });
@@ -274,7 +274,7 @@ window.User = Backbone.Model.extend({
 
                     log('Login successful');
                 } else {
-                    $.cookie('tourenplaner', null);
+                    $.store('tourenplaner', null);
                 }
                 that.trigger('login', success);
             }
@@ -282,7 +282,7 @@ window.User = Backbone.Model.extend({
     },
 
     logout: function () {
-        $.cookie('tourenplaner', null);
+        $.store('tourenplaner', null);
         this.set({
             login: false
         });
