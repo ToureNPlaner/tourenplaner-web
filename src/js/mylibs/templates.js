@@ -179,7 +179,13 @@ templates.adminTableRowView = '<tr>\
                                 <td>{{user.lastname}}</td>\
                                 <td>{{user.email}}</td>\
                                 <td class="center">{{#if user.active}}&#10004;{{else}}&#10006;{{/if}}</td>\
-                                <td>None</td>\
+                                <td>\
+                                    <a href="#" class="edit"><img src="img/user--pencil.png" alt="Edit" title="Edit" /></a>\
+                                    <a href="#" class="delete"><img src="img/user--minus.png" alt="Delete" title="Delete" /></a>\
+                                    {{#unless user.active}}\
+                                        <a href="#" class="activate"><img src="img/tick.png" alt="Activate" title="Activate" /></a>\
+                                    {{/unless}}\
+                                </td>\
                               </tr>';
 templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
 

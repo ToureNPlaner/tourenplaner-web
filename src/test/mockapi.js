@@ -283,10 +283,11 @@ $.mockjax({
                     admin: false,
                     active: true
             };
+            var user2 = _.extend({}, user, {active: false, userid: 2});
 
             this.responseText = {
                 number: 10,
-                requests: [user, user, user, user, user, user, user, user, user, user]
+                requests: [user, user, user2, user, user, user, user2, user, user, user]
             };
     }
 });

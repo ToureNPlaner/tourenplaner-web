@@ -67,11 +67,20 @@ window.Router = Backbone.Router.extend({
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
                 this.admin();
 
+            // Use sessionStorage if available
+            if (Modernizr.sessionstorage && !_.isNull(sessionStorage.getItem('edit-user'))) {
+                var user = new User();
+                user.set(JSON.parse(sessionStorage.getItem('edit-user')));
+                this.adminView.setContent(new AdminUserView({model: user}).render());
+                sessionStorage.removeItem('edit-user');
+                return;
+            }
+
             this.loadingView = new LoadingView($._('Loading user informations')).render();
 
             var that = this;
             var model = new User().load(id, function () {
-                that.adminView.setContent(new AdminUserView({model: model}).render());
+                that.adminView.setContent(new AdminUserView({model: this}).render());
                 that.loadingView.remove();
             });
         }

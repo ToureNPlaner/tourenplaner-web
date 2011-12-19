@@ -751,6 +751,19 @@ window.AdminView = Backbone.View.extend({
                     for (i in text.requests)
                         that.$('tbody').append(templates.adminTableRowView({user: text.requests[i]}));
 
+                    that.$('tbody a.activate').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onActivateClick, that, text.requests[i]));
+                    });
+                    that.$('tbody a.delete').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onDeleteClick, that, text.requests[i]));
+                    });
+                    that.$('tbody a.edit').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
+                    });
+
                     // Update pagination
                     that.$('.pagination').remove();
                     var html = '', nums = [];
@@ -851,6 +864,41 @@ window.AdminView = Backbone.View.extend({
 
         this.renderMainView();
         return false;
+    },
+
+    onActivateClick: function (user) {
+        user.active = true;
+
+        var that = this;
+        api.updateUser({
+            id: user.userid,
+            userObject: user,
+            callback: function (text, success) {
+                that.renderMainView();
+            }
+        });
+        return false;
+    },
+
+    onDeleteClick: function (user) {
+        if (confirm($._('Do you really want to delete the user?'))) {
+            var that = this;
+            api.deleteUser({
+                id: user.userid,
+                callback: function (text, success) {
+                    that.renderMainView();
+                }
+            });
+        }
+        return false;
+    },
+
+    onEditClick: function (user) {
+        if (Modernizr.sessionstorage)
+            sessionStorage.setItem('edit-user', JSON.stringify(user));
+
+        window.app.navigate('/admin/user/' + user.userid, true);
+        return false;
     }
 });
 
@@ -860,7 +908,6 @@ window.AdminUserView = Backbone.View.extend({
 
     render: function () {
         $(this.el).html("Bla Blub");
-        this.options.parent.setContent(this);
 
         return this;
     },

@@ -102,15 +102,15 @@ div.popover {
 #admin {
   width: 800px;
 }
-#admin .modal-body {
-  height: 475px;
-}
 #admin table {
   max-width: 780px;
   height: 250px;
 }
 #admin table td.center {
   text-align: center;
+}
+#admin table td a {
+  padding: 0 5px;
 }
 #admin .pagination {
   margin: 0 auto;
