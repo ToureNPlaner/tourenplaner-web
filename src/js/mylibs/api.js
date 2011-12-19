@@ -164,9 +164,9 @@ _.extend(window.Api.prototype, {
     authUser : function (args) {
         if (!args || !args.email || !args.password)
             return false;
-
-        this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
-
+        
+       	this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
+        	
         this.send({
             silent: true,
             suffix: 'authuser',
@@ -325,7 +325,8 @@ _.extend(window.Api.prototype, {
 				thisrequest = args.request;
 		}
 		else{
-			if(!args.points) return false;
+			if(!args.points)
+				return false;
 			thisrequest = {
 		        version: args.version || 1,
 		        points: args.points,
