@@ -63,8 +63,9 @@ window.Mark = Backbone.Model.extend({
     	var that = this;
         // get nearest neighbour
         var point = this.toJSON();
-		window.api.nearestNeighbour({
-			points: point,
+		window.api.alg({
+			alg: 'nns',
+			points: [point],
 			callback: function(text, success){
 				if(success && (!_.isUndefined(text.way) && !_.isNaN(text.way[0].ln) && !_.isNaN(text.way[0].lt))){
 					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
