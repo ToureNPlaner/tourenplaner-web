@@ -57,13 +57,11 @@ window.TopbarView = Backbone.View.extend({
         if (user.isLoggedIn()) {
             this.$('li.user a').html(user.get('firstname') + ' ' + user.get('lastname'));
             this.$('li.user, li.menu').show();
-            this.$('li.login-link, li.register-link').hide();
 
             if (user.get('admin'))
                 this.$('li.menu ul li.admin').show();
         } else {
             this.$('li.user, li.menu').hide();
-            this.$('li.login-link, li.register-link').show();
             this.$('li.menu ul li.admin').hide();
         }
     }
@@ -458,9 +456,8 @@ window.LoginView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "remove",
         "click .modal-footer a.login": "onSubmitClick",
-        "click .modal-footer a.cancel": "remove",
+        "click .modal-footer a.register": "onRegisterClick",
         "keydown": "onKeydown"
     },
 
@@ -522,15 +519,17 @@ window.LoginView = Backbone.View.extend({
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
-
+        $(this.el).modal('hide');
         $(this.el).remove();
         window.app.navigate('');
     },
 
     onSubmitClick: function () {
         this.$('form').submit();
+    },
+
+    onRegisterClick: function () {
+        this.remove();
     },
 
     onKeydown: function (evt) {
@@ -559,7 +558,7 @@ window.LoginView = Backbone.View.extend({
         } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
             this.$('.error-correct').show();
         }
-    }
+    },
 });
 
 window.RegisterView = Backbone.View.extend({
@@ -568,9 +567,9 @@ window.RegisterView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "remove",
+        "click .modal-header a.close": "onRemove",
         "click .modal-footer a.register": "onRegister",
-        "click .modal-footer a.cancel": "remove",
+        "click .modal-footer a.cancel": "onRemove",
         "keydown": "onKeydown"
     },
 
@@ -642,15 +641,14 @@ window.RegisterView = Backbone.View.extend({
         $(this.el).modal({
             show: true,
             backdrop: 'static',
-            keyboard: true
+            keyboard: false
         });
+        $(this.el).undelegate('.close', 'click.modal');
         return this;
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
-
+        $(this.el).modal('hide');
         $(this.el).remove();
         window.app.navigate('');
     },
@@ -689,6 +687,11 @@ window.RegisterView = Backbone.View.extend({
 
     onRegister: function () {
         this.$('form').submit();
+    },
+
+    onRemove: function () {
+        this.remove();
+        window.app.navigate('/login', true);
     },
 
     onKeydown: function (evt) {
@@ -741,7 +744,6 @@ window.AdminView = Backbone.View.extend({
                 if (success) {
                     var page = (that.position.offset / that.position.limit) + 1;
                     var pages = text.number / that.position.limit;
-                    log('Page:', page, '/', pages);
 
                     // Update table
                     that.$('tbody').html('');

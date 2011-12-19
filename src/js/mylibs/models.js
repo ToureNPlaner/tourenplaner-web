@@ -246,7 +246,6 @@ window.User = Backbone.Model.extend({
             try {
                 dec = Base64.decode(cookie);
                 decarr = dec.split(':');
-                log(dec, decarr);
                 if (decarr.length == 2)
                     return this.login(decarr[0], decarr[1]);
             } catch (e) {
@@ -254,9 +253,7 @@ window.User = Backbone.Model.extend({
             }
             cookie = null;
         }
-
         $.cookie('tourenplaner', cookie);
-        return cookie == null;
     },
 
     login: function (email, password) {
@@ -339,6 +336,7 @@ window.User = Backbone.Model.extend({
 
 window.ServerInfo = Backbone.Model.extend({
     defaults: {
+        loaded: false,
         version: null,
         servertype: 'public',
         port: 80,
@@ -367,14 +365,15 @@ window.ServerInfo = Backbone.Model.extend({
                     });
                 }
                 that.set({
+                    loaded: true,
                     servertype: obj.servertype,
                     version: obj.version,
                     algorithms: obj.algorithms
                 });
 
+                that.trigger("info-loaded");
                 if (_.isFunction(callback))
                     callback();
-                that.trigger("info-loaded");
             }
         });
     },
@@ -383,6 +382,9 @@ window.ServerInfo = Backbone.Model.extend({
         return this.get('servertype') == "public";
     },
 
+    isLoaded: function () {
+        return this.get('loaded');
+    },
 
     // maybe this is not the correct place for this method.
     // will be moved later.

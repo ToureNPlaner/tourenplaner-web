@@ -14,56 +14,72 @@ window.Router = Backbone.Router.extend({
     initialize: function(options) {
         //window.server = new ServerInfo();
         this.user = new User();
+        this.user.bind('login', this.onLogin);
+
+        this.lastURL = window.location.hash;
+        this.navigate('');
     },
 
     initServer: function() {
         var that = this;
-        this.loadingView = new LoadingView($._('Loading server informations')).render();
+        var loadingView = new LoadingView($._('Loading server informations')).render();
 
         window.server.getServerInfo(function() {
-            if (window.server.isPublic())
+            if (window.server.isPublic()) {
                 window.body.topbar.hideNavigation();
-            that.loadingView.remove();
+                that.onLogin(true);
+            } else if (!that.user.isLoggedIn()) {
+                that.navigate('/login', true);
+            }
+            loadingView.remove();
         });
     },
 
     login: function() {
-        new LoginView().render();
+        if (!window.server.isPublic())
+            new LoginView().render();
     },
 
     logout: function() {
-        if (this.user.isLoggedIn())
+        if (this.user.isLoggedIn()) {
             this.user.logout();
-        this.navigate('');
+            this.navigate('/login', true);
+        }
     },
 
     register: function() {
-        new RegisterView().render();
+        if (!window.server.isPublic() && !this.user.isLoggedIn())
+            new RegisterView().render();
     },
 
     settings: function() {
-        alert('To be implemented');
+        if (!window.server.isPublic() && this.user.isLoggedIn())
+            alert('To be implemented');
     },
 
     admin: function() {
-        this.adminView = new AdminView({remove: _.bind(this.onAdminRemove, this)}).render();
+        if (!window.server.isPublic() && this.user.get("admin"))
+            this.adminView = new AdminView({remove: _.bind(this.onAdminRemove, this)}).render();
     },
 
     adminUser: function(id) {
-        if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
-            this.admin();
+        if (!window.server.isPublic() && this.user.get("admin")) {
+            if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
+                this.admin();
 
-        this.loadingView = new LoadingView($._('Loading user informations')).render();
+            this.loadingView = new LoadingView($._('Loading user informations')).render();
 
-        var that = this;
-        var model = new User().load(id, function () {
-            that.adminView.setContent(new AdminUserView({model: model}).render());
-            that.loadingView.remove();
-        });
+            var that = this;
+            var model = new User().load(id, function () {
+                that.adminView.setContent(new AdminUserView({model: model}).render());
+                that.loadingView.remove();
+            });
+        }
     },
 
     billing: function() {
-        alert('To be implemented');
+        if (!window.server.isPublic() && this.user.get("admin"))
+            alert('To be implemented');
     },
 
     request: function(id) {
@@ -73,6 +89,13 @@ window.Router = Backbone.Router.extend({
     onAdminRemove: function () {
         log("onAdminRemove");
         this.admin = null;
+    },
+
+    onLogin: function (success) {
+        if (success && !_.isUndefined(this.lastURL) && !_.isNull(this.lastURL)) {
+            this.navigate(this.lastURL, true);
+            this.lastURL = null;
+        }
     }
 
 });

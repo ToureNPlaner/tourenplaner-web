@@ -117,6 +117,10 @@ div.popover {
   float: left;
 }
 
+#login a.btn.register {
+  float: left;
+}
+
 .container {
   width: auto;
 }

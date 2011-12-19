@@ -4,8 +4,6 @@ templates.topbarView = '<div class="fill">\
                             <div class="container">\
                               <h3><a href="#">ToureNPlaner</a></h3>\
                               <ul class="nav secondary-nav private-server">\
-                                <li class="login-link"><a href="#/login">' + $._('Login') + '</a></li>\
-                                <li class="register-link"><a href="#/register">' + $._('Register') + '</a></li>\
                                 <li class="user"><a href="#" onclick="return false;"></a></li>\
                                 <li class="menu">\
                                   <a class="menu" href="#">' + $._('Settings') + '</a>\
@@ -64,7 +62,6 @@ templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="vie
 templates.markView = Handlebars.compile(templates.markView);
 
 templates.loginView = '<div class="modal-header">\
-                        <a href="#" class="close">x</a>\
                         <h3>' + $._('Login') + '</h3>\
                        </div>\
                        <div class="modal-body">\
@@ -90,7 +87,7 @@ templates.loginView = '<div class="modal-header">\
                         </form>\
                        </div>\
                        <div class="modal-footer">\
-                        <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
+                        <a href="#/register" class="btn info register">' + $._('Register') + '</a>\
                         <a href="#/login" class="btn primary login">' + $._('Login') + '</a>\
                        </div>';
 
