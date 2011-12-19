@@ -105,14 +105,17 @@ div.popover {
 #admin .modal-body {
   height: 475px;
 }
-#admin .modal-body table {
+#admin table {
   max-width: 780px;
   height: 250px;
 }
-#admin .modal-body .pagination {
+#admin table td.center {
+  text-align: center;
+}
+#admin .pagination {
   margin: 0 auto;
 }
-#admin .modal-footer a.btn.back {
+#admin a.btn.back {
   display: none;
   float: left;
 }

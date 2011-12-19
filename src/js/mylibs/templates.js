@@ -50,10 +50,10 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                              <div class="clearfix"><label for="lat">' + $._('Lat') + ':</label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
                              <div class="clearfix"><label for="markerName">' + $._('Name') + ':</label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
                              <div class="clearfix"><label for="markerPos">' + $._('Position') + ':</label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
-                             {{#constraints}}\
+                             {{#if constraints}}\
                                 <h4>Constraints</h4>\
                                 {{{constraintsHtml}}}\
-                             {{/constraints}}\
+                             {{/if}}\
                              </div>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
@@ -178,7 +178,7 @@ templates.adminTableRowView = '<tr>\
                                 <td>{{user.firstname}}</td>\
                                 <td>{{user.lastname}}</td>\
                                 <td>{{user.email}}</td>\
-                                <td>{{user.active}}</td>\
+                                <td class="center">{{#if user.active}}&#10004;{{else}}&#10006;{{/if}}</td>\
                                 <td>None</td>\
                               </tr>';
 templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
