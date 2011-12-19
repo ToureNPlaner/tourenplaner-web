@@ -189,6 +189,62 @@ templates.adminTableRowView = '<tr>\
                               </tr>';
 templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
 
+templates.adminUserView = '<h4>User #{{user.userid}}</h4>\
+                            <div class="alert-message error error-empty">\
+                              <p><strong>' + $._('Error!') + '</strong> ' + $._('Please fill out all fields.') + '</p>\
+                            </div>\
+                            <div class="alert-message error error-correct">\
+                              <p><strong>' + $._('Error!') + '</strong> ' + $._('There were errors in the form.') + '</p>\
+                            </div>\
+                            <form name="edit-user" method="post" action="#/admin/user/{{user.userid}}">\
+                                <div class="clearfix">\
+                                  <label for="firstname">' + $._('First name') + ': </label>\
+                                  <div class="input">\
+                                    <input type="text" name="firstname" id="firstname" value="{{user.firstname}}" autofocus />\
+                                  </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                  <label for="lastname">' + $._('Last name') + ': </label>\
+                                  <div class="input">\
+                                    <input type="text" name="lastname" id="lastname" value="{{user.lastname}}" />\
+                                  </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                  <label for="address">' + $._('Address') + ': </label>\
+                                  <div class="input">\
+                                    <textarea name="address" id="address">{{user.address}}</textarea>\
+                                  </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                  <label for="email">' + $._('Email') + ': </label>\
+                                  <div class="input">\
+                                    <input type="text" name="email" id="email" value="{{user.email}}" />\
+                                  </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                  <label for="password">' + $._('Password') + ': </label>\
+                                  <div class="input">\
+                                    <input type="password" name="password" id="password" />\
+                                  </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                    <label for="active">' + $._('Activated') + ': </label>\
+                                    <div class="input">\
+                                        <input type="checkbox" name="active" id="active" {{#if user.active}}checked="checked"{{/if}}/>\
+                                    </div>\
+                                </div>\
+                                <div class="clearfix">\
+                                    <label for="administrator">' + $._('Administrator') + ': </label>\
+                                    <div class="input">\
+                                        <input type="checkbox" name="admin" id="administrator" {{#if user.admin}}checked="checked"{{/if}}/>\
+                                    </div>\
+                                </div>\
+                                <div class="clearfix input">\
+                                    <a href="#" class="btn primary save">' + $._('Save') + '</a>\
+                                </div>\
+                            </form>';
+templates.adminUserView = Handlebars.compile(templates.adminUserView);
+
 templates.paginationView = '<div class="pagination">\
                                 <ul>\
                                     <li class="prev disabled"><a href="#">&larr; ' + $._('Previous') + '</a></li>\

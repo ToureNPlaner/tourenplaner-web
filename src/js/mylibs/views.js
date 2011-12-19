@@ -633,7 +633,7 @@ window.RegisterView = Backbone.View.extend({
                     .attr('data-content', null)
                     .attr('data-original-title', null);
             },
-            submitHandler: _.bind(this.onSubmit, that),
+            submitHandler: _.bind(that.onSubmit, that),
             invalidHandler: function () {
                 that.$('.error-correct').show();
             }
@@ -904,33 +904,113 @@ window.AdminView = Backbone.View.extend({
 
 window.AdminUserView = Backbone.View.extend({
 
-    id: 'admin-users',
+    id: 'admin-user',
+
+    events: {
+        "click a.save": "onSubmitClick"
+    },
 
     render: function () {
-        $(this.el).html("Bla Blub");
+        $(this.el).html(templates.adminUserView({user: this.model.toJSON()}));
+
+        var that = this;
+        this.validator = this.$('form').validate({
+            rules: {
+                firstname: "required",
+                lastname: "required",
+                password: {
+                    minlength: 5
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                firstname: $._('Please enter a firstname'),
+                lastname: $._('Please enter a lastname'),
+                password: {
+                    minlength: $._('Enter at least 5 characters')
+                },
+                email: {
+                    required: $._('Please enter a valid email address'),
+                    email: $._('Please enter a valid email address')
+                }
+            },
+            showErrors: function (errorMap, errorList) {
+                for (obj in errorList) {
+                    $(errorList[obj].element).addClass('error')
+                        .removeClass('valid')
+                        .attr('rel', 'popover')
+                        .attr('data-content', errorList[obj].message)
+                        .attr('data-original-title', $._("Error!"))
+                        .popover();
+                }
+                this.defaultShowErrors();
+            },
+            errorPlacement: function () {},
+            highlight: function () {},
+            unhighlight: function (elem, error, valid) {
+                $(elem).addClass('valid')
+                    .removeClass('error')
+                    .attr('rel', null)
+                    .attr('data-content', null)
+                    .attr('data-original-title', null);
+            },
+            submitHandler: _.bind(that.onSubmit, that),
+            invalidHandler: function () {
+                that.$('.error-correct').show();
+            }
+        });
 
         return this;
     },
 
     remove: function () {
         $(this.el).remove();
-    }
-});
-
-window.Pagination = Backbone.View.extend({
-
-    className: 'pagination',
-
-    render: function () {
-        $(this.el).html(templates.paginationView);
-
     },
 
-    remove: function () {
-        $(this.el).remove();
-    }
+    onSubmitClick: function () {
+        this.$('form').submit();
+        return false;
+    },
 
-})
+    onSubmit: function () {
+        var loading = new LoadingView($._("Sending data")).render();
+        this.$('.error-correct').hide();
+
+        var user = this.model;
+        user.set({
+            firstname: this.$('#firstname').val(),
+            lastname: this.$('#lastname').val(),
+            address: this.$('#address').val(),
+            email: this.$('#email').val(),
+            active: this.$('#active').val(),
+            admin: this.$('#administrator').val()
+        });
+        if (this.$('#password').val() != '')
+            user.set({password: this.$('#password').val()});
+
+        user.update({
+            success: function () {
+                loading.remove();
+                window.app.adminView.onBack();
+                new MessageView({
+                    title: $._("Update successful"),
+                    message: $._("The user was updated successfully")
+                }).render();
+            },
+            error: function (text) {
+                loading.remove();
+                //TODO: Parse error message and display errors
+                new MessageView({
+                   title: $._('Error!'),
+                   message: text
+                }).render();
+            }
+        });
+    }
+});
 
 window.MessageView = Backbone.View.extend({
 

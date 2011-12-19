@@ -96,8 +96,7 @@ window.Router = Backbone.Router.extend({
     },
 
     onAdminRemove: function () {
-        log("onAdminRemove");
-        this.admin = null;
+        this.adminView = null;
     },
 
     onLogin: function (success) {
