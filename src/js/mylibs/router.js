@@ -14,9 +14,9 @@ window.Router = Backbone.Router.extend({
     initialize: function(options) {
         //window.server = new ServerInfo();
         this.user = new User();
-        this.user.bind('login', this.onLogin);
+        this.user.bind('login', _.bind(this.onLogin, this));
 
-        this.lastURL = window.location.hash;
+        this.lastURL = window.location.hash.substr(1);
         this.navigate('');
     },
 

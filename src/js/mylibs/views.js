@@ -521,7 +521,8 @@ window.LoginView = Backbone.View.extend({
     remove: function () {
         $(this.el).modal('hide');
         $(this.el).remove();
-        window.app.navigate('');
+        if (window.location.hash === '#/login')
+            window.app.navigate('');
     },
 
     onSubmitClick: function () {
