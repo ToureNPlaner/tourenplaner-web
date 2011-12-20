@@ -71,7 +71,7 @@ window.Mark = Backbone.Model.extend({
 					that.setLonLatWith1984(text.points[0].ln,text.points[0].lt);
 				}
 				else
-					log("Nearest Nabour Search wasn't successful. No points updated");
+					log("Nearest Neighbour Search wasn't successful. No points updated");
 			}
 		});
 		window.mapModel.get("mapObject").drawMarkers();
