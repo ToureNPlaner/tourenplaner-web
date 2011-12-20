@@ -67,8 +67,8 @@ window.Mark = Backbone.Model.extend({
 			alg: 'nns',
 			points: [point],
 			callback: function(text, success){
-				if(success && (!_.isUndefined(text.way) && !_.isNaN(text.way[0].ln) && !_.isNaN(text.way[0].lt))){
-					that.setLonLatWith1984(text.way[0].ln,text.way[0].lt);
+				if(success && (!_.isUndefined(text.points) && !_.isNaN(text.points[0].ln) && !_.isNaN(text.points[0].lt))){
+					that.setLonLatWith1984(text.points[0].ln,text.points[0].lt);
 				}
 				else
 					log("Nearest Nabour Search wasn't successful. No points updated");
