@@ -164,9 +164,9 @@ _.extend(window.Api.prototype, {
     authUser : function (args) {
         if (!args || !args.email || !args.password)
             return false;
-
-        this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
-
+        
+       	this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
+        	
         this.send({
             silent: true,
             suffix: 'authuser',
@@ -222,13 +222,14 @@ _.extend(window.Api.prototype, {
      * param: offset of first item
      */
     listRequests : function (args) {
-        if (!args || !args.limit || !args.offset || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || !args.limit || !args.offset ||
+        	args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
 
         var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
-        if (args.id && !_.isNaN(args.id))
+        if (args.id && !isNaN(args.id)){
             suffix += '&ID=' + args.id;
-
+}
         this.send({
             type : 'POST',
             suffix : suffix,
@@ -245,7 +246,8 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUsers : function (args) {
-        if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) || _.isNaN(args.offset) || _.isNaN(args.limit) || args.offset<0 || args.limit<0)
+        if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) ||
+        	isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
             return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
@@ -309,6 +311,7 @@ _.extend(window.Api.prototype, {
 				return false;
 			else
 				thisrequest = args.request;
+
 		} else {
 			if(!args.points)
                 return false;

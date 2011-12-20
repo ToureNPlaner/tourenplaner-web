@@ -127,9 +127,9 @@ _.extend(window.Map.prototype, {
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
 
-        for (var i = 0; i < vertexString.points.length; i++) {
+        for (var i = 0; i < vertexString.way.length; i++) {
             // transform points
-            var p = vertexString.points[i];
+            var p = vertexString.way[i];
             var lonlat = new OpenLayers.LonLat(p.ln / 1e7, p.lt / 1e7);
             var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
 

@@ -126,16 +126,6 @@ test("/authuser", 6, function() {
 
     stop_until_expected(3);
     api.authUser({
-        email: 'asd@asd.de',
-        password: 'asd',
-        callback: function(text, success) {
-            same(success, true, 'Login working for asd@asd.de:asd');
-            same(api.get('authAsBase64'), 'YXNkQGFzZC5kZTphc2Q=', 'Base64String');
-            do_start();
-        }
-    });
-
-    api.authUser({
         email: 'bsd@asd.de',
         password: 'asd',
         callback: function(text, success) {
@@ -149,6 +139,16 @@ test("/authuser", 6, function() {
         password: 'bsd',
         callback: function(text, success) {
             same(success, false, 'Login not working for asd@asd.de:bsd');
+            do_start();
+        }
+    });
+    
+    api.authUser({
+        email: 'asd@asd.de',
+        password: 'asd',
+        callback: function(text, success) {
+            same(success, true, 'Login working for asd@asd.de:asd');
+            same(api.get('authAsBase64'), 'YXNkQGFzZC5kZTphc2Q=', 'Base64String');
             do_start();
         }
     });
@@ -224,7 +224,7 @@ test("/listrequests", 9, function (){
     ok(!api.listRequests({offset: 10}), 'missing limit');
     ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
     ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
-    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: "e", offset: 10}), 'limit NaN');
     ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(2);
@@ -259,7 +259,7 @@ test("/listusers", 8, function (){
     ok(!api.listUsers({offset: 10}), 'missing limit');
     ok(!api.listUsers({limit: 2, offset: -10}), 'offset < 0');
     ok(!api.listUsers({limit: -2, offset: 10}), 'limit < 0');
-    ok(!api.listUsers({limit: "e", offset: -10}), 'limit NaN');
+    ok(!api.listUsers({limit: "e", offset: 10}), 'limit NaN');
     ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
     stop_until_expected(1);
@@ -293,29 +293,7 @@ test("/deleteuser", 4, function (){
     });
 });
 
-
-//test("/algnns", 4, function (){
-//    api.authUser({
-//        email:'asd@asd.de',
-//        password: 'asd',
-//        callback: function(text, success){
-//        }
-//    });
-//    
-//    ok(!api.deleteUser(), 'empty call');
-//    ok(!api.deleteUser({callback: function(){ }}), 'missing id');
-//    ok(!api.deleteUser({id: "r94",callback: function(){ }}), 'id ("r94") is not a number');
-//    
-//    stop_until_expected(1);
-//    api.deleteUser({id: 94,
-//                  callback: function(json, success){
-//                      same(success, true, "user deleted");
-//                      do_start();
-//                  }
-//    });
-//});
-
-test("/alg", 6, function (){
+test("/alg", 8, function (){
     var request = {
         version: 1,
         points: [
@@ -332,7 +310,10 @@ test("/alg", 6, function (){
     ok(!api.alg(), 'empty call');
     ok(!api.alg({callback: function(){ }, alg: "sp"}), 'missing request');
     ok(!api.alg({request: request, callback: function(){ }}), 'no alg specified');
-    
+    ok(!api.alg({version: request.version,constraints:request.constraints,alg: "sp",
+    	callback: function(json, success){}}), "single parameters, missing points"); // 
+    ok(!api.alg({request: requestMissPoints,alg: "sp",
+    	callback: function(json, success){} }),'request parameter with missing points');
 
     stop_until_expected(3);
     api.alg({version: request.version,
@@ -340,19 +321,10 @@ test("/alg", 6, function (){
     		constraints: request.constraints,
             alg: "sp",
               callback: function(json, success){
-                  same(success, true, "route calculated withseperate parameter");
+                  same(success, true, "route calculated with seperate parameter");
                   do_start();
               }
     });
-// macht ganze testsuite kaputt
-//    api.alg({version: request.version,
-//    		constraints: request.constraints,
-//            alg: "sp",
-//              callback: function(json, success){
-//                  same(success, false, "missing points");
-//                  do_start();
-//              }
-//    });
     api.alg({request: request,
         alg: "sp",
            callback: function(json, success){
@@ -360,14 +332,6 @@ test("/alg", 6, function (){
                do_start();
            }
     });
-// macht ganze testsuite kaputt
-//    api.alg({request: requestMissPoints,
-//        	alg: "sp",
-//           	callback: function(json, success){
-//               	same(success, false, "route calculated with request param (missing points)");
-//               	do_start();
-//           	}
-//    });
     api.authUser({
         email:'asd@asd.de',
         password: 'asd',
