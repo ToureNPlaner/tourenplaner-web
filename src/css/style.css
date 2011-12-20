@@ -119,6 +119,10 @@ div.popover {
   display: none;
   float: left;
 }
+#admin a.new-user {
+  background: url(../img/plus-button.png) no-repeat;
+  padding-left: 20px;
+}
 #admin-user {
   width: 400px;
   margin: 0 auto;

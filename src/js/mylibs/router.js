@@ -1,14 +1,15 @@
 window.Router = Backbone.Router.extend({
 
     routes: {
-        "/login":        "login",    // #/login
-        "/logout":       "logout",   // #/logout
-        "/register":     "register", // #/register
-        "/settings":     "settings", // #/settings
-        "/admin":        "admin",    // #/admin
-        "/admin/user/:id":  "adminUser", // #/admin/user/42
-        "/billing":      "billing",  // #/billing
-        "/route/:id":    "request"   // #/route/42
+        "/login":           "login",            // #/login
+        "/logout":          "logout",           // #/logout
+        "/register":        "register",         // #/register
+        "/settings":        "settings",         // #/settings
+        "/admin":           "admin",            // #/admin
+        "/admin/user":      "adminNewUser",     // #/admin/user
+        "/admin/user/:id":  "adminEditUser",    // #/admin/user/42
+        "/billing":         "billing",          // #/billing
+        "/route/:id":       "request"           // #/route/42
     },
 
     initialize: function(options) {
@@ -62,7 +63,16 @@ window.Router = Backbone.Router.extend({
             this.adminView = new AdminView({remove: _.bind(this.onAdminRemove, this)}).render();
     },
 
-    adminUser: function(id) {
+    adminNewUser: function() {
+        if (!window.server.isPublic() && this.user.get("admin")) {
+            if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
+                this.admin();
+
+            this.adminView.setContent(new AdminUserView().render())
+        }  
+    },
+
+    adminEditUser: function(id) {
         if (!window.server.isPublic() && this.user.get("admin")) {
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
                 this.admin();

@@ -911,7 +911,11 @@ window.AdminUserView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.adminUserView({user: this.model.toJSON()}));
+        var user = {}
+        if (!_.isUndefined(this.model) && !_.isNull(this.model))
+            user = this.model.toJSON()
+
+        $(this.el).html(templates.adminUserView({user: user}));
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -991,24 +995,45 @@ window.AdminUserView = Backbone.View.extend({
         if (this.$('#password').val() != '')
             user.set({password: this.$('#password').val()});
 
-        user.update({
-            success: function () {
-                loading.remove();
-                window.app.adminView.onBack();
-                new MessageView({
-                    title: $._("Update successful"),
-                    message: $._("The user was updated successfully")
-                }).render();
-            },
-            error: function (text) {
-                loading.remove();
-                //TODO: Parse error message and display errors
-                new MessageView({
-                   title: $._('Error!'),
-                   message: text
-                }).render();
-            }
-        });
+        if (_.isUndefined(this.model) || _.isNull(this.model)) {
+            user.register({
+                success: function () {
+                    loading.remove();
+                    window.app.adminView.onBack();
+                    new MessageView({
+                        title: $._("User created"),
+                        message: $._("The user was created successfully")
+                    }).render();                    
+                },
+                error: function (text) {
+                    loading.remove();
+                    //TODO: Parse error message and display errors
+                    new MessageView({
+                       title: $._('Error!'),
+                       message: text
+                    }).render();
+                }
+            })
+        } else {
+            user.update({
+                success: function () {
+                    loading.remove();
+                    window.app.adminView.onBack();
+                    new MessageView({
+                        title: $._("Update successful"),
+                        message: $._("The user was updated successfully")
+                    }).render();
+                },
+                error: function (text) {
+                    loading.remove();
+                    //TODO: Parse error message and display errors
+                    new MessageView({
+                       title: $._('Error!'),
+                       message: text
+                    }).render();
+                }
+            });
+        }
     }
 });
 
