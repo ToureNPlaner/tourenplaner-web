@@ -332,7 +332,7 @@ window.DataView = Backbone.View.extend({
         return this;
     },
 
-    onDataViewChange: function (model, marker) {
+     onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
@@ -347,17 +347,52 @@ window.DataView = Backbone.View.extend({
 			if (marker.get(key) != undefined) {
 				value = marker.get(key);
 			}
-
-			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label><input value='"+value+"' type='text' name='pc_" + key + "' id='pc_" + key + "' /></div>"
+			
+			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
+			if (pointconstraints[i].type == "boolean") {
+				// display a checkbox and set its checked state
+				var checked = "";
+				if (value == true) {
+					checked = "checked";
+				}
+				constraintsHtml += "<input type='checkbox' name='pc_" + key + "' id='pc_" + key + "' " + checked + "/></div>";
+			} else {
+				// display numberinputs for int, float, meter and price
+				switch (pointconstraints[i].type) {
+					case "integer":
+							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
+						break;
+					case "float":
+							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
+						break;
+					case "meter":
+							constraintsHtml += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
+						break;
+					case "price":
+							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> €</div>";
+						break;
+				}
+			}
 		}
-
+		
+	
         var data = {
             lonlat:  lonlat,
             marker: marker.toJSON(),
             constraints: !_.isEmpty(constraintsHtml),
             constraintsHtml: constraintsHtml
         };
+        
         this.$('.content').html(templates.dataViewContent(data));
+	
+		// initialize Spinners
+		for (var i = 0; i < pointconstraints.length; i++) {
+			var key = pointconstraints[i].name;
+			
+			var initValue = this.$('#dataview #pc_' + key).val();
+			this.$('#dataview #pc_' + key).spinit({height: 30, initValue: initValue, min: pointconstraints[i].min, max: pointconstraints[i].max});
+		}
+	
 
         this.$('#dataview #saveMarkAttributes').click(function () {
             marker.set({
@@ -371,7 +406,18 @@ window.DataView = Backbone.View.extend({
 					// instead the keys name will be "key".
 					// so this is used as an alternative:
 					if (that.$('#dataview #pc_' + key).val() != "") {
-						marker.attributes[key] = that.$('#dataview #pc_' + key).val();
+						var value = that.$('#dataview #pc_' + key).val();
+						
+						if (pointconstraints[i].type == "boolean") {
+							if (that.$('#dataview #pc_' + key).attr('checked')) {
+								value = true;
+							} else {
+								// this is needed, because attr would be "undefined"
+								// if the checkbox isn't checked.
+								value = false;
+							}
+						} 
+						marker.attributes[key] = value;
 					} else {
 						// if nothing is written in to that pointconstraint, then set
 						// it to undefined, so we can later check if it's set or not.
