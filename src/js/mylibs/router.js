@@ -4,7 +4,7 @@ window.Router = Backbone.Router.extend({
         "/login":           "login",            // #/login
         "/logout":          "logout",           // #/logout
         "/register":        "register",         // #/register
-        "/settings":        "settings",         // #/settings
+        "/import":          "import",           // #/import
         "/admin":           "admin",            // #/admin
         "/admin/user":      "adminNewUser",     // #/admin/user
         "/admin/user/:id":  "adminEditUser",    // #/admin/user/42
@@ -53,7 +53,7 @@ window.Router = Backbone.Router.extend({
             new RegisterView().render();
     },
 
-    settings: function() {
+    import: function() {
         if (!window.server.isPublic() && this.user.isLoggedIn())
             alert('To be implemented');
     },

@@ -567,6 +567,8 @@ window.LoginView = Backbone.View.extend({
     remove: function () {
         $(this.el).modal('hide');
         $(this.el).remove();
+        window.app.user.unbind('login', _.bind(this.onLoginSuccess, this));
+
         if (window.location.hash === '#/login')
             window.app.navigate('');
     },
@@ -635,7 +637,7 @@ window.RegisterView = Backbone.View.extend({
                 repeat_password: {
                     required: true,
                     minlength: 5,
-                    equalTo: '#register #password'
+                    equalTo: '#password'
                 },
                 email: {
                     required: true,

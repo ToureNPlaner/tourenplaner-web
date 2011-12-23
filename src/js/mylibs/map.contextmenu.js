@@ -1,7 +1,6 @@
 function addMarker(action, evt) {
-    var pixelx, pixely;
-    pixelx = evt.pageX - $('#map').offset().left
-    pixely = evt.pageY - $('#map').offset().top
+    var pixelx = evt.pageX - $('#map').offset().left
+    var pixely = evt.pageY - $('#map').offset().top
     var pixel = new OpenLayers.Pixel(pixelx, pixely);
     var lonlat = window.mapModel.get("mapObject").getMap().getLonLatFromPixel(pixel);
     var mark = new Mark({
