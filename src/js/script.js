@@ -5,7 +5,7 @@ $(function() {
     });*/
     window.api = new Api({
         server: null
-    })
+    });
 
     // moved to this file from router.js
     window.server = new ServerInfo();

@@ -26,6 +26,16 @@ $.mockjax({
                         type: "meter",
                         min: 0.0,
                         max: 2000.0
+                    },{
+                        name: "BoolConstraint",
+                        type: "boolean",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "PriceConstraint",
+                        type: "price",
+                        min: 0.0,
+                        max: 2000.0
                     }
                 ],
                 constraints: {
