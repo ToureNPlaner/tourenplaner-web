@@ -763,6 +763,7 @@ window.AdminView = Backbone.View.extend({
                         var i = $(this).parents('tr').index();
                         $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
                     });
+					$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
 
                     // Update pagination
                     that.$('.pagination').remove();
@@ -947,19 +948,6 @@ window.BillingView = Backbone.View.extend({
                     for (i in text.requests)
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
 					$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
-					
-//                    that.$('tbody a.activate').each(function () {
-//                        var i = $(this).parents('tr').index();
-//                        $(this).click(_.bind(that.onActivateClick, that, text.requests[i]));
-//                    });
-//                    that.$('tbody a.delete').each(function () {
-//                        var i = $(this).parents('tr').index();
-//                        $(this).click(_.bind(that.onDeleteClick, that, text.requests[i]));
-//                    });
-//                    that.$('tbody a.edit').each(function () {
-//                        var i = $(this).parents('tr').index();
-//                        $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
-//                    });
 
                     // Update pagination
                     that.$('.pagination').remove();
