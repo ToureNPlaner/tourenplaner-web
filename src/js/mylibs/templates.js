@@ -245,6 +245,50 @@ templates.adminUserView = '<h4>User #{{user.userid}}</h4>\
                             </form>';
 templates.adminUserView = Handlebars.compile(templates.adminUserView);
 
+// billing
+templates.billingView =  '<div class="modal-header">\
+                            <a href="#" class="close">x</a>\
+                            <h3 class="title">' + $._('Billing') + '</h3>\
+                        </div>\
+                        <div class="modal-body">\
+                            {{{content}}}\
+                        </div>\
+                        <div class="modal-footer">\
+                            <a href="#" class="btn secondary back">' + $._('Back') + '</a>\
+                            <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
+                        </div>';
+templates.billingView = Handlebars.compile(templates.billingView);
+
+templates.billingMainView =  '<table class="zebra-striped">\
+                                <thead>\
+                                    <th>#</th>\
+                                    <th>' + $._('User ID') + '</th>\
+                                    <th>' + $._('Algorithm') + '</th>\
+                                    <th>' + $._('Costs') + '</th>\
+                                    <th>' + $._('is Paid') + '</th>\
+                                    <th>' + $._('Request Date') + '</th>\
+                                    <th>' + $._('Finish Date') + '</th>\
+                                    <th>' + $._('Duration') + '</th>\
+                                    <th>' + $._('Status') + '</th>\
+                                </thead>\
+                                <tbody>\
+                                </tbody>\
+                            </table>';
+
+templates.billingTableRowView = '<tr>\
+                                <td>{{request.requestid}}</td>\
+                                <td>{{request.userid}}</td>\
+                                <td>{{request.algorithm}}</td>\
+                                <td>{{request.costs}}</td>\
+                                <td class="center">{{#if request.ispaid}}&#10004;{{else}}&#10006;{{/if}}</td>\
+                                <td>{{request.requestdate}}</td>\
+                                <td>{{request.finisheddate}}</td>\
+                                <td>{{request.duration}}</td>\
+                                <td>{{request.status}}</td>\
+                                </tr>';
+templates.billingTableRowView = Handlebars.compile(templates.billingTableRowView);
+
+// pagination
 templates.paginationView = '<div class="pagination">\
                                 <ul>\
                                     <li class="prev disabled"><a href="#">&larr; ' + $._('Previous') + '</a></li>\
