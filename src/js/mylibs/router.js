@@ -13,7 +13,6 @@ window.Router = Backbone.Router.extend({
     },
 
     initialize: function(options) {
-        //window.server = new ServerInfo();
         this.user = new User();
         this.user.bind('login', _.bind(this.onLogin, this));
 
@@ -54,8 +53,17 @@ window.Router = Backbone.Router.extend({
     },
 
     import: function() {
-        if (!window.server.isPublic() && this.user.isLoggedIn())
-            alert('To be implemented');
+        if (!window.server.isPublic() && this.user.isLoggedIn()) {
+            if (!Modernizr.file) {
+                // Display Im-/Export
+                alert('To be implemented');
+            } else {
+                new MessageView({
+                    title: $._('Error!'),
+                    message: $._('Your browser doesn\'t support the HTML 5 File API.<br /> To use the Im-/Export functionality, please upgrade your browser.')
+                }).render();
+            }
+        }
     },
 
     admin: function() {
