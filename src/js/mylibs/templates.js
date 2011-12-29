@@ -8,8 +8,9 @@ templates.topbarView = '<div class="fill">\
                                 <li class="menu">\
                                   <a class="menu" href="#">' + $._('Settings') + '</a>\
                                   <ul class="menu-dropdown">\
-                                    <li><a href="#/import">' + $._('Im-/Export') + '</a></li>\
+                                    <li><a href="#/settings">' + $._('Profile') + '</a></li>\
                                     <li><a href="#/billing">' + $._('Billing') + '</a></li>\
+                                    <li><a href="#/import">' + $._('Im-/Export') + '</a></li>\
                                     <li class="admin"><a href="#/admin">' + $._('Administration') + '</a></li>\
                                     <li class="divider"></li>\
                                     <li><a href="#/logout">' + $._('Logout') + '</a></li>\
@@ -170,8 +171,7 @@ templates.adminMainView =  '<a href="#/admin/user" class="new-user">' + $._('Cre
                                     <th>' + $._('Activated') + '</th>\
                                     <th>' + $._('Actions') + '</th>\
                                 </thead>\
-                                <tbody>\
-                                </tbody>\
+                                <tbody></tbody>\
                             </table>';
 
 templates.adminTableRowView = '<tr>\
@@ -190,7 +190,7 @@ templates.adminTableRowView = '<tr>\
                               </tr>';
 templates.adminTableRowView = Handlebars.compile(templates.adminTableRowView);
 
-templates.adminUserView = '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.userid}}{{else}}' + $._('New User') + '{{/if}}</h4>\
+templates.userView =       '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.userid}}{{else}}' + $._('New User') + '{{/if}}</h4>\
                             <div class="alert-message error error-empty">\
                               <p><strong>' + $._('Error!') + '</strong> ' + $._('Please fill out all fields.') + '</p>\
                             </div>\
@@ -244,7 +244,13 @@ templates.adminUserView = '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.us
                                     <a href="#" class="btn primary save">' + $._('Save') + '</a>\
                                 </div>\
                             </form>';
-templates.adminUserView = Handlebars.compile(templates.adminUserView);
+templates.userView = Handlebars.compile(templates.userView);
+
+templates.userDialogView = '<div class="modal-header">\
+                              <a href="#" class="close">x</a>\
+                              <h3 class="title">' + $._('Profile') + '</h3>\
+                            </div>\
+                            <div class="modal-body"></div>';
 
 // billing
 templates.billingView =  '<div class="modal-header">\

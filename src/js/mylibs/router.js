@@ -4,6 +4,7 @@ window.Router = Backbone.Router.extend({
         "/login":           "login",            // #/login
         "/logout":          "logout",           // #/logout
         "/register":        "register",         // #/register
+        "/settings":        "settings",         // #/settings
         "/import":          "import",           // #/import
         "/admin":           "admin",            // #/admin
         "/admin/user":      "adminNewUser",     // #/admin/user
@@ -52,6 +53,11 @@ window.Router = Backbone.Router.extend({
             new RegisterView().render();
     },
 
+    settings: function() {
+        if (!window.server.isPublic() && this.user.isLoggedIn())
+            new UserDialogView().render();
+    },
+
     import: function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
             if (!Modernizr.file) {
@@ -76,7 +82,7 @@ window.Router = Backbone.Router.extend({
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
                 this.admin();
 
-            this.adminView.setContent(new AdminUserView().render())
+            this.adminView.setContent(new UserView().render())
         }  
     },
 
@@ -89,7 +95,7 @@ window.Router = Backbone.Router.extend({
             if (Modernizr.sessionstorage && !_.isNull(sessionStorage.getItem('edit-user'))) {
                 var user = new User();
                 user.set(JSON.parse(sessionStorage.getItem('edit-user')));
-                this.adminView.setContent(new AdminUserView({model: user}).render());
+                this.adminView.setContent(new UserView({model: user}).render());
                 sessionStorage.removeItem('edit-user');
                 return;
             }
@@ -98,7 +104,7 @@ window.Router = Backbone.Router.extend({
 
             var that = this;
             var model = new User().load(id, function () {
-                that.adminView.setContent(new AdminUserView({model: this}).render());
+                that.adminView.setContent(new UserView({model: this}).render());
                 that.loadingView.remove();
             });
         }
