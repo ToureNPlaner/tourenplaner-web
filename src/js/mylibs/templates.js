@@ -295,6 +295,18 @@ templates.billingTableRowView = '<tr>\
                                 </tr>';
 templates.billingTableRowView = Handlebars.compile(templates.billingTableRowView);
 
+templates.imexportView = '<div class="modal-header">\
+                            <a href="#" class="close">x</a>\
+                            <h3>' + $._('Im-/Export') + '</h3>\
+                          </div>\
+                          <div class="modal-body">\
+                            <a href="#" class="import">Import</a>\
+                            <a href="#" class="export">Export</a>\
+                          </div>\
+                          <div class="modal-footer">\
+                            <a href="#" class="btn secondary cancel">Close</a>\
+                          </div>';
+
 // pagination
 templates.paginationView = '<div class="pagination">\
                                 <ul>\

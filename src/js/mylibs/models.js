@@ -30,35 +30,6 @@ window.Mark = Backbone.Model.extend({
         }
     },
 
-    toJSON: function () {
-        // We're using ints here instead of floats for performance improvements (Java is a bit slow)
-
-        var json = {
-            "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
-            "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
-            "name": this.get("name"),
-            "k": this.get("k")
-        };
-
-        // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
-
-        if (pointconstraints != null) {
-			for (var i = 0; i < pointconstraints.length; i++) {
-				var key = pointconstraints[i].name;
-
-				if (this.get(key) != undefined) {
-					json[key] = this.get(key);
-				} else {
-					// what if it is undefined? write "" or let View (onSend)
-					// check before sending to server?
-				}
-			}
-		}
-
-		return json;
-    },
-
     findNearestNeighbour: function (){
     	var that = this;
         // get nearest neighbour
@@ -75,6 +46,50 @@ window.Mark = Backbone.Model.extend({
 			}
 		});
 		window.mapModel.get("mapObject").drawMarkers();
+    },
+
+    toJSON: function () {
+        // We're using ints here instead of floats for performance improvements (Java is a bit slow)
+
+        var json = {
+            "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
+            "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
+            "name": this.get("name"),
+            "position": this.get("position"),
+            "k": this.get("k")
+        };
+
+        // get all pointconstraints for currently selected algorithm
+        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+
+        if (pointconstraints != null) {
+            for (var i = 0; i < pointconstraints.length; i++) {
+                var key = pointconstraints[i].name;
+
+                if (this.get(key) != undefined) {
+                    json[key] = this.get(key);
+                } else {
+                    // what if it is undefined? write "" or let View (onSend)
+                    // check before sending to server?
+                }
+            }
+        }
+
+        return json;
+    },
+
+    fromJSON: function(data) {
+        var tempLon = data.ln / 1e7;
+        var tempLat = data.lt / 1e7;
+        var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+
+        this.set({
+            name: data.name,
+            position: data.position || 99999,
+            k: data.k,
+            lonlat: tempLonLat
+        });
+        return this;
     }
 });
 
@@ -195,6 +210,14 @@ window.MarkList = Backbone.Collection.extend({
         }
 
         return ret;
+    },
+
+    fromJSON: function(data) {
+        for (var i = 0, m; m = data[i]; ++i) {
+            var mark = new Mark().fromJSON(m);
+            this.add(mark);
+        }
+        this.sort();
     },
 
     /**

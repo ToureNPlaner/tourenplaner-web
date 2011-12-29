@@ -1133,6 +1133,99 @@ window.UserDialogView = Backbone.View.extend({
     }
 });
 
+window.ImExportView = Backbone.View.extend({
+   
+   id: 'imexport',
+   className: 'modal',
+
+   events: {
+       "hidden": "remove",
+       "click .modal-footer a.cancel": "remove",
+       "click a.import": "onImport",
+       "click a.export": "onExport"
+   },
+
+   render: function() {
+        $(this.el).html(templates.imexportView);
+
+        $(this.el).modal({
+            show: true,
+            backdrop: 'static',
+            keyboard: true
+        });
+
+       return this;
+   },
+
+   remove: function() {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+
+        $(this.el).remove();
+        window.app.navigate('');   
+   },
+
+   onImport: function() {
+        var that = this;
+
+       this.$('.modal-body').append('<input type="file" name="file" multiple />');
+       this.$('.modal-body input').bind('change', function (evt) {
+            var files = evt.target.files;
+            log(files);
+
+            // Assume there is only one file selected
+            var file = files[0];
+            log(file);
+
+            var reader = new FileReader();
+            reader.onloadend = (function (file, dialog) {
+                return function(e) {
+                    if (e.target.readyState === FileReader.DONE) {
+                        var data = JSON.parse(e.target.result);
+                        log(data);
+
+                        if (!_.isEmpty(data.marks)) {
+                            window.markList.reset();
+                            window.markList.fromJSON(data.marks);
+                        }
+                        if (!_.isEmpty(data.route)) {
+                            window.mapModel.set({route: data.route});
+                        }
+                        
+                        dialog.remove();                        
+                    }
+                };
+            })(file, that);
+
+            reader.onerror = function (e) {
+                log(e);
+            }
+
+            reader.readAsText(file);
+       });
+       return false;
+   },
+
+   onExport: function() {
+        var contents = {marks: [], route: {}};
+        contents.marks = window.markList.toJSON();
+
+        var route = window.mapModel.get("route");
+        if (typeof route === 'String')
+            contents.route = JSON.parse(route);
+        else if (typeof route == 'Object')
+            contents.route = route;
+
+        log(contents);
+
+        var dataURI = 'data:application/octet-stream;charset=utf-8;base64,' + Base64.encode(JSON.stringify(contents));
+        var win = window.open(dataURI, "export.json");
+
+        return false;
+   }
+    
+});
+
 window.MessageView = Backbone.View.extend({
 
     id: 'message',

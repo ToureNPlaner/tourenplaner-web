@@ -60,9 +60,8 @@ window.Router = Backbone.Router.extend({
 
     import: function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
-            if (!Modernizr.file) {
-                // Display Im-/Export
-                alert('To be implemented');
+            if (Modernizr.file) {
+                new ImExportView().render();
             } else {
                 new MessageView({
                     title: $._('Error!'),
