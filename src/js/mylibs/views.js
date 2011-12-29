@@ -369,7 +369,7 @@ window.DataView = Backbone.View.extend({
 							constraintsHtml += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
 						break;
 					case "price":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> €</div>";
+							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> Euro</div>";
 						break;
 				}
 			}
@@ -811,6 +811,7 @@ window.AdminView = Backbone.View.extend({
                         var i = $(this).parents('tr').index();
                         $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
                     });
+					$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
 
                     // Update pagination
                     that.$('.pagination').remove();
@@ -946,6 +947,146 @@ window.AdminView = Backbone.View.extend({
             sessionStorage.setItem('edit-user', JSON.stringify(user));
 
         window.app.navigate('/admin/user/' + user.userid, true);
+        return false;
+    }
+});
+
+window.BillingView = Backbone.View.extend({
+    id: 'admin',
+    className: 'modal',
+
+    events: {
+        "hidden": "remove",
+        "click .cancel": "remove",
+        "click .back": "onBack"
+    },
+    render: function () {
+        var content = templates.billingMainView;
+        $(this.el).html(templates.billingView({content: content}));
+        $(this.el).modal({
+            show: true,
+            keyboard: true,
+            backdrop: 'static'
+        });
+
+        this.renderMainView();
+
+        return this;
+    },
+
+    renderMainView: function () {
+        if (_.isUndefined(this.position)) {
+            this.position = {
+                limit: 2,
+                offset: 3
+            };
+        }
+
+        loadingView = new LoadingView('Loading table data').render();
+        var that = this;
+        api.listRequests({
+            limit: this.position.limit,
+            offset: this.position.offset,
+            callback: function (text, success) {
+                if (success) {
+                    var page = (that.position.offset / that.position.limit) + 1;
+                    var pages = text.number / that.position.limit;
+                    // Update table
+                    that.$('tbody').html('');
+                    for (i in text.requests)
+                        that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
+					$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
+
+                    // Update pagination
+                    that.$('.pagination').remove();
+                    var html = '', nums = [];
+                    if (pages > 6) {
+                        nums = _.range(1, 4);
+                        nums.push('...');
+                        nums = nums.concat(_.range(pages - 2, pages + 1))
+                    } else if (pages > 1) {
+                        nums = _.range(1, pages + 1);
+                    } else {
+                        nums = [1];
+                    }
+
+                    for (i in nums) {
+                        html += '<li';
+                        if (nums[i] === page)
+                            html += ' class="active"';
+                        else if (!_.isNumber(nums[i]))
+                            html += ' class="disabled"';
+                        html += '><a href="#">' + nums[i] + '</a></li>';
+                    }
+
+                    that.$('.modal-body').append(templates.paginationView({pages: html}));
+                    that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
+
+                    if (page !== 1)
+                        that.$('.pagination li').first().removeClass('disabled');
+                    if (page !== pages)
+                        that.$('.pagination li').last().removeClass('disabled');
+
+                    // Add events
+                    that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
+                    that.$('.pagination li a').last().click(_.bind(that.onNext, that));
+                    that.$('.pagination li a').each(function () {
+                        var page = parseInt($(this).html());
+                        if (_.isNumber(page))
+                            $(this).click(_.bind(that.onPage, that, page));
+                    });
+                    
+                	loadingView.remove();
+                	
+                }
+            }
+        });
+    },
+
+    remove: function () {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+        if (_.isFunction(this.options.remove))
+            this.options.remove();
+        $(this.el).remove();
+        window.app.navigate('');
+    },
+
+    onPrev: function () {
+        if (this.position.offset === 0)
+            return false;
+        else if (this.position.offset - this.position.limit < 0)
+            this.position.offset = 0;
+        else
+            this.position.offset -= this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onNext: function () {
+        this.position.offset += this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onPage: function (page) {
+        this.position.offset = this.position.limit * (page - 1);
+
+        this.renderMainView();
+        return false;
+    },
+    
+    onBack: function () {
+        this.content.remove();
+        this.content = null;
+
+        this.$('.modal-body').html("jaja");//templates.adminMainView);
+        this.renderMainView(),
+        this.$('.modal-footer a.btn.back').hide();
+
+        window.app.navigate('/admin');
         return false;
     }
 });

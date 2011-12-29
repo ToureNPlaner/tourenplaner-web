@@ -216,19 +216,32 @@ $.mockjax({
     responseText: {
                 number: 100,
                 requests: [{
-                    timestamp: 1234567890,
-                    duration: 500,
-                    cost: 123.24,
+                	requestid: 0,
+                	userid: 42,
+                	algorithm: "sp",
                     request: {Request: [[48.781667, 9.1752781], [52.518056, 13.393333]]},
                     response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
-                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
+                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]},
+                    costs: 123.24,
+                    ispaid: true,
+                    requestdate: "2011-12-11T13:55:30Z",
+                    finisheddate: "2011-12-11T13:56:14Z",
+                    duration: 500,
+                    status: "OK"
                 },{
-                    timestamp: 987654321,
-                    duration: 741,
-                    cost: 12.90,
-                    request: {Request: [[52.518056, 13.393333], [48.781667, 9.1752781]]},
-                    response: {Route:[[28.1427,20.1567],[89.1427,1.0847],
-                    [17.1978,86.1487],[3.1427,90.1487],[42.5927,129.4667]]}
+                	requestid: 1,
+                	userid: 1,
+                	algorithm: "nns",
+                    request: {Request: [[48.781667, 9.1752781], [52.518056, 13.393333]]},
+                    response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
+                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]},
+                    ispending: true,
+                    costs: 12.90,
+                    ispaid: false,
+                    requestdate: "2011-12-11T13:55:30Z",
+                    finisheddate: null,
+                    duration: 42,
+                    status: "Failed"
                 }]
     }
 });
@@ -245,12 +258,19 @@ $.mockjax({
     responseText: {
                 number: 100,
                 requests: [{
-                    timestamp: 1234567890,
-                    duration: 500,
-                    cost: 123.24,
+                	requestid: 0,
+                	userid: 42,
+                	algorithm: "sp",
                     request: {Request: [[48.781667, 9.1752781], [52.518056, 13.393333]]},
                     response: {Route:[[3.1427,90.1487],[28.1427,20.1567],
-                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]}
+                    [17.1978,86.1487],[42.5927,129.4667],[89.1427,1.0847]]},
+                  
+                    costs: 123.24,
+                    ispaid: true,
+                    requestdate: "2011-12-11T13:55:30Z",
+                    finisheddate: null,
+                    duration: 500,
+                    status: "Pending"
                 }]
     }
 });

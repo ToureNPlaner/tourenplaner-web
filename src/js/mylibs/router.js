@@ -98,7 +98,7 @@ window.Router = Backbone.Router.extend({
 
     billing: function() {
         if (!window.server.isPublic() && this.user.get("admin"))
-            alert('To be implemented');
+            this.billingView = new BillingView({remove: _.bind(this.onBillingRemove, this)}).render();
     },
 
     request: function(id) {
@@ -107,6 +107,10 @@ window.Router = Backbone.Router.extend({
 
     onAdminRemove: function () {
         this.adminView = null;
+    },
+
+    onBillingRemove: function () {
+        this.billingView = null;
     },
 
     onLogin: function (success) {

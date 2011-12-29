@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 00:23+0100\n"
-"PO-Revision-Date: 2011-12-21 00:25+0100\n"
-"Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
+"POT-Creation-Date: 2011-12-24 14:17+0100\n"
+"PO-Revision-Date: 2011-12-24 14:19+0100\n"
+"Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -25,33 +25,33 @@ msgstr ""
 msgid "Error"
 msgstr "Fehler"
 
-#: map.contextmenu.js:46
+#: map.contextmenu.js:49
 msgid "Markers"
 msgstr "Markierungen"
 
-#: map.contextmenu.js:53
+#: map.contextmenu.js:56
 msgid "Set as Startmarker"
 msgstr "Als Start markieren"
 
-#: map.contextmenu.js:54
+#: map.contextmenu.js:57
 msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
-#: map.contextmenu.js:56
+#: map.contextmenu.js:59
 #: templates.js:58
 #: templates.js:185
 msgid "Delete"
 msgstr "Löschen"
 
-#: map.contextmenu.js:60
+#: map.contextmenu.js:63
 msgid "Add Startmarker"
 msgstr "Startmarkierung hinzufügen"
 
-#: map.contextmenu.js:61
+#: map.contextmenu.js:64
 msgid "Add Marker"
 msgstr "Markierung hinzufügen"
 
-#: map.contextmenu.js:62
+#: map.contextmenu.js:65
 msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
 
@@ -77,6 +77,7 @@ msgid "Administration"
 msgstr "Administration"
 
 #: templates.js:13
+#: templates.js:252
 msgid "Billing"
 msgstr "Rechnungen"
 
@@ -109,7 +110,7 @@ msgid "Clear"
 msgstr "Leeren"
 
 #: templates.js:46
-#: views.js:389
+#: views.js:435
 msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
@@ -144,12 +145,12 @@ msgstr "Login"
 #: templates.js:103
 #: templates.js:195
 #: templates.js:198
-#: views.js:493
-#: views.js:622
-#: views.js:682
-#: views.js:950
-#: views.js:1012
-#: views.js:1031
+#: views.js:539
+#: views.js:668
+#: views.js:728
+#: views.js:1137
+#: views.js:1199
+#: views.js:1218
 msgid "Error!"
 msgstr "Fehler!"
 
@@ -214,11 +215,13 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: templates.js:158
+#: templates.js:258
 msgid "Back"
 msgstr "Zurück"
 
 #: templates.js:159
-#: templates.js:266
+#: templates.js:259
+#: templates.js:310
 msgid "Close"
 msgstr "Schließen"
 
@@ -267,11 +270,44 @@ msgstr "Administrator"
 msgid "Save"
 msgstr "Speichern"
 
-#: templates.js:251
+#: templates.js:266
+#, fuzzy
+msgid "User ID"
+msgstr "Benutzer"
+
+#: templates.js:267
+msgid "Algorithm"
+msgstr "Algorithmus"
+
+#: templates.js:268
+msgid "Costs"
+msgstr "Kosten"
+
+#: templates.js:269
+msgid "is Paid"
+msgstr "Bezahlt"
+
+#: templates.js:270
+msgid "Request Date"
+msgstr "Anfragezeitpunkt"
+
+#: templates.js:271
+msgid "Finish Date"
+msgstr "Endzeitpunkt"
+
+#: templates.js:272
+msgid "Duration"
+msgstr "Dauer"
+
+#: templates.js:273
+msgid "Status"
+msgstr "Status"
+
+#: templates.js:295
 msgid "Previous"
 msgstr "Zurück"
 
-#: templates.js:253
+#: templates.js:297
 msgid "Next"
 msgstr "Weiter"
 
@@ -299,108 +335,105 @@ msgstr "Kein Algorithmus ausgewählt."
 msgid "Not enough points defined."
 msgstr "Nicht genug Punkte definiert."
 
-#: views.js:399
+#: views.js:445
 msgid "Data"
 msgstr "Daten"
 
-#: views.js:421
+#: views.js:467
 msgid "Marker"
 msgstr "Markierung"
 
-#: views.js:432
+#: views.js:478
 msgid "Start"
 msgstr "Start"
 
-#: views.js:434
+#: views.js:480
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:482
-#: views.js:483
-#: views.js:612
-#: views.js:613
-#: views.js:940
-#: views.js:941
+#: views.js:528
+#: views.js:529
+#: views.js:658
+#: views.js:659
+#: views.js:1127
+#: views.js:1128
 msgid "Please enter a valid email address"
 msgstr "Bitte geben Sie eine gültige Emailadresse an"
 
-#: views.js:485
+#: views.js:531
 msgid "Please enter your password"
 msgstr "Bitte geben Sie ihr Passwort an"
 
-#: views.js:542
+#: views.js:588
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:600
+#: views.js:646
 msgid "Please enter your firstname"
 msgstr "Bitte geben Sie ihren Vornamen an"
 
-#: views.js:601
+#: views.js:647
 msgid "Please enter your lastname"
 msgstr "Bitte geben Sie ihren Nachnamen an"
 
-#: views.js:603
+#: views.js:649
 msgid "Please provide a password"
 msgstr "Bitte geben Sie ein Passwort an"
 
-#: views.js:604
-#: views.js:608
-#: views.js:937
+#: views.js:650
+#: views.js:654
+#: views.js:1124
 msgid "Enter at least 5 characters"
 msgstr "Geben Sie mindestens 5 Zeichen ein"
 
-#: views.js:607
+#: views.js:653
 msgid "Please repeat your password"
 msgstr "Bitte geben Sie ihr Password erneut an"
 
-#: views.js:609
+#: views.js:655
 msgid "Enter the same password as above"
 msgstr "Geben Sie dasselbe Passwort wie oben an"
 
-#: views.js:658
-#: views.js:983
+#: views.js:704
+#: views.js:1170
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:674
+#: views.js:720
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:675
+#: views.js:721
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 
-#: views.js:884
+#: views.js:931
 msgid "Do you really want to delete the user?"
 msgstr "Wollen sie diesen Benutzer wirklich löschen?"
 
-#: views.js:934
+#: views.js:1121
 msgid "Please enter a firstname"
 msgstr "Bitte geben Sie einen Vornamen an"
 
-#: views.js:935
+#: views.js:1122
 msgid "Please enter a lastname"
 msgstr "Bitte geben Sie einen Nachnamen an"
 
-#: views.js:1004
+#: views.js:1191
 msgid "User created"
 msgstr "Benutzer angelegt"
 
-#: views.js:1005
+#: views.js:1192
 msgid "The user was created successfully"
 msgstr "Der Benutzer wurde erfolgreich angelegt"
 
-#: views.js:1023
+#: views.js:1210
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: views.js:1024
+#: views.js:1211
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
-
-#~ msgid "Requests"
-#~ msgstr "Anfragen"
 
 #~ msgid "No Mark selected"
 #~ msgstr "Keine Markierung ausgewählt"
