@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-30 14:42+0100\n"
-"PO-Revision-Date: 2011-12-30 14:44+0100\n"
+"POT-Creation-Date: 2011-12-30 16:03+0100\n"
+"PO-Revision-Date: 2011-12-30 16:03+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Poedit-KeywordsList: $._\n"
 
 #: api.js:117
-#: views.js:191
-#: views.js:197
+#: views.js:192
+#: views.js:198
 msgid "Error"
 msgstr "Fehler"
 
@@ -66,13 +66,13 @@ msgstr "Lade Serverinformationen"
 #: templates.js:104
 #: templates.js:195
 #: templates.js:198
-#: views.js:539
-#: views.js:670
-#: views.js:730
-#: views.js:999
-#: views.js:1071
-#: views.js:1094
-#: views.js:1186
+#: views.js:544
+#: views.js:675
+#: views.js:735
+#: views.js:1144
+#: views.js:1216
+#: views.js:1239
+#: views.js:1331
 msgid "Error!"
 msgstr "Fehler!"
 
@@ -124,7 +124,12 @@ msgstr "Keine Algorithmen"
 msgid "Points"
 msgstr "Punkte"
 
+#: templates.js:33
+msgid "Switch order"
+msgstr "Reihenfolge umkehren"
+
 #: templates.js:34
+#: views.js:180
 msgid "No points defined!"
 msgstr "Keine Punkte definiert!"
 
@@ -137,7 +142,7 @@ msgid "Clear"
 msgstr "Leeren"
 
 #: templates.js:47
-#: views.js:435
+#: views.js:440
 msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
@@ -352,121 +357,123 @@ msgstr "Kürzester Weg"
 msgid "Shortest Path Simple"
 msgstr "Simpler kürzester Weg"
 
-#: views.js:179
-msgid "No points defined"
-msgstr "Keine Punkte definiert"
-
-#: views.js:192
+#: views.js:193
 msgid "No algorithm selected."
 msgstr "Kein Algorithmus ausgewählt."
 
-#: views.js:198
+#: views.js:199
 msgid "Not enough points defined."
 msgstr "Nicht genug Punkte definiert."
 
-#: views.js:445
+#: views.js:450
 msgid "Data"
 msgstr "Daten"
 
-#: views.js:467
+#: views.js:472
 msgid "Marker"
 msgstr "Markierung"
 
-#: views.js:478
+#: views.js:483
 msgid "Start"
 msgstr "Start"
 
-#: views.js:480
+#: views.js:485
 msgid "Target"
 msgstr "Ziel"
 
-#: views.js:528
-#: views.js:529
-#: views.js:660
-#: views.js:661
-#: views.js:989
-#: views.js:990
+#: views.js:533
+#: views.js:534
+#: views.js:665
+#: views.js:666
+#: views.js:1134
+#: views.js:1135
 msgid "Please enter a valid email address"
 msgstr "Bitte geben Sie eine gültige Emailadresse an"
 
-#: views.js:531
+#: views.js:536
 msgid "Please enter your password"
 msgstr "Bitte geben Sie ihr Passwort an"
 
-#: views.js:590
+#: views.js:595
 msgid "Logging in"
 msgstr "Anmeldung läuft"
 
-#: views.js:648
+#: views.js:653
 msgid "Please enter your firstname"
 msgstr "Bitte geben Sie ihren Vornamen an"
 
-#: views.js:649
+#: views.js:654
 msgid "Please enter your lastname"
 msgstr "Bitte geben Sie ihren Nachnamen an"
 
-#: views.js:651
+#: views.js:656
 msgid "Please provide a password"
 msgstr "Bitte geben Sie ein Passwort an"
 
-#: views.js:652
-#: views.js:656
-#: views.js:986
+#: views.js:657
+#: views.js:661
+#: views.js:1131
 msgid "Enter at least 5 characters"
 msgstr "Geben Sie mindestens 5 Zeichen ein"
 
-#: views.js:655
+#: views.js:660
 msgid "Please repeat your password"
 msgstr "Bitte geben Sie ihr Password erneut an"
 
-#: views.js:657
+#: views.js:662
 msgid "Enter the same password as above"
 msgstr "Geben Sie dasselbe Passwort wie oben an"
 
-#: views.js:706
-#: views.js:1032
+#: views.js:711
+#: views.js:1177
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
-#: views.js:722
+#: views.js:727
 msgid "Registration successful"
 msgstr "Registrierung erfolgreich"
 
-#: views.js:723
+#: views.js:728
 msgid "The registration was successful. Please wait until an administrator activates your account."
 msgstr "Die Registrierung war erfolgreich. Bitte warten Sie bis ein Administrator Ihren Account aktiviert."
 
-#: views.js:933
+#: views.js:938
 msgid "Do you really want to delete the user?"
 msgstr "Wollen sie diesen Benutzer wirklich löschen?"
 
-#: views.js:983
+#: views.js:1128
 msgid "Please enter a firstname"
 msgstr "Bitte geben Sie einen Vornamen an"
 
-#: views.js:984
+#: views.js:1129
 msgid "Please enter a lastname"
 msgstr "Bitte geben Sie einen Nachnamen an"
 
-#: views.js:1063
+#: views.js:1208
 msgid "User created"
 msgstr "Benutzer angelegt"
 
-#: views.js:1064
+#: views.js:1209
 msgid "The user was created successfully"
 msgstr "Der Benutzer wurde erfolgreich angelegt"
 
-#: views.js:1086
+#: views.js:1231
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: views.js:1087
+#: views.js:1232
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
 
-#: views.js:1186
+#: views.js:1331
 msgid "No file specified"
 msgstr "Keine Datei ausgewählt!"
+
+#~ msgid "No points defined"
+#~ msgstr "Keine Punkte definiert"
+
+#~ msgid "Flip points"
+#~ msgstr "Punktreihenfolge drehen"
 
 #~ msgid "Usersettings"
 #~ msgstr "Benutzereinstellungen"

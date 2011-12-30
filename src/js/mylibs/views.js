@@ -93,8 +93,9 @@ window.SidebarView = Backbone.View.extend({
     id: 'sidebar',
 
     events: {
-        "click #btnClear": "onClear",
-        "click #btnSend": "onSend"
+        "click a.clear": "onClear",
+        "click a.send": "onSend",
+        "click a.flip": "onFlip"
     },
 
     initialize: function () {
@@ -176,7 +177,7 @@ window.SidebarView = Backbone.View.extend({
 
         if (window.markList.length == 0) {
             _markerNameSuffix = "A";
-            this.$('#marks').html($._('No points defined'));
+            this.$('#marks').html($._('No points defined!'));
         } else {
             for (var i = 0; i < window.markList.length; ++i)
                 this.marks.push(new MarkView({model: window.markList.at(i)}));
@@ -216,6 +217,10 @@ window.SidebarView = Backbone.View.extend({
         var mapObject = window.mapModel.get("mapObject");
         window.markList.deleteAllMarks();
         window.mapModel.setRoute("");
+    },
+
+    onFlip: function() {
+        window.markList.flip();
     },
 
     onResize: function () {
@@ -951,6 +956,146 @@ window.AdminView = Backbone.View.extend({
     }
 });
 
+window.BillingView = Backbone.View.extend({
+    id: 'admin',
+    className: 'modal',
+
+    events: {
+        "hidden": "remove",
+        "click .cancel": "remove",
+        "click .back": "onBack"
+    },
+    render: function () {
+        var content = templates.billingMainView;
+        $(this.el).html(templates.billingView({content: content}));
+        $(this.el).modal({
+            show: true,
+            keyboard: true,
+            backdrop: 'static'
+        });
+
+        this.renderMainView();
+
+        return this;
+    },
+
+    renderMainView: function () {
+        if (_.isUndefined(this.position)) {
+            this.position = {
+                limit: 2,
+                offset: 3
+            };
+        }
+
+        loadingView = new LoadingView('Loading table data').render();
+        var that = this;
+        api.listRequests({
+            limit: this.position.limit,
+            offset: this.position.offset,
+            callback: function (text, success) {
+                if (success) {
+                    var page = (that.position.offset / that.position.limit) + 1;
+                    var pages = text.number / that.position.limit;
+                    // Update table
+                    that.$('tbody').html('');
+                    for (i in text.requests)
+                        that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
+                   $("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
+
+                    // Update pagination
+                    that.$('.pagination').remove();
+                    var html = '', nums = [];
+                    if (pages > 6) {
+                        nums = _.range(1, 4);
+                        nums.push('...');
+                        nums = nums.concat(_.range(pages - 2, pages + 1))
+                    } else if (pages > 1) {
+                        nums = _.range(1, pages + 1);
+                    } else {
+                        nums = [1];
+                    }
+
+                    for (i in nums) {
+                        html += '<li';
+                        if (nums[i] === page)
+                            html += ' class="active"';
+                        else if (!_.isNumber(nums[i]))
+                            html += ' class="disabled"';
+                        html += '><a href="#">' + nums[i] + '</a></li>';
+                    }
+
+                    that.$('.modal-body').append(templates.paginationView({pages: html}));
+                    that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
+
+                    if (page !== 1)
+                        that.$('.pagination li').first().removeClass('disabled');
+                    if (page !== pages)
+                        that.$('.pagination li').last().removeClass('disabled');
+
+                    // Add events
+                    that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
+                    that.$('.pagination li a').last().click(_.bind(that.onNext, that));
+                    that.$('.pagination li a').each(function () {
+                        var page = parseInt($(this).html());
+                        if (_.isNumber(page))
+                            $(this).click(_.bind(that.onPage, that, page));
+                    });
+                    
+                   loadingView.remove();
+                   
+                }
+            }
+        });
+    },
+
+    remove: function () {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+        if (_.isFunction(this.options.remove))
+            this.options.remove();
+        $(this.el).remove();
+        window.app.navigate('');
+    },
+
+    onPrev: function () {
+        if (this.position.offset === 0)
+            return false;
+        else if (this.position.offset - this.position.limit < 0)
+            this.position.offset = 0;
+        else
+            this.position.offset -= this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onNext: function () {
+        this.position.offset += this.position.limit;
+
+        this.renderMainView();
+        return false;
+    },
+
+    onPage: function (page) {
+        this.position.offset = this.position.limit * (page - 1);
+
+        this.renderMainView();
+        return false;
+    },
+    
+    onBack: function () {
+        this.content.remove();
+        this.content = null;
+
+        this.$('.modal-body').html("jaja");//templates.adminMainView);
+        this.renderMainView(),
+        this.$('.modal-footer a.btn.back').hide();
+
+        window.app.navigate('/admin');
+        return false;
+    }
+});
+
 window.UserView = Backbone.View.extend({
 
     id: 'admin-user',
@@ -1227,8 +1372,6 @@ window.ImExportView = Backbone.View.extend({
             contents.route = JSON.parse(route);
         else if (typeof route == 'Object')
             contents.route = route;
-
-        log(contents);
 
         var dataURI = 'data:application/octet-stream;charset=utf-8;base64,' + Base64.encode(JSON.stringify(contents));
         var win = window.open(dataURI, "export.json");

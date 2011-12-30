@@ -30,12 +30,12 @@ templates.sidebarView = '<div style="padding: 5px 0px;">\
                               </div>\
                               <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
                               <div class="container">\
-                                <h3>' + $._('Points') + ':</h3>\
+                                <h3>' + $._('Points') + ': <a href="#" class="btn small secondary flip"><img src="img/arrow-switch.png" alt="' + $._('Switch order') + '" title="' + $._('Switch order') + '" /></a></h3>\
                                 <div id="marks">' + $._('No points defined!') + '</div>\
                               </div>\
                               <div class="container">\
-                                <a href="#" id="btnSend" class="btn primary">' + $._('Calculate Route') + '</a>\
-                                <a href="#" id="btnClear" class="btn secondary">' + $._('Clear') + '</a>\
+                                <a href="#" class="btn primary send">' + $._('Calculate Route') + '</a>\
+                                <a href="#" class="btn secondary clear">' + $._('Clear') + '</a>\
                               </div>\
                             </form>\
                          </div>';

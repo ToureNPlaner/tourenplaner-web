@@ -53,6 +53,11 @@ div.popover {
 #main #sidebar h1 {
   text-align: center;
 }
+#main #sidebar h3 a {
+  float: right;
+  margin: 5px;
+  font-size: 8pt;
+}
 #main #sidebar form {
   padding-left: 15px;
 }

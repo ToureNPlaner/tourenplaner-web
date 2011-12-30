@@ -203,6 +203,17 @@ window.MarkList = Backbone.Collection.extend({
         return ret;
     },
 
+    flip: function() {
+        // Changes the order of all points
+        var max = this.length - 1;
+        for (var i = 0; i < this.length; i++) {
+            var pt = this.at(i);
+            pt.set({position: max - pt.get("position")});
+        }
+
+        this.sort();
+    },
+
     toJSON: function () {
         var ret = [];
         for (var i = 0; i < this.length; i++) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-30 14:42+0100\n"
+"POT-Creation-Date: 2011-12-30 16:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: api.js:117 views.js:191 views.js:197
+#: api.js:117 views.js:192 views.js:198
 msgid "Error"
 msgstr ""
 
@@ -54,9 +54,9 @@ msgid "Loading server informations"
 msgstr ""
 
 #: router.js:67 templates.js:70 templates.js:73 templates.js:101
-#: templates.js:104 templates.js:195 templates.js:198 views.js:539
-#: views.js:670 views.js:730 views.js:999 views.js:1071 views.js:1094
-#: views.js:1186
+#: templates.js:104 templates.js:195 templates.js:198 views.js:544
+#: views.js:675 views.js:735 views.js:1144 views.js:1216 views.js:1239
+#: views.js:1331
 msgid "Error!"
 msgstr ""
 
@@ -106,7 +106,11 @@ msgstr ""
 msgid "Points"
 msgstr ""
 
-#: templates.js:34
+#: templates.js:33
+msgid "Switch order"
+msgstr ""
+
+#: templates.js:34 views.js:180
 msgid "No points defined!"
 msgstr ""
 
@@ -118,7 +122,7 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: templates.js:47 views.js:435
+#: templates.js:47 views.js:440
 msgid "No point selected!"
 msgstr ""
 
@@ -318,113 +322,109 @@ msgstr ""
 msgid "Shortest Path Simple"
 msgstr ""
 
-#: views.js:179
-msgid "No points defined"
-msgstr ""
-
-#: views.js:192
+#: views.js:193
 msgid "No algorithm selected."
 msgstr ""
 
-#: views.js:198
+#: views.js:199
 msgid "Not enough points defined."
 msgstr ""
 
-#: views.js:445
+#: views.js:450
 msgid "Data"
 msgstr ""
 
-#: views.js:467
+#: views.js:472
 msgid "Marker"
 msgstr ""
 
-#: views.js:478
+#: views.js:483
 msgid "Start"
 msgstr ""
 
-#: views.js:480
+#: views.js:485
 msgid "Target"
 msgstr ""
 
-#: views.js:528 views.js:529 views.js:660 views.js:661 views.js:989
-#: views.js:990
+#: views.js:533 views.js:534 views.js:665 views.js:666 views.js:1134
+#: views.js:1135
 msgid "Please enter a valid email address"
 msgstr ""
 
-#: views.js:531
+#: views.js:536
 msgid "Please enter your password"
 msgstr ""
 
-#: views.js:590
+#: views.js:595
 msgid "Logging in"
 msgstr ""
 
-#: views.js:648
+#: views.js:653
 msgid "Please enter your firstname"
 msgstr ""
 
-#: views.js:649
+#: views.js:654
 msgid "Please enter your lastname"
 msgstr ""
 
-#: views.js:651
+#: views.js:656
 msgid "Please provide a password"
 msgstr ""
 
-#: views.js:652 views.js:656 views.js:986
+#: views.js:657 views.js:661 views.js:1131
 msgid "Enter at least 5 characters"
 msgstr ""
 
-#: views.js:655
+#: views.js:660
 msgid "Please repeat your password"
 msgstr ""
 
-#: views.js:657
+#: views.js:662
 msgid "Enter the same password as above"
 msgstr ""
 
-#: views.js:706 views.js:1032
+#: views.js:711 views.js:1177
 msgid "Sending data"
 msgstr ""
 
-#: views.js:722
+#: views.js:727
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:723
+#: views.js:728
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."
 msgstr ""
 
-#: views.js:933
+#: views.js:938
 msgid "Do you really want to delete the user?"
 msgstr ""
 
-#: views.js:983
+#: views.js:1128
 msgid "Please enter a firstname"
 msgstr ""
 
-#: views.js:984
+#: views.js:1129
 msgid "Please enter a lastname"
 msgstr ""
 
-#: views.js:1063
+#: views.js:1208
 msgid "User created"
 msgstr ""
 
-#: views.js:1064
+#: views.js:1209
 msgid "The user was created successfully"
 msgstr ""
 
-#: views.js:1086
+#: views.js:1231
 msgid "Update successful"
 msgstr ""
 
-#: views.js:1087
+#: views.js:1232
 msgid "The user was updated successfully"
 msgstr ""
 
-#: views.js:1186
+#: views.js:1331
 msgid "No file specified"
 msgstr ""
