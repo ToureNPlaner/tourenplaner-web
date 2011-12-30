@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-29 15:56+0100\n"
+"POT-Creation-Date: 2011-12-30 14:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,19 +53,20 @@ msgstr ""
 msgid "Loading server informations"
 msgstr ""
 
-#: router.js:68 templates.js:70 templates.js:73 templates.js:101
+#: router.js:67 templates.js:70 templates.js:73 templates.js:101
 #: templates.js:104 templates.js:195 templates.js:198 views.js:539
 #: views.js:670 views.js:730 views.js:999 views.js:1071 views.js:1094
+#: views.js:1186
 msgid "Error!"
 msgstr ""
 
-#: router.js:69
+#: router.js:68
 msgid ""
 "Your browser doesn't support the HTML 5 File API.<br /> To use the Im-/"
 "Export functionality, please upgrade your browser."
 msgstr ""
 
-#: router.js:103
+#: router.js:102
 msgid "Loading user informations"
 msgstr ""
 
@@ -81,7 +82,7 @@ msgstr ""
 msgid "Billing"
 msgstr ""
 
-#: templates.js:13
+#: templates.js:13 templates.js:300
 msgid "Im-/Export"
 msgstr ""
 
@@ -197,7 +198,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: templates.js:160 templates.js:265 templates.js:316
+#: templates.js:160 templates.js:265 templates.js:339
 msgid "Close"
 msgstr ""
 
@@ -277,11 +278,31 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: templates.js:301
+#: templates.js:304 templates.js:310
+msgid "Import"
+msgstr ""
+
+#: templates.js:305 templates.js:314
+msgid "Export"
+msgstr ""
+
+#: templates.js:308
+msgid ""
+"Choose a valid (exported) file on your harddrive and press \"Import\" to "
+"import all points and routes."
+msgstr ""
+
+#: templates.js:313
+msgid ""
+"Press \"Export\" to download a file containing all points and routes "
+"currently displayed. This may open a new browser window."
+msgstr ""
+
+#: templates.js:324
 msgid "Previous"
 msgstr ""
 
-#: templates.js:303
+#: templates.js:326
 msgid "Next"
 msgstr ""
 
@@ -402,4 +423,8 @@ msgstr ""
 
 #: views.js:1087
 msgid "The user was updated successfully"
+msgstr ""
+
+#: views.js:1186
+msgid "No file specified"
 msgstr ""

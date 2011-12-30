@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-29 15:56+0100\n"
-"PO-Revision-Date: 2011-12-29 15:57+0100\n"
+"POT-Creation-Date: 2011-12-30 14:42+0100\n"
+"PO-Revision-Date: 2011-12-30 14:44+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -59,7 +59,7 @@ msgstr "Endmarkierung hinzufügen"
 msgid "Loading server informations"
 msgstr "Lade Serverinformationen"
 
-#: router.js:68
+#: router.js:67
 #: templates.js:70
 #: templates.js:73
 #: templates.js:101
@@ -72,14 +72,15 @@ msgstr "Lade Serverinformationen"
 #: views.js:999
 #: views.js:1071
 #: views.js:1094
+#: views.js:1186
 msgid "Error!"
 msgstr "Fehler!"
 
-#: router.js:69
+#: router.js:68
 msgid "Your browser doesn't support the HTML 5 File API.<br /> To use the Im-/Export functionality, please upgrade your browser."
 msgstr "Ihr Browser unterstützt die HTML 5 File API nicht.<br /> Um die Im-/Exportfunktionalität zu verwenden, upgraden Sie bitte ihren Browser."
 
-#: router.js:103
+#: router.js:102
 msgid "Loading user informations"
 msgstr "Lade Benutzerinformationen"
 
@@ -98,6 +99,7 @@ msgid "Billing"
 msgstr "Rechnungen"
 
 #: templates.js:13
+#: templates.js:300
 msgid "Im-/Export"
 msgstr "Im-/Export"
 
@@ -231,7 +233,7 @@ msgstr "Zurück"
 
 #: templates.js:160
 #: templates.js:265
-#: templates.js:316
+#: templates.js:339
 msgid "Close"
 msgstr "Schließen"
 
@@ -312,11 +314,29 @@ msgstr "Dauer"
 msgid "Status"
 msgstr "Status"
 
-#: templates.js:301
+#: templates.js:304
+#: templates.js:310
+msgid "Import"
+msgstr "Importieren"
+
+#: templates.js:305
+#: templates.js:314
+msgid "Export"
+msgstr "Exportieren"
+
+#: templates.js:308
+msgid "Choose a valid (exported) file on your harddrive and press \"Import\" to import all points and routes."
+msgstr "Wählen Sie eine exportierte Datei auf ihrer Festplatte aus und drücken Sie \"Importieren\" um alle Punkte und Routen zu importieren."
+
+#: templates.js:313
+msgid "Press \"Export\" to download a file containing all points and routes currently displayed. This may open a new browser window."
+msgstr "Drücken Sie \"Exportieren\" um eine Datei mit allen momentan dargestellten Punkten und Routen herunterzuladen. Dabei kann sich ein neues Browserfenster öffnen."
+
+#: templates.js:324
 msgid "Previous"
 msgstr "Zurück"
 
-#: templates.js:303
+#: templates.js:326
 msgid "Next"
 msgstr "Weiter"
 
@@ -443,6 +463,10 @@ msgstr "Aktualisierung erfolgreich"
 #: views.js:1087
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
+
+#: views.js:1186
+msgid "No file specified"
+msgstr "Keine Datei ausgewählt!"
 
 #~ msgid "Usersettings"
 #~ msgstr "Benutzereinstellungen"

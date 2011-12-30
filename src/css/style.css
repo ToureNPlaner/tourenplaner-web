@@ -132,6 +132,16 @@ div.popover {
   float: left;
 }
 
+#imexport #export {
+  display: none;
+}
+#imexport #export, #imexport #import {
+  padding: 10px;
+}
+#imexport #import input {
+  margin: 10px 10px 20px 10px;
+}
+
 .container {
   width: auto;
 }

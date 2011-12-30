@@ -1135,17 +1135,18 @@ window.UserDialogView = Backbone.View.extend({
 
 window.ImExportView = Backbone.View.extend({
    
-   id: 'imexport',
-   className: 'modal',
+    id: 'imexport',
+    className: 'modal',
 
-   events: {
+    events: {
        "hidden": "remove",
        "click .modal-footer a.cancel": "remove",
+       "click ul.tabs a": "onTabsChange",
        "click a.import": "onImport",
        "click a.export": "onExport"
-   },
+    },
 
-   render: function() {
+    render: function() {
         $(this.el).html(templates.imexportView);
 
         $(this.el).modal({
@@ -1155,58 +1156,69 @@ window.ImExportView = Backbone.View.extend({
         });
 
        return this;
-   },
+    },
 
-   remove: function() {
+    remove: function() {
         if ($(this.el).modal(true).isShown)
             $(this.el).modal('hide');
 
         $(this.el).remove();
         window.app.navigate('');   
-   },
+    },
 
-   onImport: function() {
+    onTabsChange: function(e) {
+        this.$('ul.tabs li').each(function() {
+            if ($(this).hasClass('active'))
+                $(this).removeClass('active');
+        });
+        $(e.target).parent().addClass("active");
+
+        this.$('#import').toggle();
+        this.$('#export').toggle();
+
+        return false;
+    },
+
+    onImport: function() {
         var that = this;
 
-       this.$('.modal-body').append('<input type="file" name="file" multiple />');
-       this.$('.modal-body input').bind('change', function (evt) {
-            var files = evt.target.files;
-            log(files);
+        if (_.isEmpty(this.$('#import input').val())) {
+            new MessageView({title: $._('Error!'), message: $._('No file specified')}).render();
+            return false;
+        }
 
-            // Assume there is only one file selected
-            var file = files[0];
-            log(file);
+        var files = evt.target.files;
+        // Assume there is only one file selected
+        var file = files[0];
 
-            var reader = new FileReader();
-            reader.onloadend = (function (file, dialog) {
-                return function(e) {
-                    if (e.target.readyState === FileReader.DONE) {
-                        var data = JSON.parse(e.target.result);
-                        log(data);
+        var reader = new FileReader();
+        reader.onloadend = (function (file, dialog) {
+            return function(e) {
+                if (e.target.readyState === FileReader.DONE) {
+                    var data = JSON.parse(e.target.result);
 
-                        if (!_.isEmpty(data.marks)) {
-                            window.markList.reset();
-                            window.markList.fromJSON(data.marks);
-                        }
-                        if (!_.isEmpty(data.route)) {
-                            window.mapModel.set({route: data.route});
-                        }
-                        
-                        dialog.remove();                        
+                    if (!_.isEmpty(data.marks)) {
+                        window.markList.reset();
+                        window.markList.fromJSON(data.marks);
                     }
-                };
-            })(file, that);
+                    if (!_.isEmpty(data.route)) {
+                        window.mapModel.set({route: data.route});
+                    }
 
-            reader.onerror = function (e) {
-                log(e);
-            }
+                    dialog.remove();
+                }
+            };
+        })(file, that);
+        reader.onerror = function (e) {
+            log(e);
+        }
 
-            reader.readAsText(file);
-       });
+        reader.readAsText(file);
+
        return false;
-   },
+    },
 
-   onExport: function() {
+    onExport: function() {
         var contents = {marks: [], route: {}};
         contents.marks = window.markList.toJSON();
 
@@ -1222,7 +1234,7 @@ window.ImExportView = Backbone.View.extend({
         var win = window.open(dataURI, "export.json");
 
         return false;
-   }
+    }
     
 });
 
