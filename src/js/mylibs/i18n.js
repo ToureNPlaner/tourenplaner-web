@@ -13,11 +13,12 @@ if ($.inArray(lang, available_langs) === -1) {
     }
 }
 
-log('Loading language:', lang);
 if (lang === default_lang) {
     var i18n = {};
 } else {
-    document.write('<script src="js/lang/' + lang + '.js"><\/script>');
+    $.ajaxSetup({async: false});
+    $.getScript('js/lang/' + lang + '.js');
+    $.ajaxSetup({async: true});
 }
 
 /**

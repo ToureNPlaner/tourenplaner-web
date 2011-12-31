@@ -1,4 +1,7 @@
 @import "bootstrap-1.4.0.css";
+@import "jquery-ui-1.8.16.custom.css";
+@import "jquery.contextMenu.css";
+@import "smartspinner.css"
 
 #login, #register, #message, #loading {
   display: none;
