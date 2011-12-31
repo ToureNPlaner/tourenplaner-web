@@ -1,9 +1,7 @@
-(function() {
-
 window.Api = function(attributes) {
     var defaults;
 
-    attributes || (attributes = {});
+    attributes = attributes || {};
     if ((defaults = this.defaults))
         attributes = _.extend({}, defaults, attributes);
 
@@ -18,7 +16,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
-		realm : 'Tourenplaner',
+        realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
                  "message": "Bad request",
                  "details": "Request wasn't successful'"
@@ -54,8 +52,8 @@ _.extend(window.Api.prototype, {
         if (_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
         if (_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
         if (_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
-        reqData.type || (reqData.type = 'GET');
-        reqData.request || (reqData.request = {});
+        reqData.type = reqData.type || 'GET';
+        reqData.request = reqData.request || {};
 
         if (!_.isNull(this.get('server')) && !_.isUndefined(this.get('server'))) {
             url +=  (this.get('ssl') ? 'https://' : 'http://') +
@@ -89,7 +87,7 @@ _.extend(window.Api.prototype, {
                 }
             },
             success: function (data, textStatus, jqXHR) {
-            	var obj = jqXHR.responseText;
+                var obj = jqXHR.responseText;
                 if (_.isString(obj))
                     obj = JSON.parse(obj);
                 event.trigger('request', obj, true);
@@ -99,12 +97,12 @@ _.extend(window.Api.prototype, {
 
                 // use simple error if response is empty
                 if (text === "") {
-                	if(errorThrown !== "")
-	                	text = errorThrown;
-	                else
-	                	text = that.get('error').message + "<br />" + that.get('error').details; // if everything is empty use standard error
+                    if(errorThrown !== "")
+                        text = errorThrown;
+                    else
+                        text = that.get('error').message + "<br />" + that.get('error').details; // if everything is empty use standard error
                 } else {
-                	text = JSON.parse(text);
+                    text = JSON.parse(text);
                 }
 
                 event.trigger('request', text, false);
@@ -131,7 +129,7 @@ _.extend(window.Api.prototype, {
             suffix : 'info',
             request : {},
             callback: function (text, success) {
-            	if(text.servertype == "private")
+                if(text.servertype == "private")
                     that.set({'ssl': true, 'port': text.sslport, 'authRequired': true});
                 if (_.isFunction(args.callback))
                     args.callback(text, success);
@@ -165,8 +163,8 @@ _.extend(window.Api.prototype, {
         if (!args || !args.email || !args.password)
             return false;
         
-       	this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
-        	
+        this.set({'authAsBase64': Base64.encode(args.email + ':' + args.password)});
+
         this.send({
             silent: true,
             suffix: 'authuser',
@@ -223,7 +221,7 @@ _.extend(window.Api.prototype, {
      */
     listRequests : function (args) {
         if (!args || !args.limit || !args.offset ||
-        	args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+            args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
             
         var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
@@ -247,7 +245,7 @@ _.extend(window.Api.prototype, {
      */
     listUsers : function (args) {
         if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) ||
-        	isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
+            isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
             return false;
         this.send({
             suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
@@ -274,25 +272,25 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-	/* nearestNeighbour
-	 * sends request for nearest neighbour to server
-	 * param: points list of points
-	 */
-	nearestNeighbour : function (args) {
-		if (!args || !args.points)
-			return false;
-		this.send({
-			suffix : 'algnns',
+    /* nearestNeighbour
+     * sends request for nearest neighbour to server
+     * param: points list of points
+     */
+    nearestNeighbour : function (args) {
+        if (!args || !args.points)
+            return false;
+        this.send({
+            suffix : 'algnns',
             type : 'POST',
-			request : {
+            request : {
                 version: 1,
                 points: _.isArray(args.points) ? args.points : [args.points]
             },
-			callback : _.isFunction(args.callback) ? args.callback : null
-		});
+            callback : _.isFunction(args.callback) ? args.callback : null
+        });
 
-		return true;
-	},
+        return true;
+    },
 
     /* alg
      * sends algorithm calculation request
@@ -302,25 +300,25 @@ _.extend(window.Api.prototype, {
      * param: points, version, constraints as alg spec
      */
     alg : function (args) {
-		var thisrequest = {};
+        var thisrequest = {};
         if (!args || !args.alg)
             return false;
-		// use given request or make own
-		if (args.request) {
-			if(!args.request.points)
-				return false;
-			else
-				thisrequest = args.request;
-
-		} else {
-			if(!args.points)
+        // use given request or make own
+        if (args.request) {
+            if(!args.request.points)
                 return false;
-			thisrequest = {
-		        version: args.version || 1,
-		        points: args.points,
-		        constraints: args.constraints || {}
-            }
-		}
+            else
+                thisrequest = args.request;
+
+        } else {
+            if(!args.points)
+                return false;
+            thisrequest = {
+                version: args.version || 1,
+                points: args.points,
+                constraints: args.constraints || {}
+            };
+        }
         this.send({
             type : 'POST',
             suffix : 'alg' + args.alg,
@@ -332,5 +330,3 @@ _.extend(window.Api.prototype, {
         return true;
     }
 });
-
-}).call(this);

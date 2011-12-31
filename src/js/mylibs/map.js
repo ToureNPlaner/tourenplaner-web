@@ -1,6 +1,6 @@
 window.Map = function (divId) {
     this.divId = divId;
-}
+};
 
 _.extend(window.Map.prototype, {
     map: null,
@@ -61,8 +61,8 @@ _.extend(window.Map.prototype, {
      */
     resetRoute: function () {
         // - remove all features (route and markers)
-    	// - then draw markers back
-    	this.currentRouteString = null;
+        // - then draw markers back
+        this.currentRouteString = null;
         this.dataLayer.removeAllFeatures();
         
         this.drawMarkers();
@@ -72,8 +72,8 @@ _.extend(window.Map.prototype, {
      * Reset all Markers drawed in dataLayer
      */
     resetMarkers: function () {
-    	// - remove all features (route and markers)
-    	// - then draw route back
+        // - remove all features (route and markers)
+        // - then draw route back
         this.dataLayer.removeAllFeatures();
         this.drawRoute(this.currentRouteString);
     },
@@ -97,7 +97,7 @@ _.extend(window.Map.prototype, {
 
             // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
             var iconPath = 'img/mark.png';
-            if (i == 0) {
+            if (i === 0) {
                 iconPath = 'img/startmark.png';
             } else if (i == markList.length - 1) {
                 iconPath = 'img/targetmark.png';
@@ -117,9 +117,9 @@ _.extend(window.Map.prototype, {
      * PARAM: List of Vertices
      */
     drawRoute: function (vertexString) {
-    	// exit, when there is nothing to parse
-    	if (vertexString == null || vertexString == undefined || vertexString.length == 0) 
-    		return;
+        // exit, when there is nothing to parse
+        if (_.isNull(vertexString) || _.isUndefined(vertexString) || vertexString.length === 0) 
+            return;
     
         // parse string of vertices
         var pointList = [];
@@ -159,9 +159,9 @@ _.extend(window.Map.prototype, {
      * Zoom into map, so that the whole route is visible
      */
     zoomToRoute: function() {
-    	if (this.dataLayer.getDataExtent() != null) {
-    		this.map.zoomToExtent(this.dataLayer.getDataExtent());
-    	}
+        if (!_.isNull(this.dataLayer.getDataExtent())) {
+            this.map.zoomToExtent(this.dataLayer.getDataExtent());
+        }
     },
 
     getLonLatFromPos: function (posX, posY) {
@@ -183,7 +183,7 @@ _.extend(window.Map.prototype, {
     },
     
     transformFrom1984: function (lonlat) {
-    	var proj = new OpenLayers.Projection("EPSG:4326");
+        var proj = new OpenLayers.Projection("EPSG:4326");
         var lonlatClone = lonlat.clone();
         lonlatClone.transform(proj, this.map.getProjectionObject());
         return lonlatClone;

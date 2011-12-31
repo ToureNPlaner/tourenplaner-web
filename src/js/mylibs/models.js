@@ -8,7 +8,7 @@ window.Mark = Backbone.Model.extend({
 
     getLonLatAs1984: function () {
         var lonlat = this.get("lonlat");
-        if (lonlat != null) {
+        if (!_.isNull(lonlat)) {
             return window.mapModel.get("mapObject").transformTo1984(this.get("lonlat"));
         } else {
             // error!
@@ -18,34 +18,34 @@ window.Mark = Backbone.Model.extend({
     },
 
     setLonLatWith1984: function (lon,lat){
-		if(lon != null && lat != null){
-    		var tempLon = lon / 1e7;
-    		var tempLat = lat / 1e7;
-			var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-    		var newLonLat = window.mapModel.get("mapObject").transformFrom1984(tempLonLat);
-			this.set({'lonlat':newLonLat});
-		} else {
+        if(!_.isNull(lon) && !_.isNull(lat)){
+            var tempLon = lon / 1e7;
+            var tempLat = lat / 1e7;
+            var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+            var newLonLat = window.mapModel.get("mapObject").transformFrom1984(tempLonLat);
+            this.set({'lonlat':newLonLat});
+        } else {
             // error!
             log("Fehler in Markmodel");
         }
     },
 
     findNearestNeighbour: function (){
-    	var that = this;
+        var that = this;
         // get nearest neighbour
         var point = this.toJSON();
-		window.api.alg({
-			alg: 'nns',
-			points: [point],
-			callback: function(text, success){
-				if(success && (!_.isUndefined(text.points) && !_.isNaN(text.points[0].ln) && !_.isNaN(text.points[0].lt))){
-					that.setLonLatWith1984(text.points[0].ln,text.points[0].lt);
-				}
-				else
-					log("Nearest Neighbour Search wasn't successful. No points updated");
-			}
-		});
-		window.mapModel.get("mapObject").drawMarkers();
+        window.api.alg({
+            alg: 'nns',
+            points: [point],
+            callback: function(text, success){
+                if(success && (!_.isUndefined(text.points) && !_.isNaN(text.points[0].ln) && !_.isNaN(text.points[0].lt))){
+                    that.setLonLatWith1984(text.points[0].ln,text.points[0].lt);
+                }
+                else
+                    log("Nearest Neighbour Search wasn't successful. No points updated");
+            }
+        });
+        window.mapModel.get("mapObject").drawMarkers();
     },
 
     toJSON: function () {
@@ -62,11 +62,11 @@ window.Mark = Backbone.Model.extend({
         // get all pointconstraints for currently selected algorithm
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
 
-        if (pointconstraints != null) {
+        if (!_.isNull(pointconstraints)) {
             for (var i = 0; i < pointconstraints.length; i++) {
                 var key = pointconstraints[i].name;
 
-                if (this.get(key) != undefined) {
+                if (!_.isUndefined(this.get(key))) {
                     json[key] = this.get(key);
                 } else {
                     // what if it is undefined? write "" or let View (onSend)
@@ -123,7 +123,7 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     setStartMark: function (mark) {
-        if (mark.get('position') == 0) {
+        if (mark.get('position') === 0) {
             return;
         } else if (mark.get('position') >= this.length) {
             this._moveAllMarks(0, 1);
@@ -145,7 +145,7 @@ window.MarkList = Backbone.Collection.extend({
 
     setTargetMark: function (mark) {
         if (mark.get('position') < this.length - 1) {
-            var oldpos = mark.get('position')
+            var oldpos = mark.get('position');
             mark.set({position: this.length - 1});
 
             this._moveAllMarks(oldpos + 1, -1);
@@ -157,10 +157,10 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     getTargetMark: function (mark) {
-		if (this.length > 1)
+        if (this.length > 1)
             return this.at(this.length - 1);
         return null;
-	},
+    },
 
     appendMark: function (mark) {
         mark.set({position: this.length});
@@ -436,7 +436,7 @@ window.ServerInfo = Backbone.Model.extend({
     // maybe this is not the correct place for this method.
     // will be moved later.
     getCurrentAlgorithm: function() {
-		return window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
-	}
+        return window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
+    }
 
 });

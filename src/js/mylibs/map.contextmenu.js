@@ -1,6 +1,6 @@
 function addMarker(action, evt) {
-    var pixelx = evt.pageX - $('#map').offset().left
-    var pixely = evt.pageY - $('#map').offset().top
+    var pixelx = evt.pageX - $('#map').offset().left;
+    var pixely = evt.pageY - $('#map').offset().top;
     var pixel = new OpenLayers.Pixel(pixelx, pixely);
     var lonlat = window.mapModel.get("mapObject").getMap().getLonLatFromPixel(pixel);
     var mark = new Mark({
@@ -22,7 +22,7 @@ function addMarker(action, evt) {
 
         default:
             log("Something went wrong with contextMenu! This is the default action.");
-	};
+	}
 	mark.findNearestNeighbour();
 }
 
@@ -37,7 +37,7 @@ function editMarker(action, marker) {
         case 'end':
             window.markList.setTargetMark(marker.data.mark);
             break;
-    };
+    }
 }
 
 /**
@@ -55,7 +55,7 @@ function setContextMenu(map) {
                     {label: $._('Set as Startmarker'), icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
                     {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},
                     null,
-                    {label: $._("Delete"), action: function (evt) { editMarker('delete', feature) }}
+                    {label: $._("Delete"), action: function (evt) { editMarker('delete', feature); }}
                 ];
             } else {
                 return [

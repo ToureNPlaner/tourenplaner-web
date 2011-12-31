@@ -58,7 +58,7 @@ window.Router = Backbone.Router.extend({
             new UserDialogView().render();
     },
 
-    import: function() {
+    "import": function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
             if (Modernizr.file) {
                 new ImExportView().render();
@@ -81,7 +81,7 @@ window.Router = Backbone.Router.extend({
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
                 this.admin();
 
-            this.adminView.setContent(new UserView().render())
+            this.adminView.setContent(new UserView().render());
         }  
     },
 

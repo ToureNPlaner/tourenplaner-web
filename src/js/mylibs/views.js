@@ -1,3 +1,5 @@
+var _markerNameSuffix = "A";
+
 window.BodyView = Backbone.View.extend({
     el: $('body'),
 
@@ -133,7 +135,7 @@ window.SidebarView = Backbone.View.extend({
 
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
-            for (i in algorithms) {
+            for (var i in algorithms) {
                 if (!algorithms[i].hidden)
                     $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
             }
@@ -141,7 +143,7 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onMarkAdded: function (model, collection, options) {
-        if (this.marks.length == 0)
+        if (this.marks.length === 0)
             this.$('#marks').html('');
 
         var view = new MarkView({model: model}).render();
@@ -152,13 +154,13 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onMarkRemoved: function (model, collection) {
-        for (i in this.marks) {
+        for (var i in this.marks) {
             if (_.isEqual(this.marks[i].cid, model.get('view').cid))
                 this.marks.splice(i, 1);
         }
         model.get('view').remove();
 
-        if (this.marks.length == 0)
+        if (this.marks.length === 0)
             this.$('#marks').html('No points defined!');
 
         this._sortMarks();
@@ -175,7 +177,7 @@ window.SidebarView = Backbone.View.extend({
     onListReset: function () {
         this.marks = [];
 
-        if (window.markList.length == 0) {
+        if (window.markList.length === 0) {
             _markerNameSuffix = "A";
             this.$('#marks').html($._('No points defined!'));
         } else {
@@ -238,7 +240,7 @@ window.SidebarView = Backbone.View.extend({
         });
 
         this.$('#marks').html('');
-        for (i in this.marks)
+        for (var i in this.marks)
             this.marks[i].render();
     }
 });
@@ -344,12 +346,12 @@ window.DataView = Backbone.View.extend({
         var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
 
         // add fields to edit pointconstraints
-        var constraintsHtml = "";
+        var constraintsHtml = "", key;
         for (var i = 0; i < pointconstraints.length; i++) {
-			var key = pointconstraints[i].name;
+			key = pointconstraints[i].name;
 
 			var value = "";
-			if (marker.get(key) != undefined) {
+			if (!_.isUndefined(marker.get(key))) {
 				value = marker.get(key);
 			}
 			
@@ -391,8 +393,8 @@ window.DataView = Backbone.View.extend({
         this.$('.content').html(templates.dataViewContent(data));
 	
 		// initialize Spinners
-		for (var i = 0; i < pointconstraints.length; i++) {
-			var key = pointconstraints[i].name;
+		for (i = 0; i < pointconstraints.length; i++) {
+			key = pointconstraints[i].name;
 			
 			var initValue = this.$('#dataview #pc_' + key).val();
 			this.$('#dataview #pc_' + key).spinit({height: 30, initValue: initValue, min: pointconstraints[i].min, max: pointconstraints[i].max});
@@ -404,13 +406,13 @@ window.DataView = Backbone.View.extend({
                 name: that.$('#dataview #markerName').val()
             });
 
-			if (pointconstraints != null) {
+			if (!_.isNull(pointconstraints)) {
 				for (var i = 0; i < pointconstraints.length; i++) {
 					var key = pointconstraints[i].name;
 					// marker.set({key : value}) doesnt use the value of key.
 					// instead the keys name will be "key".
 					// so this is used as an alternative:
-					if (that.$('#dataview #pc_' + key).val() != "") {
+					if (!_.isEmpty(that.$('#dataview #pc_' + key).val())) {
 						var value = that.$('#dataview #pc_' + key).val();
 						
 						if (pointconstraints[i].type == "boolean") {
@@ -459,8 +461,6 @@ window.DataView = Backbone.View.extend({
     }
 });
 
-var _markerNameSuffix = "A";
-
 window.MarkView = Backbone.View.extend({
 
     el: null,
@@ -479,7 +479,7 @@ window.MarkView = Backbone.View.extend({
 
     render: function () {
         var position = '';
-        if (this.model.get('position') == 0)
+        if (this.model.get('position') === 0)
             position = '(' + $._('Start') + ')';
         else if (this.model.get('position') == window.markList.length - 1)
             position = '(' + $._('Target') + ')';
@@ -536,7 +536,7 @@ window.LoginView = Backbone.View.extend({
                 password: $._('Please enter your password')
             },
             showErrors: function (errorMap, errorList) {
-                for (obj in errorList) {
+                for (var obj in errorList) {
                     $(errorList[obj].element).addClass('error')
                         .removeClass('valid')
                         .attr('rel', 'popover')
@@ -612,7 +612,7 @@ window.LoginView = Backbone.View.extend({
         } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
             this.$('.error-correct').show();
         }
-    },
+    }
 });
 
 window.RegisterView = Backbone.View.extend({
@@ -667,7 +667,7 @@ window.RegisterView = Backbone.View.extend({
                 }
             },
             showErrors: function (errorMap, errorList) {
-                for (obj in errorList) {
+                for (var obj in errorList) {
                     $(errorList[obj].element).addClass('error')
                         .removeClass('valid')
                         .attr('rel', 'popover')
@@ -802,7 +802,7 @@ window.AdminView = Backbone.View.extend({
 
                     // Update table
                     that.$('tbody').html('');
-                    for (i in text.requests)
+                    for (var i in text.requests)
                         that.$('tbody').append(templates.adminTableRowView({user: text.requests[i]}));
 
                     that.$('tbody a.activate').each(function () {
@@ -824,7 +824,7 @@ window.AdminView = Backbone.View.extend({
                     if (pages > 6) {
                         nums = _.range(1, 4);
                         nums.push('...');
-                        nums = nums.concat(_.range(pages - 2, pages + 1))
+                        nums = nums.concat(_.range(pages - 2, pages + 1));
                     } else if (pages > 1) {
                         nums = _.range(1, pages + 1);
                     } else {
@@ -887,7 +887,7 @@ window.AdminView = Backbone.View.extend({
         this.content = null;
 
         this.$('.modal-body').html(templates.adminMainView);
-        this.renderMainView(),
+        this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
         window.app.navigate('/admin');
@@ -998,7 +998,7 @@ window.BillingView = Backbone.View.extend({
                     var pages = text.number / that.position.limit;
                     // Update table
                     that.$('tbody').html('');
-                    for (i in text.requests)
+                    for (var i in text.requests)
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
                    $("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
 
@@ -1008,7 +1008,7 @@ window.BillingView = Backbone.View.extend({
                     if (pages > 6) {
                         nums = _.range(1, 4);
                         nums.push('...');
-                        nums = nums.concat(_.range(pages - 2, pages + 1))
+                        nums = nums.concat(_.range(pages - 2, pages + 1));
                     } else if (pages > 1) {
                         nums = _.range(1, pages + 1);
                     } else {
@@ -1088,7 +1088,7 @@ window.BillingView = Backbone.View.extend({
         this.content = null;
 
         this.$('.modal-body').html("jaja");//templates.adminMainView);
-        this.renderMainView(),
+        this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
         window.app.navigate('/admin');
@@ -1105,9 +1105,9 @@ window.UserView = Backbone.View.extend({
     },
 
     render: function () {
-        var user = {}
+        var user = {};
         if (!_.isUndefined(this.model) && !_.isNull(this.model))
-            user = this.model.toJSON()
+            user = this.model.toJSON();
 
         $(this.el).html(templates.userView({user: user}));
 
@@ -1136,7 +1136,7 @@ window.UserView = Backbone.View.extend({
                 }
             },
             showErrors: function (errorMap, errorList) {
-                for (obj in errorList) {
+                for (var obj in errorList) {
                     $(errorList[obj].element).addClass('error')
                         .removeClass('valid')
                         .attr('rel', 'popover')
@@ -1192,7 +1192,7 @@ window.UserView = Backbone.View.extend({
             active: this.$('#active').val(),
             admin: this.$('#administrator').val()
         });
-        if (this.$('#password').val() != '')
+        if (!_.isEmpty(this.$('#password').val()))
             user.set({password: this.$('#password').val()});
 
         if (new_user) {
@@ -1258,13 +1258,13 @@ window.UserDialogView = Backbone.View.extend({
         this.userView = new UserView({parent: this, model: window.app.user}).render();
         $(this.el).html(templates.userDialogView);
         this.$('.modal-body').html(this.userView.el);
-        this.$('.modal-body h4').html('')
+        this.$('.modal-body h4').html('');
 
         $(this.el).modal({
             show: true,
             backdrop: 'static',
             keyboard: true
-        })
+        });
 
         return this;
     },
@@ -1356,7 +1356,7 @@ window.ImExportView = Backbone.View.extend({
         })(file, that);
         reader.onerror = function (e) {
             log(e);
-        }
+        };
 
         reader.readAsText(file);
 
