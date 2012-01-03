@@ -39,7 +39,7 @@ for srcfile in args:
 		xlate_map[entry.msgid] = entry.msgstr;
 
 	dest = open(destfile, "w")
-	dest.write('var i18n = ')
+	dest.write('i18n = ')
 
 	encoder = json.JSONEncoder()
 

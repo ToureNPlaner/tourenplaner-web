@@ -70,6 +70,7 @@ _.extend(window.Api.prototype, {
         // method performs an asyncronous HTTP request with or without
         // authentication.
         // performs a callback, successful or not
+        var headers = this.get('authRequired') ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
         var that = this;
         $.ajax({
             url: url,
@@ -81,11 +82,7 @@ _.extend(window.Api.prototype, {
             crossDomain: true,
             data: reqData.type == 'POST' ? JSON.stringify(reqData.request) : reqData.request,
             processData: reqData.process,
-            beforeSend: function (jqXHR, settings) {
-                if (that.get('authRequired')) {
-                    settings.headers = { Authorization: that.get('realm') + ' ' + that.get('authAsBase64') };
-                }
-            },
+            headers: headers,
             success: function (data, textStatus, jqXHR) {
                 var obj = jqXHR.responseText;
                 if (_.isString(obj))

@@ -13,9 +13,8 @@ if ($.inArray(lang, available_langs) === -1) {
     }
 }
 
-if (lang === default_lang) {
-    var i18n = {};
-} else {
+var i18n = {};
+if (lang !== default_lang) {
     $.ajaxSetup({async: false});
     $.getScript('js/lang/' + lang + '.js');
     $.ajaxSetup({async: true});

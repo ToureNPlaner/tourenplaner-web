@@ -1,15 +1,13 @@
 /*!
  * MockJax - jQuery Plugin to Mock Ajax requests
  *
- * Version:  1.4.0
- * Released: 2011-02-04
- * Source:   http://github.com/appendto/jquery-mockjax
- * Docs:	 http://enterprisejquery.com/2010/07/mock-your-ajax-requests-with-mockjax-for-rapid-development
- * Plugin:   mockjax
+ * Version:  1.5.0pre
+ * Released:
+ * Home:   http://github.com/appendto/jquery-mockjax
  * Author:   Jonathan Sharp (http://jdsharp.com)
  * License:  MIT,GPL
  *
- * Copyright (c) 2010 appendTo LLC.
+ * Copyright (c) 2011 appendTo LLC.
  * Dual licensed under the MIT or GPL licenses.
  * http://appendto.com/open-source-licenses
  */
@@ -29,7 +27,7 @@
 		}
 
 		try {
-			var xmlDoc  = ( new DOMParser() ).parseFromString( xml, 'text/xml' );
+			var xmlDoc 	= ( new DOMParser() ).parseFromString( xml, 'text/xml' );
 			if ( $.isXMLDoc( xmlDoc ) ) {
 				var err = $('parsererror', xmlDoc);
 				if ( err.length == 1 ) {
@@ -47,13 +45,17 @@
 	}
 
 	$.extend({
-		ajax: function(origSettings) {
+		ajax: function(url, origSettings) {
+			// If url is an object, simulate pre-1.5 signature
+			if ( typeof url === "object" ) {
+				origSettings = url;
+				url = undefined;
+			} else {
+				// work around to support 1.5 signature
+				origSettings.url = url;
+			}
 			var s = jQuery.extend(true, {}, jQuery.ajaxSettings, origSettings),
 				mock = false;
-
-			// Added to be able to modify headers in beforeSend();
-			origSettings.beforeSend(null, origSettings);
-
 			// Iterate over our mock handlers (in registration order) until we find
 			// one that is willing to intercept the request
 			$.each(mockHandlers, function(k, v) {
@@ -77,10 +79,8 @@
 					} else {
 						// Look for a simple wildcard '*' or a direct URL match
 						var star = m.url.indexOf('*');
-						if ( ( m.url != '*' && m.url != s.url && star == -1 ) ||
-							( star > -1 && m.url.substr(0, star) != s.url.substr(0, star) ) ) {
-							 // The url we tested did not match the wildcard *
-							 m = null;
+						if (m.url !== s.url && star === -1 || !new RegExp(m.url.replace(/[-[\]{}()+?.,\\^$|#\s]/g, "\\$&").replace('*', '.+')).test(s.url)) {
+							m = null;
 						}
 					}
 					if ( m ) {
@@ -120,7 +120,7 @@
 							}
 						}
 						// Inspect the request type
-						if ( m && m.type && m.type != s.type ) {
+						if ( m && m.type && m.type.toLowerCase() != s.type.toLowerCase() ) {
 							// The request type doesn't match (GET vs. POST)
 							m = null;
 						}
@@ -234,12 +234,21 @@
 						complete();
 						return false;
 					}
+
+					m.data = s.data;
+				  m.cache = s.cache;
+				  m.timeout = s.timeout;
+				  m.global = s.global;
+
 					mock = _ajax.call($, $.extend(true, {}, origSettings, {
 						// Mock the XHR object
 						xhr: function() {
 							// Extend with our default mockjax settings
 							m = $.extend({}, $.mockjaxSettings, m);
 
+							if (typeof m.headers === 'undefined') {
+								m.headers = {};
+							}
 							if ( m.contentType ) {
 								m.headers['content-type'] = m.contentType;
 							}
@@ -250,21 +259,22 @@
 								readyState: 1,
 								open: function() { },
 								send: function() {
+
+								  mockHandlers[k].fired = true;
+
 									// This is a substitute for < 1.4 which lacks $.proxy
 									var process = (function(that) {
 										return function() {
 											return (function() {
 												// The request has returned
-												this.readyState	 = 4;
+												this.status 		= m.status;
+												this.readyState 	= 4;
 
 												// We have an executable function, call it to give
 												// the mock handler a chance to update it's data
 												if ( $.isFunction(m.response) ) {
 													m.response(origSettings);
 												}
-
-												this.status = m.status;
-
 												// Copy over our mock to our xhr object before passing control back to
 												// jQuery's onreadystatechange callback
 												if ( s.dataType == 'json' && ( typeof m.responseText == 'object' ) ) {
@@ -277,6 +287,9 @@
 													}
 												} else {
 													this.responseText = m.responseText;
+												}
+												if( typeof m.status == 'number' || typeof m.status == 'string' ) {
+												  this.status = m.status;
 												}
 												// jQuery < 1.4 doesn't have onreadystate change for xhr
 												if ( $.isFunction(this.onreadystatechange) ) {
@@ -297,6 +310,7 @@
 											complete: function(xhr, txt) {
 												m.responseXML = xhr.responseXML;
 												m.responseText = xhr.responseText;
+												m.status = xhr.status;
 												this.responseTimer = setTimeout(process, m.responseTime || 0);
 											}
 										});
@@ -313,7 +327,9 @@
 								abort: function() {
 									clearTimeout(this.responseTimer);
 								},
-								setRequestHeader: function() { },
+								setRequestHeader: function(header, value) {
+									m.headers[header] = value;
+								},
 								getResponseHeader: function(header) {
 									// 'Last-modified', 'Etag', 'content-type' are all checked by jQuery
 									if ( m.headers && m.headers[header] ) {
@@ -350,23 +366,23 @@
 	});
 
 	$.mockjaxSettings = {
-		//url:		null,
-		//type:	   'GET',
-		log:		  function(msg) {
+		//url:        null,
+		//type:       'GET',
+		log:          function(msg) {
 						window['console'] && window.console.log && window.console.log(msg);
 					  },
-		status:	   200,
+		status:       200,
 		responseTime: 500,
-		isTimeout:	false,
+		isTimeout:    false,
 		contentType:  'text/plain',
-		response:	 '',
+		response:     '',
 		responseText: '',
 		responseXML:  '',
-		proxy:		'',
-		proxyType:	'GET',
+		proxy:        '',
+		proxyType:    'GET',
 
 		lastModified: null,
-		etag:		 '',
+		etag:         '',
 		headers: {
 			etag: 'IJF@H#@923uf8023hFO@I#H#',
 			'content-type' : 'text/plain'
@@ -383,6 +399,11 @@
 			mockHandlers[i] = null;
 		} else {
 			mockHandlers = [];
+		}
+	};
+	$.mockjax.handler = function(i) {
+	  if ( arguments.length == 1 ) {
+			return mockHandlers[i];
 		}
 	};
 })(jQuery);
