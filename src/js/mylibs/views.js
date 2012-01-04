@@ -986,7 +986,7 @@ window.BillingView = Backbone.View.extend({
                 offset: 3
             };
         }
-
+        
         loadingView = new LoadingView('Loading billing data').render();
         var that = this;
         api.listRequests({
@@ -1011,10 +1011,8 @@ window.BillingView = Backbone.View.extend({
 								m.setLonLatWith1984(request.points[j].ln,request.points[j].lt);
 								window.markList.appendMark(m);
                         	}
-                        	
 							var response = jQuery.parseJSON($(this).closest('tr').children()[1].innerHTML);
 							window.mapModel.set({route: response});
-//                        	$(that.el).remove();
 							that.remove();
 						});
                     }
