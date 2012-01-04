@@ -256,14 +256,14 @@ templates.userDialogView = '<div class="modal-header">\
 templates.billingView =  '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
                             <h3 class="title">' + $._('Billing') + '</h3>\
-                        </div>\
-                        <div class="modal-body">\
+                          </div>\
+                          <div class="modal-body">\
                             {{{content}}}\
-                        </div>\
-                        <div class="modal-footer">\
+                          </div>\
+                          <div class="modal-footer">\
                             <a href="#" class="btn secondary back">' + $._('Back') + '</a>\
                             <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
-                        </div>';
+                          </div>';
 templates.billingView = Handlebars.compile(templates.billingView);
 
 templates.billingMainView =  '<table class="zebra-striped">\
@@ -282,7 +282,9 @@ templates.billingMainView =  '<table class="zebra-striped">\
                                 </tbody>\
                             </table>';
 
-templates.billingTableRowView = '<tr>\
+templates.billingTableRowView = '<tr id="billing-{{request.requestid}}">\
+                                <td id="billing-request-{{request.requestid}}"style="display:none">{{request.request}}</td>\
+                                <td id="billing-response-{{request.requestid}}"style="display:none">{{request.response}}</td>\
                                 <td>{{request.requestid}}</td>\
                                 <td>{{request.userid}}</td>\
                                 <td>{{request.algorithm}}</td>\

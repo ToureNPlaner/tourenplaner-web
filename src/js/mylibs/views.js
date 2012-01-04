@@ -987,7 +987,7 @@ window.BillingView = Backbone.View.extend({
             };
         }
 
-        loadingView = new LoadingView('Loading table data').render();
+        loadingView = new LoadingView('Loading billing data').render();
         var that = this;
         api.listRequests({
             limit: this.position.limit,
@@ -998,9 +998,29 @@ window.BillingView = Backbone.View.extend({
                     var pages = text.number / that.position.limit;
                     // Update table
                     that.$('tbody').html('');
-                    for (var i in text.requests)
+                    for (var i in text.requests){
+                    	text.requests[i].request = JSON.stringify(text.requests[i].request);
+                    	text.requests[i].response = JSON.stringify(text.requests[i].response);
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
-                   $("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
+                        // add click handling (draw clicked route)
+                        $('#billing-'+text.requests[i].requestid).click(function(){
+                       		window.markList.deleteAllMarks();
+                        	var request = jQuery.parseJSON($(this).closest('tr').children()[0].innerHTML);
+                        	for(var j=0;j<request.points.length;j++){
+								var m = new Mark();
+								m.setLonLatWith1984(request.points[j].ln,request.points[j].lt);
+								window.markList.appendMark(m);
+                        	}
+                        	
+							var response = jQuery.parseJSON($(this).closest('tr').children()[1].innerHTML);
+							window.mapModel.set({route: response});
+//                        	$(that.el).remove();
+							that.remove();
+						});
+                    }
+                   	// makes table sortable
+                   	$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
+                   	
 
                     // Update pagination
                     that.$('.pagination').remove();
@@ -1087,7 +1107,7 @@ window.BillingView = Backbone.View.extend({
         this.content.remove();
         this.content = null;
 
-        this.$('.modal-body').html("jaja");//templates.adminMainView);
+        this.$('.modal-body').templates.billingView;
         this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
