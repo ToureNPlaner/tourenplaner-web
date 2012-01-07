@@ -228,7 +228,7 @@ jQuery.store = function (key, value, options) {
  * jquery-spin-button-plugin-smart-spin
  * http://www.egrappler.com/jquery-spin-button-plugin-smart-spin/
  */
-﻿(function($) {
+(function($) {
     $.fn.extend({
         spinit: function(options) {
             var settings = $.extend({ min: 0, max: 100, initValue: 0, callback: null, stepInc: 1, pageInc: 10, width: 50, height: 15, btnWidth: 10, mask: '' }, options);
