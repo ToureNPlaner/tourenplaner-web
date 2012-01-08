@@ -235,7 +235,7 @@
 						return false;
 					}
 
-					m.data = s.data;
+					//m.data = s.data;
 				  m.cache = s.cache;
 				  m.timeout = s.timeout;
 				  m.global = s.global;

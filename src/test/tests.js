@@ -99,7 +99,7 @@ test("/registeruser", 4, function() {
         firstname: "asd",
         lastname: "asd",
         address: "asd"
-    }, test_user = {};
+    };
 
     stop_until_expected(2);
     api.registerUser({
@@ -109,10 +109,10 @@ test("/registeruser", 4, function() {
             do_start();
         }
     });
-    testuser = _.extend({}, user);
-    testuser.email = "";
+
+    user.email = "";
     api.registerUser({
-        userObject: testuser,
+        userObject: user,
         callback: function(text, success) {
             same(success, false, "Empty email address");
             do_start();

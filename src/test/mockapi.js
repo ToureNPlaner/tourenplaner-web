@@ -64,11 +64,11 @@ $.mockjax({
     url: "/registeruser",
     status: 200,
     responseTimeout: 200,
-    responseText: "",
     response: function(settings) {
         var obj = settings.data;
        	if (_.isString(obj))
        	 	obj = JSON.parse(obj);
+
         if (_.isUndefined(obj.email) || _.isUndefined(obj.password) || _.isUndefined(obj.firstname) || _.isUndefined(obj.lastname) || _.isUndefined(obj.address) || obj.email == "" || obj.password == "") {
             this.status = 400;
             this.responseText = {
@@ -76,7 +76,8 @@ $.mockjax({
                 message: "Validation error",
                 details: "Empty argument"
             };
-        } else{
+        } else {
+            log("All fine");
 	        this.responseText = {}
         }
     }
@@ -135,12 +136,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /getuser?ID=42 function on the server.
+ * Mocks the /getuser?ID=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/getuser?ID=42",
+    url: "/getuser?ID=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -180,12 +181,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /updateuser?ID=42 function on the server.
+ * Mocks the /updateuser?ID=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/updateuser?ID=42",
+    url: "/updateuser?ID=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -210,7 +211,7 @@ $.mockjax({
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?Limit=2&Offset=3",
+    url: "/listrequests?Limit=*&Offset=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -274,30 +275,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listusers?Limit=1&Offset=3 function on the server.
+ * Mocks the /listusers?Limit=*&Offset=* function on the server.
  *
  * Returns user list.
  */
 $.mockjax({
-    url: "/listusers?Limit=1&Offset=3",
-    responseTimeout: 10,
-    status: 201,
-    responseText: {
-                number: 100,
-                requests: [{
-                    email: "max.mustermann@online.de",
-                    password: "1234",
-                    firstname: "Max",
-                    lastname: "Mustermann",
-                    address: "Musterstrasse 10, 12345 Musterstadt",
-                    admin: false,
-                    active: true
-                }]
-    }
-});
-
-$.mockjax({
-    url: "/listusers?Limit=10&Offset=0",
+    url: "/listusers?Limit=*&Offset=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -325,7 +308,7 @@ $.mockjax({
  * Mocks the /deleteuser?ID=94 function on the server.
  */
 $.mockjax({
-    url: "/deleteuser?ID=94",
+    url: "/deleteuser?ID=*",
     responseTimeout: 10,
     status: 201,
     responseText: {}
