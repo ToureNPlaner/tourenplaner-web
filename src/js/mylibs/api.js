@@ -49,7 +49,6 @@ _.extend(window.Api.prototype, {
     send : function (reqData) {
         var url = "", event = {};
         if (_.isUndefined(reqData) || _.isNull(reqData)) return false;
-        if (_.isUndefined(reqData.callback) || _.isNull(reqData.callback)) return false;
         if (_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
         if (_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
         reqData.type = reqData.type || 'GET';

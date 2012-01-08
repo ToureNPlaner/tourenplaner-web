@@ -77,7 +77,6 @@ $.mockjax({
                 details: "Empty argument"
             };
         } else {
-            log("All fine");
 	        this.responseText = {}
         }
     }
