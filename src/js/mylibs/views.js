@@ -23,7 +23,8 @@ window.TopbarView = Backbone.View.extend({
     className: 'topbar',
 
     events: {
-        "click a.menu": "showDropdown"
+        "click a.menu": "showDropdown",
+        "submit form": "onSearchSubmit"
     },
 
     initialize: function () {
@@ -51,6 +52,33 @@ window.TopbarView = Backbone.View.extend({
     showDropdown: function () {
         this.$('li.menu').toggleClass('open');
         return false; // Return false stops the click event from propagating (for example to the body event)
+    },
+
+    onSearchSubmit: function (evt) {
+        if (!window.nomApi)
+            window.nomApi = new Nominatim();
+
+        var s = this.$('form input[type=text]').val(),
+            that = this;
+        nomApi.search(s, function (success, data) {
+            var spot = null;
+            for (var i in data) {
+                if (data[i].class == "place") {
+                    spot = data[i];
+                    break;
+                }
+            }
+
+            if (_.isNull(spot)) {
+                new MessageView({title: "Error!", message: "Couldn't find the spot"}).render();
+                return;
+            }
+
+            mapModel.get("mapObject").setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
+        });
+
+        evt.preventDefault();
+        return false;
     },
 
     onLogin: function (login) {

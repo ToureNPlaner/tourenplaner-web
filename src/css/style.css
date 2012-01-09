@@ -1,7 +1,7 @@
 @import "bootstrap-1.4.0.css";
 @import "jquery-ui-1.8.16.custom.css";
 @import "jquery.contextMenu.css";
-@import "smartspinner.css"
+@import "smartspinner.css";
 
 #login, #register, #message, #loading {
   display: none;
@@ -164,6 +164,9 @@ div.popover {
 }
 .topbar ul li.menu, .topbar ul li.user, .topbar ul li.menu ul li.admin {
   display: none;
+}
+.topbar form {
+  margin-left: 80px;
 }
 
 .ui-sortable-helper {

@@ -153,8 +153,16 @@ _.extend(window.Map.prototype, {
         this.dataLayer.addFeatures(feature);       
         this.currentRouteString = vertexString;
     },
-    
-    
+
+    setCenter: function(lonlat, bb) {
+        this.map.setCenter(this.transformFrom1984(new OpenLayers.LonLat(lonlat.lon, lonlat.lat)));
+
+        if (arguments.length >= 2) {
+            var bounds = new OpenLayers.Bounds(bb[2], bb[0], bb[3], bb[1]).transform(new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+            this.map.zoomToExtent(bounds);
+        }
+    },
+
     /**
      * Zoom into map, so that the whole route is visible
      */
