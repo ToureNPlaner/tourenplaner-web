@@ -321,3 +321,24 @@ test("/alg", 8, function (){
               }
     });
 });
+
+module("nominatim.js");
+
+test("search", 3, function() {
+    stop();
+
+    window.nom = new Nominatim();
+    nom.search("Stuttgart", function(success, msg) {
+        same(success, true, "API call was successful");
+        ok(msg.length > 0, "At least one object returned");
+        var item;
+        for (i in msg) {
+            if (msg[i].class == "place") {
+                item = msg[i];
+                break;   
+            }
+        }
+        same(item.address.city, "Stuttgart", "Addressdetails included");
+        start();    
+    });
+});
