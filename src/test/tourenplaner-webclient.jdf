@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tests SYSTEM "project.dtd">
+<tests product="TestDataManager" team="05" version="1.0">
+<sequence created="22.12.2011" creator="lehy" name="Projekt" number="0">
+<description>Dies ist der Wurzelknoten des Projekts. Er enthält alle anderen Testsequenzen und Testfälle</description>
+<pre/>
+<sequence created="22.12.2011" creator="lehy" name="Unit-Test" number="1">
+<description/>
+<pre/>
+</sequence>
+<sequence created="22.12.2011" creator="lehy" name="Integrationstest" number="2">
+<description/>
+<pre/>
+</sequence>
+<sequence created="22.12.2011" creator="lehy" name="Systemtest" number="3">
+<description/>
+<pre/>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="5" priority="C" title="Marker setzen">
+<description/>
+<pre>Webclient ist bereit. </pre>
+<actions>User setzt einen Marker, in dem er mit der rechten Maustaste auf die Karte klickt und dann "Add Marker" wählt.</actions>
+<post>Ein Marker wurde sowohl auf der Karte als auch in der Liste links hinzugefügt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="6" priority="C" title="Marker löschen">
+<description/>
+<pre>Webclient ist bereit und es wurden bereits Marker hinzugefügt.</pre>
+<actions>Möglichkeit 1:
+Der User klickt mit der rechten Maustaste auf einen Marker und wählt "Delete"
+
+Möglichkeit 2:
+Der User klickt mit der linken Maustaste auf einen Marker und klickt im DataView Delete.</actions>
+<post>Der Marker wird gelöscht und verschwindet somit auf der Karte als auch links in der Punkteliste.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="7" priority="C" title="Marker Dataview öffnen">
+<description/>
+<pre>Der Webclient ist bereit und es wurden bereits Marker hinzugefügt.
+</pre>
+<actions>Der User klickt auf einen Marker. </actions>
+<post>Das Marker Dataview öffnet sich.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="31" priority="C" title="Markereigenschaften editieren">
+<description/>
+<pre>Der Webclient ist bereit und das Dataview ist geöffnet.</pre>
+<actions>User ändert Eigenschaften des Markers und klickt auf übernehmen.</actions>
+<post>Die Eigenschaften des Markers werden übernommen.
+(? Der Übernehmenbutton wird ausgegraut. [NYI])</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="9" priority="C" title="Markerposition verschieben">
+<description/>
+<pre>Der Webclient ist bereit und es wurden bereits Marker hinzugefügt.</pre>
+<actions>Der User verschiebt die Marker in der Punkteliste nach unten/oben.</actions>
+<post>Die Positionen der Punkte werden neu gesetzt und verschoben.
+Wurde der Punkt an den Anfang oder an das Ende gesetzt, wird der Punkt nun als Startpunkt/Endpunkt behandelt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="10" priority="C" title="Marker als Startpunkt/Endpunkt setzen">
+<description/>
+<pre>Der Webclient ist bereit und es wurden bereits Marker hinzugefügt.</pre>
+<actions>Der User klickt mit der rechten Maustaste auf einen Marker und wählt "Set as Startmarker" / "Set as Endmarker"</actions>
+<post>Der Punkt wird an die erste Position verschoben (Set as Startmarker) bzw. an die letzte (Set as Endmarker)</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="20" priority="C" title="Route berechnen">
+<description/>
+<pre>Der Webclient ist bereit und es wurden ausreichend Punkte gesetzt, um dem Algorithmus gerecht zu werden.</pre>
+<actions>Der User klickt auf "Calculate Route".</actions>
+<post>Die Probleminstanz wird an den Server gesendet. Beim Empfangen der Antwort wird die Route gezeichnet.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="21" priority="C" title="Reset">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt auf den Button "Clear".</actions>
+<post>Alle Punkte und die gezeichnete Route (wenn vorhanden), werden resettet.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="22" priority="C" title="Login">
+<description/>
+<pre>Der Webclient ist gestartet und eine Aufforderunng für die Eingabe der Email und das Passwort ist zu sehen.</pre>
+<actions>Der User gibt die Mailadresse und das Passwort ein. Er klickt danach dann auf Login.</actions>
+<post>Die Logindaten werden an den Server gesendet und geprüft. 
+Bei korrekten Eingabedaten wird der User eingeloggt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="24" priority="C" title="Logout">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt auf Settings -&gt; Logout.</actions>
+<post>Der User wurde ausgeloggt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="25" priority="C" title="Billing ansehen">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt auf Settings -&gt; Billing.</actions>
+<post>Die Billinginformationen werden angezeigt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="26" priority="C" title="Administration">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt auf Settings-&gt;Administration.</actions>
+<post>Die Administrationsoberfläche wird angezeigt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="27" priority="C" title="Usersettings">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt auf Settings -&gt; Usersettings.</actions>
+<post>Die Usersettings werden angezeigt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="28" priority="C" title="Algorithmus wählen">
+<description/>
+<pre>Der Webclient ist bereit.</pre>
+<actions>Der User klickt die Dropdownbox und wählt sich seinen gewünschten Algorithmus aus.</actions>
+<post>Der Algorithmus wird gewählt und die Pointconstraints werden dementsprechend gesetzt.</post>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="29" priority="C" title="Punkt verschieben">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="33" priority="C" title="Benutzer anlegen">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="34" priority="C" title="Benutzer bearbeiten">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="35" priority="C" title="Benutzer löschen">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="36" priority="C" title="Benutzer auflisten">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="37" priority="C" title="Benutzer anzeigen">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="38" priority="C" title="Benutzer registrieren">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="39" priority="C" title="Benutzerdaten bearbeiten">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="40" priority="C" title="Abrechnung anzeigen">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+<testcase created="22.12.2011" creator="lehy" effort="00:00" number="41" priority="C" title="Abfrage anzeigen">
+<description/>
+<pre/>
+<actions/>
+<post/>
+<tags/>
+</testcase>
+</sequence>
+</sequence>
+<tsa name="Projekt" number="0" revId="0">
+<relatedsequence>0</relatedsequence>
+<tsa name="Unit-Test" number="1" revId="1">
+<relatedsequence>1</relatedsequence>
+</tsa>
+<tsa name="Integrationstest" number="2" revId="1">
+<relatedsequence>2</relatedsequence>
+</tsa>
+<tsa name="Systemtest" number="3" revId="1">
+<relatedsequence>3</relatedsequence>
+</tsa>
+</tsa>
+<author active="Y" firstname="" lastname="lehy" uid="lehy">
+<extension name="standarduser" value="Y"/>
+</author>
+<extension name="maxid" value="41"/>
+</tests>
