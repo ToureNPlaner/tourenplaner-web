@@ -4,27 +4,47 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://gerbera.informatik.uni-stuttgart.de/" />
-<title>Marker setzen</title>
+<title>Login</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Marker setzen</td></tr>
+<tr><td rowspan="1" colspan="3">Login</td></tr>
 </thead><tbody>
 <tr>
-	<td>contextMenu</td>
-	<td>OpenLayers.Layer.Vector_41_svgRoot</td>
+	<td>open</td>
+	<td>/webclient/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=*Startmarker*</td>
+	<td>id=email</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>marks</td>
-	<td>Marker A (Start)</td>
+	<td>type</td>
+	<td>id=email</td>
+	<td>root@tourenplaner.de</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>toureNPlaner</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[contains(@href, '#/login')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>login</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

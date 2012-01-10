@@ -985,7 +985,7 @@ window.AdminView = Backbone.View.extend({
 });
 
 window.BillingView = Backbone.View.extend({
-    id: 'admin',
+    id: 'billing',
     className: 'modal',
 
     events: {
@@ -1137,7 +1137,7 @@ window.BillingView = Backbone.View.extend({
         this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
-        window.app.navigate('/admin');
+        window.app.navigate('/billing');
         return false;
     }
 });

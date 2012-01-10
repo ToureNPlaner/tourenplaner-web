@@ -4,28 +4,24 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://gerbera.informatik.uni-stuttgart.de/" />
-<title>Marker setzen</title>
+<title>Reset</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Marker setzen</td></tr>
+<tr><td rowspan="1" colspan="3">Reset</td></tr>
 </thead><tbody>
 <tr>
-	<td>contextMenu</td>
-	<td>OpenLayers.Layer.Vector_41_svgRoot</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
-	<td>link=*Startmarker*</td>
+	<td>//a[contains(text(),'Calculate Route')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>marks</td>
-	<td>Marker A (Start)</td>
+	<td>assert</td>
+	<td></td>
+	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
