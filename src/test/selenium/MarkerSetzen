@@ -12,11 +12,6 @@
 <tr><td rowspan="1" colspan="3">Marker setzen</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/webclient/</td>
-	<td></td>
-</tr>
-<tr>
 	<td>contextMenu</td>
 	<td>OpenLayers.Layer.Vector_41_svgRoot</td>
 	<td></td>
@@ -30,6 +25,11 @@
 	<td>assertText</td>
 	<td>marks</td>
 	<td>Marker A (Start)</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

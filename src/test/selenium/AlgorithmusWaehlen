@@ -4,23 +4,34 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://gerbera.informatik.uni-stuttgart.de/" />
-<title>Markereigenschaften editieren</title>
+<title>AlgorithmusWaehlen</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Markereigenschaften editieren</td></tr>
+<tr><td rowspan="1" colspan="3">AlgorithmusWaehlen</td></tr>
 </thead><tbody>
 <tr>
-	<td>type</td>
-	<td>markerName</td>
-	<td>MyMark</td>
+	<td>click</td>
+	<td>id=algorithms</td>
+	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>data</td>
-	<td>MyMark</td>
+	<td>select</td>
+	<td>id=algorithms</td>
+	<td>label=Traveling Salesman</td>
 </tr>
+<tr>
+	<td>click</td>
+	<td>css=option[value=&quot;tsp&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>pc_PriceConstraint</td>
+	<td></td>
+</tr>
+
 </tbody></table>
 </body>
 </html>
