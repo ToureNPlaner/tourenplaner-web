@@ -273,6 +273,9 @@ window.User = Backbone.Model.extend({
     },
 
     onStartup: function () {
+        if (window.server.isPublic())
+            return;
+
         var cookie = $.store('tourenplaner');
         if (cookie && !_.isUndefined(cookie)) {
             var dec, decarr;
