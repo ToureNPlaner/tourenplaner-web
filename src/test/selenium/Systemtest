@@ -11,15 +11,18 @@
 <tr><td><a href="Login">Login</a></td></tr>
 <tr><td><a href="MarkerSetzen">Marker setzen</a></td></tr>
 <tr><td><a href="MarkerViewOeffnen">Marker Dataview öffnen</a></td></tr>
+<tr><td><a href="AlgorithmusWaehlen">AlgorithmusWaehlen</a></td></tr>
 <tr><td><a href="MarkereigenschaftenAendern">Markereigenschaften editieren</a></td></tr>
-<tr><td><a href="Reset">Reset</a></td></tr>
+<tr><td><a href="PunktVerschieben">PunktVerschieben</a></td></tr>
 <tr><td><a href="MarkerLoeschen">Marker löschen</a></td></tr>
+<tr><td><a href="Reset">Reset</a></td></tr>
 <tr><td><a href="RouteBerechnen">RouteBerechnen</a></td></tr>
 <tr><td><a href="BillingAnsehen">BillingAnsehen</a></td></tr>
-<tr><td><a href="AlgorithmusWaehlen">Administration</a></td></tr>
+<tr><td><a href="Administration">Administration</a></td></tr>
 <tr><td><a href="Usersettings">Usersettings</a></td></tr>
-<tr><td><a href="BillingAnsehen">AlgorithmusWaehlen</a></td></tr>
 <tr><td><a href="Logout">Logout</a></td></tr>
+<tr><td><a href="BenutzerAnlegen">BenutzerAnlegen</a></td></tr>
+<tr><td><a href="AbfrageAnzeigen">AbfrageAnzeigen</a></td></tr>
 </tbody></table>
 </body>
 </html>

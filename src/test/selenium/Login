@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementNotPresent</td>
+	<td>login</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertElementNotPresent</td>
 	<td>login</td>
 	<td></td>
