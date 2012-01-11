@@ -63,7 +63,7 @@ window.TopbarView = Backbone.View.extend({
         nomApi.search(s, function (success, data) {
             var spot = null;
             for (var i in data) {
-                if (data[i].class == "place") {
+                if (data[i]["class"] == "place") {
                     spot = data[i];
                     break;
                 }

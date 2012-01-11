@@ -104,7 +104,7 @@ _.extend(window.Api.prototype, {
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
-                if (!reqData.silent && (!QUnit && MessageView)) {
+                if (!reqData.silent && (_.isUndefined(window.QUnit) && MessageView)) {
                     var message = text;
                     if (!_.isString(text))
                         message = text.message + ': ' + text.details;
