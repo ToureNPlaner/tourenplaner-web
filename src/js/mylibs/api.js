@@ -71,8 +71,7 @@ _.extend(window.Api.prototype, {
         // performs a callback, successful or not
         var headers = this.get('authRequired') ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
         var that = this;
-        $.ajax({
-            url: url,
+        $.ajax(url, {
             cache: false,
             type: reqData.type,
             accepts: 'json',
