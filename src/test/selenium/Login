@@ -12,24 +12,9 @@
 <tr><td rowspan="1" colspan="3">Login</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/webclient/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=email</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>id=email</td>
 	<td>root@tourenplaner.de</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=password</td>
-	<td></td>
 </tr>
 <tr>
 	<td>type</td>

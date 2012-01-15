@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">Marker setzen</td></tr>
 </thead><tbody>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>link=*Marker*</td>
-	<td></td>
+	<td>750,480</td>
 </tr>
 <tr>
 	<td>assertNotText</td>

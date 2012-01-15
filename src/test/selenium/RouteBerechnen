@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">RouteBerechnen</td></tr>
 </thead><tbody>
 <tr>
-	<td>contextMenu</td>
-	<td>OpenLayers.Layer.Vector_41_svgRoot</td>
-	<td></td>
+	<td>contextMenuAt</td>
+	<td>map</td>
+	<td>750,480</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -22,9 +22,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>contextMenu</td>
-	<td>OpenLayers.Layer.Vector_41_svgRoot</td>
-	<td></td>
+	<td>contextMenuAt</td>
+	<td>map</td>
+	<td>780,80</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -33,12 +33,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[contains(text(),'Calculate Route')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>Da wos ergebnis steht</td>
+	<td>xpath=/html/body/div/div/div/div/form/div[4]/a</td>
 	<td></td>
 </tr>
 </tbody></table>

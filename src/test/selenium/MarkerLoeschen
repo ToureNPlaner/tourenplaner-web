@@ -12,14 +12,19 @@
 <tr><td rowspan="1" colspan="3">Marker setzen</td></tr>
 </thead><tbody>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>link=*Marker*</td>
+	<td>780,80</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id=&quot;deleteMark&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>marks</td>
-	<td></td>
+	<td>Stuttgart (Target)</td>
 </tr>
 </tbody></table>
 </body>
