@@ -42,6 +42,32 @@ $.mockjax({
                     minPoints: 2,
                     sourceIsTarget: false
                 }
+            },{
+                version: 2,
+                name: "Traveling Salesman",
+                urlsuffix: "tsp",
+                pointconstraints: [
+                    {
+                        name: "height",
+                        type: "meter",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "BoolConstraint",
+                        type: "boolean",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "PriceConstraint",
+                        type: "price",
+                        min: 0.0,
+                        max: 2000.0
+                    }
+                ],
+                constraints: {
+                    minPoints: 2,
+                    sourceIsTarget: false
+                }
             },
             {
                 version: 1,
@@ -85,7 +111,7 @@ $.mockjax({
 /**
  * Mocks the /authuser function on the server.
  *
- * For email = 'asd@asd.de' and password = 'asd' it returns a user object, otherwise it returns an error code and text.
+ * For email = 'root@tourenplaner.de' and password = 'toureNPlaner' it returns a user object, otherwise it returns an error code and text.
  */
 $.mockjax({
     url: "/authuser",
@@ -93,11 +119,11 @@ $.mockjax({
     status: 200,
     response: function(data) {
         var login = data.headers.Authorization.split(' ')[1];
-        if (_.isEqual(login, Base64.encode('asd@asd.de:asd'))) {
+        if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
             this.responseText = {
-                username: 'asd',
-                password: 'asd',
-                email: 'asd@asd.de',
+                username: 'root@tourenplaner.de',
+                password: 'toureNPlaner',
+                email: 'root@tourenplaner.de',
                 firstname: 'Peter',
                 lastname: 'Lustig',
                 admin: true,
