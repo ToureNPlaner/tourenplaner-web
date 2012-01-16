@@ -61,6 +61,7 @@ _.extend(window.Map.prototype, {
                 feature.data.mark.set({
                     lonlat: lonlat
                 });
+                feature.data.mark.findNearestNeighbour();
             }
         });
         this.map.addControl(controlFeature);
