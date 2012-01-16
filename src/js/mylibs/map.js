@@ -26,7 +26,7 @@ _.extend(window.Map.prototype, {
         });
 
         /* add maplayer and set center of the map */
-        this.map.addLayers([mapLayer]);
+        this.map.addLayer(mapLayer);
 
         /* create and add a layer for markers */
         this.dataLayer = new OpenLayers.Layer.Vector("Markers");
@@ -71,7 +71,8 @@ _.extend(window.Map.prototype, {
      * Resets all Routes drawed in the vectorLayer
      */
     resetRoute: function () {
-        this.dataLayer.removeFeatures([this.routeFeature]);
+        if (!_.isNull(this.routeFeature))
+            this.dataLayer.removeFeatures([this.routeFeature]);
         this.currentRouteString = this.routeFeature = null;        
     },
 
