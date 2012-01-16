@@ -2,7 +2,9 @@ $(function() {
     window.api = null;
     if (location.protocol === 'file:' || location.host === 'localhost' || location.host === '127.0.0.1') {
         window.api = new Api({
-            server: null
+//            server: null
+            server: "gerbera.informatik.uni-stuttgart.de",
+            port: 8080
         });
     } else {
         window.api = new Api({
