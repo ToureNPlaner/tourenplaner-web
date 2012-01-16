@@ -6,6 +6,7 @@ _.extend(window.Map.prototype, {
     map: null,
     dataLayer: null,
     currentRouteString: null,
+    routeFeature: null,
 
     getMap: function () {
         return this.map;
@@ -36,12 +37,6 @@ _.extend(window.Map.prototype, {
         var selectFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
             hover: true,
             callbacks: {
-                click: function (feature) {
-                    window.mapModel.setDataViewMarker(feature.data.mark);
-                },
-                clickout: function () {
-                    //window.mapModel.setDataViewMarker(null);
-                },
                 over: function (feature) {
                     feature.style.graphicOpacity = 1;
                     this.layer.drawFeature(feature);
@@ -54,18 +49,30 @@ _.extend(window.Map.prototype, {
         });
         this.map.addControl(selectFeature);
         selectFeature.activate();
+
+        var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
+            //geometryTypes: ['OpenLayers.Feature.Vector'],
+            onStart: function(feature) {
+                window.mapModel.setDataViewMarker(feature.data.mark);
+            },
+            onComplete: function(feature, pix) {
+                var lonlat = this.map.getLonLatFromPixel(pix);
+
+                feature.data.mark.set({
+                    lonlat: lonlat
+                });
+            }
+        });
+        this.map.addControl(controlFeature);
+        controlFeature.activate();
     },
 
     /**
      * Resets all Routes drawed in the vectorLayer
      */
     resetRoute: function () {
-        // - remove all features (route and markers)
-        // - then draw markers back
-        this.currentRouteString = null;
-        this.dataLayer.removeAllFeatures();
-        
-        this.drawMarkers();
+        this.dataLayer.removeFeatures([this.routeFeature]);
+        this.currentRouteString = this.routeFeature = null;        
     },
 
     /**
@@ -75,7 +82,8 @@ _.extend(window.Map.prototype, {
         // - remove all features (route and markers)
         // - then draw route back
         this.dataLayer.removeAllFeatures();
-        this.drawRoute(this.currentRouteString);
+        if (!_.isNull(this.routeFeature))
+            this.dataLayer.addFeatures(this.routeFeature);
     },
 
     /**
@@ -127,30 +135,25 @@ _.extend(window.Map.prototype, {
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
 
+        var proj = new OpenLayers.Projection("EPSG:4326");
         for (var i = 0; i < vertexString.way.length; i++) {
             // transform points
-            var p = vertexString.way[i];
-            var lonlat = new OpenLayers.LonLat(p.ln / 1e7, p.lt / 1e7);
-            var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-
-            var proj = new OpenLayers.Projection("EPSG:4326");
-            lonlat.transform(proj, this.map.getProjectionObject());
+            var p = vertexString.way[i];           
+            var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
             point.transform(proj, this.map.getProjectionObject());
-
-            //TODO: Check points?
 
             pointList.push(point);
         }
 
-        this.drawMarkers(window.markList);
+        //this.drawMarkers();
         // draw route on a layer and add it to map
         var geometry = new OpenLayers.Geometry.LineString(pointList);
-        var feature = new OpenLayers.Feature.Vector(geometry, null, {
+        this.routeFeature = new OpenLayers.Feature.Vector(geometry, null, {
             strokeColor: "#0000ff",
             strokeOpacity: 1.7,
             strokeWidth: 2.5
         });
-        this.dataLayer.addFeatures(feature);       
+        this.dataLayer.addFeatures(this.routeFeature);       
         this.currentRouteString = vertexString;
     },
 
