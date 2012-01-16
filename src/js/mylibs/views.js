@@ -283,7 +283,11 @@ window.MapView = Backbone.View.extend({
         args.sidebar.bind("resize", this.onSidebarResize);
 
         window.mapModel.bind("change:route", this.onRouteChange);
-        window.markList.bind("all", this.onMarkListChange);
+        
+        window.markList.bind("add", this.onMarkListChange);
+        window.markList.bind("change:lonlat", this.onMarkListChange);
+        window.markList.bind("remove", this.onMarkListChange);
+        window.markList.bind("reset", this.onMarkListChange);
     },
 
     render: function () {
