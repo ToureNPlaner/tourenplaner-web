@@ -989,16 +989,18 @@ window.AdminView = Backbone.View.extend({
 });
 
 window.BillingView = Backbone.View.extend({
-    id: 'billing',
+    id: 'admin',
     className: 'modal',
 
     events: {
         "hidden": "remove",
-        "click .cancel": "remove",
-        "click .back": "onBack"
+        "click .modal-footer a.cancel": "remove"
+        //"click .back": "onBack"
     },
     render: function () {
         var content = templates.billingMainView;
+        this.content = null;
+        
         $(this.el).html(templates.billingView({content: content}));
         $(this.el).modal({
             show: true,
@@ -1076,6 +1078,7 @@ window.BillingView = Backbone.View.extend({
 
                     that.$('.modal-body').append(templates.paginationView({pages: html}));
                     that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
+                    that.$('#billing').css({width: that.$('.modal-body').outerWidth() + 'px'});
 
                     if (page !== 1)
                         that.$('.pagination li').first().removeClass('disabled');

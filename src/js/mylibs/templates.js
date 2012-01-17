@@ -280,14 +280,14 @@ templates.billingMainView =  '<table class="zebra-striped">\
                                     <th>' + $._('Finish Date') + '</th>\
                                     <th>' + $._('Duration') + '</th>\
                                     <th>' + $._('Status') + '</th>\
+                                	<th style="display:none"></th>\
+                                	<th style="display:none"></th>\
                                 </thead>\
                                 <tbody>\
                                 </tbody>\
                             </table>';
 
 templates.billingTableRowView = '<tr id="billing-{{request.requestid}}">\
-                                <td id="billing-request-{{request.requestid}}"style="display:none">{{request.request}}</td>\
-                                <td id="billing-response-{{request.requestid}}"style="display:none">{{request.response}}</td>\
                                 <td>{{request.requestid}}</td>\
                                 <td>{{request.userid}}</td>\
                                 <td>{{request.algorithm}}</td>\
@@ -297,6 +297,8 @@ templates.billingTableRowView = '<tr id="billing-{{request.requestid}}">\
                                 <td>{{request.finisheddate}}</td>\
                                 <td>{{request.duration}}</td>\
                                 <td>{{request.status}}</td>\
+                                <td id="billing-request-{{request.requestid}}"style="display:none">{{request.request}}</td>\
+                                <td id="billing-response-{{request.requestid}}"style="display:none">{{request.response}}</td>\
                                 </tr>';
 templates.billingTableRowView = Handlebars.compile(templates.billingTableRowView);
 
