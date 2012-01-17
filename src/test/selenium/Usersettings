@@ -27,8 +27,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//a[contains(text(),'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertElementPresent</td>
 	<td>user-settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=x</td>
 	<td></td>
 </tr>
 </tbody></table>
