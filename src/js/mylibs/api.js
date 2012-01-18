@@ -220,9 +220,9 @@ _.extend(window.Api.prototype, {
             return false;
             
         var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
-        if (args.id && !isNaN(args.id)){
+        if (args.id && !isNaN(args.id))
             suffix += '&ID=' + args.id;
-}
+
         this.send({
             type : 'POST',
             suffix : suffix,

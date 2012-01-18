@@ -355,6 +355,7 @@ $.mockjax({
             var c = Math.floor(Math.random() * 90 * 1e7);
             var d = Math.floor(Math.random() * 90 * 1e7);
             this.responseText = {
+                requestid: 42,
                 way: [
                     {lt: a, ln: b},
                     {lt: c, ln: d},
