@@ -995,7 +995,6 @@ window.BillingView = Backbone.View.extend({
     events: {
         "hidden": "remove",
         "click .modal-footer a.cancel": "remove"
-        //"click .back": "onBack"
     },
     render: function () {
         var content = templates.billingMainView;
@@ -1020,16 +1019,16 @@ window.BillingView = Backbone.View.extend({
                 offset: 3
             };
         }
-        
         loadingView = new LoadingView('Loading billing data').render();
         var that = this;
         api.listRequests({
             limit: this.position.limit,
             offset: this.position.offset,
             callback: function (text, success) {
-                if (success) {
-                    var page = (that.position.offset / that.position.limit) + 1;
+                if (success && _.isNull(that.content)) {
+                    var page = Math.floor((that.position.offset / that.position.limit) + 1);
                     var pages = text.number / that.position.limit;
+
                     // Update table
                     that.$('tbody').html('');
                     for (var i in text.requests){
@@ -1049,11 +1048,9 @@ window.BillingView = Backbone.View.extend({
 							window.mapModel.set({route: response});
 							that.remove();
 						});
+						
                     }
-                   	// makes table sortable
-                   	$("table.zebra-striped").tablesorter({ sortList: [[0,0]] });
-                   	
-
+                   	 
                     // Update pagination
                     that.$('.pagination').remove();
                     var html = '', nums = [];
@@ -1093,10 +1090,8 @@ window.BillingView = Backbone.View.extend({
                         if (_.isNumber(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
-                    
-                   loadingView.remove();
-                   
-                }
+                }                    
+            	loadingView.remove();
             }
         });
     },
@@ -1108,6 +1103,17 @@ window.BillingView = Backbone.View.extend({
             this.options.remove();
         $(this.el).remove();
         window.app.navigate('');
+    },
+
+    setContent: function (content) {
+        if (!_.isNull(this.content) && !_.isUndefined(this.content))
+            this.content.remove();
+
+        if (this.$('.modal-footer a.btn.back').css('display') === 'none')
+            this.$('.modal-footer a.btn.back').show();
+
+        this.$('.modal-body').html(content.el);
+        this.content = content;
     },
 
     onPrev: function () {
@@ -1140,7 +1146,7 @@ window.BillingView = Backbone.View.extend({
         this.content.remove();
         this.content = null;
 
-        this.$('.modal-body').templates.billingView;
+        this.$('.modal-body').html(templates.billingMainView);
         this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
