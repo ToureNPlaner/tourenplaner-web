@@ -51,7 +51,7 @@ _.extend(window.Map.prototype, {
         selectFeature.activate();
 
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
-            //geometryTypes: ['OpenLayers.Feature.Vector'],
+            geometryTypes: ['OpenLayers.Geometry.Point'],
             onStart: function(feature) {
                window.guiModel.setDataViewMarker(feature.data.mark);
             },
