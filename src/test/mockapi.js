@@ -399,3 +399,37 @@ $.mockjax({
         this.responseText = tmp;
     }
 });
+
+/**
+ * Mocks the /getrequest function on the server.
+ *
+ * Returns a random route.
+ */
+$.mockjax({
+    url: "/getrequest?id=*",
+    status: 200,
+    responseTimeout: 200,
+    response: function (data) {
+            var a = Math.floor(Math.random() * 90 * 1e7);
+            var b = Math.floor(Math.random() * 90 * 1e7);
+            var c = Math.floor(Math.random() * 90 * 1e7);
+            var d = Math.floor(Math.random() * 90 * 1e7);
+            this.responseText = {
+                requestid: 42,
+                points: [
+                    {lt: a, ln: b, name: "MockMarker A"},
+                    {lt: c, ln: d, name: "MockMarker B"},
+                    {lt: 488485554, ln: 94182360, name: "MockMarker C"}
+                ],
+                way: [
+                    {lt: a, ln: b},
+                    {lt: c, ln: d},
+                    {lt: 488485554, ln: 94182360}
+                ],
+                misc: {
+                    distance: 100,
+                    apx: 0.5
+                }
+            };
+    }
+});

@@ -323,5 +323,18 @@ _.extend(window.Api.prototype, {
         });
 
         return true;
+    },
+
+    getRequest: function(args) {
+        if (!args || !args.id)
+            return false;
+        
+        this.send({
+            suffix: 'getrequest?id=' + args.id,
+            request: '',
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
+
+        return true;
     }
 });
