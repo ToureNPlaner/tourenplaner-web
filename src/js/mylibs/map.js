@@ -53,7 +53,7 @@ _.extend(window.Map.prototype, {
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
             //geometryTypes: ['OpenLayers.Feature.Vector'],
             onStart: function(feature) {
-                window.mapModel.setDataViewMarker(feature.data.mark);
+               window.guiModel.setDataViewMarker(feature.data.mark);
             },
             onComplete: function(feature, pix) {
                 var lonlat = this.map.getLonLatFromPixel(pix);
@@ -130,10 +130,12 @@ _.extend(window.Map.prototype, {
         // exit, when there is nothing to parse
         if (_.isNull(vertexString) || _.isUndefined(vertexString) || vertexString.length === 0) 
             return;
-    
+        this.resetRoute();
+    	
+     this.currentRouteString = vertexString;
+    	
         // parse string of vertices
         var pointList = [];
-
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
 
@@ -147,7 +149,6 @@ _.extend(window.Map.prototype, {
             pointList.push(point);
         }
 
-        //this.drawMarkers();
         // draw route on a layer and add it to map
         var geometry = new OpenLayers.Geometry.LineString(pointList);
         this.routeFeature = new OpenLayers.Feature.Vector(geometry, null, {
@@ -156,7 +157,11 @@ _.extend(window.Map.prototype, {
             strokeWidth: 2.5
         });
         this.dataLayer.addFeatures(this.routeFeature);       
-        this.currentRouteString = vertexString;
+        this.zoomToRoute();
+    },
+    
+    getRoute: function() {
+    	return this.currentRouteString;
     },
 
     setCenter: function(lonlat, bb) {

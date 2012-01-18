@@ -74,7 +74,7 @@ window.TopbarView = Backbone.View.extend({
                 return;
             }
 
-            mapModel.get("mapObject").setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
+            window.map.setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
         });
 
         evt.preventDefault();
@@ -234,9 +234,7 @@ window.SidebarView = Backbone.View.extend({
                 points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {
-                        window.mapModel.set({
-                            route: text
-                        });
+                        window.map.drawRoute(text);
                     }
                 }
             });
@@ -244,9 +242,9 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onClear: function () {
-        var mapObject = window.mapModel.get("mapObject");
+        var mapObject = window.map;
         window.markList.deleteAllMarks();
-        window.mapModel.setRoute("");
+        window.map.drawRoute("");
     },
 
     onFlip: function() {
@@ -282,7 +280,6 @@ window.MapView = Backbone.View.extend({
         $(window).resize(_.bind(this.onResize, this));
         args.sidebar.bind("resize", this.onSidebarResize);
 
-        window.mapModel.bind("change:route", this.onRouteChange);
         
         window.markList.bind("add", this.onMarkListChange);
         window.markList.bind("change:lonlat", this.onMarkListChange);
@@ -295,7 +292,7 @@ window.MapView = Backbone.View.extend({
 
         this.onResize(this.options.sidebar);
 
-        var mapObject = window.mapModel.get("mapObject");
+        var mapObject = window.map;
         mapObject.draw();
         setContextMenu();
         mapObject.refresh();
@@ -309,15 +306,9 @@ window.MapView = Backbone.View.extend({
         return this;
     },
 
-    onRouteChange: function (model, route) {
-        var mapObject = window.mapModel.get("mapObject");
-        mapObject.resetRoute();
-        mapObject.drawRoute(route);
-        mapObject.zoomToRoute();
-    },
 
     onMarkListChange: function (model, markList) {
-        var mapObject = window.mapModel.get("mapObject");
+        var mapObject = window.map;
         mapObject.resetMarkers();
         mapObject.drawMarkers(markList);
     },
@@ -339,7 +330,7 @@ window.MapView = Backbone.View.extend({
         $("#main #map").css('left', ui.size.width);
         $("#main #map").css('width', "100%");
         $("#main #map").css('height', "100%");
-        window.mapModel.get("mapObject").refresh();
+        window.map.refresh();
     }
 });
 
@@ -357,7 +348,7 @@ window.DataView = Backbone.View.extend({
     },
 
     initialize: function () {
-        window.mapModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
+        window.guiModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
     },
 
     render: function () {
@@ -370,12 +361,17 @@ window.DataView = Backbone.View.extend({
 
         return this;
     },
-
+    
+    testFkt: function() {
+    
+    	alert("SChon stier he");
+    },
+    
      onDataViewChange: function (model, marker) {
         var that = this;
-        var lonlat = window.mapModel.get("mapObject").transformTo1984(marker.get("lonlat"));
+        var lonlat = window.map.transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+        var pointconstraints = window.guiModel.getCurrentAlgorithm().pointconstraints;
 
         // add fields to edit pointconstraints
         var constraintsHtml = "", key;
@@ -529,7 +525,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     onClick: function () {
-        window.mapModel.setDataViewMarker(this.model);
+        window.guiModel.setDataViewMarker(this.model);
     }
 });
 
@@ -1045,7 +1041,7 @@ window.BillingView = Backbone.View.extend({
 								window.markList.appendMark(m);
                         	}
 							var response = jQuery.parseJSON($(this).closest('tr').children()[1].innerHTML);
-							window.mapModel.set({route: response});
+							window.map.drawRoute(response);
 							that.remove();
 						});
 						
@@ -1406,7 +1402,7 @@ window.ImExportView = Backbone.View.extend({
                         window.markList.fromJSON(data.marks);
                     }
                     if (!_.isEmpty(data.route)) {
-                        window.mapModel.set({route: data.route});
+                        window.map.drawRoute(data.route);
                     }
 
                     dialog.remove();
@@ -1426,7 +1422,7 @@ window.ImExportView = Backbone.View.extend({
         var contents = {marks: [], route: {}};
         contents.marks = window.markList.toJSON();
 
-        var route = window.mapModel.get("route");
+        var route = window.map.getRoute();
         if (typeof route === 'String')
             contents.route = JSON.parse(route);
         else if (typeof route == 'Object')

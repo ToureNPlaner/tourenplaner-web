@@ -355,7 +355,7 @@ $.mockjax({
             var c = Math.floor(Math.random() * 90 * 1e7);
             var d = Math.floor(Math.random() * 90 * 1e7);
             this.responseText = {
-                points: [
+                way: [
                     {lt: a, ln: b},
                     {lt: c, ln: d},
                     {lt: 488485554, ln: 94182360}

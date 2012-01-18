@@ -9,7 +9,7 @@ window.Mark = Backbone.Model.extend({
     getLonLatAs1984: function () {
         var lonlat = this.get("lonlat");
         if (!_.isNull(lonlat)) {
-            return window.mapModel.get("mapObject").transformTo1984(this.get("lonlat"));
+            return window.map.transformTo1984(this.get("lonlat"));
         } else {
             // error!
             log("Fehler in Markmodel");
@@ -22,7 +22,7 @@ window.Mark = Backbone.Model.extend({
             var tempLon = lon / 1e7;
             var tempLat = lat / 1e7;
             var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-            var newLonLat = window.mapModel.get("mapObject").transformFrom1984(tempLonLat);
+            var newLonLat = window.map.transformFrom1984(tempLonLat);
             this.set({'lonlat':newLonLat});
         } else {
             // error!
@@ -58,7 +58,7 @@ window.Mark = Backbone.Model.extend({
         };
 
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.server.getCurrentAlgorithm().pointconstraints;
+        var pointconstraints = window.guiModel.getCurrentAlgorithm().pointconstraints;
 
         if (!_.isNull(pointconstraints)) {
             for (var i = 0; i < pointconstraints.length; i++) {
@@ -241,23 +241,21 @@ window.MarkList = Backbone.Collection.extend({
     }
 });
 
-window.MapModel = Backbone.Model.extend({
-
-    defaults: {
-        "mapObject": new Map("map")
-    },
-
-    setRoute: function (routeString) {
-        this.set({
-            route: routeString
-        });
-    },
+window.GuiModel = Backbone.Model.extend({
 
     setDataViewMarker: function (marker) {
         this.set({
             dataViewText: marker
         });
+    },
+    
+    // maybe this is not the correct place for this method.
+    // will be moved later.
+    getCurrentAlgorithm: function() {
+        return window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
     }
+    
+    
 });
 
 window.User = Backbone.Model.extend({
@@ -432,12 +430,5 @@ window.ServerInfo = Backbone.Model.extend({
 
     isLoaded: function () {
         return this.get('loaded');
-    },
-
-    // maybe this is not the correct place for this method.
-    // will be moved later.
-    getCurrentAlgorithm: function() {
-        return window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
     }
-
 });
