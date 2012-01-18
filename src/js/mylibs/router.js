@@ -115,7 +115,16 @@ window.Router = Backbone.Router.extend({
     },
 
     request: function(id) {
-        alert('To be implemented');
+        window.api.getRequest({
+            id: id,
+            callback: function(text, success) {
+                if (success) {
+                    window.map.resetRoute();
+                    window.map.resetMarkers();
+                    window.map.drawMarkersAndRoute(text);
+                }
+            }
+        })
     },
 
     onAdminRemove: function () {

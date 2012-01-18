@@ -159,6 +159,22 @@ _.extend(window.Map.prototype, {
         this.dataLayer.addFeatures(this.routeFeature);       
         this.zoomToRoute();
     },
+
+    drawMarkersAndRoute: function(obj) {
+        this.drawRoute(obj);
+        window.markList.deleteAllMarks();
+
+        var proj = new OpenLayers.Projection("EPSG:4326");
+        for (var i in obj.points) {
+            var ll = new OpenLayers.LonLat(obj.points[i].ln / 1e7, obj.points[i].lt / 1e7);
+            ll.transform(proj, this.map.getProjectionObject());
+
+            var m = new Mark({lonlat: ll});
+            m.set(obj.points[i]);
+            window.markList.appendMark(m);
+        }
+        this.drawMarkers();
+    },
     
     getRoute: function() {
     	return this.currentRouteString;
