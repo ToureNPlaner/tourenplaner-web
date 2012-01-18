@@ -13,13 +13,13 @@ $(function() {
         });
     }
 
-    /**/
-
     window.server = new ServerInfo();
     window.app = new Router();
     Backbone.history.start({silent: true});
 
-    window.mapModel = new MapModel();
+    window.map = new Map("map");
+
+    window.guiModel = new GuiModel();
     window.markList = new MarkList();
 
     window.body = new BodyView();

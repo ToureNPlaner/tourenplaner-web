@@ -2,7 +2,7 @@ function addMarker(action, evt) {
     var pixelx = evt.pageX - $('#map').offset().left;
     var pixely = evt.pageY - $('#map').offset().top;
     var pixel = new OpenLayers.Pixel(pixelx, pixely);
-    var lonlat = window.mapModel.get("mapObject").getMap().getLonLatFromPixel(pixel);
+    var lonlat = window.map.getMap().getLonLatFromPixel(pixel);
     var mark = new Mark({
         "lonlat": lonlat
     });
@@ -47,7 +47,7 @@ function setContextMenu(map) {
     $('#main #map').contextPopup({
         title: $._("Markers"),
         items: function (evt) {
-            var feature = window.mapModel.get('mapObject').dataLayer.getFeatureFromEvent(evt);
+            var feature = window.map.dataLayer.getFeatureFromEvent(evt);
 
             // if it's a marker
             if (feature && !_.isUndefined(feature.attributes.mark)) {
