@@ -269,7 +269,7 @@ templates.billingView =  '<div class="modal-header">\
                           </div>';
 templates.billingView = Handlebars.compile(templates.billingView);
 
-templates.billingMainView =  '<table class="zebra-striped">\
+templates.billingMainView =  '<table>\
                                 <thead>\
                                     <th>#</th>\
                                     <th>' + $._('User ID') + '</th>\
