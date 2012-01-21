@@ -100,7 +100,7 @@ _.extend(window.Map.prototype, {
      * Draw markers given in markList
      */
     drawMarkers: function () {
-        var markList = window.markList;
+        var sourceIsTarget = window.guiModel.getCurrentAlgorithm().details.sourceIsTarget;
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
             var size = new OpenLayers.Size(21, 25);
@@ -109,7 +109,7 @@ _.extend(window.Map.prototype, {
             var iconPath = 'img/mark.png';
             if (i === 0) {
                 iconPath = 'img/startmark.png';
-            } else if (i == markList.length - 1) {
+            } else if (!sourceIsTarget && i == markList.length - 1) {
                 iconPath = 'img/targetmark.png';
             }
 

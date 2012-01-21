@@ -16,10 +16,13 @@ window.MarkView = Backbone.View.extend({
 
     render: function () {
         var position = '';
-        if (this.model.get('position') === 0)
+        var sourceIsTarget = window.guiModel.getCurrentAlgorithm().details.sourceIsTarget;
+        if (!sourceIsTarget && this.model.get('position') === 0)
             position = '(' + $._('Start') + ')';
-        else if (this.model.get('position') == window.markList.length - 1)
+        else if (!sourceIsTarget && this.model.get('position') == window.markList.length - 1)
             position = '(' + $._('Target') + ')';
+        else if (sourceIsTarget && this.model.get('position') === 0)
+            position = '(' + $._('Start/Target') + ')';
 
         $('#marks').append(templates.markView({cid: this.model.cid, name: this.name, position: position}));
         this.el = $('#mark_'+this.model.cid);
