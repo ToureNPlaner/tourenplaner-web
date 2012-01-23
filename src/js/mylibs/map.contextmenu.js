@@ -1,3 +1,10 @@
+/**
+ * Callback function for the contextmenu when adding a marker.
+ * Will add a marker at the given pixel position.
+ *
+ * @param action The name of the event triggered by the contextmenu
+ * @param evt The event object
+ */
 function addMarker(action, evt) {
     var pixelx = evt.pageX - $('#map').offset().left;
     var pixely = evt.pageY - $('#map').offset().top;
@@ -26,6 +33,12 @@ function addMarker(action, evt) {
 	mark.findNearestNeighbour();
 }
 
+/**
+ * Callback function for the contextmenu when a marker is selected.
+ *
+ * @param action The name of the event triggered by the contextmenu
+ * @param marker The Feature that is currently selected
+ */
 function editMarker(action, marker) {
     switch (action) {
         case 'delete':
@@ -41,9 +54,9 @@ function editMarker(action, marker) {
 }
 
 /**
- * Binds contextmenu to map.
+ * Displays the contextmenu on top of the map when requested.
  */
-function setContextMenu(map) {
+function setContextMenu() {
     $('#main #map').contextPopup({
         title: $._("Markers"),
         items: function (evt) {

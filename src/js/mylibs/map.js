@@ -1,3 +1,7 @@
+/**
+ * The Map class is a wrapper around the OpenLayers.Map class which draws the map using OpenStreetMap data.
+ * It also provides a few utility functions to simplify our use cases.
+ */
 window.Map = function (divId) {
     this.divId = divId;
 };
@@ -8,14 +12,21 @@ _.extend(window.Map.prototype, {
     currentRouteString: null,
     routeFeature: null,
 
+    /**
+     * Returns the used instance of the OpenLayers.Map class.
+     *
+     * @return An instance of the OpenLayers.Map class
+     */
     getMap: function () {
         return this.map;
     },
 
     /**
-     * Initialize and draw map
+     * Initialize and draw the map using OSM data and our own tile server.
      */
     draw: function () {
+        var that = this;
+
         OpenLayers.ImgPath = "img/openlayers/";
         this.map = new OpenLayers.Map("map", {
             projection: new OpenLayers.Projection("EPSG:4326")
@@ -28,12 +39,12 @@ _.extend(window.Map.prototype, {
         /* add maplayer and set center of the map */
         this.map.addLayer(mapLayer);
 
-        /* create and add a layer for markers */
-        this.dataLayer = new OpenLayers.Layer.Vector("Markers");
+        /* create and add a layer for the markers and the route */
+        this.dataLayer = new OpenLayers.Layer.Vector("Data");
         this.map.addLayer(this.dataLayer);
         this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
 
-        var that = this;
+        /* SelectFeature for some simple opacity changes */
         var selectFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
             hover: true,
             callbacks: {
@@ -50,6 +61,7 @@ _.extend(window.Map.prototype, {
         this.map.addControl(selectFeature);
         selectFeature.activate();
 
+        /* DragFeature for drag and drop support of the markers */
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
             geometryTypes: ['OpenLayers.Geometry.Point'],
             onStart: function(feature) {
@@ -69,7 +81,7 @@ _.extend(window.Map.prototype, {
     },
 
     /**
-     * Resets all Routes drawed in the vectorLayer
+     * Removes the currently drawn route from the map.
      */
     resetRoute: function () {
         if (!_.isNull(this.routeFeature))
@@ -78,7 +90,7 @@ _.extend(window.Map.prototype, {
     },
 
     /**
-     * Reset all Markers drawed in dataLayer
+     * Removes all currently drawn markers from the map.
      */
     resetMarkers: function () {
         // - remove all features (route and markers)
@@ -90,14 +102,14 @@ _.extend(window.Map.prototype, {
 
     /**
      * Forces Map to update itself.
-     * Needed, when the div of this map getting resized
+     * Needed, when the div of this map is getting resized.
      */
     refresh: function () {
         this.map.updateSize();
     },
 
     /**
-     * Draw markers given in markList
+     * Draw the markers currently saved in markList.
      */
     drawMarkers: function () {
         var sourceIsTarget = window.guiModel.getCurrentAlgorithm().details.sourceIsTarget;
@@ -123,8 +135,9 @@ _.extend(window.Map.prototype, {
     },
 
     /**
-     * Draws the route defined by list of vertices
-     * PARAM: List of Vertices
+     * Draws the route defined by a list of vertices.
+     * 
+     * @param vertexString List of vertices
      */
     drawRoute: function (vertexString) {
         // exit, when there is nothing to parse
@@ -132,7 +145,7 @@ _.extend(window.Map.prototype, {
             return;
         this.resetRoute();
     	
-     this.currentRouteString = vertexString;
+        this.currentRouteString = vertexString;
     	
         // parse string of vertices
         var pointList = [];
@@ -160,6 +173,11 @@ _.extend(window.Map.prototype, {
         this.zoomToRoute();
     },
 
+    /**
+     * Draw the markers and the route contained in an object returned by the server.
+     *
+     * @param obj A route object returned by the server
+     */
     drawMarkersAndRoute: function(obj) {
         this.drawRoute(obj);
         window.markList.deleteAllMarks();
@@ -176,10 +194,22 @@ _.extend(window.Map.prototype, {
         this.drawMarkers();
     },
     
+    /**
+     * Returns the current route as a string.
+     *
+     * @return The current route as a stringified json object
+     */
     getRoute: function() {
     	return this.currentRouteString;
     },
 
+    /**
+     * Centers and zooms the map to the given position and boundaries. 
+     * This function is used by the Nominatim code. This is why the order of the bounding box may seem unintuitive.
+     *
+     * @param lonlat The longitude and latitude to center on
+     * @param bb The bounding box to zoom to.
+     */
     setCenter: function(lonlat, bb) {
         this.map.setCenter(this.transformFrom1984(new OpenLayers.LonLat(lonlat.lon, lonlat.lat)));
 
@@ -190,7 +220,7 @@ _.extend(window.Map.prototype, {
     },
 
     /**
-     * Zoom into map, so that the whole route is visible
+     * Zoom into map, so that the whole route is visible.
      */
     zoomToRoute: function() {
         if (!_.isNull(this.dataLayer.getDataExtent())) {
@@ -198,16 +228,25 @@ _.extend(window.Map.prototype, {
         }
     },
 
+    /**
+     * Returns the geo coordinates for a pixel position on the map.
+     *
+     * @param posX The position on the x axis
+     * @param posY The position on the y axis
+     * @return A OpenLayers.LonLat object in 1984 projection
+     */
     getLonLatFromPos: function (posX, posY) {
         var pixel = new OpenLayers.Pixel(posX, posY);
         var lonlat = this.map.getLonLatFromPixel(pixel);
-
-        // convert to "correct" projection
-        var proj = new OpenLayers.Projection("EPSG:4326");
-        lonlat.transform(this.map.getProjectionObject(), proj);
-        return lonlat;
+        return this.transfromTo1984(lonlat);
     },
 
+    /**
+     * Transforms the given OpenLayers.LonLat object to the 1984 projection.
+     *
+     * @param lonlat The OpenLayers.LonLat object to transform
+     * @return The object in 1984 projection
+     */
     transformTo1984: function (lonlat) {
         var proj = new OpenLayers.Projection("EPSG:4326");
         var lonlatClone = lonlat.clone();
@@ -216,6 +255,12 @@ _.extend(window.Map.prototype, {
         return lonlatClone;
     },
     
+    /**
+     * Transforms the given OpenLayers.LonLat object from the 1984 projection to the map projection.
+     *
+     * @param lonlat The OpenLayers.LonLat object to transform
+     * @return The object in map projection
+     */
     transformFrom1984: function (lonlat) {
         var proj = new OpenLayers.Projection("EPSG:4326");
         var lonlatClone = lonlat.clone();

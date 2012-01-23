@@ -1,5 +1,9 @@
+/**
+ * The Router class is responsible for all url changes and opening the corresponding views. 
+ */
 window.Router = Backbone.Router.extend({
 
+    /** Maps routes to functions */
     routes: {
         "/login":           "login",            // #/login
         "/logout":          "logout",           // #/logout
@@ -13,7 +17,10 @@ window.Router = Backbone.Router.extend({
         "/route/:id":       "request"           // #/route/42
     },
 
-    initialize: function(options) {
+    /**
+     * Constructor for the Router class. Initializes the user.
+     */
+    initialize: function() {
         this.user = new User();
         this.user.bind('login', _.bind(this.onLogin, this));
 
@@ -21,6 +28,9 @@ window.Router = Backbone.Router.extend({
         this.navigate('');
     },
 
+    /**
+     * Get the informations of the server and display accordingly.
+     */
     initServer: function() {
         var that = this;
         var loadingView = new LoadingView($._('Loading server informations')).render();
@@ -36,11 +46,17 @@ window.Router = Backbone.Router.extend({
         });
     },
 
+    /**
+     * Display the login view.
+     */
     login: function() {
         if (!window.server.isPublic())
             new LoginView().render();
     },
 
+    /**
+     * Log the user out and display the login view.
+     */
     logout: function() {
         if (this.user.isLoggedIn()) {
             this.user.logout();
@@ -48,16 +64,25 @@ window.Router = Backbone.Router.extend({
         }
     },
 
+    /**
+     * Display the register view.
+     */
     register: function() {
         if (!window.server.isPublic() && !this.user.isLoggedIn())
             new RegisterView().render();
     },
 
+    /**
+     * Display the settings view.
+     */
     settings: function() {
         if (!window.server.isPublic() && this.user.isLoggedIn())
             new UserDialogView().render();
     },
 
+    /**
+     * Display the im-/export view.
+     */
     "import": function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
             if (Modernizr.file) {
@@ -71,11 +96,17 @@ window.Router = Backbone.Router.extend({
         }
     },
 
+    /**
+     * Display the admin view.
+     */
     admin: function() {
         if (!window.server.isPublic() && this.user.get("admin"))
             this.adminView = new AdminView({remove: _.bind(this.onAdminRemove, this)}).render();
     },
 
+    /**
+     * Change the content of the admin view to the new user view.
+     */
     adminNewUser: function() {
         if (!window.server.isPublic() && this.user.get("admin")) {
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
@@ -85,6 +116,11 @@ window.Router = Backbone.Router.extend({
         }  
     },
 
+    /**
+     * Change the content of the admin view to the edit user view.
+     *
+     * @param id The id of the user to edit
+     */
     adminEditUser: function(id) {
         if (!window.server.isPublic() && this.user.get("admin")) {
             if (_.isNull(this.adminView) || _.isUndefined(this.adminView))
@@ -109,11 +145,19 @@ window.Router = Backbone.Router.extend({
         }
     },
 
+    /**
+     * Display the billing view.
+     */
     billing: function() {
         if (!window.server.isPublic() && this.user.get("admin"))
             this.billingView = new BillingView({remove: _.bind(this.onBillingRemove, this)}).render();
     },
 
+    /**
+     * Display an old request by loading it from the server.
+     *
+     * @param id The id of the old request
+     */
     request: function(id) {
         window.api.getRequest({
             id: id,
@@ -135,6 +179,9 @@ window.Router = Backbone.Router.extend({
         this.billingView = null;
     },
 
+    /**
+     * Navigate to the requested url after a successful login.
+     */
     onLogin: function (success) {
         if (success && !_.isUndefined(this.lastURL) && !_.isNull(this.lastURL)) {
             this.navigate(this.lastURL, true);

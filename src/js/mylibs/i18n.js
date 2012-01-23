@@ -23,8 +23,8 @@ if (lang !== default_lang) {
 /**
  * Get the translated version of key. Can also be used as $._(key).
  *
- * @param {String} The string to be translated
- * @returns {String} The translated string
+ * @param key The string to be translated
+ * @returns The translated string
  */
 function gettext(key) {
     if (i18n[key] && i18n[key].length > 0) {
