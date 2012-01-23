@@ -102,7 +102,7 @@ window.SidebarView = Backbone.View.extend({
                 title: $._('Error'),
                 message: $._('No algorithm selected.')
             }).render();
-        } else if (window.markList.length < window.guiModel.getCurrentAlgorithm().constraints.minPoints) {
+        } else if (window.markList.length < window.server.get("algorithms")[$('#algorithms')[0].selectedIndex].constraints.minPoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
