@@ -62,6 +62,42 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
+// Helper for constraints
+Handlebars.registerHelper('constraintsHelper', function (context) {
+    // context: type, value, key
+    var ret = "<div class='clearfix'><label for='pc_" + context.key + "'><b>" + context.key + ":</b></label>";
+    switch (context.type) {
+    case "boolean":
+        // display a checkbox and set its checked state
+        var checked = "";
+        if (context.value == true) {
+            checked = "checked";
+        }
+        ret += "<input type='checkbox' name='pc_" + context.key + "' id='pc_" + context.key + "' " + checked + "/></div>";
+        break;
+
+    case "integer":
+        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /></div>";
+        break;
+
+    case "float":
+        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /></div>";
+        break;
+
+    case "meter":
+        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /> m</div>";
+        break;
+
+    case "price":
+        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /> &#8364;</div>";
+        break;
+    }
+    return ret;
+});
+templates.constraintsView = "{{{constraintsHelper this}}}";
+templates.constraintsView = Handlebars.compile(templates.constraintsView);
+
+
 templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';
 templates.markView = Handlebars.compile(templates.markView);
 

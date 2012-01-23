@@ -47,39 +47,20 @@ window.DataView = Backbone.View.extend({
         // add fields to edit pointconstraints
         var constraintsHtml = "", key;
         for (var i = 0; i < pointconstraints.length; i++) {
-			key = pointconstraints[i].name;
+            key = pointconstraints[i].name;
 
-			var value = "";
-			if (!_.isUndefined(marker.get(key))) {
-				value = marker.get(key);
-			}
-			
- 			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
-			if (pointconstraints[i].type == "boolean") {
-				// display a checkbox and set its checked state
-				var checked = "";
-				if (value == true) {
-					checked = "checked";
-				}
-				constraintsHtml += "<input type='checkbox' name='pc_" + key + "' id='pc_" + key + "' " + checked + "/></div>";
-			} else {
-				// display numberinputs for int, float, meter and price
-				switch (pointconstraints[i].type) {
-					case "integer":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-						break;
-					case "float":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-						break;
-					case "meter":
-							constraintsHtml += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
-						break;
-					case "price":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> &#8364;</div>";
-						break;
-				}
-			}
-		}
+            var value = "";
+            if (!_.isUndefined(marker.get(key))) {
+                value = marker.get(key);
+            }
+            
+            var data = {
+                key: key,
+                value: value,
+                type: pointconstraints[i].type
+            };
+            constraintsHtml += templates.constraintsView(data);
+        }
 		
 	
         var data = {
