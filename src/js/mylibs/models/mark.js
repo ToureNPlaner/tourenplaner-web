@@ -58,8 +58,7 @@ window.Mark = Backbone.Model.extend({
         };
 
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.guiModel.getCurrentAlgorithm().pointconstraints;
-
+        var pointconstraints = window.server.get("algorithms")[$('#algorithms')[0].selectedIndex];
         if (!_.isNull(pointconstraints)) {
             for (var i = 0; i < pointconstraints.length; i++) {
                 var key = pointconstraints[i].name;

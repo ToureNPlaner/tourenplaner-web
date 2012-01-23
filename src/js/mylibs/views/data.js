@@ -1,6 +1,7 @@
 window.DataView = Backbone.View.extend({
 
     id: 'data',
+    currentMarker: null,
 
     /**
      * Used to save the old size (before minimizing). Using this, we can restore the old size.
@@ -9,10 +10,6 @@ window.DataView = Backbone.View.extend({
 
     events: {
         "click span.minmax a": "onMinMax"
-    },
-
-    initialize: function () {
-        window.guiModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
     },
 
     render: function () {
@@ -26,16 +23,26 @@ window.DataView = Backbone.View.extend({
         return this;
     },
     
-    testFkt: function() {
-    
-    	alert("SChon stier he");
+        showMarker: function (marker) {
+        var that = this;
+
+        if (this.currentMarker != null) {
+            this.currentMarker.unbind("change:lonlat");
+        }
+        
+        this.currentMarker = marker;
+        this.currentMarker.bind("change:lonlat", function() {
+            that.onDataViewChange(that, marker);
+        });
+
+        this.onDataViewChange(this, marker);
     },
-    
-     onDataViewChange: function (model, marker) {
+
+    onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.map.transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.guiModel.getCurrentAlgorithm().pointconstraints;
+        var pointconstraints = window.server.get("algorithms")[$('#algorithms')[0].selectedIndex].pointconstraints;
 
         // add fields to edit pointconstraints
         var constraintsHtml = "", key;
@@ -47,7 +54,7 @@ window.DataView = Backbone.View.extend({
 				value = marker.get(key);
 			}
 			
-			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
+ 			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
 			if (pointconstraints[i].type == "boolean") {
 				// display a checkbox and set its checked state
 				var checked = "";

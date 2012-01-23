@@ -19,7 +19,6 @@ $(function() {
 
     window.map = new Map("map");
 
-    window.guiModel = new GuiModel();
     window.markList = new MarkList();
 
     window.body = new BodyView();
