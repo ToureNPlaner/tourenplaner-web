@@ -310,8 +310,7 @@ templates.billingMainView =  '<table>\
                                     <th>#</th>\
                                     <th>' + $._('User ID') + '</th>\
                                     <th>' + $._('Algorithm') + '</th>\
-                                    <th>' + $._('Costs') + '</th>\
-                                    <th>' + $._('is Paid') + '</th>\
+                                    <th>' + $._('Cost') + '</th>\
                                     <th>' + $._('Request Date') + '</th>\
                                     <th>' + $._('Finish Date') + '</th>\
                                     <th>' + $._('Duration') + '</th>\
@@ -327,8 +326,7 @@ templates.billingTableRowView = '<tr id="billing-{{request.requestid}}">\
                                 <td>{{request.requestid}}</td>\
                                 <td>{{request.userid}}</td>\
                                 <td>{{request.algorithm}}</td>\
-                                <td>{{request.costs}}</td>\
-                                <td class="center">{{#if request.ispaid}}&#10004;{{else}}&#10006;{{/if}}</td>\
+                                <td>{{request.cost}}</td>\
                                 <td>{{request.requestdate}}</td>\
                                 <td>{{request.finisheddate}}</td>\
                                 <td>{{request.duration}}</td>\

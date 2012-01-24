@@ -248,10 +248,9 @@ $.mockjax({
                     request: {"points": [{"lt":487816670, "ln":91752781}, {"lt":525180560, "ln":133933330}]},
                     response: {"way":[{"lt":487816670, "ln":91752781},{"lt":48702700,"ln":91706700},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":124667000},{"lt":525180560, "ln":133933330}]},
-                    costs: 123.24,
-                    ispaid: true,
-                    requestdate: "2011-12-11T13:55:30Z",
-                    finisheddate: "2011-12-11T13:56:14Z",
+                    cost: 123.24,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
+                    finisheddate: "2011-12-11T13:55:56.000+0000",
                     duration: 500,
                     status: "OK"
                 },{
@@ -261,9 +260,8 @@ $.mockjax({
                 	request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
                     response: {"way":[{"lt":525180560,"ln":133933330},{"lt":281427000,"ln":201567000},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":1294667000},{"lt":487816670,"ln":91752781}]},
-                    costs: 12.90,
-                    ispaid: false,
-                    requestdate: "2011-12-11T13:55:30Z",
+                    cost: 12.90,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
                     finisheddate: null,
                     duration: 42,
                     status: "Failed"
@@ -283,17 +281,16 @@ $.mockjax({
     responseText: {
                 number: 100,
                 requests: [{
-                	requestid: 0,
-                	userid: 42,
-                	algorithm: "sp",
-                	request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
-                    response: {"way":[{"lt":525180560,"ln":133933330},{"lt":535180560,"ln":143933330},
+                    requestid: 1,
+                    userid: 1,
+                    algorithm: "nns",
+                    request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
+                    response: {"way":[{"lt":525180560,"ln":133933330},{"lt":281427000,"ln":201567000},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":1294667000},{"lt":487816670,"ln":91752781}]},
-                    costs: 123.24,
-                    ispaid: true,
-                    requestdate: "2011-12-11T13:55:30Z",
+                    cost: 12.90,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
                     finisheddate: null,
-                    duration: 500,
+                    duration: 42,
                     status: "Pending"
                 }]
     }
@@ -317,7 +314,9 @@ $.mockjax({
                     lastname: "Mustermann",
                     address: "Musterstrasse 10, 12345 Musterstadt",
                     admin: false,
-                    active: true
+                    status: "verified",
+                    resitrationdate: "2011-12-11T13:55:30.000+0000",
+                    verifieddate: null
             };
             var user2 = _.extend({}, user, {active: false, userid: 2});
 
