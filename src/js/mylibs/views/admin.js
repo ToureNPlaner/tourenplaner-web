@@ -100,8 +100,11 @@ window.AdminView = Backbone.View.extend({
                         if (_.isNumber(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
+                    loadingView.remove();
+                } else {
+                    loadingView.remove();
+                    that.remove();
                 }
-                loadingView.remove();
             }
         });
     },
