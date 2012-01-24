@@ -211,7 +211,7 @@ $.mockjax({
  * Returns user object.
  */
 $.mockjax({
-    url: "/updateuse?ID=*",
+    url: "/updateuser?ID=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
