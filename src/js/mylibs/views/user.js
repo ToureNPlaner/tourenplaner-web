@@ -91,8 +91,8 @@ window.UserView = Backbone.View.extend({
             lastname: this.$('#lastname').val(),
             address: this.$('#address').val(),
             email: this.$('#email').val(),
-            active: this.$('#active').val(),
-            admin: this.$('#administrator').val()
+            active: this.$('#active').is(':checked'),
+            admin: this.$('#administrator').is(':checked')
         });
         if (!_.isEmpty(this.$('#password').val()))
             user.set({password: this.$('#password').val()});
