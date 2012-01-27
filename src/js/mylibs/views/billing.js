@@ -85,7 +85,8 @@ window.BillingView = Backbone.View.extend({
 
                     that.$('.modal-body').append(templates.paginationView({pages: html}));
                     that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
-                    that.$('#billing').css({width: that.$('.modal-body').outerWidth() + 'px'});
+                    // ugly but it works
+                    $('#billing').css({width: $('#billing.modal div.modal-body table thead').outerWidth() + 20 + 'px'});
 
                     if (page !== 1)
                         that.$('.pagination li').first().removeClass('disabled');
@@ -100,7 +101,7 @@ window.BillingView = Backbone.View.extend({
                         if (_.isNumber(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
-                loadingView.remove();
+                    loadingView.remove();
                 } else {
                     loadingView.remove();
                     that.remove();
