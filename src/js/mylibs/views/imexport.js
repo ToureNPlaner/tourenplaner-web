@@ -32,11 +32,12 @@ window.ImExportView = Backbone.View.extend({
     },
 
     onTabsChange: function(e) {
+        if ($(e.target).parent().hasClass('active'))
+            return false;
+
         this.$('ul.tabs li').each(function() {
-            if ($(this).hasClass('active'))
-                $(this).removeClass('active');
+            $(this).toggleClass('active');
         });
-        $(e.target).parent().addClass("active");
 
         this.$('#import').toggle();
         this.$('#export').toggle();

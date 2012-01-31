@@ -342,8 +342,8 @@ templates.imexportView = '<div class="modal-header">\
                           </div>\
                           <div class="modal-body">\
                             <ul class="tabs">\
-                              <li class="active"><a href="#">' + $._('Import') + '</a></li>\
-                              <li><a href="#">' + $._('Export') + '</a></li>\
+                              <li class="import active"><a href="#">' + $._('Import') + '</a></li>\
+                              <li class="export"><a href="#">' + $._('Export') + '</a></li>\
                             </ul>\
                             <div id="import">\
                               <p>' + $._('Choose a valid (exported) file on your harddrive and press "Import" to import all points and routes.') + '</p>\
