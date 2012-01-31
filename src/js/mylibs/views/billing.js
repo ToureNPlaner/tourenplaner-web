@@ -25,8 +25,8 @@ window.BillingView = Backbone.View.extend({
     renderMainView: function () {
         if (_.isUndefined(this.position)) {
             this.position = {
-                limit: 2,
-                offset: 3
+                limit: 8,
+                offset: 0
             };
         }
         loadingView = new LoadingView($._("Loading billing data")).render();
@@ -45,7 +45,8 @@ window.BillingView = Backbone.View.extend({
                     	text.requests[i].request = JSON.stringify(text.requests[i].request);
                     	text.requests[i].response = JSON.stringify(text.requests[i].response);
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
-                        // add click handling (draw clicked route)
+                        // add click handling (draw clicked route) TODO: Actually support this
+                        /*
                         $('#billing-'+text.requests[i].requestid).click(function(){
                        		window.markList.deleteAllMarks();
                         	var request = jQuery.parseJSON($(this).closest('tr').children()[0].innerHTML);
@@ -58,6 +59,7 @@ window.BillingView = Backbone.View.extend({
 							window.map.drawRoute(response);
 							that.remove();
 						});
+						*/
 						
                     }
                    	 
