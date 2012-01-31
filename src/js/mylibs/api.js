@@ -176,7 +176,7 @@ _.extend(window.Api.prototype, {
     getUser : function (args) {
         var suffix = 'getuser';
         if (args.id && !_.isNaN(args.id))
-            suffix += '?ID=' + args.id;
+            suffix += '?id=' + args.id;
 
         this.send({
             suffix : suffix,
@@ -196,7 +196,7 @@ _.extend(window.Api.prototype, {
 
         var suffix = 'updateuser';
         if (args.id && !_.isNaN(args.id))
-            suffix += '?ID=' + args.id;
+            suffix += '?id=' + args.id;
 
         this.send({
             type : 'POST',
@@ -215,11 +215,10 @@ _.extend(window.Api.prototype, {
      * param: offset of first item
      */
     listRequests : function (args) {
-        if (!args || !args.limit || !args.offset ||
-            args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
             
-        var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
+        var suffix = 'listrequests?limit=' + args.limit + '&offset=' + args.offset;
         if (args.id && !isNaN(args.id))
             suffix += '&ID=' + args.id;
 
@@ -239,11 +238,10 @@ _.extend(window.Api.prototype, {
      * param: offset of first user
      */
     listUsers : function (args) {
-        if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) ||
-            isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
+        if (!args || isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
             return false;
         this.send({
-            suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
+            suffix : 'listusers?limit=' + args.limit + '&offset=' + args.offset,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
@@ -259,7 +257,7 @@ _.extend(window.Api.prototype, {
         if (!args || !args.id || isNaN(args.id))
             return false;
         this.send({
-            suffix : 'deleteuser?ID=' + args.id,
+            suffix : 'deleteuser?id=' + args.id,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
