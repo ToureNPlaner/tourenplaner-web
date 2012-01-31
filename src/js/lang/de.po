@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 15:05+0100\n"
-"PO-Revision-Date: 2012-01-31 15:06+0100\n"
+"POT-Creation-Date: 2012-01-31 15:40+0100\n"
+"PO-Revision-Date: 2012-01-31 15:41+0100\n"
 "Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -65,7 +65,8 @@ msgid "Add Endmarker"
 msgstr "Endmarkierung hinzufügen"
 
 #: router.js:26
-msgid "Loading server informations"
+#, fuzzy
+msgid "Loading server information"
 msgstr "Lade Serverinformationen"
 
 #: router.js:67

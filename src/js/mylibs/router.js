@@ -23,7 +23,7 @@ window.Router = Backbone.Router.extend({
 
     initServer: function() {
         var that = this;
-        var loadingView = new LoadingView($._('Loading server informations')).render();
+        var loadingView = new LoadingView($._('Loading server information')).render();
 
         window.server.getServerInfo(function() {
             if (window.server.isPublic()) {
