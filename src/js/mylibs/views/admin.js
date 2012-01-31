@@ -46,20 +46,20 @@ window.AdminView = Backbone.View.extend({
 
                     // Update table
                     that.$('tbody').html('');
-                    for (var i in text.requests)
-                        that.$('tbody').append(templates.adminTableRowView({user: text.requests[i]}));
+                    for (var i in text.users)
+                        that.$('tbody').append(templates.adminTableRowView({user: text.users[i]}));
 
                     that.$('tbody a.activate').each(function () {
                         var i = $(this).parents('tr').index();
-                        $(this).click(_.bind(that.onActivateClick, that, text.requests[i]));
+                        $(this).click(_.bind(that.onActivateClick, that, text.users[i]));
                     });
                     that.$('tbody a.delete').each(function () {
                         var i = $(this).parents('tr').index();
-                        $(this).click(_.bind(that.onDeleteClick, that, text.requests[i]));
+                        $(this).click(_.bind(that.onDeleteClick, that, text.users[i]));
                     });
                     that.$('tbody a.edit').each(function () {
                         var i = $(this).parents('tr').index();
-                        $(this).click(_.bind(that.onEditClick, that, text.requests[i]));
+                        $(this).click(_.bind(that.onEditClick, that, text.users[i]));
                     });
 
                     // Update pagination
