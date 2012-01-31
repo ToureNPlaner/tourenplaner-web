@@ -356,7 +356,7 @@ templates.imexportView = '<div class="modal-header">\
                             </div>\
                           </div>\
                           <div class="modal-footer">\
-                            <a href="#" class="btn secondary cancel">Close</a>\
+                            <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                           </div>';
 
 // pagination
