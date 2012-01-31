@@ -322,7 +322,7 @@ $.mockjax({
 
             this.responseText = {
                 number: 10,
-                requests: [user, user, user2, user, user, user, user2, user, user, user]
+                users: [user, user, user2, user, user, user, user2, user, user, user]
             };
     }
 });
