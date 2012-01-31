@@ -8,7 +8,7 @@ window.ImExportView = Backbone.View.extend({
        "click .modal-footer a.cancel": "remove",
        "click ul.tabs a": "onTabsChange",
        "click a.import": "onImport",
-       "click a.export": "onExport"
+       "click a.export": "onExport" 
     },
 
     render: function() {
