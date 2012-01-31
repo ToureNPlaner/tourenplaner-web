@@ -8,7 +8,7 @@ window.ImExportView = Backbone.View.extend({
        "click .modal-footer a.cancel": "remove",
        "click ul.tabs a": "onTabsChange",
        "click a.import": "onImport",
-       "click a.export": "onExport"
+       "click a.export": "onExport" 
     },
 
     render: function() {
@@ -51,7 +51,7 @@ window.ImExportView = Backbone.View.extend({
             new MessageView({title: $._('Error!'), message: $._('No file specified')}).render();
             return false;
         }
-
+        
         var files = evt.target.files;
         // Assume there is only one file selected
         var file = files[0];
