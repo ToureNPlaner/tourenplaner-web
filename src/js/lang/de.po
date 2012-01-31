@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 15:40+0100\n"
-"PO-Revision-Date: 2012-01-31 15:41+0100\n"
+"POT-Creation-Date: 2012-01-31 15:42+0100\n"
+"PO-Revision-Date: 2012-01-31 15:43+0100\n"
 "Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -91,7 +91,8 @@ msgid "Your browser doesn't support the HTML 5 File API.<br /> To use the Im-/Ex
 msgstr "Ihr Browser unterstützt die HTML 5 File API nicht.<br /> Um die Im-/Exportfunktionalität zu verwenden, upgraden Sie bitte ihren Browser."
 
 #: router.js:102
-msgid "Loading user informations"
+#, fuzzy
+msgid "Loading user information"
 msgstr "Lade Benutzerinformationen"
 
 #: templates.js:7

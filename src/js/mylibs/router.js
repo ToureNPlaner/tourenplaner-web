@@ -99,7 +99,7 @@ window.Router = Backbone.Router.extend({
                 return;
             }
 
-            this.loadingView = new LoadingView($._('Loading user informations')).render();
+            this.loadingView = new LoadingView($._('Loading user information')).render();
 
             var that = this;
             var model = new User().load(id, function () {
