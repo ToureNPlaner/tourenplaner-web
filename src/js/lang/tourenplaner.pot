@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 13:59+0100\n"
+"POT-Creation-Date: 2012-01-31 14:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: api.js:110
-msgid "Errr"
+#: api.js:21
+msgid "Bad request"
+msgstr ""
+
+#: api.js:22
+msgid "Request wasn't successful"
+msgstr ""
+
+#: api.js:110 views/sidebar.js:102 views/sidebar.js:107 views/topbar.js:54
+msgid "Error"
 msgstr ""
 
 #: map.contextmenu.js:48
@@ -54,7 +62,9 @@ msgid "Loading server informations"
 msgstr ""
 
 #: router.js:67 templates.js:109 templates.js:112 templates.js:140
-#: templates.js:143 templates.js:234 templates.js:237
+#: templates.js:143 templates.js:234 templates.js:237 views/imexport.js:51
+#: views/login.js:41 views/register.js:58 views/register.js:118
+#: views/user.js:46 views/user.js:118 views/user.js:141
 msgid "Error!"
 msgstr ""
 
@@ -108,7 +118,7 @@ msgstr ""
 msgid "Switch order"
 msgstr ""
 
-#: templates.js:37
+#: templates.js:37 views/sidebar.js:90
 msgid "No points defined!"
 msgstr ""
 
@@ -318,4 +328,115 @@ msgstr ""
 
 #: views/billing.js:32
 msgid "Loading billing data"
+msgstr ""
+
+#: views/admin.js:36
+msgid "Loading table data"
+msgstr ""
+
+#: views/admin.js:185
+msgid "Do you really want to delete the user?"
+msgstr ""
+
+#: views/imexport.js:51
+msgid "No file specified"
+msgstr ""
+
+#: views/login.js:30 views/login.js:31 views/register.js:48
+#: views/register.js:49 views/user.js:36 views/user.js:37
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: views/login.js:33
+msgid "Please enter your password"
+msgstr ""
+
+#: views/login.js:92
+msgid "Logging in"
+msgstr ""
+
+#: views/mark.js:9
+msgid "Marker"
+msgstr ""
+
+#: views/mark.js:20
+msgid "Start"
+msgstr ""
+
+#: views/mark.js:22
+msgid "Target"
+msgstr ""
+
+#: views/register.js:36
+msgid "Please enter your firstname"
+msgstr ""
+
+#: views/register.js:37
+msgid "Please enter your lastname"
+msgstr ""
+
+#: views/register.js:39
+msgid "Please provide a password"
+msgstr ""
+
+#: views/register.js:40 views/register.js:44 views/user.js:33
+msgid "Enter at least 5 characters"
+msgstr ""
+
+#: views/register.js:43
+msgid "Please repeat your password"
+msgstr ""
+
+#: views/register.js:45
+msgid "Enter the same password as above"
+msgstr ""
+
+#: views/register.js:94 views/user.js:79
+msgid "Sending data"
+msgstr ""
+
+#: views/register.js:110
+msgid "Registration successful"
+msgstr ""
+
+#: views/register.js:111
+msgid ""
+"The registration was successful. Please wait until an administrator "
+"activates your account."
+msgstr ""
+
+#: views/sidebar.js:103
+msgid "No algorithm selected."
+msgstr ""
+
+#: views/sidebar.js:108
+msgid "Not enough points defined."
+msgstr ""
+
+#: views/topbar.js:54
+msgid "Couldn't find the spot"
+msgstr ""
+
+#: views/user.js:30
+msgid "Please enter a firstname"
+msgstr ""
+
+#: views/user.js:31
+msgid "Please enter a lastname"
+msgstr ""
+
+#: views/user.js:110
+msgid "User created"
+msgstr ""
+
+#: views/user.js:111
+msgid "The user was created successfully"
+msgstr ""
+
+#: views/user.js:133
+msgid "Update successful"
+msgstr ""
+
+#: views/user.js:134
+msgid "The user was updated successfully"
 msgstr ""
