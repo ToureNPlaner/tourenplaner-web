@@ -125,9 +125,9 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onClear: function () {
-        var mapObject = window.map;
         window.markList.deleteAllMarks();
         window.map.drawRoute("");
+        window.map.resetRoute();
     },
 
     onFlip: function() {
