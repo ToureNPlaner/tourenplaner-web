@@ -18,8 +18,8 @@ _.extend(window.Api.prototype, {
         ssl : false,
         realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
-                 "message": "Bad request",
-                 "details": "Request wasn't successful'"
+                 "message": $._("Bad request"),
+                 "details": $._("Request wasn't successful")
                }
     },
 
