@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 14:30+0100\n"
+"POT-Creation-Date: 2012-01-31 15:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 #: router.js:67 templates.js:109 templates.js:112 templates.js:140
 #: templates.js:143 templates.js:234 templates.js:237 views/imexport.js:51
 #: views/login.js:41 views/register.js:58 views/register.js:118
-#: views/user.js:46 views/user.js:118 views/user.js:141
+#: views/user.js:46 views/user.js:123 views/user.js:146
 msgid "Error!"
 msgstr ""
 
@@ -76,6 +76,10 @@ msgstr ""
 
 #: router.js:102
 msgid "Loading user informations"
+msgstr ""
+
+#: templates.js:7
+msgid "Search"
 msgstr ""
 
 #: templates.js:12
@@ -210,7 +214,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: templates.js:199 templates.js:304 templates.js:380
+#: templates.js:199 templates.js:304 templates.js:359 templates.js:380
 msgid "Close"
 msgstr ""
 
@@ -391,7 +395,7 @@ msgstr ""
 msgid "Enter the same password as above"
 msgstr ""
 
-#: views/register.js:94 views/user.js:79
+#: views/register.js:94 views/user.js:84
 msgid "Sending data"
 msgstr ""
 
@@ -429,18 +433,18 @@ msgstr ""
 msgid "Please enter a lastname"
 msgstr ""
 
-#: views/user.js:110
+#: views/user.js:115
 msgid "User created"
 msgstr ""
 
-#: views/user.js:111
+#: views/user.js:116
 msgid "The user was created successfully"
 msgstr ""
 
-#: views/user.js:133
+#: views/user.js:138
 msgid "Update successful"
 msgstr ""
 
-#: views/user.js:134
+#: views/user.js:139
 msgid "The user was updated successfully"
 msgstr ""

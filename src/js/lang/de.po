@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 14:30+0100\n"
-"PO-Revision-Date: 2012-01-31 14:31+0100\n"
+"POT-Creation-Date: 2012-01-31 15:05+0100\n"
+"PO-Revision-Date: 2012-01-31 15:06+0100\n"
 "Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -80,8 +80,8 @@ msgstr "Lade Serverinformationen"
 #: views/register.js:58
 #: views/register.js:118
 #: views/user.js:46
-#: views/user.js:118
-#: views/user.js:141
+#: views/user.js:123
+#: views/user.js:146
 msgid "Error!"
 msgstr "Fehler!"
 
@@ -92,6 +92,10 @@ msgstr "Ihr Browser unterstützt die HTML 5 File API nicht.<br /> Um die Im-/Exp
 #: router.js:102
 msgid "Loading user informations"
 msgstr "Lade Benutzerinformationen"
+
+#: templates.js:7
+msgid "Search"
+msgstr "Suche"
 
 #: templates.js:12
 msgid "Settings"
@@ -246,6 +250,7 @@ msgstr "Zurück"
 
 #: templates.js:199
 #: templates.js:304
+#: templates.js:359
 #: templates.js:380
 msgid "Close"
 msgstr "Schließen"
@@ -434,7 +439,7 @@ msgid "Enter the same password as above"
 msgstr "Geben Sie dasselbe Passwort wie oben an"
 
 #: views/register.js:94
-#: views/user.js:79
+#: views/user.js:84
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
@@ -470,19 +475,19 @@ msgstr "Bitte geben Sie einen Vornamen an"
 msgid "Please enter a lastname"
 msgstr "Bitte geben Sie einen Nachnamen an"
 
-#: views/user.js:110
+#: views/user.js:115
 msgid "User created"
 msgstr "Benutzer angelegt"
 
-#: views/user.js:111
+#: views/user.js:116
 msgid "The user was created successfully"
 msgstr "Der Benutzer wurde erfolgreich angelegt"
 
-#: views/user.js:133
+#: views/user.js:138
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: views/user.js:134
+#: views/user.js:139
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
 
