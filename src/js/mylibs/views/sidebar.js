@@ -108,7 +108,7 @@ window.SidebarView = Backbone.View.extend({
                message: $._('Not enough points defined.')
             }).render();
         } else {
-            loadingView = new LoadingView('Waiting for response from server ...').render();
+            loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             window.api.alg({
                 alg: this.$('#algorithms').val(),
                 points: window.markList.toJSON(),

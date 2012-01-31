@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 14:18+0100\n"
-"PO-Revision-Date: 2012-01-31 14:23+0100\n"
+"POT-Creation-Date: 2012-01-31 14:30+0100\n"
+"PO-Revision-Date: 2012-01-31 14:31+0100\n"
 "Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -453,6 +453,10 @@ msgstr "Kein Algorithmus ausgewählt."
 #: views/sidebar.js:108
 msgid "Not enough points defined."
 msgstr "Nicht genug Punkte definiert."
+
+#: views/sidebar.js:111
+msgid "Waiting for response from server ..."
+msgstr "Warte auf Antwort vom Server ..."
 
 #: views/topbar.js:54
 msgid "Couldn't find the spot"
