@@ -98,7 +98,7 @@ $.mockjax({
         if (_.isUndefined(obj.email) || _.isUndefined(obj.password) || _.isUndefined(obj.firstname) || _.isUndefined(obj.lastname) || _.isUndefined(obj.address) || obj.email == "" || obj.password == "") {
             this.status = 400;
             this.responseText = {
-                errorid: "ENOTVALID",
+                errorid: "ENOTVALid",
                 message: "Validation error",
                 details: "Empty argument"
             };
@@ -161,12 +161,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /getuser?ID=* function on the server.
+ * Mocks the /getuser?id=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/getuser?ID=*",
+    url: "/getuser?id=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -206,12 +206,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /updateuser?ID=* function on the server.
+ * Mocks the /updateuser?id=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/updateuser?ID=*",
+    url: "/updateuser?id=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -231,12 +231,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listrequests?Limit=2&Offset=3 function on the server.
+ * Mocks the /listrequests?limit=2&offset=3 function on the server.
  *
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?Limit=*&Offset=*",
+    url: "/listrequests?limit=*&offset=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -270,12 +270,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listrequests?Limit=1&Offset=3 function on the server.
+ * Mocks the /listrequests?limit=1&offset=3 function on the server.
  *
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?Limit=1&Offset=1032&ID=1024",
+    url: "/listrequests?limit=1&offset=1032&id=1024",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -297,12 +297,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listusers?Limit=*&Offset=* function on the server.
+ * Mocks the /listusers?limit=*&offset=* function on the server.
  *
  * Returns user list.
  */
 $.mockjax({
-    url: "/listusers?Limit=*&Offset=*",
+    url: "/listusers?limit=*&offset=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -329,10 +329,10 @@ $.mockjax({
 
 
 /**
- * Mocks the /deleteuser?ID=94 function on the server.
+ * Mocks the /deleteuser?id=94 function on the server.
  */
 $.mockjax({
-    url: "/deleteuser?ID=*",
+    url: "/deleteuser?id=*",
     responseTimeout: 10,
     status: 201,
     responseText: {}
