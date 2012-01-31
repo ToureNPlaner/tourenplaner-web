@@ -51,7 +51,7 @@ window.TopbarView = Backbone.View.extend({
             }
 
             if (_.isNull(spot)) {
-                new MessageView({title: "Error!", message: "Couldn't find the spot"}).render();
+                new MessageView({title: $._("Error"), message: $._("Couldn't find the spot")}).render();
                 return;
             }
 

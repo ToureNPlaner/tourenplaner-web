@@ -33,7 +33,7 @@ window.AdminView = Backbone.View.extend({
             };
         }
 
-        loadingView = new LoadingView('Loading table data').render();
+        loadingView = new LoadingView($._('Loading table data')).render();
 
         var that = this;
         api.listUsers({
