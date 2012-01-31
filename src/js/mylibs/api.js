@@ -16,11 +16,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
-        realm : 'Tourenplaner',
-        error : {"errorid": "EBADCALL",
-                 "message": $._("Bad request"),
-                 "details": $._("Request wasn't successful")
-               }
+        realm : 'Tourenplaner'
     },
 
     set: function(attrs) {
