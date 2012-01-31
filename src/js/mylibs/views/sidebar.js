@@ -44,7 +44,7 @@ window.SidebarView = Backbone.View.extend({
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
             $algorithms.children().remove();
             for (var i in algorithms) {
-                if (!algorithms[i].hidden)
+                if (!algorithms[i].details.hidden)
                     $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
             }
         }
@@ -108,7 +108,7 @@ window.SidebarView = Backbone.View.extend({
                message: $._('Not enough points defined.')
             }).render();
         } else {
-            loadingView = new LoadingView('Waiting for response from server ...').render();
+            loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             window.api.alg({
                 alg: this.$('#algorithms').val(),
                 points: window.markList.toJSON(),

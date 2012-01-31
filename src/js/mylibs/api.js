@@ -18,8 +18,8 @@ _.extend(window.Api.prototype, {
         ssl : false,
         realm : 'Tourenplaner',
         error : {"errorid": "EBADCALL",
-                 "message": "Bad request",
-                 "details": "Request wasn't successful'"
+                 "message": $._("Bad request"),
+                 "details": $._("Request wasn't successful")
                }
     },
 
@@ -95,7 +95,7 @@ _.extend(window.Api.prototype, {
                     if(errorThrown !== "")
                         text = errorThrown;
                     else
-                        text = that.get('error').message + "<br />" + that.get('error').details; // if everything is empty use standard error
+                        text = that.get('error').message + ": " + that.get('error').details; // if everything is empty use standard error
                 } else {
                     text = JSON.parse(text);
                 }

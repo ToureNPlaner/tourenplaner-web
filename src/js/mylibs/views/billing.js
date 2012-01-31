@@ -29,7 +29,7 @@ window.BillingView = Backbone.View.extend({
                 offset: 0
             };
         }
-        loadingView = new LoadingView('Loading billing data').render();
+        loadingView = new LoadingView($._("Loading billing data")).render();
         var that = this;
         api.listRequests({
             limit: this.position.limit,

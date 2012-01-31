@@ -4,7 +4,7 @@ templates.topbarView = '<div class="fill">\
                             <div class="container">\
                               <h3><a href="#">ToureNPlaner</a></h3>\
                               <form>\
-                                <input type="text" placeholder="Search" />\
+                                <input type="text" placeholder="' + $._('Search') + '" />\
                               </form>\
                               <ul class="nav secondary-nav private-server">\
                                 <li class="user"><a href="#" onclick="return false;"></a></li>\
@@ -356,7 +356,7 @@ templates.imexportView = '<div class="modal-header">\
                             </div>\
                           </div>\
                           <div class="modal-footer">\
-                            <a href="#" class="btn secondary cancel">Close</a>\
+                            <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                           </div>';
 
 // pagination
