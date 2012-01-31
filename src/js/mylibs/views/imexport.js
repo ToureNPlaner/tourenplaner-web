@@ -52,9 +52,7 @@ window.ImExportView = Backbone.View.extend({
             return false;
         }
 
-        var files = evt.target.files;
-        // Assume there is only one file selected
-        var file = files[0];
+        var file = $('#import input[type=file]').get()[0].files[0];
 
         var reader = new FileReader();
         reader.onloadend = (function (file, dialog) {
@@ -75,12 +73,12 @@ window.ImExportView = Backbone.View.extend({
             };
         })(file, that);
         reader.onerror = function (e) {
-            log(e);
+            log("Error", e);
         };
 
         reader.readAsText(file);
 
-       return false;
+        return false;
     },
 
     onExport: function() {
