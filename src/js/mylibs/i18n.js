@@ -27,12 +27,10 @@ if (lang !== default_lang) {
  * @returns {String} The translated string
  */
 function gettext(key) {
-    if (i18n[key] && i18n[key].length > 0) {
+    if (i18n[key] && i18n[key].length > 0)
         return i18n[key];
-    } else {
-        lang === default_lang || log('Unknown translation key:', key);
+    else
         return key;
-    }
 }
 
 $.extend({ '_': gettext });

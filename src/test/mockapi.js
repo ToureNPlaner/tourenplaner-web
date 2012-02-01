@@ -20,6 +20,11 @@ $.mockjax({
                 version: 2,
                 name: "Shortest Path",
                 urlsuffix: "sp",
+                details: {
+                    hidden: false,
+                    minPoints: 2,
+                    sourceIsTarget: false
+                },
                 pointconstraints: [
                     {
                         name: "height",
@@ -38,14 +43,17 @@ $.mockjax({
                         max: 2000.0
                     }
                 ],
-                constraints: {
-                    minPoints: 2,
-                    sourceIsTarget: false
-                }
+                constraints: [
+                ]
             },{
                 version: 2,
                 name: "Traveling Salesman",
                 urlsuffix: "tsp",
+                details: {
+                    hidden: false,
+                    minPoints: 2,
+                    sourceIsTarget: true
+                },
                 pointconstraints: [
                     {
                         name: "height",
@@ -64,18 +72,21 @@ $.mockjax({
                         max: 2000.0
                     }
                 ],
-                constraints: {
-                    minPoints: 2,
+                constraints: [
+                ]
+            },{
+                version: 2,
+                name: "Nearest Neighbor",
+                urlsuffix: "nns",
+                details: {
+                    hidden: true,
+                    minPoints: 1,
                     sourceIsTarget: false
-                }
-            },
-            {
-                version: 1,
-                hidden: true,
-                name: 'Hidden Algorithm',
-                urlsuffix: 'hidden',
-                pointconstraints: [],
-                constraints: {}
+                },
+                pointconstraints: [
+                ],
+                constraints: [
+                ]
             }
         ]
     }
