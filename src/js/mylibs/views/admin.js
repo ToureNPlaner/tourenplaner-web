@@ -182,7 +182,7 @@ window.AdminView = Backbone.View.extend({
     },
 
     onDeleteClick: function (user) {
-        if (confirm($._('Do you really want to delete the user?'))) {
+        if (confirm($._('Do you really want to delete the user: '+user.email))) {
             var that = this;
             api.deleteUser({
                 id: user.userid,
