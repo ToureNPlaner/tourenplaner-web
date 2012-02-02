@@ -1,5 +1,5 @@
 window.BillingView = Backbone.View.extend({
-    id: 'admin',
+    id: 'billing',
     className: 'modal',
 
     events: {

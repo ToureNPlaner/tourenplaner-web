@@ -6,6 +6,7 @@
 #login, #register, #message, #loading {
   display: none;
   width: 470px;
+  margin: -250px 0 0 -225px;
 }
 
 #login .alert-message, #register .alert-message, #admin-user .alert-message {
@@ -107,27 +108,28 @@ div.popover {
   font-weight: bold;
 }
 
-#admin {
+#admin, #billing {
   width: 800px;
+  margin: -300px 0 0 -400px;
 }
-#admin table {
+#admin table, #billing table {
   max-width: 780px;
   height: 250px;
 }
-#admin table td.center {
+#admin table td.center, #billing table td.center {
   text-align: center;
 }
-#admin table td a {
+#admin table td a, #billing table td a {
   padding: 0 5px;
 }
-#admin .pagination {
+#admin .pagination, #billing .pagination {
   margin: 0 auto;
 }
-#admin a.btn.back {
+#admin a.btn.back, #billing a.btn.back {
   display: none;
   float: left;
 }
-#admin a.new-user {
+#admin a.new-user, #billing a.new-user {
   background: url(../img/plus-button.png) no-repeat;
   padding-left: 20px;
 }
