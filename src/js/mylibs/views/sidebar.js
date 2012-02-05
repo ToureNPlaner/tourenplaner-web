@@ -147,8 +147,6 @@ window.SidebarView = Backbone.View.extend({
     onShowAlgs: function() {
         // TODO: move element to algview.js and access it from here
        $('#algview').toggle();
-
-       window.body.main.algview.getSelectedAlgorithm();
     },
 
     onResize: function () {

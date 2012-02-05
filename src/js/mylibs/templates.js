@@ -26,8 +26,8 @@ templates.topbarView = '<div class="fill">\
 templates.sidebarView = '<div style="padding: 5px 0px;">\
                             <form name="route">\
                               <div class="container">\
-                                <h3>' + $._('Algorithms') + ':</h3>\
-                                Selected Alg: <br><a href="#" id="selectedAlg" class="showAlgs">' + $._('No algorithms') + ' </a>\
+                                <h3>' + $._('Selected Algorithm') + ':</h3>\
+                                <a href="#" id="selectedAlg" class="showAlgs">' + $._('No algorithms') + ' </a>\
                               </div>\
                               <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
                               <div class="container">\
@@ -120,14 +120,14 @@ Handlebars.registerHelper('algListHelper', function (context) {
 
     for (var i = 0; i < context.algorithms.length; i++) {
         if (!context.algorithms[i].details.hidden) {
-          var algName = context.algorithms[i].name;
-          var algSuffix = context.algorithms[i].urlsuffix;
-          var checked = "";
+            var algName = context.algorithms[i].name;
+            var algSuffix = context.algorithms[i].urlsuffix;
+            var checked = "";
 
-          if (!_.isUndefined(context.currentAlg) && context.currentAlg.urlsuffix == algSuffix) {
-            checked = " checked";
-          }
-          ret += '<input type="radio" name="alg" value="' + algSuffix + '" ' + checked + '>' + $._(algName) + '</input><br>';
+            if (!_.isUndefined(context.currentAlg) && context.currentAlg.urlsuffix == algSuffix) {
+                checked = " checked";
+            }
+            ret += '<input type="radio" name="alg" value="' + algSuffix + '" ' + checked + '>' + $._(algName) + '</input><br>';
 
         }
     }
@@ -137,20 +137,21 @@ Handlebars.registerHelper('algListHelper', function (context) {
 
 // Helper for global constraints
 Handlebars.registerHelper('algConstraintsHelper', function (context) {
-
-  if (!_.isUndefined(context.currentAlg)) {
-    var data = {
-      constraints: context.currentAlg.constraints,
-      marker: null
-    };
-    return templates.constraintsView(data);
-  }
+    if (!_.isUndefined(context.currentAlg) && context.currentAlg.constraints.length > 0) {
+        var data = {
+            constraints: context.currentAlg.constraints,
+            marker: null
+        };
+        return '<div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
+        <h3>' + $._('Constraints') + ':</h3>' + templates.constraintsView(data);
+    }
 });
 
 templates.algView = '<div style="padding: 5px 0px;" style="visibility:hidden">\
+                      <h3>' + $._('Algorithms') + ':</h3>\
                       <div id="algorithms">{{{algListHelper this}}}</div>\
-                      <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
                       <div id="constraints">{{{algConstraintsHelper this}}}</div>\
+                      <a href="#" class="btn secondary" id="close">' + $._('Close') + '</a>\
                       </div>';
 templates.algView = Handlebars.compile(templates.algView);
 
