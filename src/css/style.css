@@ -85,10 +85,10 @@ div.popover {
   background: white;
   /*border-top: 1px solid black;
   border-left: 1px solid black;*/
-  /*box-shadow: -2px -2px 5px #333;
-  -moz-box-shadow: -2px -2px 5px #333;
-  -webkit-box-shadow: -2px -2px 5px #333;
-  */
+  box-shadow: 0px 0px 5px #333;
+  -moz-box-shadow: 0px 0px 5px #333;
+  -webkit-box-shadow: 0px 0px 5px #333;
+  
 }
 
 #main #map {

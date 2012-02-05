@@ -32,7 +32,10 @@ window.AlgView = Backbone.View.extend({
         };
         $(this.el).html(templates.algView(data));
         $('#main').append(this.el);
-
+        
+        $(this.el).css("border-right", "1px solid #000");
+        $(this.el).css("border-bottom", "1px solid #000");
+        $(this.el).corner("right 10px");
         return this;
     },
 

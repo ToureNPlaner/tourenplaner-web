@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-31 15:42+0100\n"
-"PO-Revision-Date: 2012-01-31 15:43+0100\n"
-"Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
+"PO-Revision-Date: 2012-02-06 00:06+0100\n"
+"Last-Translator: Huy Viet Le <lehy@studi.informatik.uni-stuttgart.de>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -128,6 +128,10 @@ msgid "Logout"
 msgstr "Logout"
 
 #: templates.js:29
+msgid "Selected Algorithm"
+msgstr "Gewählter Algorithmus"
+
+#: templates.js:29
 msgid "Algorithms"
 msgstr "Algorithmen"
 
@@ -161,10 +165,12 @@ msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
 #: templates.js:53
+#, fuzzy
 msgid "Lon"
 msgstr "Breite"
 
 #: templates.js:54
+#, fuzzy
 msgid "Lat"
 msgstr "Höhe"
 
