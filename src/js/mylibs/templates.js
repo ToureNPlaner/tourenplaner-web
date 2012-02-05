@@ -27,9 +27,7 @@ templates.sidebarView = '<div style="padding: 5px 0px;">\
                             <form name="route">\
                               <div class="container">\
                                 <h3>' + $._('Algorithms') + ':</h3>\
-                                <select name="algorithms" id="algorithms">\
-                                  <option value="">' + $._('No algorithms') + '</option>\
-                                </select>\
+                                Selected Alg: <br><a href="#" id="selectedAlg" class="showAlgs">' + $._('No algorithms') + ' </a>\
                               </div>\
                               <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
                               <div class="container">\
@@ -42,6 +40,8 @@ templates.sidebarView = '<div style="padding: 5px 0px;">\
                               </div>\
                             </form>\
                          </div>';
+templates.sidebarView = Handlebars.compile(templates.sidebarView);
+
 
 templates.dataView = '<span class="minmax">\
                         <a href="#">_</a>\
@@ -65,38 +65,94 @@ templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 // Helper for constraints
 Handlebars.registerHelper('constraintsHelper', function (context) {
     // context: type, value, key
-    var ret = "<div class='clearfix'><label for='pc_" + context.key + "'><b>" + context.key + ":</b></label>";
-    switch (context.type) {
-    case "boolean":
-        // display a checkbox and set its checked state
-        var checked = "";
-        if (context.value == true) {
-            checked = "checked";
-        }
-        ret += "<input type='checkbox' name='pc_" + context.key + "' id='pc_" + context.key + "' " + checked + "/></div>";
-        break;
+    var ret = "";
+    for (var i = 0; i < context.constraints.length; i++) {
+      key = context.constraints[i].name;
+      var value = "";
+      var type = context.constraints[i].type;
 
-    case "integer":
-        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /></div>";
-        break;
+      if (context.marker!=null && !_.isUndefined(context.marker.get(key))) {
+          value = context.marker.get(key);
+      }
 
-    case "float":
-        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /></div>";
-        break;
+      var cInfo = "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
+      switch (type) {
+      case "boolean":
+          // display a checkbox and set its checked state
+          var checked = "";
+          if (value == true) {
+              checked = "checked";
+          }
+          cInfo += "<input type='checkbox' name='pc_" + key + "' id='pc_" + key + "' " + checked + "/></div>";
+          break;
 
-    case "meter":
-        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /> m</div>";
-        break;
+      case "integer":
+          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
+          break;
 
-    case "price":
-        ret += "<input value='" + context.value + "' type='text' class='smartspinner' name='pc_" + context.key + "' id='pc_" + context.key + "' /> &#8364;</div>";
-        break;
+      case "float":
+          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
+          break;
+
+      case "meter":
+          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
+          break;
+
+      case "price":
+          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> &#8364;</div>";
+          break;
+      }
+
+      ret += cInfo;
+
     }
+
     return ret;
 });
 templates.constraintsView = "{{{constraintsHelper this}}}";
 templates.constraintsView = Handlebars.compile(templates.constraintsView);
 
+
+
+// Helper for algorithm list
+Handlebars.registerHelper('algListHelper', function (context) {
+    var ret = "";
+
+    for (var i = 0; i < context.algorithms.length; i++) {
+        if (!context.algorithms[i].details.hidden) {
+          var algName = context.algorithms[i].name;
+          var algSuffix = context.algorithms[i].urlsuffix;
+          var checked = "";
+
+          if (!_.isUndefined(context.currentAlg) && context.currentAlg.urlsuffix == algSuffix) {
+            checked = " checked";
+          }
+          ret += '<input type="radio" name="alg" value="' + algSuffix + '" ' + checked + '>' + $._(algName) + '</input><br>';
+
+        }
+    }
+
+    return ret;
+});
+
+// Helper for global constraints
+Handlebars.registerHelper('algConstraintsHelper', function (context) {
+
+  if (!_.isUndefined(context.currentAlg)) {
+    var data = {
+      constraints: context.currentAlg.constraints,
+      marker: null
+    };
+    return templates.constraintsView(data);
+  }
+});
+
+templates.algView = '<div style="padding: 5px 0px;" style="visibility:hidden">\
+                      <div id="algorithms">{{{algListHelper this}}}</div>\
+                      <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
+                      <div id="constraints">{{{algConstraintsHelper this}}}</div>\
+                      </div>';
+templates.algView = Handlebars.compile(templates.algView);
 
 templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';
 templates.markView = Handlebars.compile(templates.markView);

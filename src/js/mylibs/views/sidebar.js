@@ -5,7 +5,8 @@ window.SidebarView = Backbone.View.extend({
     events: {
         "click a.clear": "onClear",
         "click a.send": "onSend",
-        "click a.flip": "onFlip"
+        "click a.flip": "onFlip",
+        "click a.showAlgs": "onShowAlgs"
     },
 
     initialize: function () {
@@ -96,21 +97,22 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onSend: function () {
-        var alg = this.$('#algorithms').val();
+        var alg = window.algview.getSelectedAlgorithm().urlsuffix;
         if (_.isUndefined(alg) || _.isEmpty(alg))  {
             new MessageView({
                 title: $._('Error'),
                 message: $._('No algorithm selected.')
             }).render();
-        } else if (window.markList.length < window.server.get("algorithms")[$('#algorithms')[0].selectedIndex].details.minPoints) {
+        } else if (window.markList.length < window.algview.getSelectedAlgorithm().details.minPoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
             }).render();
         } else {
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
-            window.api.alg({
-                alg: this.$('#algorithms').val(),
+            
+            var jsonObj = {
+                alg: window.algview.$('input[@name=alg]:checked').val(),
                 points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {
@@ -120,7 +122,15 @@ window.SidebarView = Backbone.View.extend({
                     }
                     loadingView.remove();
                 }
-            });
+            };
+
+            // if constraints are available, then add them to request object
+            var constraints = window.algview.getConstraintSettings();
+            if (constraints != null) {
+                jsonObj['constraints'] = constraints;
+            }
+
+            window.api.alg(jsonObj);
         }
     },
 
@@ -132,6 +142,13 @@ window.SidebarView = Backbone.View.extend({
 
     onFlip: function() {
         window.markList.flip();
+    },
+
+    onShowAlgs: function() {
+        // TODO: move element to algview.js and access it from here
+       $('#algview').toggle();
+
+       window.body.main.algview.getSelectedAlgorithm();
     },
 
     onResize: function () {

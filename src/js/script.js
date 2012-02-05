@@ -2,9 +2,9 @@ $(function() {
     window.api = null;
     if (location.protocol === 'file:' || location.host === 'localhost' || location.host === '127.0.0.1') {
         window.api = new Api({
-            server: null
-//            server: "gerbera.informatik.uni-stuttgart.de",
-//            port: 8080
+//            server: null
+            server: "gerbera.informatik.uni-stuttgart.de",
+            port: 8080
         });
     } else {
         window.api = new Api({
@@ -22,6 +22,7 @@ $(function() {
     window.markList = new MarkList();
 
     window.body = new BodyView();
+    window.algview = window.body.main.algview;
 
     window.app.initServer();
 });
