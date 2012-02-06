@@ -76,6 +76,41 @@ $.mockjax({
                 ]
             },{
                 version: 2,
+                name: "Constrained Shortest Path",
+                urlsuffix: "csp",
+                details: {
+                    hidden: false,
+                    minPoints: 2,
+                    sourceIsTarget: false
+                },
+                pointconstraints: [
+                    {
+                        name: "height",
+                        type: "meter",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "BoolConstraint",
+                        type: "boolean",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "PriceConstraint",
+                        type: "price",
+                        min: 0.0,
+                        max: 2000.0
+                    }
+                ],
+                constraints: [
+                    {
+                        name: "maxAltitudeDifference",
+                        description: "The maximum difference in altitude combined over the path",
+                        type: "meter",
+                        min: 0
+                    }
+                ]
+            },{
+                version: 2,
                 name: "Nearest Neighbor",
                 urlsuffix: "nns",
                 details: {

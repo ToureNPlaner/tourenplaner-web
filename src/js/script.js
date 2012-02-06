@@ -22,6 +22,7 @@ $(function() {
     window.markList = new MarkList();
 
     window.body = new BodyView();
+    window.algview = window.body.main.algview;
 
     window.app.initServer();
 });

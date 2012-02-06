@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 10:12+0100\n"
-"PO-Revision-Date: 2012-02-06 10:12+0100\n"
-"Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
+"POT-Creation-Date: 2012-01-31 15:42+0100\n"
+"PO-Revision-Date: 2012-02-06 00:06+0100\n"
+"Last-Translator: Huy Viet Le <lehy@studi.informatik.uni-stuttgart.de>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,15 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-KeywordsList: $._\n"
 
-#: api.js:106
+#: api.js:21
+msgid "Bad request"
+msgstr "Anfrage fehlerhaft"
+
+#: api.js:22
+msgid "Request wasn't successful"
+msgstr "Anfrage war erfolglos"
+
+#: api.js:110
 #: views/sidebar.js:102
 #: views/sidebar.js:107
 #: views/topbar.js:54
@@ -68,7 +76,7 @@ msgstr "Lade Serverinformationen"
 #: templates.js:143
 #: templates.js:234
 #: templates.js:237
-#: views/imexport.js:52
+#: views/imexport.js:51
 #: views/login.js:41
 #: views/register.js:58
 #: views/register.js:118
@@ -86,10 +94,6 @@ msgstr "Ihr Browser unterstützt die HTML 5 File API nicht.<br /> Um die Im-/Exp
 #, fuzzy
 msgid "Loading user information"
 msgstr "Lade Benutzerinformationen"
-
-#: router.js:121
-msgid "Loading route information"
-msgstr "Lade Weginformationen"
 
 #: templates.js:7
 msgid "Search"
@@ -110,7 +114,7 @@ msgid "Billing"
 msgstr "Rechnungen"
 
 #: templates.js:16
-#: templates.js:338
+#: templates.js:341
 msgid "Im-/Export"
 msgstr "Im-/Export"
 
@@ -122,6 +126,10 @@ msgstr "Administration"
 #: templates.js:19
 msgid "Logout"
 msgstr "Logout"
+
+#: templates.js:29
+msgid "Selected Algorithm"
+msgstr "Gewählter Algorithmus"
 
 #: templates.js:29
 msgid "Algorithms"
@@ -157,10 +165,12 @@ msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
 #: templates.js:53
+#, fuzzy
 msgid "Lon"
 msgstr "Breite"
 
 #: templates.js:54
+#, fuzzy
 msgid "Lat"
 msgstr "Höhe"
 
@@ -248,8 +258,8 @@ msgstr "Zurück"
 
 #: templates.js:199
 #: templates.js:304
-#: templates.js:356
-#: templates.js:377
+#: templates.js:359
+#: templates.js:380
 msgid "Close"
 msgstr "Schließen"
 
@@ -327,29 +337,29 @@ msgstr "Dauer"
 msgid "Status"
 msgstr "Status"
 
-#: templates.js:342
-#: templates.js:348
+#: templates.js:345
+#: templates.js:351
 msgid "Import"
 msgstr "Importieren"
 
-#: templates.js:343
-#: templates.js:352
+#: templates.js:346
+#: templates.js:355
 msgid "Export"
 msgstr "Exportieren"
 
-#: templates.js:346
+#: templates.js:349
 msgid "Choose a valid (exported) file on your harddrive and press \"Import\" to import all points and routes."
 msgstr "Wählen Sie eine exportierte Datei auf ihrer Festplatte aus und drücken Sie \"Importieren\" um alle Punkte und Routen zu importieren."
 
-#: templates.js:351
+#: templates.js:354
 msgid "Press \"Export\" to download a file containing all points and routes currently displayed. This may open a new browser window."
 msgstr "Drücken Sie \"Exportieren\" um eine Datei mit allen momentan dargestellten Punkten und Routen herunterzuladen. Dabei kann sich ein neues Browserfenster öffnen."
 
-#: templates.js:362
+#: templates.js:365
 msgid "Previous"
 msgstr "Zurück"
 
-#: templates.js:364
+#: templates.js:367
 msgid "Next"
 msgstr "Weiter"
 
@@ -377,7 +387,7 @@ msgstr "Tabellendaten werden gelanden"
 msgid "Do you really want to delete the user?"
 msgstr "Wollen sie diesen Benutzer wirklich löschen?"
 
-#: views/imexport.js:52
+#: views/imexport.js:51
 msgid "No file specified"
 msgstr "Keine Datei ausgewählt!"
 
@@ -488,12 +498,6 @@ msgstr "Aktualisierung erfolgreich"
 #: views/user.js:139
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
-
-#~ msgid "Bad request"
-#~ msgstr "Anfrage fehlerhaft"
-
-#~ msgid "Request wasn't successful"
-#~ msgstr "Anfrage war erfolglos"
 
 #~ msgid "is Paid"
 #~ msgstr "Bezahlt"

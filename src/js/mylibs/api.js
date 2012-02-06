@@ -79,7 +79,7 @@ _.extend(window.Api.prototype, {
             headers: headers,
             success: function (data, textStatus, jqXHR) {
                 var obj = jqXHR.responseText;
-                if (_.isString(obj))
+                if (_.isString(obj) && obj != '')
                     obj = JSON.parse(obj);
                 event.trigger('request', obj, true);
             },

@@ -20,6 +20,9 @@ window.DataView = Backbone.View.extend({
             handles: "n, nw, w"
         });
 
+        $(this.el).css("border-right", "1px solid #000");
+        $(this.el).css("border-bottom", "1px solid #000");
+        $(this.el).corner("top 10px");
         return this;
     },
     
@@ -42,26 +45,16 @@ window.DataView = Backbone.View.extend({
         var that = this;
         var lonlat = window.map.transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.server.get("algorithms")[$('#algorithms')[0].selectedIndex].pointconstraints;
-
+        var pointconstraints = window.algview.getSelectedAlgorithm();
         // add fields to edit pointconstraints
         var constraintsHtml = "", key;
-        for (var i = 0; i < pointconstraints.length; i++) {
-            key = pointconstraints[i].name;
+        
+        var data = {
+            constraints: pointconstraints,
+            marker: marker
+        };
 
-            var value = "";
-            if (!_.isUndefined(marker.get(key))) {
-                value = marker.get(key);
-            }
-            
-            var data = {
-                key: key,
-                value: value,
-                type: pointconstraints[i].type
-            };
-            constraintsHtml += templates.constraintsView(data);
-        }
-		
+        constraintsHtml += templates.constraintsView(data);
 	
         var data = {
             lonlat:  lonlat,
