@@ -1,18 +1,14 @@
 window.AlgView = Backbone.View.extend({
 
     id: 'algview',
-    algDiv: this.$('#algs'),
-    constraintDiv: this.$('#constraints'),
+
     events: {
-        "change #algorithms input": "onChooseAlg",
+        "change #algorithms input": "onRefreshAlgorithm",
         "click #close": "onCloseDialog"
     },
 
     initialize: function () {
-        this.el.style.display = "none";
-        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
-        var constraints = Backbone.Model.extend({});
-        this.constraintInfo = new constraints();
+        window.server.bind("info-loaded", _.bind(this.onRefreshAlgorithm, this));
     },
 
     render: function () {
@@ -32,9 +28,8 @@ window.AlgView = Backbone.View.extend({
         };
         $(this.el).html(templates.algView(data));
         $('#main').append(this.el);
-        
-        $(this.el).css("border-right", "1px solid #000");
-        $(this.el).css("border-bottom", "1px solid #000");
+
+        //TODO: Remove and use CSS instead
         $(this.el).corner("right 10px");
         return this;
     },
@@ -42,15 +37,14 @@ window.AlgView = Backbone.View.extend({
     getSelectedAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
         var selected = this.$('input[@name=alg]:checked').val();
-        var algToReturn = null;
 
         for (var i = 0; i < algorithms.length; i++) {
             if (algorithms[i].urlsuffix == selected) {
-                algToReturn = algorithms[i];
+                return algorithms[i];
             }
         }
 
-        return algToReturn;
+        return null;
     },
 
     getConstraintSettings: function () {
@@ -98,11 +92,7 @@ window.AlgView = Backbone.View.extend({
         return constraintsJson;
     },
 
-    onChooseAlg: function () {
-        this.onInfoLoaded();
-    },
-
-    onInfoLoaded: function () {
+    onRefreshAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
 
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {

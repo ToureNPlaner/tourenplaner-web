@@ -147,12 +147,10 @@ Handlebars.registerHelper('algConstraintsHelper', function (context) {
     }
 });
 
-templates.algView = '<div style="padding: 5px 0px;" style="visibility:hidden">\
-                      <h3>' + $._('Algorithms') + ':</h3>\
+templates.algView =  '<h3>' + $._('Algorithms') + ':</h3>\
                       <div id="algorithms">{{{algListHelper this}}}</div>\
                       <div id="constraints">{{{algConstraintsHelper this}}}</div>\
-                      <a href="#" class="btn secondary" id="close">' + $._('Close') + '</a>\
-                      </div>';
+                      <a href="#" class="btn secondary" id="close">' + $._('Close') + '</a>';
 templates.algView = Handlebars.compile(templates.algView);
 
 templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';
