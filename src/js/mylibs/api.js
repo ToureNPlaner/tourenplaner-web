@@ -1,3 +1,6 @@
+/**
+ * The Api class provides a simple interface to all functions the ToureNPlaner server provides.
+ */
 window.Api = function(attributes) {
     var defaults;
 
@@ -10,6 +13,7 @@ window.Api = function(attributes) {
 };
 
 _.extend(window.Api.prototype, {
+    /* The default configuration */
     defaults: {
         authAsBase64 : '', // provides username+password Base64 encoded
         authRequired : false,
@@ -23,6 +27,12 @@ _.extend(window.Api.prototype, {
                }
     },
 
+    /**
+     * Change one or multiple configuration variables.
+     *
+     * @param attrs Key-Value object of configuration variables
+     * @return The instance of the class
+     */
     set: function(attrs) {
         if (!attrs)
             return this;
@@ -33,18 +43,24 @@ _.extend(window.Api.prototype, {
         return this;
     },
 
+    /**
+     * Get a configuration variable by name.
+     *
+     * @param attr The name of the configuration variable
+     * @return The value of the variable
+     */
     get: function(attr) {
         return this.attributes[attr];
     },
 
-    /* send
-     * sends given request to server. with or without authentfication.
-     * handles callback from reqData
-     * param: reqData
-     *          .type chooses how the request should be send. POST or GET.
-     *          .suffix chooses algorithm, info or modi.
-     *          .request String that contains the request.
-     *          .callback function should be called when done.
+    /**
+     * Sends the given request to the server. May include an Authorization header if necessary.
+     * 
+     * @param reqData.type The HTTP request type, e.g. POST or GET
+     * @param reqData.suffix The suffix used for the requested API method
+     * @param reqData.request String/Object containing the request
+     * @param reqData.callback Callback function that gets called once the request returns
+     * @return False if the reqData object was incorrect
      */
     send : function (reqData) {
         var url = "", event = {};
@@ -115,8 +131,12 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* serverInformation
-     * aks' server for information about the server
+    /**
+     * Retrieve the server information object from the server. Automatically sets some configuration variables for the api.
+     *
+     * @param args.callback Callback function that gets called after the request returns
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     serverInformation : function (args) {
         var that = this;
@@ -132,9 +152,12 @@ _.extend(window.Api.prototype, {
         });
     },
 
-    /* registerUser
-     * creates new user account
-     * param: userObject containing info about user
+    /**
+     * Creates a new user account on the server.
+     * 
+     * @param args.userObject Object containing the necessary infos to create a user
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     registerUser: function (args) {
         if (!args || !args.userObject)
@@ -149,10 +172,13 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* authUser
-     * confirmes user.
-     * param: email email-adress of user
-     * param: password that belongs to email
+    /**
+     * Checks the email/password combination with the server.
+     *
+     * @param args.email Emailaddress of the user
+     * @param args.password Password of the user
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     authUser : function (args) {
         if (!args || !args.email || !args.password)
@@ -169,9 +195,12 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* getUser
-     * get user data by id or own data.
-     * param: id of requested user, null for own data
+    /**
+     * Get user data of the given id or the own data.
+     *
+     * @param args.id The id of the user for which to get the data (optional)
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     getUser : function (args) {
         var suffix = 'getuser';
@@ -186,9 +215,13 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* updateUser
-     * change user data by id or own
-     * param: id of user you want to change, null if to change own
+    /**
+     * Change the user data of the given id or the data of the logged in user.
+     *
+     * @param args.id The id of the user for which to change the data (optional)
+     * @param args.userObject The new user data
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     updateUser : function (args) {
         if (!args || !args.userObject)
@@ -208,11 +241,14 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* listRequests
-     * lists all requests that have been made
-     * param: id of single user, null if general request
-     * param: limit max number of items
-     * param: offset of first item
+    /**
+     * Retrieves a list of all requests of every user or of a single, specified user.
+     *
+     * @param args.id The id of the single user (optional)
+     * qparam args.limit The max. number of items retrieved
+     * @param args.offset The offset of the first retrieved item
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     listRequests : function (args) {
         if (!args || !args.limit || !args.offset ||
@@ -233,10 +269,13 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* listUsers
-     * lists user from server
-     * param: limit max numbers of users
-     * param: offset of first user
+    /**
+     * Retrieves a list of all registered users on the server.
+     *
+     * @param args.limit The max. numbers of users retrieved
+     * @param args.offset The offset of the first retrieved user
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     listUsers : function (args) {
         if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) ||
@@ -251,9 +290,12 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* deleteUser
-     * deletes user from server
-     * param: id of user that should be deleted
+    /**
+     * Deletes the specified user on the server.
+     *
+     * @param args.id The id of the user that should be deleted
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     deleteUser : function (args) {
         if (!args || !args.id || isNaN(args.id))
@@ -267,9 +309,12 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* nearestNeighbour
-     * sends request for nearest neighbour to server
-     * param: points list of points
+    /**
+     * Requests the nearest valid neighbouring point on a street for the given point.
+     *
+     * @param args.points A list of points for which neighbours should be searched
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     nearestNeighbour : function (args) {
         if (!args || !args.points)
@@ -287,12 +332,18 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
-    /* alg
-     * sends algorithm calculation request
-     * use params request or one for each request element
-     * param: alg shortname of desired alg
-     * param: request contains problem instance (format as alg specification)
-     * param: points, version, constraints as alg spec
+    /**
+     * Sends an algorithm calculation request to the server.
+     *
+     * Use either args.request or args.point, args.version and args.contraints.
+     *
+     * @param args.alg The shortname of the desired algorithm
+     * @param args.request A complete request object according to the specification
+     * @param args.points The points supplied to the algorithm
+     * @param args.version The requested version of the algorithm
+     * @param args.constraints Constraints that need to be applied to the algorithm
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
      */
     alg : function (args) {
         var thisrequest = {};
@@ -300,13 +351,13 @@ _.extend(window.Api.prototype, {
             return false;
         // use given request or make own
         if (args.request) {
-            if(!args.request.points)
+            if (!args.request.points)
                 return false;
             else
                 thisrequest = args.request;
 
         } else {
-            if(!args.points)
+            if (!args.points)
                 return false;
             thisrequest = {
                 version: args.version || 1,
@@ -325,6 +376,13 @@ _.extend(window.Api.prototype, {
         return true;
     },
 
+    /**
+     * Retrieve a single request from the server.
+     *
+     * @param args.id The id of the request
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
+     */
     getRequest: function(args) {
         if (!args || !args.id)
             return false;
