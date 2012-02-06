@@ -14,7 +14,6 @@ window.SidebarView = Backbone.View.extend({
 
         $(window).resize(_.bind(this.onResize, this));
 
-        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
         window.markList.bind("add", _.bind(this.onMarkAdded, this));
         window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
         window.markList.bind("reset", _.bind(this.onListReset, this));
@@ -36,19 +35,6 @@ window.SidebarView = Backbone.View.extend({
         this.$('#marks').disableSelection();
 
         return this;
-    },
-
-    onInfoLoaded: function () {
-        var algorithms = window.server.get('algorithms');
-        var $algorithms = this.$('#algorithms');
-
-        if (!_.isUndefined(algorithms) && algorithms.length > 0) {
-            $algorithms.children().remove();
-            for (var i in algorithms) {
-                if (!algorithms[i].details.hidden)
-                    $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
-            }
-        }
     },
 
     onMarkAdded: function (model, collection, options) {
