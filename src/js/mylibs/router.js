@@ -118,11 +118,13 @@ window.Router = Backbone.Router.extend({
         window.api.getRequest({
             id: id,
             callback: function(text, success) {
+                this.loadingView = new LoadingView($._('Loading route information')).render();
                 if (success) {
                     window.map.resetRoute();
                     window.map.resetMarkers();
                     window.map.drawMarkersAndRoute(text);
                 }
+                this.loadingView.remove();
             }
         })
     },
