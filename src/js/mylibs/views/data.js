@@ -117,7 +117,7 @@ window.DataView = Backbone.View.extend({
     },
 
     onMinMax: function () {
-        this.el.toggleClass('minimized');
+        $(this.el).toggleClass('minimized');
         this.$('.content').toggle();
 
         var link = this.$('.minmax a');
