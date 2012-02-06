@@ -46,21 +46,13 @@ window.BillingView = Backbone.View.extend({
                     	text.requests[i].response = JSON.stringify(text.requests[i].response);
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
                         // add click handling (draw clicked route) TODO: Actually support this
-                        /*
-                        $('#billing-'+text.requests[i].requestid).click(function(){
-                       		window.markList.deleteAllMarks();
-                        	var request = jQuery.parseJSON($(this).closest('tr').children()[0].innerHTML);
-                        	for(var j=0;j<request.points.length;j++){
-								var m = new Mark();
-								m.setLonLatWith1984(request.points[j].ln,request.points[j].lt);
-								window.markList.appendMark(m);
-                        	}
-							var response = jQuery.parseJSON($(this).closest('tr').children()[1].innerHTML);
-							window.map.drawRoute(response);
-							that.remove();
-						});
-						*/
-						
+                        that.$('#billing-item').each(function () {
+                            $(this).click(function(){
+                                var link = '/route/' + $(this).children()[0].innerHTML;
+                                that.remove();
+                                window.app.navigate(link, true);
+                            });
+                        });						
                     }
                    	 
                     // Update pagination
