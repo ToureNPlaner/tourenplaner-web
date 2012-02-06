@@ -20,13 +20,10 @@ window.DataView = Backbone.View.extend({
             handles: "n, nw, w"
         });
 
-        $(this.el).css("border-right", "1px solid #000");
-        $(this.el).css("border-bottom", "1px solid #000");
-        $(this.el).corner("top 10px");
         return this;
     },
     
-        showMarker: function (marker) {
+    showMarker: function (marker) {
         var that = this;
 
         if (this.currentMarker != null) {

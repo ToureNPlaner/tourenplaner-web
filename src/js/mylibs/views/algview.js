@@ -29,8 +29,6 @@ window.AlgView = Backbone.View.extend({
         $(this.el).html(templates.algView(data));
         $('#main').append(this.el);
 
-        //TODO: Remove and use CSS instead
-        $(this.el).corner("right 10px");
         return this;
     },
 
