@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 15:42+0100\n"
+"POT-Creation-Date: 2012-02-06 10:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: api.js:21
-msgid "Bad request"
-msgstr ""
-
-#: api.js:22
-msgid "Request wasn't successful"
-msgstr ""
-
-#: api.js:110 views/sidebar.js:102 views/sidebar.js:107 views/topbar.js:54
+#: api.js:106 views/sidebar.js:102 views/sidebar.js:107 views/topbar.js:54
 msgid "Error"
 msgstr ""
 
@@ -62,7 +54,7 @@ msgid "Loading server information"
 msgstr ""
 
 #: router.js:67 templates.js:109 templates.js:112 templates.js:140
-#: templates.js:143 templates.js:234 templates.js:237 views/imexport.js:51
+#: templates.js:143 templates.js:234 templates.js:237 views/imexport.js:52
 #: views/login.js:41 views/register.js:58 views/register.js:118
 #: views/user.js:46 views/user.js:123 views/user.js:146
 msgid "Error!"
@@ -76,6 +68,10 @@ msgstr ""
 
 #: router.js:102
 msgid "Loading user information"
+msgstr ""
+
+#: router.js:121
+msgid "Loading route information"
 msgstr ""
 
 #: templates.js:7
@@ -94,7 +90,7 @@ msgstr ""
 msgid "Billing"
 msgstr ""
 
-#: templates.js:16 templates.js:341
+#: templates.js:16 templates.js:338
 msgid "Im-/Export"
 msgstr ""
 
@@ -214,7 +210,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: templates.js:199 templates.js:304 templates.js:359 templates.js:380
+#: templates.js:199 templates.js:304 templates.js:356 templates.js:377
 msgid "Close"
 msgstr ""
 
@@ -290,31 +286,31 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: templates.js:345 templates.js:351
+#: templates.js:342 templates.js:348
 msgid "Import"
 msgstr ""
 
-#: templates.js:346 templates.js:355
+#: templates.js:343 templates.js:352
 msgid "Export"
 msgstr ""
 
-#: templates.js:349
+#: templates.js:346
 msgid ""
 "Choose a valid (exported) file on your harddrive and press \"Import\" to "
 "import all points and routes."
 msgstr ""
 
-#: templates.js:354
+#: templates.js:351
 msgid ""
 "Press \"Export\" to download a file containing all points and routes "
 "currently displayed. This may open a new browser window."
 msgstr ""
 
-#: templates.js:365
+#: templates.js:362
 msgid "Previous"
 msgstr ""
 
-#: templates.js:367
+#: templates.js:364
 msgid "Next"
 msgstr ""
 
@@ -342,7 +338,7 @@ msgstr ""
 msgid "Do you really want to delete the user?"
 msgstr ""
 
-#: views/imexport.js:51
+#: views/imexport.js:52
 msgid "No file specified"
 msgstr ""
 
