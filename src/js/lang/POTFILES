@@ -4,4 +4,12 @@ router.js
 templates.js
 strings.js
 views.js
-
+views/billing.js
+views/admin.js
+views/imexport.js
+views/login.js
+views/mark.js
+views/register.js
+views/sidebar.js
+views/topbar.js
+views/user.js

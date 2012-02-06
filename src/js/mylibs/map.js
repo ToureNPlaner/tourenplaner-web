@@ -65,7 +65,7 @@ _.extend(window.Map.prototype, {
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
             geometryTypes: ['OpenLayers.Geometry.Point'],
             onStart: function(feature) {
-               window.guiModel.setDataViewMarker(feature.data.mark);
+               window.body.main.data.showMarker(feature.data.mark);
             },
             onComplete: function(feature, pix) {
                 var lonlat = this.map.getLonLatFromPixel(pix);

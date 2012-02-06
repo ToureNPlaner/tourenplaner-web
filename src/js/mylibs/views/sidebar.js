@@ -5,7 +5,8 @@ window.SidebarView = Backbone.View.extend({
     events: {
         "click a.clear": "onClear",
         "click a.send": "onSend",
-        "click a.flip": "onFlip"
+        "click a.flip": "onFlip",
+        "click a.showAlgs": "onShowAlgs"
     },
 
     initialize: function () {
@@ -13,7 +14,6 @@ window.SidebarView = Backbone.View.extend({
 
         $(window).resize(_.bind(this.onResize, this));
 
-        window.server.bind("info-loaded", _.bind(this.onInfoLoaded, this));
         window.markList.bind("add", _.bind(this.onMarkAdded, this));
         window.markList.bind("remove", _.bind(this.onMarkRemoved, this));
         window.markList.bind("reset", _.bind(this.onListReset, this));
@@ -35,19 +35,6 @@ window.SidebarView = Backbone.View.extend({
         this.$('#marks').disableSelection();
 
         return this;
-    },
-
-    onInfoLoaded: function () {
-        var algorithms = window.server.get('algorithms');
-        var $algorithms = this.$('#algorithms');
-
-        if (!_.isUndefined(algorithms) && algorithms.length > 0) {
-            $algorithms.children().remove();
-            for (var i in algorithms) {
-                if (!algorithms[i].hidden)
-                    $algorithms.append('<option value="' + algorithms[i].urlsuffix + '">' + $._(algorithms[i].name) + '</option>');
-            }
-        }
     },
 
     onMarkAdded: function (model, collection, options) {
@@ -96,20 +83,22 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onSend: function () {
-        var alg = this.$('#algorithms').val();
+        var alg = window.algview.getSelectedAlgorithm().urlsuffix;
         if (_.isUndefined(alg) || _.isEmpty(alg))  {
             new MessageView({
                 title: $._('Error'),
                 message: $._('No algorithm selected.')
             }).render();
-        } else if (window.markList.length < window.guiModel.getCurrentAlgorithm().constraints.minPoints) {
+        } else if (window.markList.length < window.algview.getSelectedAlgorithm().details.minPoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
             }).render();
         } else {
-            window.api.alg({
-                alg: this.$('#algorithms').val(),
+            loadingView = new LoadingView($._('Waiting for response from server ...')).render();
+            
+            var jsonObj = {
+                alg: window.algview.$('input[@name=alg]:checked').val(),
                 points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {
@@ -117,19 +106,33 @@ window.SidebarView = Backbone.View.extend({
                         if (!_.isUndefined(text.requestid))
                             window.app.navigate('/route/' + text.requestid);
                     }
+                    loadingView.remove();
                 }
-            });
+            };
+
+            // if constraints are available, then add them to request object
+            var constraints = window.algview.getConstraintSettings();
+            if (constraints != null) {
+                jsonObj['constraints'] = constraints;
+            }
+
+            window.api.alg(jsonObj);
         }
     },
 
     onClear: function () {
-        var mapObject = window.map;
         window.markList.deleteAllMarks();
         window.map.drawRoute("");
+        window.map.resetRoute();
     },
 
     onFlip: function() {
         window.markList.flip();
+    },
+
+    onShowAlgs: function() {
+        // TODO: move element to algview.js and access it from here
+       $('#algview').toggle();
     },
 
     onResize: function () {

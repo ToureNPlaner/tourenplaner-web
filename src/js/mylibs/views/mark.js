@@ -37,6 +37,6 @@ window.MarkView = Backbone.View.extend({
     },
 
     onClick: function () {
-        window.guiModel.setDataViewMarker(this.model);
+        window.body.main.data.showMarker(this.model);
     }
 });

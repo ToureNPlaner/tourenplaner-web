@@ -1,6 +1,7 @@
 window.DataView = Backbone.View.extend({
 
     id: 'data',
+    currentMarker: null,
 
     /**
      * Used to save the old size (before minimizing). Using this, we can restore the old size.
@@ -11,10 +12,6 @@ window.DataView = Backbone.View.extend({
         "click span.minmax a": "onMinMax"
     },
 
-    initialize: function () {
-        window.guiModel.bind("change:dataViewText", _.bind(this.onDataViewChange, this));
-    },
-
     render: function () {
         $(this.el).html(templates.dataView);
         $('#main').append(this.el);
@@ -23,57 +20,41 @@ window.DataView = Backbone.View.extend({
             handles: "n, nw, w"
         });
 
+        $(this.el).css("border-right", "1px solid #000");
+        $(this.el).css("border-bottom", "1px solid #000");
+        $(this.el).corner("top 10px");
         return this;
     },
     
-    testFkt: function() {
-    
-    	alert("SChon stier he");
+        showMarker: function (marker) {
+        var that = this;
+
+        if (this.currentMarker != null) {
+            this.currentMarker.unbind("change:lonlat");
+        }
+        
+        this.currentMarker = marker;
+        this.currentMarker.bind("change:lonlat", function() {
+            that.onDataViewChange(that, marker);
+        });
+
+        this.onDataViewChange(this, marker);
     },
-    
-     onDataViewChange: function (model, marker) {
+
+    onDataViewChange: function (model, marker) {
         var that = this;
         var lonlat = window.map.transformTo1984(marker.get("lonlat"));
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.guiModel.getCurrentAlgorithm().pointconstraints;
-
+        var pointconstraints = window.algview.getSelectedAlgorithm();
         // add fields to edit pointconstraints
         var constraintsHtml = "", key;
-        for (var i = 0; i < pointconstraints.length; i++) {
-			key = pointconstraints[i].name;
+        
+        var data = {
+            constraints: pointconstraints,
+            marker: marker
+        };
 
-			var value = "";
-			if (!_.isUndefined(marker.get(key))) {
-				value = marker.get(key);
-			}
-			
-			constraintsHtml += "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
-			if (pointconstraints[i].type == "boolean") {
-				// display a checkbox and set its checked state
-				var checked = "";
-				if (value == true) {
-					checked = "checked";
-				}
-				constraintsHtml += "<input type='checkbox' name='pc_" + key + "' id='pc_" + key + "' " + checked + "/></div>";
-			} else {
-				// display numberinputs for int, float, meter and price
-				switch (pointconstraints[i].type) {
-					case "integer":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-						break;
-					case "float":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-						break;
-					case "meter":
-							constraintsHtml += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
-						break;
-					case "price":
-							constraintsHtml += "<input value='"+value+"' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> &#8364;</div>";
-						break;
-				}
-			}
-		}
-		
+        constraintsHtml += templates.constraintsView(data);
 	
         var data = {
             lonlat:  lonlat,
@@ -136,7 +117,7 @@ window.DataView = Backbone.View.extend({
     },
 
     onMinMax: function () {
-        this.el.toggleClass('minimized');
+        $(this.el).toggleClass('minimized');
         this.$('.content').toggle();
 
         var link = this.$('.minmax a');

@@ -45,6 +45,7 @@ window.MainView = Backbone.View.extend({
         $('#container').append(this.el);
 
         this.sidebar = new SidebarView().render();
+        this.algview = new AlgView().render();
         this.map = new MapView({
             sidebar: this.sidebar
         }).render();

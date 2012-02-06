@@ -67,7 +67,12 @@ window.UserView = Backbone.View.extend({
     },
 
     remove: function () {
+        if ($(this.el).modal(true).isShown)
+            $(this.el).modal('hide');
+        if (_.isFunction(this.options.remove))
+            this.options.remove();
         $(this.el).remove();
+        window.app.navigate('');
     },
 
     onSubmitClick: function () {
@@ -91,8 +96,8 @@ window.UserView = Backbone.View.extend({
             lastname: this.$('#lastname').val(),
             address: this.$('#address').val(),
             email: this.$('#email').val(),
-            active: this.$('#active').val(),
-            admin: this.$('#administrator').val()
+            active: this.$('#active').is(':checked'),
+            admin: this.$('#administrator').is(':checked')
         });
         if (!_.isEmpty(this.$('#password').val()))
             user.set({password: this.$('#password').val()});

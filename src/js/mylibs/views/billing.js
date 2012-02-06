@@ -25,11 +25,11 @@ window.BillingView = Backbone.View.extend({
     renderMainView: function () {
         if (_.isUndefined(this.position)) {
             this.position = {
-                limit: 2,
-                offset: 3
+                limit: 8,
+                offset: 0
             };
         }
-        loadingView = new LoadingView('Loading billing data').render();
+        loadingView = new LoadingView($._("Loading billing data")).render();
         var that = this;
         api.listRequests({
             limit: this.position.limit,
@@ -45,20 +45,14 @@ window.BillingView = Backbone.View.extend({
                     	text.requests[i].request = JSON.stringify(text.requests[i].request);
                     	text.requests[i].response = JSON.stringify(text.requests[i].response);
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
-                        // add click handling (draw clicked route)
-                        $('#billing-'+text.requests[i].requestid).click(function(){
-                       		window.markList.deleteAllMarks();
-                        	var request = jQuery.parseJSON($(this).closest('tr').children()[0].innerHTML);
-                        	for(var j=0;j<request.points.length;j++){
-								var m = new Mark();
-								m.setLonLatWith1984(request.points[j].ln,request.points[j].lt);
-								window.markList.appendMark(m);
-                        	}
-							var response = jQuery.parseJSON($(this).closest('tr').children()[1].innerHTML);
-							window.map.drawRoute(response);
-							that.remove();
-						});
-						
+                        // add click handling (draw clicked route) TODO: Actually support this
+                        that.$('#billing-item').each(function () {
+                            $(this).click(function(){
+                                var link = '/route/' + $(this).children()[0].innerHTML;
+                                that.remove();
+                                window.app.navigate(link, true);
+                            });
+                        });						
                     }
                    	 
                     // Update pagination
@@ -85,7 +79,8 @@ window.BillingView = Backbone.View.extend({
 
                     that.$('.modal-body').append(templates.paginationView({pages: html}));
                     that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
-                    that.$('#billing').css({width: that.$('.modal-body').outerWidth() + 'px'});
+                    // ugly but it works
+                    $('#billing').css({width: $('#billing.modal div.modal-body table thead').outerWidth() + 20 + 'px'});
 
                     if (page !== 1)
                         that.$('.pagination li').first().removeClass('disabled');
@@ -100,8 +95,11 @@ window.BillingView = Backbone.View.extend({
                         if (_.isNumber(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
-                }                    
-            	loadingView.remove();
+                    loadingView.remove();
+                } else {
+                    loadingView.remove();
+                    that.remove();
+                }
             }
         });
     },

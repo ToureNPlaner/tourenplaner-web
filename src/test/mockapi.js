@@ -20,6 +20,11 @@ $.mockjax({
                 version: 2,
                 name: "Shortest Path",
                 urlsuffix: "sp",
+                details: {
+                    hidden: false,
+                    minPoints: 2,
+                    sourceIsTarget: false
+                },
                 pointconstraints: [
                     {
                         name: "height",
@@ -38,14 +43,17 @@ $.mockjax({
                         max: 2000.0
                     }
                 ],
-                constraints: {
-                    minPoints: 2,
-                    sourceIsTarget: false
-                }
+                constraints: [
+                ]
             },{
                 version: 2,
                 name: "Traveling Salesman",
                 urlsuffix: "tsp",
+                details: {
+                    hidden: false,
+                    minPoints: 2,
+                    sourceIsTarget: true
+                },
                 pointconstraints: [
                     {
                         name: "height",
@@ -64,18 +72,56 @@ $.mockjax({
                         max: 2000.0
                     }
                 ],
-                constraints: {
+                constraints: [
+                ]
+            },{
+                version: 2,
+                name: "Constrained Shortest Path",
+                urlsuffix: "csp",
+                details: {
+                    hidden: false,
                     minPoints: 2,
                     sourceIsTarget: false
-                }
-            },
-            {
-                version: 1,
-                hidden: true,
-                name: 'Hidden Algorithm',
-                urlsuffix: 'hidden',
-                pointconstraints: [],
-                constraints: {}
+                },
+                pointconstraints: [
+                    {
+                        name: "height",
+                        type: "meter",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "BoolConstraint",
+                        type: "boolean",
+                        min: 0.0,
+                        max: 2000.0
+                    },{
+                        name: "PriceConstraint",
+                        type: "price",
+                        min: 0.0,
+                        max: 2000.0
+                    }
+                ],
+                constraints: [
+                    {
+                        name: "maxAltitudeDifference",
+                        description: "The maximum difference in altitude combined over the path",
+                        type: "meter",
+                        min: 0
+                    }
+                ]
+            },{
+                version: 2,
+                name: "Nearest Neighbor",
+                urlsuffix: "nns",
+                details: {
+                    hidden: true,
+                    minPoints: 1,
+                    sourceIsTarget: false
+                },
+                pointconstraints: [
+                ],
+                constraints: [
+                ]
             }
         ]
     }
@@ -98,7 +144,7 @@ $.mockjax({
         if (_.isUndefined(obj.email) || _.isUndefined(obj.password) || _.isUndefined(obj.firstname) || _.isUndefined(obj.lastname) || _.isUndefined(obj.address) || obj.email == "" || obj.password == "") {
             this.status = 400;
             this.responseText = {
-                errorid: "ENOTVALID",
+                errorid: "ENOTVALid",
                 message: "Validation error",
                 details: "Empty argument"
             };
@@ -161,12 +207,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /getuser?ID=* function on the server.
+ * Mocks the /getuser?id=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/getuser?ID=*",
+    url: "/getuser?id=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -206,12 +252,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /updateuser?ID=* function on the server.
+ * Mocks the /updateuser?id=* function on the server.
  *
  * Returns user object.
  */
 $.mockjax({
-    url: "/updateuser?ID=*",
+    url: "/updateuser?id=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -231,12 +277,12 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listrequests?Limit=2&Offset=3 function on the server.
+ * Mocks the /listrequests?limit=2&offset=3 function on the server.
  *
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?Limit=*&Offset=*",
+    url: "/listrequests?limit=*&offset=*",
     responseTimeout: 10,
     status: 201,
     responseText: {
@@ -248,10 +294,9 @@ $.mockjax({
                     request: {"points": [{"lt":487816670, "ln":91752781}, {"lt":525180560, "ln":133933330}]},
                     response: {"way":[{"lt":487816670, "ln":91752781},{"lt":48702700,"ln":91706700},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":124667000},{"lt":525180560, "ln":133933330}]},
-                    costs: 123.24,
-                    ispaid: true,
-                    requestdate: "2011-12-11T13:55:30Z",
-                    finisheddate: "2011-12-11T13:56:14Z",
+                    cost: 123.24,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
+                    finisheddate: "2011-12-11T13:55:56.000+0000",
                     duration: 500,
                     status: "OK"
                 },{
@@ -261,9 +306,8 @@ $.mockjax({
                 	request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
                     response: {"way":[{"lt":525180560,"ln":133933330},{"lt":281427000,"ln":201567000},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":1294667000},{"lt":487816670,"ln":91752781}]},
-                    costs: 12.90,
-                    ispaid: false,
-                    requestdate: "2011-12-11T13:55:30Z",
+                    cost: 12.90,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
                     finisheddate: null,
                     duration: 42,
                     status: "Failed"
@@ -272,40 +316,39 @@ $.mockjax({
 });
 
 /**
- * Mocks the /listrequests?Limit=1&Offset=3 function on the server.
+ * Mocks the /listrequests?limit=1&offset=3 function on the server.
  *
  * Returns request list.
  */
 $.mockjax({
-    url: "/listrequests?Limit=1&Offset=1032&ID=1024",
+    url: "/listrequests?limit=1&offset=1032&id=1024",
     responseTimeout: 10,
     status: 201,
     responseText: {
                 number: 100,
                 requests: [{
-                	requestid: 0,
-                	userid: 42,
-                	algorithm: "sp",
-                	request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
-                    response: {"way":[{"lt":525180560,"ln":133933330},{"lt":535180560,"ln":143933330},
+                    requestid: 1,
+                    userid: 1,
+                    algorithm: "nns",
+                    request: {"points": [{"lt":525180560, "ln":133933330}, {"lt":487816670, "ln":91752781}]},
+                    response: {"way":[{"lt":525180560,"ln":133933330},{"lt":281427000,"ln":201567000},
                     {"lt":171978000,"ln":861487000},{"lt":425927000,"ln":1294667000},{"lt":487816670,"ln":91752781}]},
-                    costs: 123.24,
-                    ispaid: true,
-                    requestdate: "2011-12-11T13:55:30Z",
+                    cost: 12.90,
+                    requestdate: "2011-12-11T13:55:30.000+0000",
                     finisheddate: null,
-                    duration: 500,
+                    duration: 42,
                     status: "Pending"
                 }]
     }
 });
 
 /**
- * Mocks the /listusers?Limit=*&Offset=* function on the server.
+ * Mocks the /listusers?limit=*&offset=* function on the server.
  *
  * Returns user list.
  */
 $.mockjax({
-    url: "/listusers?Limit=*&Offset=*",
+    url: "/listusers?limit=*&offset=*",
     responseTimeout: 10,
     status: 201,
     response: function(data) {
@@ -317,23 +360,25 @@ $.mockjax({
                     lastname: "Mustermann",
                     address: "Musterstrasse 10, 12345 Musterstadt",
                     admin: false,
-                    active: true
+                    status: "verified",
+                    resitrationdate: "2011-12-11T13:55:30.000+0000",
+                    verifieddate: null
             };
             var user2 = _.extend({}, user, {active: false, userid: 2});
 
             this.responseText = {
                 number: 10,
-                requests: [user, user, user2, user, user, user, user2, user, user, user]
+                users: [user, user, user2, user, user, user, user2, user, user, user]
             };
     }
 });
 
 
 /**
- * Mocks the /deleteuser?ID=94 function on the server.
+ * Mocks the /deleteuser?id=94 function on the server.
  */
 $.mockjax({
-    url: "/deleteuser?ID=*",
+    url: "/deleteuser?id=*",
     responseTimeout: 10,
     status: 201,
     responseText: {}

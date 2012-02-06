@@ -78,6 +78,20 @@ div.popover {
   border-top: 1px solid #ccc;
 }
 
+#main #algview {
+  z-index: 2;
+  position: relative;
+  float: left;
+  padding: 0 5px;
+  background: white;
+  /*border-top: 1px solid black;
+  border-left: 1px solid black;*/
+  box-shadow: 0px 0px 5px #333;
+  -moz-box-shadow: 0px 0px 5px #333;
+  -webkit-box-shadow: 0px 0px 5px #333;
+  
+}
+
 #main #map {
   float: right;
   z-index: 1;

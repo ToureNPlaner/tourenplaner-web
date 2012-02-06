@@ -8,7 +8,7 @@ window.ImExportView = Backbone.View.extend({
        "click .modal-footer a.cancel": "remove",
        "click ul.tabs a": "onTabsChange",
        "click a.import": "onImport",
-       "click a.export": "onExport"
+       "click a.export": "onExport" 
     },
 
     render: function() {
@@ -32,11 +32,12 @@ window.ImExportView = Backbone.View.extend({
     },
 
     onTabsChange: function(e) {
+        if ($(e.target).parent().hasClass('active'))
+            return false;
+
         this.$('ul.tabs li').each(function() {
-            if ($(this).hasClass('active'))
-                $(this).removeClass('active');
+            $(this).toggleClass('active');
         });
-        $(e.target).parent().addClass("active");
 
         this.$('#import').toggle();
         this.$('#export').toggle();
@@ -52,9 +53,7 @@ window.ImExportView = Backbone.View.extend({
             return false;
         }
 
-        var files = evt.target.files;
-        // Assume there is only one file selected
-        var file = files[0];
+        var file = $('#import input[type=file]').get()[0].files[0];
 
         var reader = new FileReader();
         reader.onloadend = (function (file, dialog) {
@@ -75,12 +74,12 @@ window.ImExportView = Backbone.View.extend({
             };
         })(file, that);
         reader.onerror = function (e) {
-            log(e);
+            log("Error", e);
         };
 
         reader.readAsText(file);
 
-       return false;
+        return false;
     },
 
     onExport: function() {

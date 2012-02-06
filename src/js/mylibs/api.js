@@ -20,11 +20,7 @@ _.extend(window.Api.prototype, {
         server : 'localhost', // url of the server
         port : 8081, // port on which the server listens
         ssl : false,
-        realm : 'Tourenplaner',
-        error : {"errorid": "EBADCALL",
-                 "message": "Bad request",
-                 "details": "Request wasn't successful'"
-               }
+        realm : 'Tourenplaner'
     },
 
     /**
@@ -99,7 +95,7 @@ _.extend(window.Api.prototype, {
             headers: headers,
             success: function (data, textStatus, jqXHR) {
                 var obj = jqXHR.responseText;
-                if (_.isString(obj))
+                if (_.isString(obj) && obj != '')
                     obj = JSON.parse(obj);
                 event.trigger('request', obj, true);
             },
@@ -111,7 +107,7 @@ _.extend(window.Api.prototype, {
                     if(errorThrown !== "")
                         text = errorThrown;
                     else
-                        text = that.get('error').message + "<br />" + that.get('error').details; // if everything is empty use standard error
+                        text = that.get('error').message + ": " + that.get('error').details; // if everything is empty use standard error
                 } else {
                     text = JSON.parse(text);
                 }
@@ -205,7 +201,7 @@ _.extend(window.Api.prototype, {
     getUser : function (args) {
         var suffix = 'getuser';
         if (args.id && !_.isNaN(args.id))
-            suffix += '?ID=' + args.id;
+            suffix += '?id=' + args.id;
 
         this.send({
             suffix : suffix,
@@ -229,7 +225,7 @@ _.extend(window.Api.prototype, {
 
         var suffix = 'updateuser';
         if (args.id && !_.isNaN(args.id))
-            suffix += '?ID=' + args.id;
+            suffix += '?id=' + args.id;
 
         this.send({
             type : 'POST',
@@ -251,11 +247,10 @@ _.extend(window.Api.prototype, {
      * @return True if the arguments were correct, false otherwise
      */
     listRequests : function (args) {
-        if (!args || !args.limit || !args.offset ||
-            args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
+        if (!args || args.offset<0 || args.limit<0 || isNaN(args.offset) || isNaN(args.limit))
             return false;
             
-        var suffix = 'listrequests?Limit=' + args.limit + '&Offset=' + args.offset;
+        var suffix = 'listrequests?limit=' + args.limit + '&offset=' + args.offset;
         if (args.id && !isNaN(args.id))
             suffix += '&ID=' + args.id;
 
@@ -278,11 +273,10 @@ _.extend(window.Api.prototype, {
      * @return True if the arguments were correct, false otherwise
      */
     listUsers : function (args) {
-        if (!args || _.isUndefined(args.limit) || _.isUndefined(args.offset) ||
-            isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
+        if (!args || isNaN(args.offset) || isNaN(args.limit) || args.offset<0 || args.limit<0)
             return false;
         this.send({
-            suffix : 'listusers?Limit=' + args.limit + '&Offset=' + args.offset,
+            suffix : 'listusers?limit=' + args.limit + '&offset=' + args.offset,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });
@@ -301,7 +295,7 @@ _.extend(window.Api.prototype, {
         if (!args || !args.id || isNaN(args.id))
             return false;
         this.send({
-            suffix : 'deleteuser?ID=' + args.id,
+            suffix : 'deleteuser?id=' + args.id,
             request : '',
             callback : _.isFunction(args.callback) ? args.callback : null
         });

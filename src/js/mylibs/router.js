@@ -33,7 +33,7 @@ window.Router = Backbone.Router.extend({
      */
     initServer: function() {
         var that = this;
-        var loadingView = new LoadingView($._('Loading server informations')).render();
+        var loadingView = new LoadingView($._('Loading server information')).render();
 
         window.server.getServerInfo(function() {
             if (window.server.isPublic()) {
@@ -135,7 +135,7 @@ window.Router = Backbone.Router.extend({
                 return;
             }
 
-            this.loadingView = new LoadingView($._('Loading user informations')).render();
+            this.loadingView = new LoadingView($._('Loading user information')).render();
 
             var that = this;
             var model = new User().load(id, function () {
@@ -162,11 +162,13 @@ window.Router = Backbone.Router.extend({
         window.api.getRequest({
             id: id,
             callback: function(text, success) {
+                this.loadingView = new LoadingView($._('Loading route information')).render();
                 if (success) {
                     window.map.resetRoute();
                     window.map.resetMarkers();
                     window.map.drawMarkersAndRoute(text);
                 }
+                this.loadingView.remove();
             }
         })
     },

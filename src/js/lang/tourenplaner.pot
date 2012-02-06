@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-30 16:03+0100\n"
+"POT-Creation-Date: 2012-02-06 00:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: api.js:117 views.js:192 views.js:198
+#: api.js:106 views/sidebar.js:103 views/sidebar.js:108 views/topbar.js:54
 msgid "Error"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Set as Endmarker"
 msgstr ""
 
-#: map.contextmenu.js:58 templates.js:59 templates.js:185
+#: map.contextmenu.js:58 templates.js:62 templates.js:281
 msgid "Delete"
 msgstr ""
 
@@ -50,13 +50,13 @@ msgid "Add Endmarker"
 msgstr ""
 
 #: router.js:26
-msgid "Loading server informations"
+msgid "Loading server information"
 msgstr ""
 
-#: router.js:67 templates.js:70 templates.js:73 templates.js:101
-#: templates.js:104 templates.js:195 templates.js:198 views.js:544
-#: views.js:675 views.js:735 views.js:1144 views.js:1216 views.js:1239
-#: views.js:1331
+#: router.js:67 templates.js:166 templates.js:169 templates.js:197
+#: templates.js:200 templates.js:291 templates.js:294 views/imexport.js:52
+#: views/login.js:41 views/register.js:58 views/register.js:118
+#: views/user.js:46 views/user.js:123 views/user.js:146
 msgid "Error!"
 msgstr ""
 
@@ -67,246 +67,255 @@ msgid ""
 msgstr ""
 
 #: router.js:102
-msgid "Loading user informations"
+msgid "Loading user information"
 msgstr ""
 
-#: templates.js:9
+#: templates.js:7
+msgid "Search"
+msgstr ""
+
+#: templates.js:12
 msgid "Settings"
 msgstr ""
 
-#: templates.js:11 templates.js:251
+#: templates.js:14 templates.js:347
 msgid "Profile"
 msgstr ""
 
-#: templates.js:12 templates.js:258
+#: templates.js:15 templates.js:354
 msgid "Billing"
 msgstr ""
 
-#: templates.js:13 templates.js:300
+#: templates.js:16 templates.js:398
 msgid "Im-/Export"
 msgstr ""
 
-#: templates.js:14 templates.js:153
+#: templates.js:17 templates.js:249
 msgid "Administration"
 msgstr ""
 
-#: templates.js:16
+#: templates.js:19
 msgid "Logout"
 msgstr ""
 
-#: templates.js:26
-msgid "Algorithms"
+#: templates.js:29
+msgid "Selected Algorithm"
 msgstr ""
 
-#: templates.js:28
+#: templates.js:30
 msgid "No algorithms"
 msgstr ""
 
-#: templates.js:33
+#: templates.js:34
 msgid "Points"
 msgstr ""
 
-#: templates.js:33
+#: templates.js:34
 msgid "Switch order"
 msgstr ""
 
-#: templates.js:34 views.js:180
+#: templates.js:35 views/sidebar.js:91
 msgid "No points defined!"
 msgstr ""
 
-#: templates.js:37
+#: templates.js:38
 msgid "Calculate Route"
 msgstr ""
 
-#: templates.js:38
+#: templates.js:39
 msgid "Clear"
 msgstr ""
 
-#: templates.js:47 views.js:440
+#: templates.js:50
 msgid "No point selected!"
 msgstr ""
 
-#: templates.js:50
+#: templates.js:53
 msgid "Lon"
 msgstr ""
 
-#: templates.js:51
+#: templates.js:54
 msgid "Lat"
 msgstr ""
 
-#: templates.js:52
+#: templates.js:55
 msgid "Name"
 msgstr ""
 
-#: templates.js:53
+#: templates.js:56
 msgid "Position"
 msgstr ""
 
-#: templates.js:59
+#: templates.js:62
 msgid "Apply"
 msgstr ""
 
-#: templates.js:66 templates.js:92
-msgid "Login"
-msgstr ""
-
-#: templates.js:70 templates.js:101 templates.js:195
-msgid "Please fill out all fields."
-msgstr ""
-
-#: templates.js:73
-msgid "The email or password you entered was incorrect."
-msgstr ""
-
-#: templates.js:77 templates.js:126 templates.js:170 templates.js:220
-msgid "Email"
-msgstr ""
-
-#: templates.js:83 templates.js:132 templates.js:226
-msgid "Password"
-msgstr ""
-
-#: templates.js:91 templates.js:147
-msgid "Register"
-msgstr ""
-
-#: templates.js:97
-msgid "Registration"
-msgstr ""
-
-#: templates.js:104 templates.js:198
-msgid "There were errors in the form."
-msgstr ""
-
-#: templates.js:108 templates.js:202
-msgid "First name"
-msgstr ""
-
-#: templates.js:114 templates.js:208
-msgid "Last name"
-msgstr ""
-
-#: templates.js:120 templates.js:214
-msgid "Address"
-msgstr ""
-
-#: templates.js:138
-msgid "Repeat Password"
-msgstr ""
-
 #: templates.js:146
-msgid "Cancel"
+msgid "Constraints"
 msgstr ""
 
-#: templates.js:159 templates.js:264
-msgid "Back"
+#: templates.js:151
+msgid "Algorithms"
 msgstr ""
 
-#: templates.js:160 templates.js:265 templates.js:339
+#: templates.js:154 templates.js:256 templates.js:361 templates.js:416
+#: templates.js:437
 msgid "Close"
 msgstr ""
 
-#: templates.js:164
-msgid "Create New User"
+#: templates.js:162 templates.js:188
+msgid "Login"
 msgstr ""
 
-#: templates.js:168
-msgid "First Name"
+#: templates.js:166 templates.js:197 templates.js:291
+msgid "Please fill out all fields."
 msgstr ""
 
 #: templates.js:169
+msgid "The email or password you entered was incorrect."
+msgstr ""
+
+#: templates.js:173 templates.js:222 templates.js:266 templates.js:316
+msgid "Email"
+msgstr ""
+
+#: templates.js:179 templates.js:228 templates.js:322
+msgid "Password"
+msgstr ""
+
+#: templates.js:187 templates.js:243
+msgid "Register"
+msgstr ""
+
+#: templates.js:193
+msgid "Registration"
+msgstr ""
+
+#: templates.js:200 templates.js:294
+msgid "There were errors in the form."
+msgstr ""
+
+#: templates.js:204 templates.js:298
+msgid "First name"
+msgstr ""
+
+#: templates.js:210 templates.js:304
+msgid "Last name"
+msgstr ""
+
+#: templates.js:216 templates.js:310
+msgid "Address"
+msgstr ""
+
+#: templates.js:234
+msgid "Repeat Password"
+msgstr ""
+
+#: templates.js:242
+msgid "Cancel"
+msgstr ""
+
+#: templates.js:255 templates.js:360
+msgid "Back"
+msgstr ""
+
+#: templates.js:260
+msgid "Create New User"
+msgstr ""
+
+#: templates.js:264
+msgid "First Name"
+msgstr ""
+
+#: templates.js:265
 msgid "Last Name"
 msgstr ""
 
-#: templates.js:171 templates.js:232
+#: templates.js:267 templates.js:328
 msgid "Activated"
 msgstr ""
 
-#: templates.js:172
+#: templates.js:268
 msgid "Actions"
 msgstr ""
 
-#: templates.js:184
+#: templates.js:280
 msgid "Edit"
 msgstr ""
 
-#: templates.js:187
+#: templates.js:283
 msgid "Activate"
 msgstr ""
 
-#: templates.js:193
+#: templates.js:289
 msgid "User"
 msgstr ""
 
-#: templates.js:193
+#: templates.js:289
 msgid "New User"
 msgstr ""
 
-#: templates.js:238
+#: templates.js:334
 msgid "Administrator"
 msgstr ""
 
-#: templates.js:244
+#: templates.js:340
 msgid "Save"
 msgstr ""
 
-#: templates.js:272
+#: templates.js:368
 msgid "User ID"
 msgstr ""
 
-#: templates.js:273
+#: templates.js:369
 msgid "Algorithm"
 msgstr ""
 
-#: templates.js:274
-msgid "Costs"
+#: templates.js:370
+msgid "Cost"
 msgstr ""
 
-#: templates.js:275
-msgid "is Paid"
-msgstr ""
-
-#: templates.js:276
+#: templates.js:371
 msgid "Request Date"
 msgstr ""
 
-#: templates.js:277
+#: templates.js:372
 msgid "Finish Date"
 msgstr ""
 
-#: templates.js:278
+#: templates.js:373
 msgid "Duration"
 msgstr ""
 
-#: templates.js:279
+#: templates.js:374
 msgid "Status"
 msgstr ""
 
-#: templates.js:304 templates.js:310
+#: templates.js:402 templates.js:408
 msgid "Import"
 msgstr ""
 
-#: templates.js:305 templates.js:314
+#: templates.js:403 templates.js:412
 msgid "Export"
 msgstr ""
 
-#: templates.js:308
+#: templates.js:406
 msgid ""
 "Choose a valid (exported) file on your harddrive and press \"Import\" to "
 "import all points and routes."
 msgstr ""
 
-#: templates.js:313
+#: templates.js:411
 msgid ""
 "Press \"Export\" to download a file containing all points and routes "
 "currently displayed. This may open a new browser window."
 msgstr ""
 
-#: templates.js:324
+#: templates.js:422
 msgid "Previous"
 msgstr ""
 
-#: templates.js:326
+#: templates.js:424
 msgid "Next"
 msgstr ""
 
@@ -322,109 +331,121 @@ msgstr ""
 msgid "Shortest Path Simple"
 msgstr ""
 
-#: views.js:193
-msgid "No algorithm selected."
+#: views/billing.js:32
+msgid "Loading billing data"
 msgstr ""
 
-#: views.js:199
-msgid "Not enough points defined."
+#: views/admin.js:36
+msgid "Loading table data"
 msgstr ""
 
-#: views.js:450
-msgid "Data"
+#: views/admin.js:185
+msgid "Do you really want to delete the user: "
 msgstr ""
 
-#: views.js:472
-msgid "Marker"
+#: views/imexport.js:52
+msgid "No file specified"
 msgstr ""
 
-#: views.js:483
-msgid "Start"
-msgstr ""
-
-#: views.js:485
-msgid "Target"
-msgstr ""
-
-#: views.js:533 views.js:534 views.js:665 views.js:666 views.js:1134
-#: views.js:1135
+#: views/login.js:30 views/login.js:31 views/register.js:48
+#: views/register.js:49 views/user.js:36 views/user.js:37
 msgid "Please enter a valid email address"
 msgstr ""
 
-#: views.js:536
+#: views/login.js:33
 msgid "Please enter your password"
 msgstr ""
 
-#: views.js:595
+#: views/login.js:92
 msgid "Logging in"
 msgstr ""
 
-#: views.js:653
+#: views/mark.js:9
+msgid "Marker"
+msgstr ""
+
+#: views/mark.js:20
+msgid "Start"
+msgstr ""
+
+#: views/mark.js:22
+msgid "Target"
+msgstr ""
+
+#: views/register.js:36
 msgid "Please enter your firstname"
 msgstr ""
 
-#: views.js:654
+#: views/register.js:37
 msgid "Please enter your lastname"
 msgstr ""
 
-#: views.js:656
+#: views/register.js:39
 msgid "Please provide a password"
 msgstr ""
 
-#: views.js:657 views.js:661 views.js:1131
+#: views/register.js:40 views/register.js:44 views/user.js:33
 msgid "Enter at least 5 characters"
 msgstr ""
 
-#: views.js:660
+#: views/register.js:43
 msgid "Please repeat your password"
 msgstr ""
 
-#: views.js:662
+#: views/register.js:45
 msgid "Enter the same password as above"
 msgstr ""
 
-#: views.js:711 views.js:1177
+#: views/register.js:94 views/user.js:84
 msgid "Sending data"
 msgstr ""
 
-#: views.js:727
+#: views/register.js:110
 msgid "Registration successful"
 msgstr ""
 
-#: views.js:728
+#: views/register.js:111
 msgid ""
 "The registration was successful. Please wait until an administrator "
 "activates your account."
 msgstr ""
 
-#: views.js:938
-msgid "Do you really want to delete the user?"
+#: views/sidebar.js:104
+msgid "No algorithm selected."
 msgstr ""
 
-#: views.js:1128
+#: views/sidebar.js:109
+msgid "Not enough points defined."
+msgstr ""
+
+#: views/sidebar.js:112
+msgid "Waiting for response from server ..."
+msgstr ""
+
+#: views/topbar.js:54
+msgid "Couldn't find the spot"
+msgstr ""
+
+#: views/user.js:30
 msgid "Please enter a firstname"
 msgstr ""
 
-#: views.js:1129
+#: views/user.js:31
 msgid "Please enter a lastname"
 msgstr ""
 
-#: views.js:1208
+#: views/user.js:115
 msgid "User created"
 msgstr ""
 
-#: views.js:1209
+#: views/user.js:116
 msgid "The user was created successfully"
 msgstr ""
 
-#: views.js:1231
+#: views/user.js:138
 msgid "Update successful"
 msgstr ""
 
-#: views.js:1232
+#: views/user.js:139
 msgid "The user was updated successfully"
-msgstr ""
-
-#: views.js:1331
-msgid "No file specified"
 msgstr ""
