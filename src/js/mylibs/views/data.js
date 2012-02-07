@@ -85,15 +85,29 @@ window.DataView = Backbone.View.extend({
 					if (!_.isEmpty(that.$('#dataview #pc_' + key).val())) {
 						var value = that.$('#dataview #pc_' + key).val();
 						
-						if (pointconstraints[i].type == "boolean") {
-							if (that.$('#dataview #pc_' + key).attr('checked')) {
-								value = true;
+					    switch(pointconstraints[i].type) {
+					    	case "boolean":
+						    	if (that.$('#dataview #pc_' + key).attr('checked')) {
+							    value = true;
 							} else {
-								// this is needed, because attr would be "undefined"
-								// if the checkbox isn't checked.
-								value = false;
+							    // this is needed, because attr would be "undefined"
+							    // if the checkbox isn't checked.
+							    value = false;
 							}
-						} 
+							break;
+						case "integer":
+							value = parseInt(value, 10);
+							break;
+						case "meter": 
+							value = parseFloat(value.replace(",", "."));
+							break;
+						case "price":
+							value = parseFloat(value.replace(",", "."));
+							break;
+						case "float":
+							value = parseFloat(value.replace(",", "."));
+							break;
+					   }
 						marker.attributes[key] = value;
 					} else {
 						// if nothing is written in to that pointconstraint, then set

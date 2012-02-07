@@ -64,18 +64,32 @@ window.AlgView = Backbone.View.extend({
                 // marker.set({key : value}) doesnt use the value of key.
                 // instead the keys name will be "key".
                 // so this is used as an alternative:
+                                
                 if (!_.isEmpty(this.$('#pc_' + key).val())) {
                     var value = this.$('#pc_' + key).val();
-
-                    if (currentAlg.constraints[i].type == "boolean") {
-                        if (that.$('#pc_' + key).attr('checked')) {
-                            value = true;
-                        } else {
-                            // this is needed, because attr would be "undefined"
-                            // if the checkbox isn't checked.
-                            value = false;
-                        }
-                    }
+        		    switch(currentAlg.constraints[i].type) {
+        		    	case "boolean":
+        			    	if (that.$('#pc_' + key).attr('checked')) {
+        		                    value = true;
+        		                } else {
+        		                    // this is needed, because attr would be "undefined"
+        		                    // if the checkbox isn't checked.
+        		                    value = false;
+        		                }
+        		                break;
+        		        case "integer":
+        		        	value = parseInt(value, 10);
+        		        	break;
+        		        case "meter": 
+        		        	value = parseFloat(value.replace(",", "."));
+        		        	break;
+        		        case "price":
+        		        	value = parseFloat(value.replace(",", "."));
+        		        	break;
+        		        case "float":
+        		        	value = parseFloat(value.replace(",", "."));
+        		        	break;
+        		    }
                     constraintsJson[key] = value;
                 } else {
                     // if nothing is written in to that pointconstraint, then set
