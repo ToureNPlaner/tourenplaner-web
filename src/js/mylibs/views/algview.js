@@ -4,7 +4,7 @@ window.AlgView = Backbone.View.extend({
 
     events: {
         "change #algorithms input": "onRefreshAlgorithm",
-        "click #close": "onCloseDialog"
+        "click a.close": "onCloseDialog"
     },
 
     initialize: function () {
@@ -12,21 +12,6 @@ window.AlgView = Backbone.View.extend({
     },
 
     render: function () {
-        var algorithms = window.server.get('algorithms');
-        var algArr = [];
-
-        if (!_.isUndefined(algorithms) && algorithms.length > 0) {
-            for (var i in algorithms) {
-                if (!algorithms[i].details.hidden) {
-                    algArr.push([algorithms[i].urlsuffix, algorithms[i].name]);
-                }
-            }
-        }
-
-        var data = {
-            algorithms: algArr,
-        };
-        $(this.el).html(templates.algView(data));
         $('#main').append(this.el);
 
         return this;
@@ -130,8 +115,6 @@ window.AlgView = Backbone.View.extend({
                 // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
             }
-
-
         }
     },
 

@@ -1,3 +1,10 @@
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+    if (_.isEqual(arg1, arg2))
+        return options.fn(this);
+    else
+        return options.inverse(this);
+});
+
 window.templates = window.templates || {};
 
 templates.topbarView = '<div class="fill">\
@@ -62,95 +69,35 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
-// Helper for constraints
-Handlebars.registerHelper('constraintsHelper', function (context) {
-    // context: type, value, key
-    var ret = "";
-    for (var i = 0; i < context.constraints.length; i++) {
-      key = context.constraints[i].name;
-      var value = "";
-      var type = context.constraints[i].type;
-
-      if (context.marker!=null && !_.isUndefined(context.marker.get(key))) {
-          value = context.marker.get(key);
-      }
-
-      var cInfo = "<div class='clearfix'><label for='pc_" + key + "'><b>" + key + ":</b></label>";
-      switch (type) {
-      case "boolean":
-          // display a checkbox and set its checked state
-          var checked = "";
-          if (value == true) {
-              checked = "checked";
-          }
-          cInfo += "<input type='checkbox' name='pc_" + key + "' id='pc_" + key + "' " + checked + "/></div>";
-          break;
-
-      case "integer":
-          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-          break;
-
-      case "float":
-          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /></div>";
-          break;
-
-      case "meter":
-          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> m</div>";
-          break;
-
-      case "price":
-          cInfo += "<input value='" + value + "' type='text' class='smartspinner' name='pc_" + key + "' id='pc_" + key + "' /> &#8364;</div>";
-          break;
-      }
-
-      ret += cInfo;
-
-    }
-
-    return ret;
-});
-templates.constraintsView = "{{{constraintsHelper this}}}";
-templates.constraintsView = Handlebars.compile(templates.constraintsView);
-
-
-
-// Helper for algorithm list
-Handlebars.registerHelper('algListHelper', function (context) {
-    var ret = "";
-
-    for (var i = 0; i < context.algorithms.length; i++) {
-        if (!context.algorithms[i].details.hidden) {
-            var algName = context.algorithms[i].name;
-            var algSuffix = context.algorithms[i].urlsuffix;
-            var checked = "";
-
-            if (!_.isUndefined(context.currentAlg) && context.currentAlg.urlsuffix == algSuffix) {
-                checked = " checked";
-            }
-            ret += '<input type="radio" name="alg" value="' + algSuffix + '" ' + checked + '>' + $._(algName) + '</input><br>';
-
-        }
-    }
-
-    return ret;
-});
-
-// Helper for global constraints
-Handlebars.registerHelper('algConstraintsHelper', function (context) {
-    if (!_.isUndefined(context.currentAlg) && context.currentAlg.constraints.length > 0) {
-        var data = {
-            constraints: context.currentAlg.constraints,
-            marker: null
-        };
-        return '<div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
-        <h3>' + $._('Constraints') + ':</h3>' + templates.constraintsView(data);
-    }
-});
-
-templates.algView =  '<h3>' + $._('Algorithms') + ':</h3>\
-                      <div id="algorithms">{{{algListHelper this}}}</div>\
-                      <div id="constraints">{{{algConstraintsHelper this}}}</div>\
-                      <a href="#" class="btn secondary" id="close">' + $._('Close') + '</a>';
+templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x</a></h3>\
+                      <form>\
+                        <div id="algorithms" class="clearfix">\
+                          {{#each algorithms}}\
+                            {{#unless this.details.hidden}}\
+                              <div class="clearfix">\
+                                <input type="radio" name="alg" id="{{urlsuffix}}" value="{{urlsuffix}}" {{#ifEquals ../../currentAlg.urlsuffix urlsuffix}}checked="checked"{{/ifEquals}} />\
+                                <label for="{{urlsuffix}}" target="{{urlsuffix}}"> {{name}}</a>\
+                              </div>\
+                            {{/unless}}\
+                          {{/each}}\
+                        </div>\
+                        <div id="constraints">\
+                          {{#if currentAlg.constraints}}\
+                            <div class="bar">&nbsp;</div>\
+                            <h3>' + $._('Constraints') + ':</h3>\
+                            {{#each currentAlg.constraints}}\
+                              <div class="clearfix">\
+                                <label for="pc_{{name}}">{{name}}</label>\
+                                {{#ifEquals type "boolean"}}\
+                                  <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
+                                {{else}}\
+                                  <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&8364;{{/ifEquals}}\
+                                {{/ifEquals}}\
+                              </div>\
+                            {{/each}}\
+                          {{/if}}\
+                        </div>\
+                      </form>';
 templates.algView = Handlebars.compile(templates.algView);
 
 templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';

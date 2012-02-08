@@ -46,7 +46,7 @@ div.popover {
 #main #sidebar {
   float: left;
   margin: 0;
-  z-index: 2;
+  z-index: 3;
   width: 250px;
   border-right: 1px solid black;
   background: white;
@@ -80,10 +80,12 @@ div.popover {
 
 #main #algview {
   display: none;
+  width: 200px;
+
   z-index: 2;
   position: relative;
   float: left;
-  padding: 5px;
+  padding: 5px 5px 5px 10px;
   background: white;
 
   box-shadow: 0px 0px 5px #333;
@@ -93,6 +95,22 @@ div.popover {
   border-bottom-right-radius: 10px;
   -moz-border-radius-bottomright: 10px;
   -webkit-border-bottom-right-radius: 10px;
+}
+#main #algview label {
+  float: left;
+  text-align: left;
+  width: 180px;
+  overflow-x: hidden;
+}
+#main #algview input {
+  float: left;
+  margin-top: 6px;
+}
+#main #algview .clearfix {
+  margin-bottom: 3px;
+}
+#main #algview .close {
+  margin: 10px 1px;
 }
 
 #main #map {
