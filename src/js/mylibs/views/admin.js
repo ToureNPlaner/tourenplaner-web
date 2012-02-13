@@ -202,7 +202,7 @@ window.AdminView = Backbone.View.extend({
     },
 
     onActivateClick: function (user) {
-        user.active = true;
+        user.status = "verified";
 
         var that = this;
         api.updateUser({
