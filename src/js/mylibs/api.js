@@ -81,7 +81,7 @@ _.extend(window.Api.prototype, {
         // method performs an asyncronous HTTP request with or without
         // authentication.
         // performs a callback, successful or not
-        var headers = this.get('authRequired') ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
+        var headers = this.get('authRequired') && !_.isEmpty(this.get('authAsBase64')) ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
         var that = this;
         $.ajax(url, {
             cache: false,
@@ -189,6 +189,13 @@ _.extend(window.Api.prototype, {
         });
 
         return true;
+    },
+
+    /**
+     * Remove all login informations.
+     */
+    logout : function () {
+        this.set({'authAsBase64': ''});
     },
 
     /**

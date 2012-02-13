@@ -58,6 +58,7 @@ window.User = Backbone.Model.extend({
         this.set({
             login: false
         });
+        window.api.logout();
         this.trigger('login', false);
     },
 
