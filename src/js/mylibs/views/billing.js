@@ -50,7 +50,7 @@ window.BillingView = Backbone.View.extend({
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
                     var page = Math.floor((that.position.offset / that.position.limit) + 1);
-                    var pages = text.number / that.position.limit;
+                    var pages = Math.ceil(text.number / that.position.limit);
 
                     // Update table
                     that.$('tbody').html('');

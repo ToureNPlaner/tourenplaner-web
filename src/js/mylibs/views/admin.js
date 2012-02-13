@@ -37,7 +37,7 @@ window.AdminView = Backbone.View.extend({
         var limit = modalTableHeight / lineHeight;
         limit = Math.floor(limit);
         if(limit<2) limit=2;
-        
+
         if (_.isUndefined(this.position)) {
             this.position = {
                 limit: limit,
@@ -53,8 +53,8 @@ window.AdminView = Backbone.View.extend({
             offset: this.position.offset,
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
-                    var page = (that.position.offset / that.position.limit) + 1;
-                    var pages = text.number / that.position.limit;
+                    var page = Math.floor((that.position.offset / that.position.limit) + 1);
+                    var pages = Math.ceil(text.number / that.position.limit);
 
                     // Update table
                     that.$('tbody').html('');
