@@ -164,9 +164,10 @@ window.Router = Backbone.Router.extend({
             callback: function(text, success) {
                 this.loadingView = new LoadingView($._('Loading route information')).render();
                 if (success) {
+                    var response = JSON.parse(Base64.decode(text.response));
                     window.map.resetRoute();
                     window.map.resetMarkers();
-                    window.map.drawMarkersAndRoute(text);
+                    window.map.drawMarkersAndRoute(response);
                 }
                 this.loadingView.remove();
             }
