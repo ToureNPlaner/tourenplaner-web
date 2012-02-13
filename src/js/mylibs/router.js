@@ -149,7 +149,7 @@ window.Router = Backbone.Router.extend({
      * Display the billing view.
      */
     billing: function() {
-        if (!window.server.isPublic() && this.user.get("admin"))
+        if (!window.server.isPublic())
             this.billingView = new BillingView({remove: _.bind(this.onBillingRemove, this)}).render();
     },
 
