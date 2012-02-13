@@ -9,6 +9,10 @@ window.AdminView = Backbone.View.extend({
         "click .back": "onBack"
     },
 
+    initialize: function() {
+        $(window).resize(_.bind(this.resize, this));
+    },
+
     render: function () {
         var content = templates.adminMainView;
         this.content = null;
@@ -26,9 +30,17 @@ window.AdminView = Backbone.View.extend({
     },
 
     renderMainView: function () {
+        // calculate row count
+        var lineHeight = 37;
+        var modalTableHeight = $(document).height() - 350;
+        var height = $(document).height() + 'px';
+        var limit = modalTableHeight / lineHeight;
+        limit = Math.floor(limit);
+        if(limit<2) limit=2;
+        
         if (_.isUndefined(this.position)) {
             this.position = {
-                limit: 10,
+                limit: limit,
                 offset: 0
             };
         }
@@ -100,6 +112,8 @@ window.AdminView = Backbone.View.extend({
                         if (_.isNumber(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
+
+                    that.resize();
                     loadingView.remove();
                 } else {
                     loadingView.remove();
@@ -107,6 +121,19 @@ window.AdminView = Backbone.View.extend({
                 }
             }
         });
+    },
+
+    resize: function () {
+        // center modal vertical; make scrollable
+        $('#admin .modal-body').css("max-height", $(document).height()-150);
+        if($(document).height() < $('#admin').height())
+            $('#admin .modal-body').css("overflow-y", "scroll");
+        else
+            $('#admin .modal-body').css("overflow-y", "auto");
+        
+        var top = ($(document).height() - $('#admin').height())/2;
+        $('#admin').css("margin", "0 0 0 -400px");
+        $('#admin').css("top", top+"px");
     },
 
     remove: function () {
