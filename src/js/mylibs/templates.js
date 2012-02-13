@@ -269,6 +269,7 @@ templates.userView =       '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.u
                                     <input type="password" name="password" id="password" />\
                                   </div>\
                                 </div>\
+                                {{#unless own_data}}\
                                 <div class="clearfix">\
                                     <label for="active">' + $._('Activated') + ': </label>\
                                     <div class="input">\
@@ -281,6 +282,7 @@ templates.userView =       '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.u
                                         <input type="checkbox" name="admin" id="administrator" {{#if user.admin}}checked="checked"{{/if}}/>\
                                     </div>\
                                 </div>\
+                                {{/unless}}\
                                 <div class="clearfix input">\
                                     <a href="#" class="btn primary save">' + $._('Save') + '</a>\
                                 </div>\

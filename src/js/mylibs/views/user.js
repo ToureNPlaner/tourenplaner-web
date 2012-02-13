@@ -7,11 +7,16 @@ window.UserView = Backbone.View.extend({
     },
 
     render: function () {
-        var user = {};
+        var user = {}, 
+            own_data = false;
+
         if (!_.isUndefined(this.model) && !_.isNull(this.model))
             user = this.model.toJSON();
 
-        $(this.el).html(templates.userView({user: user}));
+        if (!_.isUndefined(this.options.parent) && this.model === window.app.user)
+            own_data = true;
+
+        $(this.el).html(templates.userView({user: user, own_data: own_data}));
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -102,14 +107,15 @@ window.UserView = Backbone.View.extend({
         if (!_.isEmpty(this.$('#password').val()))
             user.set({password: this.$('#password').val()});
 
+        var that = this;
         if (new_user) {
             user.register({
                 success: function () {
                     loading.remove();
-                    if (_.isUndefined(this.parent))
+                    if (_.isUndefined(that.options.parent))
                         window.app.adminView.onBack();
                     else
-                        this.parent.remove();
+                        that.options.parent.remove();
 
                     new MessageView({
                         title: $._("User created"),
@@ -129,10 +135,10 @@ window.UserView = Backbone.View.extend({
             user.update({
                 success: function () {
                     loading.remove();
-                    if (_.isUndefined(this.parent))
+                    if (_.isUndefined(that.options.parent))
                         window.app.adminView.onBack();
                     else
-                        this.parent.remove();
+                        that.options.parent.remove();
 
                     new MessageView({
                         title: $._("Update successful"),
