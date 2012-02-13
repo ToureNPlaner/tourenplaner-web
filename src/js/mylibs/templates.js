@@ -63,7 +63,16 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                              <div class="clearfix"><label for="markerPos">' + $._('Position') + ':</label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
                              {{#if constraints}}\
                                 <h4>Constraints</h4>\
-                                {{{constraintsHtml}}}\
+                                {{#each constraints}}\
+                                  <div class="clearfix">\
+                                    <label for="pc_{{name}}">{{name}}: </label>\
+                                    {{#ifEquals type "boolean"}}\
+                                      <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
+                                    {{else}}\
+                                      <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                    {{/ifEquals}}\
+                                  </div>\
+                                {{/each}}\
                              {{/if}}\
                              </div>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
@@ -87,11 +96,11 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                             <h3>' + $._('Constraints') + ':</h3>\
                             {{#each currentAlg.constraints}}\
                               <div class="clearfix">\
-                                <label for="pc_{{name}}">{{name}}</label>\
+                                <label for="pc_{{name}}">{{name}}: </label>\
                                 {{#ifEquals type "boolean"}}\
                                   <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
                                 {{else}}\
-                                  <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&8364;{{/ifEquals}}\
+                                  <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
                                 {{/ifEquals}}\
                               </div>\
                             {{/each}}\

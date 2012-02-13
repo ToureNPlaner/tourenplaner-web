@@ -107,6 +107,8 @@ window.RegisterView = Backbone.View.extend({
             success: function () {
                 that.loading.remove();
                 that.remove();
+                window.app.navigate('/login', true);
+
                 new MessageView({
                     title: $._("Registration successful"),
                     message: $._("The registration was successful. Please wait until an administrator activates your account.")
