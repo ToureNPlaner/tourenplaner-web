@@ -102,7 +102,7 @@ window.BillingView = Backbone.View.extend({
 
                     // Add events
                     that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
-                    that.$('.pagination li a').last().click(_.bind(that.onNext, that));
+                    that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
                     that.$('.pagination li a').each(function () {
                         var page = parseInt($(this).html());
                         if (_.isNumber(page))
@@ -164,7 +164,9 @@ window.BillingView = Backbone.View.extend({
         return false;
     },
 
-    onNext: function () {
+    onNext: function (pages) {
+        if(this.position.offset >= (pages-1)*this.position.limit)
+            return false;
         this.position.offset += this.position.limit;
 
         this.renderMainView();
