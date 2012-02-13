@@ -364,7 +364,7 @@ $.mockjax({
                     resitrationdate: "2011-12-11T13:55:30.000+0000",
                     verifieddate: null
             };
-            var user2 = _.extend({}, user, {active: false, userid: 2});
+            var user2 = _.extend({}, user, {status: "needs verification", userid: 2});
 
             this.responseText = {
                 number: 10,

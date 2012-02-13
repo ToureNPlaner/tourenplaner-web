@@ -58,8 +58,13 @@ window.AdminView = Backbone.View.extend({
 
                     // Update table
                     that.$('tbody').html('');
-                    for (var i in text.users)
+                    for (var i in text.users){
+                        if(text.users[i].status === "verified")
+                            text.users[i].active = true;
+                        else
+                            text.users[i].active = false;
                         that.$('tbody').append(templates.adminTableRowView({user: text.users[i]}));
+                    }
 
                     that.$('tbody a.activate').each(function () {
                         var i = $(this).parents('tr').index();
