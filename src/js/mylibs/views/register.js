@@ -94,25 +94,26 @@ window.RegisterView = Backbone.View.extend({
         this.loading = new LoadingView($._("Sending data")).render();
         this.$('.error-correct').hide();
 
-        var user = window.app.user;
+        var user = window.app.user,
+            that = this;
         user.set({
             firstname: this.$('#firstname').val(),
             lastname: this.$('#lastname').val(),
             address: this.$('#address').val(),
             email: this.$('#email').val(),
             password: this.$('#password').val()
-        });
+        });        
         user.register({
             success: function () {
-                this.loading.remove();
-                this.remove();
+                that.loading.remove();
+                that.remove();
                 new MessageView({
                     title: $._("Registration successful"),
                     message: $._("The registration was successful. Please wait until an administrator activates your account.")
                 }).render();
             },
             error: function (text) {
-                this.loading.remove();
+                that.loading.remove();
                 //TODO: Parse error message and display errors
                 new MessageView({
                    title: $._('Error!'),
