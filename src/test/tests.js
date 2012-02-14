@@ -112,7 +112,7 @@ test("/authuser", 6, function() {
     });
 
     api.authUser({
-        email: 'asd@asd.de',
+        email: 'root@tourenplaner.de',
         password: 'bsd',
         callback: function(text, success) {
             same(success, false, 'Login not working for asd@asd.de:bsd');
@@ -121,11 +121,11 @@ test("/authuser", 6, function() {
     });
     
     api.authUser({
-        email: 'asd@asd.de',
-        password: 'asd',
+        email: 'root@tourenplaner.de',
+        password: 'toureNPlaner',
         callback: function(text, success) {
-            same(success, true, 'Login working for asd@asd.de:asd');
-            same(api.get('authAsBase64'), 'YXNkQGFzZC5kZTphc2Q=', 'Base64String');
+            same(success, true, 'Login working for root@tourenplaner.de:toureNPlaner');
+            same(api.get('authAsBase64'), "cm9vdEB0b3VyZW5wbGFuZXIuZGU6dG91cmVOUGxhbmVy", 'Base64String');
             start();
         }
     });
