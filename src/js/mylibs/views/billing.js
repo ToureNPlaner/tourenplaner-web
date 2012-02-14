@@ -4,7 +4,8 @@ window.BillingView = Backbone.View.extend({
 
     events: {
         "hidden": "remove",
-        "click .modal-footer a.cancel": "remove"
+        "click .modal-footer a.cancel": "remove",
+        "click #billingShowAll": "toggleShowAll"
     },
 
     initialize: function() {
@@ -12,10 +13,13 @@ window.BillingView = Backbone.View.extend({
     },
 
     render: function () {
+        this.admin = window.app.user.get("admin");
+        this.showAll = false;
+
         var content = templates.billingMainView;
         this.content = null;
         
-        $(this.el).html(templates.billingView({content: content}));
+        $(this.el).html(templates.billingView({content: content, admin: this.admin, showAll: this.showAll ? "checked" : null}));
         $(this.el).modal({
             show: true,
             keyboard: true,
@@ -42,11 +46,16 @@ window.BillingView = Backbone.View.extend({
                 offset: 0
             };
         }
+        var id = window.app.user.get("userid");
+        if(this.showAll && this.admin) id = null;
+        
         loadingView = new LoadingView($._("Loading billing data")).render();
+
         var that = this;
         api.listRequests({
             limit: this.position.limit,
             offset: this.position.offset,
+            id: id,
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
                     var page = Math.floor((that.position.offset / that.position.limit) + 1);
@@ -117,6 +126,15 @@ window.BillingView = Backbone.View.extend({
                 }
             }
         });
+    },
+
+    toggleShowAll: function() {
+        if($(':checkbox').is(':checked'))
+            this.showAll = true;
+        else
+            this.showAll = false;
+        
+        this.renderMainView();
     },
 
     resize: function () {

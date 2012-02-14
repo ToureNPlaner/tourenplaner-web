@@ -310,12 +310,16 @@ templates.billingView =  '<div class="modal-header">\
                             <h3 class="title">' + $._('Billing') + '</h3>\
                           </div>\
                           <div class="modal-body">\
+                            {{#if admin}}\
+                            <input type="checkbox" name="billingShowAll" id="billingShowAll" {{#if checked}}checked{{/if}} /> Show requests of all users\
+                            {{/if}}\
                             {{{content}}}\
                           </div>\
                           <div class="modal-footer">\
                             <a href="#" class="btn secondary back">' + $._('Back') + '</a>\
                             <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                           </div>';
+                   
 templates.billingView = Handlebars.compile(templates.billingView);
 
 templates.billingMainView =  '<table>\
