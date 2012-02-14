@@ -59,6 +59,8 @@ window.Router = Backbone.Router.extend({
      */
     logout: function() {
         if (this.user.isLoggedIn()) {
+            window.map.resetRoute();
+            window.map.resetMarkers();
             this.user.logout();
             this.navigate('/login', true);
         }
