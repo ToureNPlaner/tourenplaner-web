@@ -259,7 +259,9 @@ _.extend(window.Api.prototype, {
             
         var suffix = 'listrequests?limit=' + args.limit + '&offset=' + args.offset;
         if (args.id && !isNaN(args.id))
-            suffix += '&ID=' + args.id;
+            suffix += '&id=' + args.id;
+        else if(window.app.user.get("admin"))
+            suffix += '&id=all';
 
         this.send({
             type : 'POST',
