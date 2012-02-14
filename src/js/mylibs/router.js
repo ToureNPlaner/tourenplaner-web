@@ -159,15 +159,14 @@ window.Router = Backbone.Router.extend({
      * @param id The id of the old request
      */
     request: function(id) {
-        window.api.getRequest({
+        window.api.getResponse({
             id: id,
             callback: function(text, success) {
                 this.loadingView = new LoadingView($._('Loading route information')).render();
                 if (success) {
-                    var response = JSON.parse(Base64.decode(text.response));
                     window.map.resetRoute();
                     window.map.resetMarkers();
-                    window.map.drawMarkersAndRoute(response);
+                    window.map.drawMarkersAndRoute(text);
                 }
                 this.loadingView.remove();
             }

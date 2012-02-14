@@ -395,5 +395,25 @@ _.extend(window.Api.prototype, {
         });
 
         return true;
+    },
+
+    /**
+     * Retrieve a single response from the server.
+     *
+     * @param args.id The id of the response
+     * @param args.callback Callback function which will be called after the request returns
+     * @return True if the arguments were correct, false otherwise
+     */
+    getResponse: function(args) {
+        if (!args || !args.id)
+            return false;
+        
+        this.send({
+            suffix: 'getresponse?id=' + args.id,
+            request: '',
+            callback: _.isFunction(args.callback) ? args.callback : null
+        });
+
+        return true;
     }
 });
