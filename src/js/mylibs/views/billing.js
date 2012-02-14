@@ -29,7 +29,7 @@ window.BillingView = Backbone.View.extend({
 
     renderMainView: function () {
         // calculate row count
-        var lineHeight = 70;
+        var lineHeight = 37;
         var modalTableHeight = $(document).height() - 350;
         var height = $(document).height() + 'px';
         var limit = modalTableHeight / lineHeight;
