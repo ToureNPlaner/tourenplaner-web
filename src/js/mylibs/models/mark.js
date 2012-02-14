@@ -76,16 +76,14 @@ window.Mark = Backbone.Model.extend({
     },
 
     fromJSON: function(data) {
-        var tempLon = data.ln / 1e7;
-        var tempLat = data.lt / 1e7;
-        var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-
         this.set({
             name: data.name,
-            position: data.position || 99999,
-            k: data.k,
-            lonlat: tempLonLat
+            position: data.position,
+            k: data.k
         });
+
+        this.setLonLatWith1984(data.ln, data.lt);
+
         return this;
     }
 });
