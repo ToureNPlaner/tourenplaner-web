@@ -108,11 +108,10 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     fromJSON: function(data) {
-        for (var i = 0, m; m = data[i]; ++i) {
-            var mark = new Mark().fromJSON(m);
-            this.add(mark);
-        }
-        this.sort();
+        var marks = [];
+        for (var i = 0, m; m = data[i]; ++i)
+            marks.push(new Mark().fromJSON(m));
+        this.reset(marks);
     },
 
     /**

@@ -60,14 +60,11 @@ window.ImExportView = Backbone.View.extend({
             return function(e) {
                 if (e.target.readyState === FileReader.DONE) {
                     var data = JSON.parse(e.target.result);
-                    
-                    if (!_.isEmpty(data.marks)) {
-                        window.markList.reset();
+
+                    if (!_.isEmpty(data.marks))
                         window.markList.fromJSON(data.marks);
-                    }
-                    if (!_.isEmpty(data.route)) {
+                    if (!_.isEmpty(data.route))
                         window.map.drawRoute(data.route);
-                    }
 
                     dialog.remove();
                 }
@@ -87,9 +84,9 @@ window.ImExportView = Backbone.View.extend({
         contents.marks = window.markList.toJSON();
 
         var route = window.map.getRoute();
-        if (typeof route === 'String')
+        if (_.isString(route))
             contents.route = JSON.parse(route);
-        else if (typeof route == 'Object')
+        else
             contents.route = route;
 
         var dataURI = 'data:application/octet-stream;charset=utf-8;base64,' + Base64.encode(JSON.stringify(contents));

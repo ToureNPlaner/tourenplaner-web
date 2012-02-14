@@ -109,7 +109,7 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                       </form>';
 templates.algView = Handlebars.compile(templates.algView);
 
-templates.markView = '<div id="mark_{{cid}}" class="mark"><a href="#" class="view">{{name}}</a> {{position}}</div>';
+templates.markView = '<a href="#" class="view">{{name}}</a> {{position}}';
 templates.markView = Handlebars.compile(templates.markView);
 
 templates.loginView = '<div class="modal-header">\
