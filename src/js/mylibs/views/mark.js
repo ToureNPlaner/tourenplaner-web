@@ -1,9 +1,14 @@
 window.MarkView = Backbone.View.extend({
 
-    el: null,
+    id: '',
+    className: 'mark',
     model: null,
+    events: {
+        'click a.view': 'onClick'
+    },
 
     initialize: function () {
+        this.id = 'mark_' + this.model.cid;
         this.name = this.model.get('name');
         if (_.isEmpty(this.name)) {
             this.name = $._("Marker") + " " + _markerNameSuffix;
@@ -15,8 +20,22 @@ window.MarkView = Backbone.View.extend({
     },
 
     render: function () {
-        var position = '';
-        var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceIsTarget;
+        $(this.el).html(this.getTemplate());
+        $('#marks').append(this.el);
+
+        this.$('a.view').click(_.bind(this.onClick, this));
+        this.model.bind('change:position', _.bind(this.onPositionChange, this));
+
+        return this;
+    },
+
+    remove: function () {
+        $(this.el).remove();
+    },
+
+    getTemplate: function () {
+        var position = '',
+            sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceIsTarget;
         if (!sourceIsTarget && this.model.get('position') === 0)
             position = '(' + $._('Start') + ')';
         else if (!sourceIsTarget && this.model.get('position') == window.markList.length - 1)
@@ -24,19 +43,14 @@ window.MarkView = Backbone.View.extend({
         else if (sourceIsTarget && this.model.get('position') === 0)
             position = '(' + $._('Start/Target') + ')';
 
-        $('#marks').append(templates.markView({cid: this.model.cid, name: this.name, position: position}));
-        this.el = $('#mark_'+this.model.cid);
-
-        this.$('a.view').click(_.bind(this.onClick, this));
-
-        return this;
-    },
-
-    remove: function () {
-        this.el.remove();
+        return templates.markView({cid: this.model.cid, name: this.name, position: position});
     },
 
     onClick: function () {
         window.body.main.data.showMarker(this.model);
+    },
+
+    onPositionChange: function () {
+        $(this.el).html(this.getTemplate());
     }
 });

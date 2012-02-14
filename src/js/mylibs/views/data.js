@@ -45,8 +45,6 @@ window.DataView = Backbone.View.extend({
             pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints,
             // add fields to edit pointconstraints
             key;
-
-        log(pointconstraints);
 	
         var data = {
             lonlat:  lonlat,
