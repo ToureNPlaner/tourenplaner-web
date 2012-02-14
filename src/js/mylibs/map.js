@@ -154,12 +154,14 @@ _.extend(window.Map.prototype, {
 
         var proj = new OpenLayers.Projection("EPSG:4326");
         for (var i = 0; i < vertexString.way.length; i++) {
-            // transform points
-            var p = vertexString.way[i];           
-            var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
-            point.transform(proj, this.map.getProjectionObject());
+            for (var j = 0; j < vertexString.way[i].length; j++){
+                // transform points
+                var p = vertexString.way[i][j];           
+                var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
+                point.transform(proj, this.map.getProjectionObject());
 
-            pointList.push(point);
+                pointList.push(point);
+            }
         }
 
         // draw route on a layer and add it to map

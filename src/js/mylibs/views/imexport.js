@@ -60,7 +60,7 @@ window.ImExportView = Backbone.View.extend({
             return function(e) {
                 if (e.target.readyState === FileReader.DONE) {
                     var data = JSON.parse(e.target.result);
-
+                    
                     if (!_.isEmpty(data.marks)) {
                         window.markList.reset();
                         window.markList.fromJSON(data.marks);

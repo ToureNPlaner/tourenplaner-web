@@ -401,11 +401,11 @@ $.mockjax({
             var d = Math.floor(Math.random() * 90 * 1e7);
             this.responseText = {
                 requestid: 42,
-                way: [
+                way: [[
                     {lt: a, ln: b},
                     {lt: c, ln: d},
                     {lt: 488485554, ln: 94182360}
-                ],
+                ]],
                 misc: {
                     distance: 100,
                     apx: 0.5
