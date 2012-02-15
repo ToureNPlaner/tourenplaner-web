@@ -9,6 +9,7 @@ window.templates = window.templates || {};
 
 templates.topbarView = '<div class="fill">\
                             <div class="container">\
+                              <img src="img/icon.png" class="icon">\
                               <h3><a href="#">ToureNPlaner</a></h3>\
                               <form>\
                                 <input type="text" placeholder="' + $._('Search') + '" />\
