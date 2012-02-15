@@ -24,6 +24,8 @@ _.extend(window.Nominatim.prototype, {
 	 * @param callback Function called when the lookup has finished
 	 */
 	search: function (query, callback) {
+        query = str_replace(['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'ß'], ['ae', 'ue', 'oe', 'Ae', 'Ue', 'Oe', 'ss'], query);
+
 		var data = {q: encodeURIComponent(query)};
 		_.extend(data, this.params);
 
