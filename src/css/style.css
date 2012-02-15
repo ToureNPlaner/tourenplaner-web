@@ -214,3 +214,9 @@ div.popover {
 .ui-sortable-helper {
   border-top: 1px solid #ccc;
 }
+
+.icon {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
