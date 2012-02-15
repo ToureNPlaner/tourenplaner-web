@@ -10,6 +10,13 @@ window.Api = function(attributes) {
 
     this.attributes = {};
     this.set(attributes);
+
+    // Set error here because $._() might not be available
+    this.set({error: {
+        errorid: 'EBADCALL',
+        message: $._('Bad Request'),
+        details: $._("Request wasn't successful")
+    }})
 };
 
 _.extend(window.Api.prototype, {
