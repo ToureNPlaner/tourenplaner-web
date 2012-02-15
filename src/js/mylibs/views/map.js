@@ -47,9 +47,9 @@ window.MapView = Backbone.View.extend({
             width = $(window.body.main.sidebar.el).outerWidth();
         }
 
-        $(this.el).height($(window).height() - 40);
-        $(this.el).width($(window).width() - $('#main #sidebar').width());
-        $(this.el).css("left", $('#main #sidebar').width());
+        this.$el.height($(window).height() - 40);
+        this.$el.width($(window).width() - $('#main #sidebar').width());
+        this.$el.css("left", $('#main #sidebar').width());
     },
 
     onSidebarResize: function (event, ui) {

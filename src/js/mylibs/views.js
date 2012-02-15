@@ -86,9 +86,9 @@ window.MessageView = Backbone.View.extend({
      * @return The instance of the class
      */
     render: function () {
-        $(this.el).html(templates.messageView({title: this.title, message: this.message}));
+        this.$el.html(templates.messageView({title: this.title, message: this.message}));
 
-        $(this.el).modal({
+        this.$el.modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -100,10 +100,10 @@ window.MessageView = Backbone.View.extend({
      * Hide the dialog and remove the element.
      */
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
 
-        $(this.el).remove();
+        this.$el.remove();
     }
 });
 
@@ -130,9 +130,9 @@ window.LoadingView = Backbone.View.extend({
      * @return The instance of the class
      */
     render: function () {
-        $(this.el).html(templates.loadingView({message: this.message}));
+        this.$el.html(templates.loadingView({message: this.message}));
 
-        $(this.el).modal({
+        this.$el.modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -144,7 +144,7 @@ window.LoadingView = Backbone.View.extend({
      * Hide the dialog and remove the element.
      */
     remove: function () {
-        $(this.el).modal('hide');
-        $(this.el).remove();
+        this.$el.modal('hide');
+        this.$el.remove();
     }
 });

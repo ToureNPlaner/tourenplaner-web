@@ -14,7 +14,7 @@ window.LoginView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.loginView);
+        this.$el.html(templates.loginView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -58,7 +58,7 @@ window.LoginView = Backbone.View.extend({
             }
         });
 
-        $(this.el).modal({
+        this.$el.modal({
             show: true,
             backdrop: 'static',
             keyboard: false
@@ -67,8 +67,8 @@ window.LoginView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).modal('hide');
-        $(this.el).remove();
+        this.$el.modal('hide');
+        this.$el.remove();
         window.app.user.unbind('login', _.bind(this.onLoginSuccess, this));
 
         if (window.location.hash === '#/login')
@@ -106,7 +106,7 @@ window.LoginView = Backbone.View.extend({
 
         if (success) {
             this.remove();
-        } else if ($(this.el).length > 0 || $(this.el).css('display') !== 'none') {
+        } else if (this.$el.length > 0 || this.$el.css('display') !== 'none') {
             this.$('.error-correct').show();
         }
     }

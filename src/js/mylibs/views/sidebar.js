@@ -20,12 +20,12 @@ window.SidebarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.sidebarView);
+        this.$el.html(templates.sidebarView);
         $('#main').append(this.el);
 
         this.onResize();
 
-        $(this.el).resizable({
+        this.$el.resizable({
             handles: 'e'
         });
 
@@ -144,7 +144,7 @@ window.SidebarView = Backbone.View.extend({
         // 76 = 40 (header) + Padding (sidebar) + 11(hr) + 20 (padding #marks)
         var height = $(window).height() - 76 - $cont.first().height() - $cont.last().height() - $cont.next().next().children('h3').height();
 
-        $(this.el).height($(window).height() - 40);
+        this.$el.height($(window).height() - 40);
         this.$('#marks').css('max-height', height + 'px');
     },
 

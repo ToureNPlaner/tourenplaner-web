@@ -113,7 +113,7 @@ window.AlgView = Backbone.View.extend({
             };
 
             // ... and print them out
-            $(this.el).html(templates.algView(data));
+            this.$el.html(templates.algView(data));
 
             if (!_.isUndefined(currentAlg)) {
                 for (i = 0; i < currentAlg.constraints.length; i++) {

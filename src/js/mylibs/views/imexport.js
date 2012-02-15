@@ -12,9 +12,9 @@ window.ImExportView = Backbone.View.extend({
     },
 
     render: function() {
-        $(this.el).html(templates.imexportView);
+        this.$el.html(templates.imexportView);
 
-        $(this.el).modal({
+        this.$el.modal({
             show: true,
             backdrop: 'static',
             keyboard: true
@@ -24,10 +24,10 @@ window.ImExportView = Backbone.View.extend({
     },
 
     remove: function() {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
 
-        $(this.el).remove();
+        this.$el.remove();
         window.app.navigate('');   
     },
 

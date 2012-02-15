@@ -17,8 +17,8 @@ window.AdminView = Backbone.View.extend({
         var content = templates.adminMainView;
         this.content = null;
 
-        $(this.el).html(templates.adminView({content: content}));
-        $(this.el).modal({
+        this.$el.html(templates.adminView({content: content}));
+        this.$el.modal({
             show: true,
             keyboard: true,
             backdrop: 'static'
@@ -142,11 +142,11 @@ window.AdminView = Backbone.View.extend({
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
         if (_.isFunction(this.options.remove))
             this.options.remove();
-        $(this.el).remove();
+        this.$el.remove();
         window.app.navigate('');
     },
 
