@@ -115,7 +115,7 @@ _.extend(window.Map.prototype, {
         var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceIsTarget;
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
-            var size = new OpenLayers.Size(21, 25);
+            var size = new OpenLayers.Size(17, 25);
 
             // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
             var iconPath = 'img/mark.png';
@@ -128,7 +128,7 @@ _.extend(window.Map.prototype, {
             var feature = new OpenLayers.Feature.Vector(
                 new OpenLayers.Geometry.Point(mark.get('lonlat').lon, mark.get('lonlat').lat),
                 {mark: mark},
-                {externalGraphic: iconPath, graphicHeight: size.h, graphicWidth: size.w, graphicXOffset: -(size.w/2), graphicYOffset: -size.h, graphicOpacity: 0.7 }
+                {externalGraphic: iconPath, graphicHeight: size.h, graphicWidth: size.w, graphicXOffset: -(size.w/2), graphicYOffset: -size.h, graphicOpacity: 0.7}
             );
             this.dataLayer.addFeatures(feature);
         }
