@@ -8,7 +8,7 @@ window.Nominatim = function() {
 _.extend(window.Nominatim.prototype, {
 
 	/** The url of the API */
-	url: 'http://nominatim.openstreetmap.org/search',
+	url: 'http://nominatim.openstreetmap.org/search.php',
 
 	/** Standard parameters given to the API */
 	params: {
@@ -30,6 +30,7 @@ _.extend(window.Nominatim.prototype, {
 		_.extend(data, this.params);
 
 		$.ajax(this.url, {
+            type: 'get',
 			data: data,
 			cache: false,
 			accepts: 'json',

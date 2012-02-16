@@ -16,7 +16,7 @@ window.UserView = Backbone.View.extend({
         if (!_.isUndefined(this.options.parent) && this.model === window.app.user)
             own_data = true;
 
-        $(this.el).html(templates.userView({user: user, own_data: own_data}));
+        this.$el.html(templates.userView({user: user, own_data: own_data}));
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -72,11 +72,11 @@ window.UserView = Backbone.View.extend({
     },
 
     remove: function () {
-        if ($(this.el).modal(true).isShown)
-            $(this.el).modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
         if (_.isFunction(this.options.remove))
             this.options.remove();
-        $(this.el).remove();
+        this.$el.remove();
         window.app.navigate('');
     },
 

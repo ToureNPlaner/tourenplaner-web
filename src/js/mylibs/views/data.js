@@ -13,10 +13,10 @@ window.DataView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.dataView);
+        this.$el.html(templates.dataView);
         $('#main').append(this.el);
 
-        $(this.el).resizable({
+        this.$el.resizable({
             handles: "n, nw, w"
         });
 
@@ -120,7 +120,7 @@ window.DataView = Backbone.View.extend({
     },
 
     onMinMax: function () {
-        $(this.el).toggleClass('minimized');
+        this.$el.toggleClass('minimized');
         this.$('.content').toggle();
 
         var link = this.$('.minmax a');

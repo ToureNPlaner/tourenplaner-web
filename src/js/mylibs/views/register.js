@@ -11,7 +11,7 @@ window.RegisterView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.registerView);
+        this.$el.html(templates.registerView);
 
         var that = this;
         this.validator = this.$('form').validate({
@@ -75,18 +75,18 @@ window.RegisterView = Backbone.View.extend({
             }
         });
 
-        $(this.el).modal({
+        this.$el.modal({
             show: true,
             backdrop: 'static',
             keyboard: false
         });
-        $(this.el).undelegate('.close', 'click.modal');
+        this.$el.undelegate('.close', 'click.modal');
         return this;
     },
 
     remove: function () {
-        $(this.el).modal('hide');
-        $(this.el).remove();
+        this.$el.modal('hide');
+        this.$el.remove();
         window.app.navigate('');
     },
 

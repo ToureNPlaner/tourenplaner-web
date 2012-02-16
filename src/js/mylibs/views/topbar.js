@@ -13,7 +13,7 @@ window.TopbarView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(templates.topbarView);
+        this.$el.html(templates.topbarView);
         $('#container').append(this.el);
 
         this.$('ul li.menu, ul li.user').each(function () {

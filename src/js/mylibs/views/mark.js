@@ -20,7 +20,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     render: function () {
-        $(this.el).html(this.getTemplate());
+        this.$el.html(this.getTemplate());
         $('#marks').append(this.el);
 
         this.$('a.view').click(_.bind(this.onClick, this));
@@ -30,7 +30,7 @@ window.MarkView = Backbone.View.extend({
     },
 
     remove: function () {
-        $(this.el).remove();
+        this.$el.remove();
     },
 
     getTemplate: function () {
@@ -51,6 +51,6 @@ window.MarkView = Backbone.View.extend({
     },
 
     onPositionChange: function () {
-        $(this.el).html(this.getTemplate());
+        this.$el.html(this.getTemplate());
     }
 });
