@@ -232,7 +232,7 @@ window.AdminView = Backbone.View.extend({
         if (Modernizr.sessionstorage)
             sessionStorage.setItem('edit-user', JSON.stringify(user));
 
-        window.app.navigate('admin/user/' + user.userid, true);
+        window.app.navigate('admin/user/' + user.userid, {trigger: true});
         return false;
     }
 });

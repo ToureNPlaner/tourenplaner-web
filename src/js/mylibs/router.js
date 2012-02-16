@@ -27,7 +27,7 @@ window.Router = Backbone.Router.extend({
         this.lastURL = window.location.hash.substr(1);
         if (this.lastURL === 'login')
             this.lastURL = null;
-        this.navigate('');
+        window.location.hash = '';
     },
 
     /**
@@ -42,7 +42,7 @@ window.Router = Backbone.Router.extend({
                 window.body.topbar.hideNavigation();
                 that.onLogin(true);
             } else if (!that.user.isLoggedIn()) {
-                that.navigate('login', true);
+                that.navigate('login', {trigger: true});
             }
             loadingView.remove();
         });
@@ -65,7 +65,7 @@ window.Router = Backbone.Router.extend({
             window.map.resetMarkers();
             window.markList.reset();
             this.user.logout();
-            this.navigate('login', true);
+            this.navigate('login', {trigger: true});
         }
     },
 
@@ -191,7 +191,7 @@ window.Router = Backbone.Router.extend({
      */
     onLogin: function (success) {
         if (success && !_.isUndefined(this.lastURL) && !_.isNull(this.lastURL)) {
-            this.navigate(this.lastURL, true);
+            this.navigate(this.lastURL, {trigger: true});
             this.lastURL = null;
         }
     }

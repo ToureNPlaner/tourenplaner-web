@@ -72,7 +72,7 @@ window.BillingView = Backbone.View.extend({
                             $(this).click(function(){
                                 var link = '/route/' + $(this).children()[0].innerHTML;
                                 that.remove();
-                                window.app.navigate(link, true);
+                                window.app.navigate(link, {trigger: true});
                             });
                         });						
                     }
