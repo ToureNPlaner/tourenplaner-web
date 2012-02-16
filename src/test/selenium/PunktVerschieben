@@ -12,11 +12,10 @@
 <tr><td rowspan="1" colspan="3">PunktVerschieben</td></tr>
 </thead><tbody>
 <tr>
-	<td>assertText</td>
-	<td></td>
-	<td>TODO</td>
+	<td>dragAndDropToObject</td>
+	<td>link=*Marker*</td>
+	<td>400,400</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

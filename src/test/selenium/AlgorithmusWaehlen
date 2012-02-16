@@ -13,25 +13,24 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>id=algorithms</td>
+	<td>xpath=//*[@id=&quot;selectedAlg&quot;]</td>
 	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=algorithms</td>
-	<td>label=Traveling Salesman</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=option[value=&quot;tsp&quot;]</td>
+	<td>xpath=/html/body/div/div/div[2]/form/div/div[3]/label</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>pc_PriceConstraint</td>
+	<td>click</td>
+	<td>xpath=/html/body/div/div/div[2]/h3/a</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//*[@id=&quot;selectedAlg&quot;]</td>
+	<td>Constrained Shortest Path</td>
+</tr>
 </tbody></table>
 </body>
 </html>
