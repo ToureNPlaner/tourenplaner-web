@@ -169,7 +169,7 @@ window.AdminView = Backbone.View.extend({
         this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
-        window.app.navigate('/admin');
+        window.app.navigate('admin');
         return false;
     },
 
@@ -232,7 +232,7 @@ window.AdminView = Backbone.View.extend({
         if (Modernizr.sessionstorage)
             sessionStorage.setItem('edit-user', JSON.stringify(user));
 
-        window.app.navigate('/admin/user/' + user.userid, true);
+        window.app.navigate('admin/user/' + user.userid, true);
         return false;
     }
 });

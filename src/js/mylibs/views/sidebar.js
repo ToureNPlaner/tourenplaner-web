@@ -108,7 +108,7 @@ window.SidebarView = Backbone.View.extend({
                     if (success) {
                         window.map.drawRoute(text);
                         if (!_.isUndefined(text.requestid))
-                            window.app.navigate('/route/' + text.requestid);
+                            window.app.navigate('route/' + text.requestid);
                     }
                     loadingView.remove();
                 }

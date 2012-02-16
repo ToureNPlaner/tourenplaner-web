@@ -107,7 +107,7 @@ window.RegisterView = Backbone.View.extend({
             success: function () {
                 that.loading.remove();
                 that.remove();
-                window.app.navigate('/login', true);
+                window.app.navigate('login', true);
 
                 new MessageView({
                     title: $._("Registration successful"),
@@ -131,7 +131,7 @@ window.RegisterView = Backbone.View.extend({
 
     onRemove: function () {
         this.remove();
-        window.app.navigate('/login', true);
+        window.app.navigate('login', true);
     },
 
     onKeydown: function (evt) {

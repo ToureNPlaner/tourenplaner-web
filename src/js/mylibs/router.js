@@ -5,16 +5,16 @@ window.Router = Backbone.Router.extend({
 
     /** Maps routes to functions */
     routes: {
-        "/login":           "login",            // #/login
-        "/logout":          "logout",           // #/logout
-        "/register":        "register",         // #/register
-        "/settings":        "settings",         // #/settings
-        "/import":          "import",           // #/import
-        "/admin":           "admin",            // #/admin
-        "/admin/user":      "adminNewUser",     // #/admin/user
-        "/admin/user/:id":  "adminEditUser",    // #/admin/user/42
-        "/billing":         "billing",          // #/billing
-        "/route/:id":       "request"           // #/route/42
+        "login":           "login",            // #login
+        "logout":          "logout",           // #logout
+        "register":        "register",         // #register
+        "settings":        "settings",         // #settings
+        "import":          "import",           // #import
+        "admin":           "admin",            // #admin
+        "admin/user":      "adminNewUser",     // #admin/user
+        "admin/user/:id":  "adminEditUser",    // #admin/user/42
+        "billing":         "billing",          // #billing
+        "route/:id":       "request"           // #route/42
     },
 
     /**
@@ -25,6 +25,8 @@ window.Router = Backbone.Router.extend({
         this.user.bind('login', _.bind(this.onLogin, this));
 
         this.lastURL = window.location.hash.substr(1);
+        if (this.lastURL === 'login')
+            this.lastURL = null;
         this.navigate('');
     },
 
@@ -40,7 +42,7 @@ window.Router = Backbone.Router.extend({
                 window.body.topbar.hideNavigation();
                 that.onLogin(true);
             } else if (!that.user.isLoggedIn()) {
-                that.navigate('/login', true);
+                that.navigate('login', true);
             }
             loadingView.remove();
         });
@@ -61,8 +63,9 @@ window.Router = Backbone.Router.extend({
         if (this.user.isLoggedIn()) {
             window.map.resetRoute();
             window.map.resetMarkers();
+            window.markList.reset();
             this.user.logout();
-            this.navigate('/login', true);
+            this.navigate('login', true);
         }
     },
 

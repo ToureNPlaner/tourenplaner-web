@@ -19,12 +19,12 @@ templates.topbarView = '<div class="fill">\
                                 <li class="menu">\
                                   <a class="menu" href="#">' + $._('Settings') + '</a>\
                                   <ul class="menu-dropdown">\
-                                    <li><a href="#/settings">' + $._('Profile') + '</a></li>\
-                                    <li><a href="#/billing">' + $._('Billing') + '</a></li>\
-                                    <li><a href="#/import">' + $._('Im-/Export') + '</a></li>\
-                                    <li class="admin"><a href="#/admin">' + $._('Administration') + '</a></li>\
+                                    <li><a href="#settings">' + $._('Profile') + '</a></li>\
+                                    <li><a href="#billing">' + $._('Billing') + '</a></li>\
+                                    <li><a href="#import">' + $._('Im-/Export') + '</a></li>\
+                                    <li class="admin"><a href="#admin">' + $._('Administration') + '</a></li>\
                                     <li class="divider"></li>\
-                                    <li><a href="#/logout">' + $._('Logout') + '</a></li>\
+                                    <li><a href="#logout">' + $._('Logout') + '</a></li>\
                                   </ul>\
                                 </li>\
                               </ul>\
@@ -123,7 +123,7 @@ templates.loginView = '<div class="modal-header">\
                         <div class="alert-message error error-correct">\
                           <p><strong>' + $._('Error!') + '</strong> ' + $._('The email or password you entered was incorrect.') + '</p>\
                         </div>\
-                        <form name="login" method="post" action="#/login">\
+                        <form name="login" method="post" action="#login">\
                           <div class="clearfix">\
                             <label for="email">' + $._('Email') + ':</label>\
                             <div class="input">\
@@ -139,8 +139,8 @@ templates.loginView = '<div class="modal-header">\
                         </form>\
                        </div>\
                        <div class="modal-footer">\
-                        <a href="#/register" class="btn info register">' + $._('Register') + '</a>\
-                        <a href="#/login" class="btn primary login">' + $._('Login') + '</a>\
+                        <a href="#register" class="btn info register">' + $._('Register') + '</a>\
+                        <a href="#login" class="btn primary login">' + $._('Login') + '</a>\
                        </div>';
 
 templates.registerView = '  <div class="modal-header">\
@@ -154,7 +154,7 @@ templates.registerView = '  <div class="modal-header">\
                               <div class="alert-message error error-correct">\
                                 <p><strong>' + $._('Error!') + '</strong> ' + $._('There were errors in the form.') + '</p>\
                               </div>\
-                              <form name="register" method="post" action="#/register">\
+                              <form name="register" method="post" action="#register">\
                                 <div class="clearfix">\
                                   <label for="firstname">' + $._('First name') + ': </label>\
                                   <div class="input">\
@@ -195,7 +195,7 @@ templates.registerView = '  <div class="modal-header">\
                             </div>\
                             <div class="modal-footer">\
                               <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
-                              <a href="#/register" class="btn primary register">' + $._('Register') + '</a>\
+                              <a href="#register" class="btn primary register">' + $._('Register') + '</a>\
                             </div>';
 
 
@@ -212,7 +212,7 @@ templates.adminView =  '<div class="modal-header">\
                         </div>';
 templates.adminView = Handlebars.compile(templates.adminView);
 
-templates.adminMainView =  '<a href="#/admin/user" class="new-user">' + $._('Create New User') + '</a>\
+templates.adminMainView =  '<a href="#admin/user" class="new-user">' + $._('Create New User') + '</a>\
                             <table class="zebra-striped">\
                                 <thead>\
                                     <th>#</th>\
@@ -248,7 +248,7 @@ templates.userView =       '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.u
                             <div class="alert-message error error-correct">\
                               <p><strong>' + $._('Error!') + '</strong> ' + $._('There were errors in the form.') + '</p>\
                             </div>\
-                            <form name="edit-user" method="post" action="#/admin/user/{{user.userid}}">\
+                            <form name="edit-user" method="post" action="#admin/user/{{user.userid}}">\
                                 <div class="clearfix">\
                                   <label for="firstname">' + $._('First name') + ': </label>\
                                   <div class="input">\

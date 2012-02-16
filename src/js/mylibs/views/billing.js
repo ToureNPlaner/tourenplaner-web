@@ -206,7 +206,7 @@ window.BillingView = Backbone.View.extend({
         this.renderMainView();
         this.$('.modal-footer a.btn.back').hide();
 
-        window.app.navigate('/billing');
+        window.app.navigate('billing');
         return false;
     }
 });
