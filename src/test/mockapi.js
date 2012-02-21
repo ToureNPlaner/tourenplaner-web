@@ -266,6 +266,7 @@ $.mockjax({
     	   	if (_.isString(obj))
     	   	 	obj = JSON.parse(obj);
             this.responseText = {
+                userid: 42,
                 username: obj.username,
                 password: obj.password,
                 email: obj.email,

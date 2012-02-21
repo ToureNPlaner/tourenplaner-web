@@ -240,12 +240,19 @@ _.extend(window.Api.prototype, {
         var suffix = 'updateuser';
         if (args.id && !_.isNaN(args.id))
             suffix += '?id=' + args.id;
-
+        
+        this.args = args;
+        var that = this;
         this.send({
             type : 'POST',
             suffix : suffix,
             request : args.userObject,
-            callback : _.isFunction(args.callback) ? args.callback : null
+            callback: function (text, success) {
+                if(success && window.app.user.get('userid') === text.userid)
+                    that.set({'authAsBase64': Base64.encode(text.email + ':' + text.password)});    
+                if (_.isFunction(that.args.callback))
+                    that.args.callback(text, success);
+            }
         });
 
         return true;
