@@ -14,6 +14,7 @@ window.Router = Backbone.Router.extend({
         "admin/user":      "adminNewUser",     // #admin/user
         "admin/user/:id":  "adminEditUser",    // #admin/user/42
         "billing":         "billing",          // #billing
+        "billing/user/:id":"billing",          // #billing/42
         "route/:id":       "request"           // #route/42
     },
 
@@ -153,9 +154,9 @@ window.Router = Backbone.Router.extend({
     /**
      * Display the billing view.
      */
-    billing: function() {
+    billing: function(id) {
         if (!window.server.isPublic())
-            this.billingView = new BillingView({remove: _.bind(this.onBillingRemove, this)}).render();
+            this.billingView = new BillingView({remove: _.bind(this.onBillingRemove, this)}).render(id);
     },
 
     /**

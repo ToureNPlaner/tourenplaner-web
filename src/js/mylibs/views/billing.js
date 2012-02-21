@@ -12,9 +12,10 @@ window.BillingView = Backbone.View.extend({
         $(window).resize(_.bind(this.resize, this));
     },
 
-    render: function () {
+    render: function (id) {
         this.admin = window.app.user.get("admin");
         this.showAll = false;
+        this.id = id;
 
         var content = templates.billingMainView;
         this.content = null;
@@ -46,8 +47,9 @@ window.BillingView = Backbone.View.extend({
                 offset: 0
             };
         }
-        var id = window.app.user.get("userid");
-        if(this.showAll && this.admin) id = null;
+
+        if(_.isNaN(this.id)||_.isUndefined(this.id)) this.id = window.app.user.get('userid');
+        if(this.showAll && this.admin) this.id = 'all';
         
         loadingView = new LoadingView($._("Loading billing data")).render();
 
@@ -55,7 +57,7 @@ window.BillingView = Backbone.View.extend({
         api.listRequests({
             limit: this.position.limit,
             offset: this.position.offset,
-            id: id,
+            id: this.id,
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
                     var page = Math.floor((that.position.offset / that.position.limit) + 1);

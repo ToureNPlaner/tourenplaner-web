@@ -78,6 +78,10 @@ window.AdminView = Backbone.View.extend({
                         var i = $(this).parents('tr').index();
                         $(this).click(_.bind(that.onEditClick, that, text.users[i]));
                     });
+                    that.$('tbody a.view').each(function () {
+                        var i = $(this).parents('tr').index();
+                        $(this).click(_.bind(that.onViewClick, that, text.users[i]));
+                    });
 
                     // Update pagination
                     that.$('.pagination').remove();
@@ -233,6 +237,13 @@ window.AdminView = Backbone.View.extend({
             sessionStorage.setItem('edit-user', JSON.stringify(user));
 
         window.app.navigate('admin/user/' + user.userid, {trigger: true});
+        return false;
+    },
+
+    onViewClick: function (user) {
+        this.remove();
+
+        window.app.navigate('billing/user/' + user.userid, {trigger: true});
         return false;
     }
 });

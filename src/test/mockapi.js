@@ -167,6 +167,7 @@ $.mockjax({
         var login = data.headers.Authorization.split(' ')[1];
         if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
             this.responseText = {
+                userid: 42,
                 username: 'root@tourenplaner.de',
                 password: 'toureNPlaner',
                 email: 'root@tourenplaner.de',
