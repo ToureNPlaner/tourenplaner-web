@@ -80,14 +80,24 @@ window.User = Backbone.Model.extend({
     },
 
     update: function (args) {
-        var ret = window.api.updateUser({
-            id: this.get('userid'),
-            userObject: this.toUserobject(),
-            callback: function (text, success) {
-                if (success && _.isFunction(args.success)) args.success();
-                else if (!success && _.isFunction(args.error)) args.error(text);
-            }
-        });
+        if (this.get('admin')){
+            var ret = window.api.updateUser({
+                id: this.get('userid'),
+                userObject: this.toUserobject(),
+                callback: function (text, success) {
+                    if (success && _.isFunction(args.success)) args.success();
+                    else if (!success && _.isFunction(args.error)) args.error(text);
+                }
+            });
+        } else {
+            var ret = window.api.updateUser({
+                userObject: this.toUserobject(),
+                callback: function (text, success) {
+                    if (success && _.isFunction(args.success)) args.success();
+                    else if (!success && _.isFunction(args.error)) args.error(text);
+                }
+            });
+        }
 
         if (!ret && _.isFunction(args.error))
             args.error('Incorrect arguments');
