@@ -100,10 +100,15 @@ window.UserView = Backbone.View.extend({
             firstname: this.$('#firstname').val(),
             lastname: this.$('#lastname').val(),
             address: this.$('#address').val(),
-            email: this.$('#email').val(),
-            status: this.$('#active').is(':checked') ? "verified" : "needs_verification",
-            admin: this.$('#administrator').is(':checked')
+            email: this.$('#email').val()
         });
+
+        if (window.app.user.get('userid') != user.get('userid')){
+            user.set({
+                status: this.$('#active').is(':checked') ? "verified" : "needs_verification",
+                admin: this.$('#administrator').is(':checked')
+            });
+        }
         if (!_.isEmpty(this.$('#password').val()))
             user.set({password: this.$('#password').val()});
 
