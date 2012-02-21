@@ -49,8 +49,8 @@ window.BillingView = Backbone.View.extend({
         }
 
         var tempID = this.id;
-        if(_.isNaN(tempID)||_.isUndefined(tempID)) tempID = window.app.user.get('userid');
-        if(this.showAll && this.admin) tempID = 'all';
+        var all = false;
+        if(this.showAll && this.admin) all = true;
         
         loadingView = new LoadingView($._("Loading billing data")).render();
 
@@ -59,6 +59,7 @@ window.BillingView = Backbone.View.extend({
             limit: this.position.limit,
             offset: this.position.offset,
             id: tempID,
+            all: all,
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
                     var page = Math.floor((that.position.offset / that.position.limit) + 1);

@@ -262,6 +262,7 @@ _.extend(window.Api.prototype, {
      * Retrieves a list of all requests of every user or of a single, specified user.
      *
      * @param args.id The id of the single user (optional)
+     * @param args.all True if requests from all users shall be shown
      * qparam args.limit The max. number of items retrieved
      * @param args.offset The offset of the first retrieved item
      * @param args.callback Callback function which will be called after the request returns
@@ -272,10 +273,11 @@ _.extend(window.Api.prototype, {
             return false;
             
         var suffix = 'listrequests?limit=' + args.limit + '&offset=' + args.offset;
-        if (args.id && !isNaN(args.id))
-            suffix += '&id=' + args.id;
-        else if(window.app.user.get("admin"))
+
+        if(args.all)
             suffix += '&id=all';
+        else if (args.id && !isNaN(args.id))
+            suffix += '&id=' + args.id;
 
         this.send({
             type : 'POST',
