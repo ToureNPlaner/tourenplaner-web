@@ -45,7 +45,7 @@ window.AlgView = Backbone.View.extend({
         var constraintsJson = {};
         if (!_.isNull(currentAlg.constraints)) {
             for (var i = 0; i < currentAlg.constraints.length; i++) {
-                var key = currentAlg.constraints[i].name;
+                var key = currentAlg.constraints[i].id;
                 // marker.set({key : value}) doesnt use the value of key.
                 // instead the keys name will be "key".
                 // so this is used as an alternative:
@@ -117,7 +117,7 @@ window.AlgView = Backbone.View.extend({
 
             if (!_.isUndefined(currentAlg)) {
                 for (i = 0; i < currentAlg.constraints.length; i++) {
-                    key = currentAlg.constraints[i].name;
+                    key = currentAlg.constraints[i].id;
                     var initValue = this.$('#pc_' + key).val();
                     this.$('#pc_' + key).spinit({
                         height: 20,

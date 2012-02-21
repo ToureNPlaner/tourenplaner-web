@@ -103,7 +103,8 @@ $.mockjax({
                 ],
                 constraints: [
                     {
-                        name: "maxAltitudeDifference",
+                        name: "Max Altitude Difference",
+                        id: "maxAltitudeDifference",
                         description: "The maximum difference in altitude combined over the path",
                         type: "meter",
                         min: 0

@@ -97,13 +97,12 @@ div.popover {
   -webkit-border-bottom-right-radius: 10px;
 }
 #main #algview label {
-  float: left;
+ 
   text-align: left;
   width: 180px;
   overflow-x: hidden;
 }
 #main #algview input {
-  float: left;
   margin-top: 6px;
 }
 #main #algview .clearfix {
