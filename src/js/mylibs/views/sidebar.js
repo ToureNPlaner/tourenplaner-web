@@ -93,10 +93,15 @@ window.SidebarView = Backbone.View.extend({
                 title: $._('Error'),
                 message: $._('No algorithm selected.')
             }).render();
-        } else if (window.markList.length < window.algview.getSelectedAlgorithm().details.minPoints) {
+        } else if (window.markList.length < window.algview.getSelectedAlgorithm().details.minpoints) {
             new MessageView({
                title: $._('Error'),
                message: $._('Not enough points defined.')
+            }).render();
+        } else if (window.markList.length > window.algview.getSelectedAlgorithm().details.maxpoints) {
+            new MessageView({
+               title: $._('Error'),
+               message: $._('Too much points defined.')
             }).render();
         } else {
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
