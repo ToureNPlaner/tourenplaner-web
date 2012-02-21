@@ -101,7 +101,7 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                                 {{#ifEquals type "boolean"}}\
                                   <input type="checkbox" name="pc_{{id}}" id="pc_{{id}}" />\
                                 {{else}}\
-                                  <input type="text" name="pc_{{id}}" id="pc_{{id}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                  <input type="text" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
                                 {{/ifEquals}}\
                               </div>\
                             {{/each}}\

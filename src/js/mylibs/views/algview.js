@@ -125,6 +125,7 @@ window.AlgView = Backbone.View.extend({
                         min: currentAlg.constraints[i].min,
                         max: 999999
                     });
+                    this.$('#pc_' + key).tipsy({gravity: 'w'});
                 }
                 // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
