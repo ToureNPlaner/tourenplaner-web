@@ -248,7 +248,7 @@ _.extend(window.Api.prototype, {
             suffix : suffix,
             request : args.userObject,
             callback: function (text, success) {
-                if(success && window.app.user.get('userid') === text.userid)
+                if (success && window.app.user.get('userid') === that.args.userObject.userid && !_.isUndefined(that.args.userObject.password))
                     that.set({'authAsBase64': Base64.encode(that.args.userObject.email + ':' + that.args.userObject.password)});    
                 if (_.isFunction(that.args.callback))
                     that.args.callback(text, success);
