@@ -218,6 +218,7 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     responseText: {
+                userid: 13,
                 username: 'qwe',
                 password: 'qwe',
                 email: 'qwe@ewq.de',
