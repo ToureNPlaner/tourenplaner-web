@@ -170,7 +170,6 @@ $.mockjax({
             this.responseText = {
                 userid: 42,
                 username: 'root@tourenplaner.de',
-                password: 'toureNPlaner',
                 email: 'root@tourenplaner.de',
                 firstname: 'Peter',
                 lastname: 'Lustig',
