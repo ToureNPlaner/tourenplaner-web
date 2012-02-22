@@ -103,7 +103,8 @@ $.mockjax({
                 ],
                 constraints: [
                     {
-                        name: "maxAltitudeDifference",
+                        name: "Max Altitude Difference",
+                        id: "maxAltitudeDifference",
                         description: "The maximum difference in altitude combined over the path",
                         type: "meter",
                         min: 0
@@ -167,8 +168,8 @@ $.mockjax({
         var login = data.headers.Authorization.split(' ')[1];
         if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
             this.responseText = {
+                userid: 42,
                 username: 'root@tourenplaner.de',
-                password: 'toureNPlaner',
                 email: 'root@tourenplaner.de',
                 firstname: 'Peter',
                 lastname: 'Lustig',
@@ -216,6 +217,7 @@ $.mockjax({
     responseTimeout: 10,
     status: 201,
     responseText: {
+                userid: 13,
                 username: 'qwe',
                 password: 'qwe',
                 email: 'qwe@ewq.de',
@@ -265,6 +267,7 @@ $.mockjax({
     	   	if (_.isString(obj))
     	   	 	obj = JSON.parse(obj);
             this.responseText = {
+                userid: 42,
                 username: obj.username,
                 password: obj.password,
                 email: obj.email,

@@ -104,9 +104,9 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                               <div class="clearfix">\
                                 <label for="pc_{{name}}">{{name}}: </label>\
                                 {{#ifEquals type "boolean"}}\
-                                  <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
+                                  <input type="checkbox" name="pc_{{id}}" id="pc_{{id}}" />\
                                 {{else}}\
-                                  <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                  <input type="text" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
                                 {{/ifEquals}}\
                               </div>\
                             {{/each}}\
@@ -237,6 +237,7 @@ templates.adminTableRowView = '<tr>\
                                 <td>{{user.email}}</td>\
                                 <td class="center">{{#if user.active}}&#10004;{{else}}&#10006;{{/if}}</td>\
                                 <td>\
+                                    <a href="#" class="view"><img src="img/user--view.png" alt="' + $._('View requests') + '" title="' + $._('View requests') + '" /></a>\
                                     <a href="#" class="edit"><img src="img/user--pencil.png" alt="' + $._('Edit') + '" title="' + $._('Edit') + '" /></a>\
                                     <a href="#" class="delete"><img src="img/user--minus.png" alt="' + $._('Delete') + '" title="' + $._('Delete') + '" /></a>\
                                     {{#unless user.active}}\

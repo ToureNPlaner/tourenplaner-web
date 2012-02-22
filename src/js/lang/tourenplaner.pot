@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-22 09:47+0100\n"
+"POT-Creation-Date: 2012-02-22 09:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,8 @@ msgstr ""
 msgid "Request wasn't successful"
 msgstr ""
 
-#: api.js:129 views/sidebar.js:93 views/sidebar.js:98 views/topbar.js:54
+#: api.js:129 views/sidebar.js:93 views/sidebar.js:98 views/sidebar.js:103
+#: views/topbar.js:54
 msgid "Error"
 msgstr ""
 
@@ -41,7 +42,7 @@ msgstr ""
 msgid "Set as Endmarker"
 msgstr ""
 
-#: map.contextmenu.js:71 templates.js:79 templates.js:241
+#: map.contextmenu.js:71 templates.js:79 templates.js:242
 msgid "Delete"
 msgstr ""
 
@@ -57,28 +58,28 @@ msgstr ""
 msgid "Add Endmarker"
 msgstr ""
 
-#: router.js:38
+#: router.js:39
 msgid "Loading server information"
 msgstr ""
 
-#: router.js:97 templates.js:126 templates.js:129 templates.js:157
-#: templates.js:160 templates.js:251 templates.js:254 views/imexport.js:52
+#: router.js:98 templates.js:126 templates.js:129 templates.js:157
+#: templates.js:160 templates.js:252 templates.js:255 views/imexport.js:52
 #: views/login.js:41 views/register.js:58 views/register.js:121
-#: views/user.js:51 views/user.js:129 views/user.js:152
+#: views/user.js:51 views/user.js:134 views/user.js:157
 msgid "Error!"
 msgstr ""
 
-#: router.js:98
+#: router.js:99
 msgid ""
 "Your browser doesn't support the HTML 5 File API.<br /> To use the Im-/"
 "Export functionality, please upgrade your browser."
 msgstr ""
 
-#: router.js:143
+#: router.js:144
 msgid "Loading user information"
 msgstr ""
 
-#: router.js:170
+#: router.js:171
 msgid "Loading route information"
 msgstr ""
 
@@ -90,15 +91,15 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: templates.js:22 templates.js:309
+#: templates.js:22 templates.js:310
 msgid "Profile"
 msgstr ""
 
-#: templates.js:23 templates.js:316
+#: templates.js:23 templates.js:317
 msgid "Billing"
 msgstr ""
 
-#: templates.js:24 templates.js:361
+#: templates.js:24 templates.js:362
 msgid "Im-/Export"
 msgstr ""
 
@@ -186,7 +187,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: templates.js:126 templates.js:157 templates.js:251
+#: templates.js:126 templates.js:157 templates.js:252
 msgid "Please fill out all fields."
 msgstr ""
 
@@ -194,11 +195,11 @@ msgstr ""
 msgid "The email or password you entered was incorrect."
 msgstr ""
 
-#: templates.js:133 templates.js:182 templates.js:226 templates.js:276
+#: templates.js:133 templates.js:182 templates.js:226 templates.js:277
 msgid "Email"
 msgstr ""
 
-#: templates.js:139 templates.js:188 templates.js:282
+#: templates.js:139 templates.js:188 templates.js:283
 msgid "Password"
 msgstr ""
 
@@ -210,19 +211,19 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: templates.js:160 templates.js:254
+#: templates.js:160 templates.js:255
 msgid "There were errors in the form."
 msgstr ""
 
-#: templates.js:164 templates.js:258
+#: templates.js:164 templates.js:259
 msgid "First name"
 msgstr ""
 
-#: templates.js:170 templates.js:264
+#: templates.js:170 templates.js:265
 msgid "Last name"
 msgstr ""
 
-#: templates.js:176 templates.js:270
+#: templates.js:176 templates.js:271
 msgid "Address"
 msgstr ""
 
@@ -234,11 +235,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: templates.js:215 templates.js:325
+#: templates.js:215 templates.js:326
 msgid "Back"
 msgstr ""
 
-#: templates.js:216 templates.js:326 templates.js:379 templates.js:400
+#: templates.js:216 templates.js:327 templates.js:380 templates.js:401
 msgid "Close"
 msgstr ""
 
@@ -254,7 +255,7 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: templates.js:227 templates.js:289
+#: templates.js:227 templates.js:290
 msgid "Activated"
 msgstr ""
 
@@ -263,82 +264,86 @@ msgid "Actions"
 msgstr ""
 
 #: templates.js:240
+msgid "View requests"
+msgstr ""
+
+#: templates.js:241
 msgid "Edit"
 msgstr ""
 
-#: templates.js:243
+#: templates.js:244
 msgid "Activate"
 msgstr ""
 
-#: templates.js:249
+#: templates.js:250
 msgid "User"
 msgstr ""
 
-#: templates.js:249
+#: templates.js:250
 msgid "New User"
 msgstr ""
 
-#: templates.js:295
+#: templates.js:296
 msgid "Administrator"
 msgstr ""
 
-#: templates.js:302
+#: templates.js:303
 msgid "Save"
 msgstr ""
 
-#: templates.js:334
+#: templates.js:335
 msgid "User ID"
 msgstr ""
 
-#: templates.js:335
+#: templates.js:336
 msgid "Algorithm"
 msgstr ""
 
-#: templates.js:336
+#: templates.js:337
 msgid "Cost"
 msgstr ""
 
-#: templates.js:337
+#: templates.js:338
 msgid "Request Date"
 msgstr ""
 
-#: templates.js:338
+#: templates.js:339
 msgid "Finish Date"
 msgstr ""
 
-#: templates.js:339
+#: templates.js:340
 msgid "Duration"
 msgstr ""
 
-#: templates.js:340
+#: templates.js:341
 msgid "Status"
 msgstr ""
 
-#: templates.js:365 templates.js:371
+#: templates.js:366 templates.js:372
 msgid "Import"
 msgstr ""
 
-#: templates.js:366 templates.js:375
+#: templates.js:367 templates.js:376
 msgid "Export"
 msgstr ""
 
-#: templates.js:369
+#: templates.js:370
 msgid ""
 "Choose a valid (exported) file on your harddrive and press \"Import\" to "
 "import all points and routes."
 msgstr ""
 
-#: templates.js:374
+#: templates.js:375
 msgid ""
 "Press \"Export\" to download a file containing all points and routes "
 "currently displayed. This may open a new browser window."
 msgstr ""
 
-#: templates.js:385
+#: templates.js:386
 msgid "Previous"
 msgstr ""
 
-#: templates.js:387
+#: templates.js:388
 msgid "Next"
 msgstr ""
 
@@ -354,7 +359,7 @@ msgstr ""
 msgid "Shortest Path Simple"
 msgstr ""
 
-#: views/billing.js:52
+#: views/billing.js:55
 msgid "Loading billing data"
 msgstr ""
 
@@ -362,7 +367,7 @@ msgstr ""
 msgid "Loading table data"
 msgstr ""
 
-#: views/admin.js:219
+#: views/admin.js:223
 msgid "Do you really want to delete the user: "
 msgstr ""
 
@@ -445,7 +450,11 @@ msgstr ""
 msgid "Not enough points defined."
 msgstr ""
 
-#: views/sidebar.js:102
+#: views/sidebar.js:104
+msgid "Too much points defined."
+msgstr ""
+
+#: views/sidebar.js:107
 msgid "Waiting for response from server ..."
 msgstr ""
 
@@ -461,18 +470,18 @@ msgstr ""
 msgid "Please enter a lastname"
 msgstr ""
 
-#: views/user.js:121
+#: views/user.js:126
 msgid "User created"
 msgstr ""
 
-#: views/user.js:122
+#: views/user.js:127
 msgid "The user was created successfully"
 msgstr ""
 
-#: views/user.js:144
+#: views/user.js:149
 msgid "Update successful"
 msgstr ""
 
-#: views/user.js:145
+#: views/user.js:150
 msgid "The user was updated successfully"
 msgstr ""
