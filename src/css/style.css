@@ -148,6 +148,28 @@ div.popover {
   font-weight: bold;
 }
 
+#main #route-overlay {
+  z-index: 3;
+  position: absolute;
+  padding: 5px;
+  background: white;
+  border: 1px solid black;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#main #route-overlay .header {
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
 #admin, #billing {
   width: 800px;
   margin: -300px 0 0 -400px;

@@ -45,7 +45,8 @@ _.extend(window.Map.prototype, {
         this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
 
         /* SelectFeature for some simple opacity changes */
-        var selectFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
+        var selectMarkerFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
+            geometryTypes: ['OpenLayers.Geometry.Point'],
             hover: true,
             callbacks: {
                 over: function (feature) {
@@ -58,8 +59,8 @@ _.extend(window.Map.prototype, {
                 }
             }
         });
-        this.map.addControl(selectFeature);
-        selectFeature.activate();
+        this.map.addControl(selectMarkerFeature);
+        selectMarkerFeature.activate();
 
         /* DragFeature for drag and drop support of the markers */
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
@@ -84,8 +85,11 @@ _.extend(window.Map.prototype, {
      * Removes the currently drawn route from the map.
      */
     resetRoute: function () {
-        if (!_.isNull(this.routeFeature))
+        if (!_.isNull(this.routeFeature)) {
             this.dataLayer.removeFeatures([this.routeFeature]);
+            this.routeOverlay.remove();
+        }
+            
         this.currentRouteString = this.routeFeature = null;        
     },
 
@@ -96,8 +100,9 @@ _.extend(window.Map.prototype, {
         // - remove all features (route and markers)
         // - then draw route back
         this.dataLayer.removeAllFeatures();
-        if (!_.isNull(this.routeFeature))
+        if (!_.isNull(this.routeFeature)) {
             this.dataLayer.addFeatures(this.routeFeature);
+        }            
     },
 
     /**
@@ -154,7 +159,7 @@ _.extend(window.Map.prototype, {
 
         var proj = new OpenLayers.Projection("EPSG:4326");
         for (var i = 0; i < vertexString.way.length; i++) {
-            for (var j = 0; j < vertexString.way[i].length; j++){
+            for (var j = 0; j < vertexString.way[i].length; j++) {
                 // transform points
                 var p = vertexString.way[i][j];           
                 var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
@@ -173,6 +178,8 @@ _.extend(window.Map.prototype, {
         });
         this.dataLayer.addFeatures(this.routeFeature);       
         this.zoomToRoute();
+
+        this.displayRouteInfo();
     },
 
     /**
@@ -195,7 +202,18 @@ _.extend(window.Map.prototype, {
         }
         this.drawMarkers();
     },
-    
+
+    displayRouteInfo: function () {
+        if ($('#route-overlay').length > 0)
+            this.routeOverlay.remove();
+
+        var data = this.currentRouteString;
+        if (_.isString(this.currentRouteString))
+            data = JSON.parse(this.currentRouteString);
+
+        data = data.misc;
+        this.routeOverlay = new RouteOverlay(data).render();
+    },
     /**
      * Returns the current route as a string.
      *
@@ -268,5 +286,6 @@ _.extend(window.Map.prototype, {
         var lonlatClone = lonlat.clone();
         lonlatClone.transform(proj, this.map.getProjectionObject());
         return lonlatClone;
-    }
+    },
+
 });
