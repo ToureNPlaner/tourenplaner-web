@@ -48,7 +48,6 @@ window.BillingView = Backbone.View.extend({
             };
         }
 
-        var tempID = this.id;
         var all = false;
         if(this.showAll && this.admin) all = true;
         
@@ -58,7 +57,7 @@ window.BillingView = Backbone.View.extend({
         api.listRequests({
             limit: this.position.limit,
             offset: this.position.offset,
-            id: tempID,
+            id: this.id,
             all: all,
             callback: function (text, success) {
                 if (success && _.isNull(that.content)) {
