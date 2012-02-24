@@ -80,10 +80,14 @@ window.User = Backbone.Model.extend({
     },
 
     update: function (args) {
+        var selfUpdate = false;
+        if(this.get('userid') === window.app.user.get('userid'))
+            selfUpdate = true;
         if (this.get('admin')){
             var ret = window.api.updateUser({
                 id: this.get('userid'),
                 userObject: this.toUserobject(),
+                self: selfUpdate,
                 callback: function (text, success) {
                     if (success && _.isFunction(args.success)) args.success();
                     else if (!success && _.isFunction(args.error)) args.error(text);
@@ -92,6 +96,7 @@ window.User = Backbone.Model.extend({
         } else {
             var ret = window.api.updateUser({
                 userObject: this.toUserobject(),
+                self: selfUpdate,
                 callback: function (text, success) {
                     if (success && _.isFunction(args.success)) args.success();
                     else if (!success && _.isFunction(args.error)) args.error(text);

@@ -236,6 +236,8 @@ _.extend(window.Api.prototype, {
     updateUser : function (args) {
         if (!args || !args.userObject)
             return false;
+        if (!args.self)
+            args.self = false;
 
         var suffix = 'updateuser';
         if (args.id && !_.isNaN(args.id))
@@ -248,8 +250,8 @@ _.extend(window.Api.prototype, {
             suffix : suffix,
             request : args.userObject,
             callback: function (text, success) {
-                if (success && window.app.user.get('userid') === that.args.userObject.userid && !_.isUndefined(that.args.userObject.password))
-                    that.set({'authAsBase64': Base64.encode(that.args.userObject.email + ':' + that.args.userObject.password)});    
+                if (success && that.args.self && !_.isUndefined(that.args.userObject.password))
+                    that.set({'authAsBase64': Base64.encode(that.args.userObject.email + ':' + that.args.userObject.password)});
                 if (_.isFunction(that.args.callback))
                     that.args.callback(text, success);
             }
