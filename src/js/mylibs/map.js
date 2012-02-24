@@ -286,6 +286,6 @@ _.extend(window.Map.prototype, {
         var lonlatClone = lonlat.clone();
         lonlatClone.transform(proj, this.map.getProjectionObject());
         return lonlatClone;
-    },
+    }
 
 });
