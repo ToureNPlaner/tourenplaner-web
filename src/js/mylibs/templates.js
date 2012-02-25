@@ -285,6 +285,12 @@ templates.userView =       '<h4>{{#if user.userid}}' + $._('User') + ' #{{user.u
                                     <input type="password" name="password" id="password" />\
                                   </div>\
                                 </div>\
+                                <div class="clearfix">\
+                                  <label for="password_confirm">' + $._('Confirm Password') + ': </label>\
+                                  <div class="input">\
+                                    <input type="password" name="password_confirm" id="password_confirm" />\
+                                  </div>\
+                                </div>\
                                 {{#unless own_data}}\
                                 <div class="clearfix">\
                                     <label for="active">' + $._('Activated') + ': </label>\

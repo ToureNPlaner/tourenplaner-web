@@ -26,6 +26,10 @@ window.UserView = Backbone.View.extend({
                 password: {
                     minlength: 5
                 },
+                password_confirm: {
+                    minlength: 5,
+                    equalTo: "#password" 
+                },
                 email: {
                     required: true,
                     email: true
@@ -36,6 +40,10 @@ window.UserView = Backbone.View.extend({
                 lastname: $._('Please enter a lastname'),
                 password: {
                     minlength: $._('Enter at least 5 characters')
+                },
+                password_confirm: {
+                    minlength: $._('Enter at least 5 characters'),
+                    equalTo: $._('Enter the same password as above')
                 },
                 email: {
                     required: $._('Please enter a valid email address'),
