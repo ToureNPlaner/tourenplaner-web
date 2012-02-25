@@ -18,7 +18,7 @@ window.BillingView = Backbone.View.extend({
         this.id = id;
 
         var content = templates.billingMainView;
-        this.content = null;
+        this.content = this.loadingView = null;
         
         this.$el.html(templates.billingView({content: content, admin: this.admin, showAll: this.showAll ? "checked" : null}));
         this.$el.modal({
@@ -51,7 +51,9 @@ window.BillingView = Backbone.View.extend({
         var all = false;
         if(this.showAll && this.admin) all = true;
         
-        loadingView = new LoadingView($._("Loading billing data")).render();
+        if (!_.isNull(this.loadingView))
+            this.loadingView.remove();
+        this.loadingView = new LoadingView($._("Loading billing data")).render();
 
         var that = this;
         api.listRequests({
@@ -107,24 +109,31 @@ window.BillingView = Backbone.View.extend({
                     // ugly but it works
                     $('#billing').css({width: $('#billing.modal div.modal-body table thead').outerWidth() + 20 + 'px'});
 
-                    if (page !== 1)
+                    if (page !== 1) {
                         that.$('.pagination li').first().removeClass('disabled');
-                    if (page !== pages)
+                        that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
+                    } else {
+                        that.$('.pagination li a').first().click(function (e) { e.preventDefault(); return false; });
+                    }  
+                    if (page !== pages) {
                         that.$('.pagination li').last().removeClass('disabled');
+                        that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
+                    } else {
+                        that.$('.pagination li a').last().click(function (e) { e.preventDefault(); return false; });
+                    }
 
-                    // Add events
-                    that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
-                    that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
                     that.$('.pagination li a').each(function () {
                         var page = parseInt($(this).html());
-                        if (_.isNumber(page))
+                        if (_.isNumber(page) && !_.isNaN(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
 
                     that.resize();
-                    loadingView.remove();
+                    that.loadingView.remove();
+                    that.loadingView = null;
                 } else {
-                    loadingView.remove();
+                    that.loadingView.remove();
+                    that.loadingView = null;
                     that.remove();
                 }
             }

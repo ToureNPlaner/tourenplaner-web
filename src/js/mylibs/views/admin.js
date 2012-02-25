@@ -15,7 +15,7 @@ window.AdminView = Backbone.View.extend({
 
     render: function () {
         var content = templates.adminMainView;
-        this.content = null;
+        this.content = this.loadingView = null;
 
         this.$el.html(templates.adminView({content: content}));
         this.$el.modal({
@@ -45,7 +45,9 @@ window.AdminView = Backbone.View.extend({
             };
         }
 
-        loadingView = new LoadingView($._('Loading table data')).render();
+        if (!_.isNull(this.loadingView))
+            this.loadingView.remove();
+        this.loadingView = new LoadingView($._('Loading table data')).render();
 
         var that = this;
         api.listUsers({
@@ -108,24 +110,32 @@ window.AdminView = Backbone.View.extend({
                     that.$('.modal-body').append(templates.paginationView({pages: html}));
                     that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
 
-                    if (page !== 1)
-                        that.$('.pagination li').first().removeClass('disabled');
-                    if (page !== pages)
-                        that.$('.pagination li').last().removeClass('disabled');
-
                     // Add events
-                    that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
-                    that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
+                    if (page !== 1) {
+                        that.$('.pagination li').first().removeClass('disabled');
+                        that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
+                    } else {
+                        that.$('.pagination li a').first().click(function (e) { e.preventDefault(); return false; });
+                    }  
+                    if (page !== pages) {
+                        that.$('.pagination li').last().removeClass('disabled');
+                        that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
+                    } else {
+                        that.$('.pagination li a').last().click(function (e) { e.preventDefault(); return false; });
+                    }
+
                     that.$('.pagination li a').each(function () {
                         var page = parseInt($(this).html());
-                        if (_.isNumber(page))
+                        if (_.isNumber(page) && !_.isNaN(page))
                             $(this).click(_.bind(that.onPage, that, page));
                     });
 
                     that.resize();
-                    loadingView.remove();
+                    that.loadingView.remove();
+                    that.loadingView = null;
                 } else {
-                    loadingView.remove();
+                    that.loadingView.remove();
+                    that.loadingView = null;
                     that.remove();
                 }
             }
