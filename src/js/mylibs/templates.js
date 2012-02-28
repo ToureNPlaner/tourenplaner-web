@@ -5,6 +5,10 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
         return options.inverse(this);
 });
 
+Handlebars.registerHelper('toKm', function(distance) {
+    return distance/1000;
+});
+
 window.templates = window.templates || {};
 
 templates.topbarView = '<div class="fill">\
@@ -80,7 +84,7 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
 templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>\
-                          <div style="float: left"><div class="info"><b>' + $._('Distance') + '</b>: {{distance}} km</div>\
+                          <div style="float: left"><div class="info"><b>' + $._('Distance') + '</b>: {{toKm distance}} km</div>\
                           <div class="info"><b>' + $._('APX') + '</b>: {{apx}}</div></div>';
 templates.routeOverlay = Handlebars.compile(templates.routeOverlay);
 
