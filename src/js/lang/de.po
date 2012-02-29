@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-22 09:54+0100\n"
-"PO-Revision-Date: 2012-02-22 09:54+0100\n"
-"Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
+"POT-Creation-Date: 2012-02-29 15:42+0100\n"
+"PO-Revision-Date: 2012-02-29 15:43+0100\n"
+"Last-Translator: Kevin Wenz <kevinwenz@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,21 @@ msgstr "Anfrage fehlerhaft"
 msgid "Request wasn't successful"
 msgstr "Anfrage war erfolglos"
 
-#: api.js:129
+#: api.js:111
 #: views/sidebar.js:93
 #: views/sidebar.js:98
 #: views/sidebar.js:103
 #: views/topbar.js:54
 msgid "Error"
 msgstr "Fehler"
+
+#: api.js:125
+msgid "Abort"
+msgstr "Abbruch"
+
+#: api.js:126
+msgid "Request has been cancelled."
+msgstr "Anfrage wurde abgebrochen."
 
 #: map.contextmenu.js:61
 msgid "Markers"
@@ -48,8 +56,8 @@ msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
 
 #: map.contextmenu.js:71
-#: templates.js:79
-#: templates.js:242
+#: templates.js:83
+#: templates.js:246
 msgid "Delete"
 msgstr "Löschen"
 
@@ -70,19 +78,19 @@ msgid "Loading server information"
 msgstr "Lade Serverinformationen"
 
 #: router.js:98
-#: templates.js:126
-#: templates.js:129
-#: templates.js:157
-#: templates.js:160
-#: templates.js:252
-#: templates.js:255
+#: templates.js:130
+#: templates.js:133
+#: templates.js:161
+#: templates.js:164
+#: templates.js:256
+#: templates.js:259
 #: views/imexport.js:52
 #: views/login.js:41
 #: views/register.js:58
 #: views/register.js:121
-#: views/user.js:51
-#: views/user.js:134
-#: views/user.js:157
+#: views/user.js:59
+#: views/user.js:142
+#: views/user.js:165
 msgid "Error!"
 msgstr "Fehler!"
 
@@ -98,289 +106,293 @@ msgstr "Lade Benutzerinformationen"
 msgid "Loading route information"
 msgstr "Lade Routeninformationen"
 
-#: templates.js:15
+#: templates.js:19
 msgid "Search"
 msgstr "Suche"
 
-#: templates.js:20
+#: templates.js:24
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates.js:22
-#: templates.js:310
+#: templates.js:26
+#: templates.js:320
 msgid "Profile"
 msgstr "Profil"
 
-#: templates.js:23
-#: templates.js:317
+#: templates.js:27
+#: templates.js:327
 msgid "Billing"
 msgstr "Rechnungen"
 
-#: templates.js:24
-#: templates.js:362
+#: templates.js:28
+#: templates.js:372
 msgid "Im-/Export"
 msgstr "Im-/Export"
 
-#: templates.js:25
-#: templates.js:209
+#: templates.js:29
+#: templates.js:213
 msgid "Administration"
 msgstr "Administration"
 
-#: templates.js:27
+#: templates.js:31
 msgid "Logout"
 msgstr "Logout"
 
-#: templates.js:37
+#: templates.js:41
 msgid "Selected Algorithm"
 msgstr "Gewählter Algorithmus"
 
-#: templates.js:38
+#: templates.js:42
 msgid "No algorithms"
 msgstr "Keine Algorithmen"
 
-#: templates.js:42
+#: templates.js:46
 msgid "Points"
 msgstr "Punkte"
 
-#: templates.js:42
+#: templates.js:46
 msgid "Switch order"
 msgstr "Reihenfolge umkehren"
 
-#: templates.js:43
+#: templates.js:47
 #: views/sidebar.js:77
 msgid "No points defined!"
 msgstr "Keine Punkte definiert!"
 
-#: templates.js:46
+#: templates.js:50
 msgid "Calculate Route"
 msgstr "Route berechnen"
 
-#: templates.js:47
+#: templates.js:51
 msgid "Clear"
 msgstr "Leeren"
 
-#: templates.js:58
+#: templates.js:62
 msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
-#: templates.js:61
+#: templates.js:65
 msgid "Lon"
 msgstr "Breitengrad"
 
-#: templates.js:62
+#: templates.js:66
 msgid "Lat"
 msgstr "Höhengrad"
 
-#: templates.js:63
+#: templates.js:67
 msgid "Name"
 msgstr "Name"
 
-#: templates.js:64
+#: templates.js:68
 msgid "Position"
 msgstr "Position"
 
-#: templates.js:79
+#: templates.js:83
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: templates.js:82
+#: templates.js:86
 msgid "Routeinfos"
 msgstr "Routeninfos"
 
-#: templates.js:83
+#: templates.js:87
 msgid "Distance"
 msgstr "Distanz"
 
-#: templates.js:84
+#: templates.js:88
 #, fuzzy
 msgid "APX"
 msgstr "APX"
 
-#: templates.js:87
+#: templates.js:91
 msgid "Algorithms"
 msgstr "Algorithmen"
 
-#: templates.js:102
+#: templates.js:106
 msgid "Constraints"
 msgstr "Beschränkungen"
 
-#: templates.js:122
-#: templates.js:148
+#: templates.js:126
+#: templates.js:152
 msgid "Login"
 msgstr "Login"
 
-#: templates.js:126
-#: templates.js:157
-#: templates.js:252
+#: templates.js:130
+#: templates.js:161
+#: templates.js:256
 msgid "Please fill out all fields."
 msgstr "Bitte füllen Sie alle Felder aus."
 
-#: templates.js:129
+#: templates.js:133
 msgid "The email or password you entered was incorrect."
 msgstr "Die Emailadresse oder das Passwort waren nicht korrekt."
 
-#: templates.js:133
-#: templates.js:182
-#: templates.js:226
-#: templates.js:277
+#: templates.js:137
+#: templates.js:186
+#: templates.js:230
+#: templates.js:281
 msgid "Email"
 msgstr "Email"
 
-#: templates.js:139
-#: templates.js:188
-#: templates.js:283
+#: templates.js:143
+#: templates.js:192
+#: templates.js:287
 msgid "Password"
 msgstr "Passwort"
 
-#: templates.js:147
-#: templates.js:203
+#: templates.js:151
+#: templates.js:207
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates.js:153
+#: templates.js:157
 msgid "Registration"
 msgstr "Registrierung"
 
-#: templates.js:160
-#: templates.js:255
+#: templates.js:164
+#: templates.js:259
 msgid "There were errors in the form."
 msgstr "Es traten Fehler im Formular auf."
 
-#: templates.js:164
-#: templates.js:259
+#: templates.js:168
+#: templates.js:263
 msgid "First name"
 msgstr "Vorname"
 
-#: templates.js:170
-#: templates.js:265
+#: templates.js:174
+#: templates.js:269
 msgid "Last name"
 msgstr "Nachname"
 
-#: templates.js:176
-#: templates.js:271
+#: templates.js:180
+#: templates.js:275
 msgid "Address"
 msgstr "Adresse"
 
-#: templates.js:194
+#: templates.js:198
 msgid "Repeat Password"
 msgstr "Passwort wiederholen"
 
-#: templates.js:202
+#: templates.js:206
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates.js:215
-#: templates.js:326
+#: templates.js:219
+#: templates.js:336
 msgid "Back"
 msgstr "Zurück"
 
-#: templates.js:216
-#: templates.js:327
-#: templates.js:380
-#: templates.js:401
+#: templates.js:220
+#: templates.js:337
+#: templates.js:390
+#: templates.js:411
 msgid "Close"
 msgstr "Schließen"
 
-#: templates.js:220
+#: templates.js:224
 msgid "Create New User"
 msgstr "Neuen Benutzer anlegen"
 
-#: templates.js:224
+#: templates.js:228
 msgid "First Name"
 msgstr "Vorname"
 
-#: templates.js:225
+#: templates.js:229
 msgid "Last Name"
 msgstr "Nachname"
 
-#: templates.js:227
-#: templates.js:290
+#: templates.js:231
+#: templates.js:300
 msgid "Activated"
 msgstr "Aktiviert"
 
-#: templates.js:228
+#: templates.js:232
 msgid "Actions"
 msgstr "Aktionen"
 
-#: templates.js:240
+#: templates.js:244
 msgid "View requests"
 msgstr "Requests anzeigen"
 
-#: templates.js:241
+#: templates.js:245
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: templates.js:244
+#: templates.js:248
 msgid "Activate"
 msgstr "Aktivieren"
 
-#: templates.js:250
+#: templates.js:254
 msgid "User"
 msgstr "Benutzer"
 
-#: templates.js:250
+#: templates.js:254
 msgid "New User"
 msgstr "Neuer Benutzer"
 
-#: templates.js:296
+#: templates.js:293
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: templates.js:306
 msgid "Administrator"
 msgstr "Administrator"
 
-#: templates.js:303
+#: templates.js:313
 msgid "Save"
 msgstr "Speichern"
 
-#: templates.js:335
+#: templates.js:345
 msgid "User ID"
 msgstr "Benutzerid"
 
-#: templates.js:336
+#: templates.js:346
 msgid "Algorithm"
 msgstr "Algorithmus"
 
-#: templates.js:337
+#: templates.js:347
 msgid "Cost"
 msgstr "Kosten"
 
-#: templates.js:338
+#: templates.js:348
 msgid "Request Date"
 msgstr "Anfragezeitpunkt"
 
-#: templates.js:339
+#: templates.js:349
 msgid "Finish Date"
 msgstr "Endzeitpunkt"
 
-#: templates.js:340
+#: templates.js:350
 msgid "Duration"
 msgstr "Dauer"
 
-#: templates.js:341
+#: templates.js:351
 msgid "Status"
 msgstr "Status"
 
-#: templates.js:366
-#: templates.js:372
+#: templates.js:376
+#: templates.js:382
 msgid "Import"
 msgstr "Importieren"
 
-#: templates.js:367
-#: templates.js:376
+#: templates.js:377
+#: templates.js:386
 msgid "Export"
 msgstr "Exportieren"
 
-#: templates.js:370
+#: templates.js:380
 msgid "Choose a valid (exported) file on your harddrive and press \"Import\" to import all points and routes."
 msgstr "Wählen Sie eine exportierte Datei auf ihrer Festplatte aus und drücken Sie \"Importieren\" um alle Punkte und Routen zu importieren."
 
-#: templates.js:375
+#: templates.js:385
 msgid "Press \"Export\" to download a file containing all points and routes currently displayed. This may open a new browser window."
 msgstr "Drücken Sie \"Exportieren\" um eine Datei mit allen momentan dargestellten Punkten und Routen herunterzuladen. Dabei kann sich ein neues Browserfenster öffnen."
 
-#: templates.js:386
+#: templates.js:396
 msgid "Previous"
 msgstr "Zurück"
 
-#: templates.js:388
+#: templates.js:398
 msgid "Next"
 msgstr "Weiter"
 
@@ -396,15 +408,15 @@ msgstr "Kürzester Weg"
 msgid "Shortest Path Simple"
 msgstr "Simpler kürzester Weg"
 
-#: views/billing.js:55
+#: views/billing.js:56
 msgid "Loading billing data"
 msgstr "Rechnungsdaten werden geladen"
 
-#: views/admin.js:48
+#: views/admin.js:50
 msgid "Loading table data"
 msgstr "Tabellendaten werden gelanden"
 
-#: views/admin.js:223
+#: views/admin.js:233
 msgid "Do you really want to delete the user: "
 msgstr "Wollen sie diesen Benutzer wirklich löschen:"
 
@@ -416,8 +428,8 @@ msgstr "Keine Datei ausgewählt!"
 #: views/login.js:31
 #: views/register.js:48
 #: views/register.js:49
-#: views/user.js:41
-#: views/user.js:42
+#: views/user.js:49
+#: views/user.js:50
 msgid "Please enter a valid email address"
 msgstr "Bitte geben Sie eine gültige Emailadresse an"
 
@@ -459,7 +471,8 @@ msgstr "Bitte geben Sie ein Passwort an"
 
 #: views/register.js:40
 #: views/register.js:44
-#: views/user.js:38
+#: views/user.js:42
+#: views/user.js:45
 msgid "Enter at least 5 characters"
 msgstr "Geben Sie mindestens 5 Zeichen ein"
 
@@ -468,11 +481,12 @@ msgid "Please repeat your password"
 msgstr "Bitte geben Sie ihr Password erneut an"
 
 #: views/register.js:45
+#: views/user.js:46
 msgid "Enter the same password as above"
 msgstr "Geben Sie dasselbe Passwort wie oben an"
 
 #: views/register.js:94
-#: views/user.js:89
+#: views/user.js:97
 msgid "Sending data"
 msgstr "Daten werden gesendet"
 
@@ -504,27 +518,27 @@ msgstr "Warte auf Antwort vom Server ..."
 msgid "Couldn't find the spot"
 msgstr "Spot konnte nicht gefunden werden"
 
-#: views/user.js:35
+#: views/user.js:39
 msgid "Please enter a firstname"
 msgstr "Bitte geben Sie einen Vornamen an"
 
-#: views/user.js:36
+#: views/user.js:40
 msgid "Please enter a lastname"
 msgstr "Bitte geben Sie einen Nachnamen an"
 
-#: views/user.js:126
+#: views/user.js:134
 msgid "User created"
 msgstr "Benutzer angelegt"
 
-#: views/user.js:127
+#: views/user.js:135
 msgid "The user was created successfully"
 msgstr "Der Benutzer wurde erfolgreich angelegt"
 
-#: views/user.js:149
+#: views/user.js:157
 msgid "Update successful"
 msgstr "Aktualisierung erfolgreich"
 
-#: views/user.js:150
+#: views/user.js:158
 msgid "The user was updated successfully"
 msgstr "Der Benutzer wurde erfolgreich aktualisiert"
 
