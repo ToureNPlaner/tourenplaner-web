@@ -115,6 +115,10 @@ window.LoadingView = Backbone.View.extend({
     id: 'loading',
     className: 'modal',
 
+    events: {
+        "hidden": "close"
+    },
+
     /**
      * Constructor of the LoadingView class. Initializes the contents of the dialog.
      *
@@ -146,5 +150,13 @@ window.LoadingView = Backbone.View.extend({
     remove: function () {
         this.$el.modal('hide');
         this.$el.remove();
+    },
+
+    /**
+     * Hide the dialog manually and kill ajax request.
+     */
+    close: function (){
+        window.api.abort();
+        this.remove();
     }
 });

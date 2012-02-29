@@ -90,7 +90,7 @@ _.extend(window.Api.prototype, {
         // performs a callback, successful or not
         var headers = this.get('authRequired') && !_.isEmpty(this.get('authAsBase64')) ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
         var that = this;
-        $.ajax(url, {
+        this.xhr = $.ajax(url, {
             cache: false,
             type: reqData.type,
             accepts: 'json',
@@ -435,5 +435,12 @@ _.extend(window.Api.prototype, {
         });
 
         return true;
+    },
+
+    /**
+     * Aborts actual request
+     */
+    abort : function (){
+        this.xhr.abort();
     }
 });
