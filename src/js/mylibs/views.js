@@ -116,7 +116,7 @@ window.LoadingView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "close"
+        "click #loading.modal .modal-header .close": "close"
     },
 
     /**

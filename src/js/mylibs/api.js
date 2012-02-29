@@ -108,6 +108,7 @@ _.extend(window.Api.prototype, {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var text = jqXHR.responseText || "";
+                var title = $._("Error");
 
                 // use simple error if response is empty
                 if (text === "") {
@@ -119,6 +120,12 @@ _.extend(window.Api.prototype, {
                     text = JSON.parse(text);
                 }
 
+                // handle abort
+                if (text === "abort") {
+                    title = $._("Abort");
+                    text = $._("Request has been cancelled.");
+                }
+
                 event.trigger('request', text, false);
 
                 // Also display an error message for the user
@@ -126,7 +133,7 @@ _.extend(window.Api.prototype, {
                     var message = text;
                     if (!_.isString(text))
                         message = text.message + ': ' + text.details;
-                    new MessageView({title: $._("Error"), message: message}).render();
+                    new MessageView({title: title, message: message}).render();
                 }
             },
             complete: function (){
