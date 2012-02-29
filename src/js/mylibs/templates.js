@@ -412,8 +412,10 @@ templates.messageView = '<div class="modal-header">\
                          </div>';
 templates.messageView = Handlebars.compile(templates.messageView);
 
-templates.loadingView = '<div class="body">\
+templates.loadingView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
+                         </div>\
+                         <div class="modal-body">\
                             <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>\
                             <div class="message">{{message}}</div>\
                          </div>';
