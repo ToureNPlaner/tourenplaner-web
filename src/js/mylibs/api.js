@@ -128,6 +128,9 @@ _.extend(window.Api.prototype, {
                         message = text.message + ': ' + text.details;
                     new MessageView({title: $._("Error"), message: message}).render();
                 }
+            },
+            complete: function (){
+                that.xhr = null;
             }
         });
 
@@ -441,6 +444,9 @@ _.extend(window.Api.prototype, {
      * Aborts actual request
      */
     abort : function (){
-        this.xhr.abort();
+        if(!_.isNull(this.xhr)){
+            this.xhr.abort();
+            this.xhr = null;
+        }
     }
 });
