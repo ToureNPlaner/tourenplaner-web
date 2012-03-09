@@ -221,6 +221,7 @@ window.AdminView = Backbone.View.extend({
         var that = this;
         api.updateUser({
             id: user.userid,
+            self: false,
             userObject: user,
             callback: function (text, success) {
                 that.renderMainView();

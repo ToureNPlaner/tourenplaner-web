@@ -83,7 +83,7 @@ window.User = Backbone.Model.extend({
         var selfUpdate = false;
         if(this.get('userid') === window.app.user.get('userid'))
             selfUpdate = true;
-        if (this.get('admin')){
+        if (window.app.user.get('admin')){
             var ret = window.api.updateUser({
                 id: this.get('userid'),
                 userObject: this.toUserobject(),
