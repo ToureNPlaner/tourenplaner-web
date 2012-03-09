@@ -46,6 +46,18 @@ window.MarkList = Backbone.Collection.extend({
         return null;
     },
 
+    getMarkAtIndex: function(index) {
+        if (index < this.length) {
+            return this.at(index);
+        }
+
+        return null;
+    },
+
+    getSize: function() {
+        return this.length;
+    },
+
     appendMark: function (mark) {
         mark.set({position: this.length});
         this.add(mark, {

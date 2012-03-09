@@ -111,6 +111,19 @@ window.SidebarView = Backbone.View.extend({
                 points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {
+
+                        // sort markers
+                        var markers = [];
+                        for (var i = 0; i < window.markList.getSize(); i++) {
+                            markers[i] = window.markList.getMarkAtIndex(i);
+                        }
+                        for (var i = 0; i < text.points.length; i++) {
+                            var pos = text.points[i].position;
+                            if (pos < markers.length) {
+                                window.markList.moveMark(markers[pos], i);
+                            }
+                        }
+
                         window.map.drawRoute(text);
                         if (!_.isUndefined(text.requestid))
                             window.app.navigate('route/' + text.requestid);
@@ -140,7 +153,6 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onShowAlgs: function() {
-        // TODO: move element to algview.js and access it from here
        $('#algview').toggle();
     },
 
