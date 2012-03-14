@@ -69,8 +69,19 @@ window.BillingView = Backbone.View.extend({
                     // Update table
                     that.$('tbody').html('');
                     for (var i in text.requests){
-                    	text.requests[i].request = JSON.stringify(text.requests[i].request);
-                    	text.requests[i].response = JSON.stringify(text.requests[i].response);
+                        var date;
+                        if(!_.isNull(text.requests[i].requestdate)){
+                            date = text.requests[i].requestdate.substr(0,10);
+                            date += " ";
+                            date += text.requests[i].requestdate.substr(11,8);
+                            text.requests[i].requestdate = date;
+                        }
+                        if(!_.isNull(text.requests[i].finisheddate)){
+                            date = text.requests[i].finisheddate.substr(0,10);
+                            date += " ";
+                            date += text.requests[i].finisheddate.substr(11,8);
+                            text.requests[i].finisheddate = date;
+                        }
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
                         // add click handling (draw clicked route) TODO: Actually support this
                         that.$('#billing-item').each(function () {
