@@ -68,17 +68,56 @@ _.extend(window.Map.prototype, {
             onStart: function(feature) {
                window.body.main.data.showMarker(feature.data.mark);
             },
-            onComplete: function(feature, pix) {
-                var lonlat = this.map.getLonLatFromPixel(pix);
-
-                feature.data.mark.set({
-                    lonlat: lonlat
-                });
-                feature.data.mark.findNearestNeighbour();
-            }
+            onComplete: _.bind(this.onDragComplete, this)
         });
         this.map.addControl(controlFeature);
         controlFeature.activate();
+    },
+
+    onDragComplete: function(feature, pix) {
+        var lonlat = this.map.getLonLatFromPixel(pix);
+
+        feature.data.mark.set({
+            lonlat: lonlat
+        });
+
+        var alg = window.algview.getSelectedAlgorithm().urlsuffix;
+        if (_.isUndefined(alg) || _.isEmpty(alg) || 
+                window.markList.length < window.algview.getSelectedAlgorithm().details.minpoints ||
+                window.markList.length > window.algview.getSelectedAlgorithm().details.maxpoints) {
+            // Only send a nns request if we're not requesting the whole route (which would also return the nns)
+            feature.data.mark.findNearestNeighbour();
+        } else {
+            loadingView = new LoadingView($._('Waiting for response from server ...')).render();
+            
+            var jsonObj = {
+                alg: window.algview.$('input[@name=alg]:checked').val(),
+                points: window.markList.toJSON(),
+                callback: function (text, success) {
+                    if (success) {
+                        for (var i = 0; i < text.points.length; i++) {
+                            var pos = text.points[i].position;
+                            if (pos < window.markList.length) {
+                                window.markList.moveMark(window.markList.at(pos), i);
+                            }
+                        }
+
+                        window.map.drawRoute(text);
+                        if (!_.isUndefined(text.requestid))
+                            window.app.navigate('route/' + text.requestid);
+                    }
+                    loadingView.remove();
+                }
+            };
+
+            // if constraints are available, then add them to request object
+            var constraints = window.algview.getConstraintSettings();
+            if (constraints != null) {
+                jsonObj['constraints'] = constraints;
+            }
+
+            window.api.alg(jsonObj);
+        }
     },
 
     /**
