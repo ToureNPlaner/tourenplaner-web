@@ -90,8 +90,13 @@ window.AdminView = Backbone.View.extend({
                     var html = '', nums = [];
                     if (pages > 6) {
                         nums = _.range(1, 4);
-                        nums.push('...');
-                        nums = nums.concat(_.range(pages - 2, pages + 1));
+                        nums = _.union(nums, _.range(page - 2, page + 3));
+                        nums = _.union(nums, _.range(pages - 2, pages + 1));
+                        nums = _.without(nums, -1, 0, pages + 1, pages + 2);
+                        nums.sort(function Numsort (a, b) {return a - b;});
+                        for (var i = nums.length - 1; i > 0; i--) {
+                            if(nums[i] !== nums[i-1] + 1) nums.splice(i, 0, '...');
+                        };
                     } else if (pages > 1) {
                         nums = _.range(1, pages + 1);
                     } else {
@@ -221,6 +226,7 @@ window.AdminView = Backbone.View.extend({
         var that = this;
         api.updateUser({
             id: user.userid,
+            self: false,
             userObject: user,
             callback: function (text, success) {
                 that.renderMainView();
