@@ -410,6 +410,10 @@ $.mockjax({
                     {lt: c, ln: d},
                     {lt: 488485554, ln: 94182360}
                 ]],
+                points: [
+                    {lt: a, ln: b, name: "Marker A"},
+                    {lt: c, ln: d, name: "Marker B"}
+                ],
                 misc: {
                     distance: 100,
                     apx: 0.5
@@ -437,7 +441,7 @@ $.mockjax({
  */
 $.mockjax({
     url: "/algnns",
-    responseTimeout: 10,
+    responseTimeout: 100,
     status: 200,
     response: function (data) {
         var arr = JSON.parse(data.data)
