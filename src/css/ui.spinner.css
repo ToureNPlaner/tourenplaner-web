@@ -1,0 +1,6 @@
+.ui-spinner {position: absolute; display: block; left:82%; width:auto;}
+.ui-spinner-buttons {position: relative; display: block;}
+.ui-spinner-button {overflow: hidden; display: block;}
+.spininput {
+	width: 80%;
+}
