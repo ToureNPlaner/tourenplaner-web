@@ -119,13 +119,8 @@ window.AlgView = Backbone.View.extend({
                 for (i = 0; i < currentAlg.constraints.length; i++) {
                     key = currentAlg.constraints[i].id;
                     var initValue = this.$('#pc_' + key).val();
-                    this.$('#pc_' + key).spinit({
-                        height: 20,
-                        initValue: initValue,
-                        min: currentAlg.constraints[i].min,
-                        max: 999999
-                    });
-                    this.$('#pc_' + key).tipsy({gravity: 'w'});
+                    this.$('#pc_' + key).spinner({min:0, max:99999, init: 0});
+                    this.$('#pc_' + key).twipsy({placement: 'right'});
                 }
                 // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
