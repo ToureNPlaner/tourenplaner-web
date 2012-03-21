@@ -87,53 +87,40 @@ window.AdminView = Backbone.View.extend({
 
                     // Update pagination
                     that.$('.pagination').remove();
-                    var html = '', nums = [];
-                    if (pages > 6) {
-                        nums = _.range(1, 4);
-                        nums = _.union(nums, _.range(page - 2, page + 3));
-                        nums = _.union(nums, _.range(pages - 2, pages + 1));
-                        nums = _.without(nums, -1, 0, pages + 1, pages + 2);
-                        nums.sort(function Numsort (a, b) {return a - b;});
-                        for (var i = nums.length - 1; i > 0; i--) {
-                            if(nums[i] !== nums[i-1] + 1) nums.splice(i, 0, '...');
-                        };
-                    } else if (pages > 1) {
-                        nums = _.range(1, pages + 1);
-                    } else {
-                        nums = [1];
-                    }
+                    that.$('.modal-body').css('overflow-x', 'hidden');
+                    that.$('.modal-body').append(templates.paginationView());
 
-                    for (i in nums) {
-                        html += '<li';
-                        if (nums[i] === page)
-                            html += ' class="active"';
-                        else if (!_.isNumber(nums[i]))
-                            html += ' class="disabled"';
-                        html += '><a href="#">' + nums[i] + '</a></li>';
-                    }
-
-                    that.$('.modal-body').append(templates.paginationView({pages: html}));
-                    that.$('.pagination').css({width: that.$('.pagination ul').outerWidth() + 'px'});
-
-                    // Add events
-                    if (page !== 1) {
-                        that.$('.pagination li').first().removeClass('disabled');
-                        that.$('.pagination li a').first().click(_.bind(that.onPrev, that));
-                    } else {
-                        that.$('.pagination li a').first().click(function (e) { e.preventDefault(); return false; });
-                    }  
-                    if (page !== pages) {
-                        that.$('.pagination li').last().removeClass('disabled');
-                        that.$('.pagination li a').last().click(_.bind(that.onNext, that, pages));
-                    } else {
-                        that.$('.pagination li a').last().click(function (e) { e.preventDefault(); return false; });
-                    }
-
-                    that.$('.pagination li a').each(function () {
-                        var page = parseInt($(this).html());
-                        if (_.isNumber(page) && !_.isNaN(page))
-                            $(this).click(_.bind(that.onPage, that, page));
+                    $("#slider").slider({
+                        min: 1,
+                        max: pages,
+                        value: page,
+                        create: function(event, ui) {
+                            $("#slider-val").val(page);
+                            $("#slider-max").html("/" + pages);
+                        },
+                        stop: function(event, ui) {
+                            var value = $("#slider").slider("option", "value");
+                            that.onPage(value);
+                        },
+                        slide: function(event, ui) {
+                            $("#slider-val").val(ui.value);
+                        }
                     });
+
+                    $("#slider-val").change(function() {
+                        var value = $("#slider-val").val();
+                        if(!_.isNaN(value) && value <= pages && value > 0)
+                            that.onPage(value);
+                    });
+
+                    if (page !== 1) {
+                        that.$('#slider-back').first().removeClass('disabled');
+                        that.$('#slider-back').first().click(_.bind(that.onPrev, that));
+                    }
+                    if (page !== pages) {
+                        that.$('#slider-next').first().removeClass('disabled');
+                        that.$('#slider-next').first().click(_.bind(that.onNext, that));
+                    }
 
                     that.resize();
                     that.loadingView.remove();
