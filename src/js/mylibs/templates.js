@@ -359,8 +359,8 @@ templates.billingTableRowView = '<tr id="billing-item">\
                                 <td>{{request.userid}}</td>\
                                 <td>{{request.algorithm}}</td>\
                                 <td>{{request.cost}}</td>\
-                                <td>{{request.requestdate}}</td>\
-                                <td>{{request.finisheddate}}</td>\
+                                <td><nobr>{{request.requestdate}}</nobr></td>\
+                                <td><nobr>{{request.finisheddate}}</nobr></td>\
                                 <td>{{request.duration}}</td>\
                                 <td>{{request.status}}</td>\
                                 </tr>';
