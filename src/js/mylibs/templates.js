@@ -392,11 +392,14 @@ templates.imexportView = '<div class="modal-header">\
 
 // pagination
 templates.paginationView = '<div class="pagination">\
-                                <ul>\
-                                    <li class="prev disabled"><a href="#">&larr; ' + $._('Previous') + '</a></li>\
-                                    {{{pages}}}\
-                                    <li class="next disabled"><a href="#">' + $._('Next') + ' &rarr;</a></li>\
-                                </ul>\
+                              <div id="slider"></div>\
+                              <div id="slider-control" style="width:290px; margin: 5px auto">\
+                                <form class="form-inline">\
+                                  <span class="input-append"><input type="button" id="slider-back" class="btn disabled" value="&larr; ' + $._('Previous') + '">\
+                                  <input type="text" id="slider-text" class="input-mini"><span id="slider-max" class="add-on">/1000</span></span>\
+                                  <input type="button" id="slider-next" class="btn disabled" value="' + $._('Next') + ' &rarr;">\
+                                </form>\
+                              </div>\
                             </div>';
 templates.paginationView = Handlebars.compile(templates.paginationView);
 
