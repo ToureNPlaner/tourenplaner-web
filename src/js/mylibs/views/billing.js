@@ -103,7 +103,7 @@ window.BillingView = Backbone.View.extend({
                         max: pages,
                         value: page,
                         create: function(event, ui) {
-                            $("#slider-text").val(page);
+                            $("#slider-val").val(page);
                             $("#slider-max").html("/" + pages);
                         },
                         stop: function(event, ui) {
@@ -111,12 +111,12 @@ window.BillingView = Backbone.View.extend({
                             that.onPage(value);
                         },
                         slide: function(event, ui) {
-                            $("#slider-text").val(ui.value);
+                            $("#slider-val").val(ui.value);
                         }
                     });
 
-                    $("#slider-text").change(function() {
-                        var value = $("#slider-text").val();
+                    $("#slider-val").change(function() {
+                        var value = $("#slider-val").val();
                         if(!_.isNaN(value) && value <= pages && value > 0)
                             that.onPage(value);
                     });

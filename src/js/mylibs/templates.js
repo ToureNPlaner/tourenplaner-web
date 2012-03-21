@@ -396,7 +396,7 @@ templates.paginationView = '<div class="pagination">\
                               <div id="slider-control" style="width:290px; margin: 5px auto">\
                                 <form class="form-inline">\
                                   <span class="input-append"><input type="button" id="slider-back" class="btn disabled" value="&larr; ' + $._('Previous') + '">\
-                                  <input type="text" id="slider-text" class="input-mini"><span id="slider-max" class="add-on">/1000</span></span>\
+                                  <input type="text" id="slider-val" class="input-mini"><span id="slider-max" class="add-on">/1000</span></span>\
                                   <input type="button" id="slider-next" class="btn disabled" value="' + $._('Next') + ' &rarr;">\
                                 </form>\
                               </div>\
