@@ -282,7 +282,6 @@ jQuery.store = function (key, value, options) {
 };
 
 
-
 /**
  * jquery-spin-button-plugin-smart-spin
  * http://www.egrappler.com/jquery-spin-button-plugin-smart-spin/
