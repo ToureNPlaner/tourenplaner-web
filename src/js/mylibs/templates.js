@@ -83,10 +83,11 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
-templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>\
-                          <div style="float: left"><div class="info"><b>' + $._('Distance') + '</b>: {{toKm distance}} km</div>\
-                          <div class="info"><b>' + $._('APX') + '</b>: {{apx}}</div></div>';
+templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>';
 templates.routeOverlay = Handlebars.compile(templates.routeOverlay);
+
+templates.routeOverlayAttribute = '<div style="float: left"><div class="info"><b>' + $._('{{name}}') + '</b>: {{value}} km</div>';
+templates.routeOverlayAttribute = Handlebars.compile(templates.routeOverlayAttribute);
 
 templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x</a></h3>\
                       <form>\

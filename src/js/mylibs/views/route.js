@@ -11,7 +11,15 @@ window.RouteOverlay = Backbone.View.extend({
 	},
 
 	render: function () {
-		this.$el.html(templates.routeOverlay(this.data));
+		var html = templates.routeOverlay();
+		jQuery.each(this.data, function(i, val) {
+			i = i.charAt(0).toUpperCase() + i.slice(1);
+			html += templates.routeOverlayAttribute({name: i, value: val});
+		});
+
+		this.$el.html(html);
+
+
 		$('#main').append(this.el);
 
 		var left = ($(window).width() - this.$el.innerWidth()) / 2;
