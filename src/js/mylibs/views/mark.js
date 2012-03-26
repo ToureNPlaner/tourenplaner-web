@@ -35,7 +35,7 @@ window.MarkView = Backbone.View.extend({
 
     getTemplate: function () {
         var position = '',
-            sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceIsTarget;
+            sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
         if (!sourceIsTarget && this.model.get('position') === 0)
             position = '(' + $._('Start') + ')';
         else if (!sourceIsTarget && this.model.get('position') == window.markList.length - 1)

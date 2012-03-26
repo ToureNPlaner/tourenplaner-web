@@ -22,8 +22,8 @@ $.mockjax({
                 urlsuffix: "sp",
                 details: {
                     hidden: false,
-                    minPoints: 2,
-                    sourceIsTarget: false
+                    minpoints: 2,
+                    sourceistarget: false
                 },
                 pointconstraints: [
                     {
@@ -51,8 +51,8 @@ $.mockjax({
                 urlsuffix: "tsp",
                 details: {
                     hidden: false,
-                    minPoints: 2,
-                    sourceIsTarget: true
+                    minpoints: 2,
+                    sourceistarget: true
                 },
                 pointconstraints: [
                     {
@@ -80,8 +80,8 @@ $.mockjax({
                 urlsuffix: "csp",
                 details: {
                     hidden: false,
-                    minPoints: 2,
-                    sourceIsTarget: false
+                    minpoints: 2,
+                    sourceistarget: false
                 },
                 pointconstraints: [
                     {
@@ -116,8 +116,8 @@ $.mockjax({
                 urlsuffix: "nns",
                 details: {
                     hidden: true,
-                    minPoints: 1,
-                    sourceIsTarget: false
+                    minpoints: 1,
+                    sourceistarget: false
                 },
                 pointconstraints: [
                 ],

@@ -156,7 +156,7 @@ _.extend(window.Map.prototype, {
      * Draw the markers currently saved in markList.
      */
     drawMarkers: function () {
-        var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceIsTarget;
+        var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
             var size = new OpenLayers.Size(17, 25);
