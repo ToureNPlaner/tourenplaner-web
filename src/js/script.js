@@ -1,15 +1,8 @@
 $(function() {
-    window.api = null;
-    if (location.protocol === 'file:' || location.host === 'localhost' || location.host === '127.0.0.1') {
-        window.api = new Api({
-            server: null
-        });
-    } else {
-        window.api = new Api({
-            server: "gerbera.informatik.uni-stuttgart.de",
-            port: 8080
-        });
-    }
+    window.api = new Api({
+        server: "gerbera.informatik.uni-stuttgart.de",
+        port: 80
+    });
 
     window.server = new ServerInfo();
     window.app = new Router();

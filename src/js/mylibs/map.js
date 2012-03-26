@@ -79,7 +79,7 @@ _.extend(window.Map.prototype, {
 
         feature.data.mark.set({
             lonlat: lonlat
-        });
+        }, {silent: true});
 
         var alg = window.algview.getSelectedAlgorithm().urlsuffix;
         if (_.isUndefined(alg) || _.isEmpty(alg) || 
