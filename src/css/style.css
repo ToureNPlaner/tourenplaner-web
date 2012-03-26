@@ -118,6 +118,14 @@ div.popover {
   position:absolute;
 }
 
+#main #map img.leaflet-marker-icon {
+  opacity: 0.7;
+}
+
+#main #map img.leaflet-marker-icon:hover {
+  opacity: 1.0;
+}
+
 #main #data {
   z-index: 2;
   position: absolute;
