@@ -61,21 +61,26 @@ function setContextMenu() {
         title: $._("Markers"),
         items: function (evt) {
             var feature = window.map.dataLayer.getFeatureFromEvent(evt);
+            var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
 
             // if it's a marker
             if (feature && !_.isUndefined(feature.attributes.mark)) {
-                return [
+                var ret = [
                     {label: $._('Set as Startmarker'), icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
-                    {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }},
                     null,
                     {label: $._("Delete"), action: function (evt) { editMarker('delete', feature); }}
                 ];
+                if (!sourceIsTarget)
+                    ret.splice(1, 0, {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }});
+                return ret;
             } else {
-                return [
+                var ret = [
                     {label: $._("Add Startmarker"), icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
-                    {label: $._("Add Marker"), icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }},
-                    {label: $._("Add Endmarker"), icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }}
+                    {label: $._("Add Marker"), icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }}                    
                 ];
+                if (!sourceIsTarget)
+                    ret.push({label: $._("Add Endmarker"), icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }});
+                return ret;
             }
         }
     });
