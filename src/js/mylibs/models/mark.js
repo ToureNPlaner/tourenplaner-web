@@ -7,28 +7,14 @@ window.Mark = Backbone.Model.extend({
     },
 
     getLonLatAs1984: function () {
-        var lonlat = this.get("lonlat");
-        // if (!_.isNull(lonlat)) {
-        //     return window.map.transformTo1984(this.get("lonlat"));
-        // } else {
-        //     // error!
-        //     log("Fehler in Markmodel");
-        //     return null;
-        // }
         return this.get("lonlat");
     },
 
     setLonLatWith1984: function (lon, lat){
-        if(!_.isNull(lon) && !_.isNull(lat)){
-            // var tempLon = lon / 1e7;
-            // var tempLat = lat / 1e7;
-            // var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-            // var newLonLat = window.map.transformFrom1984(tempLonLat);
+        if (!_.isNull(lon) && !_.isNull(lat))
             this.set({'lonlat': new L.LatLng(lat / 1e7, lon / 1e7)});
-        } else {
-            // error!
+        else
             log("Fehler in Markmodel");
-        }
     },
 
     findNearestNeighbour: function (){

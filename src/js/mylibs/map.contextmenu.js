@@ -9,7 +9,7 @@ function addMarker(action, evt) {
     var latlng = window.map.getMap().mouseEventToLatLng(evt);
     log(latlng);
     var mark = new Mark({
-        "lonlat": latlng
+        lonlat: latlng
     });
 	switch (action) {
 		// alert selected point as lonlat
@@ -58,6 +58,7 @@ function setContextMenu() {
     $('#main #map').contextPopup({
         title: $._("Markers"),
         items: function (evt) {
+            //TODO: Get it working!
             var feature = null; //window.map.dataLayer.getFeatureFromEvent(evt);
             var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
 
