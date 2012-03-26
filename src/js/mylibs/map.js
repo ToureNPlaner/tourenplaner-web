@@ -6,11 +6,32 @@ window.Map = function (divId) {
     this.divId = divId;
 };
 
+StartMarker = L.Icon.extend({
+    iconUrl: 'img/startmark.png',
+    shadowUrl: null,
+    iconSize: new L.Point(24, 36),
+    iconAnchro: new L.Point(0, 0)    
+});
+
+Marker = L.Icon.extend({
+    iconUrl: 'img/mark.png',
+    shadowUrl: null,
+    iconSize: new L.Point(24, 36),
+    iconAnchro: new L.Point(0, 0)    
+});
+
+TargetMarker = L.Icon.extend({
+    iconUrl: 'img/targetmark.png',
+    shadowUrl: null,
+    iconSize: new L.Point(24, 36),
+    iconAnchro: new L.Point(0, 0)    
+});
+
 _.extend(window.Map.prototype, {
     map: null,
-    dataLayer: null,
     currentRouteString: null,
     routeFeature: null,
+    markers: [],
 
     /**
      * Returns the used instance of the OpenLayers.Map class.
@@ -27,25 +48,21 @@ _.extend(window.Map.prototype, {
     draw: function () {
         var that = this;
 
-        OpenLayers.ImgPath = "img/openlayers/";
-        this.map = new OpenLayers.Map("map", {
-            projection: new OpenLayers.Projection("EPSG:4326")
-        });
-        
-        var mapLayer = new OpenLayers.Layer.OSM("OSM Tiles", "http://gerbera.informatik.uni-stuttgart.de/osm/tiles/${z}/${x}/${y}.png", {
-            numZoomLevels: 19
+        this.map = new L.Map("map");
+
+        var mapLayer = new L.TileLayer('http://gerbera.informatik.uni-stuttgart.de/osm/tiles/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 19
         });
 
-        /* add maplayer and set center of the map */
         this.map.addLayer(mapLayer);
 
-        /* create and add a layer for the markers and the route */
-        this.dataLayer = new OpenLayers.Layer.Vector("Data");
-        this.map.addLayer(this.dataLayer);
-        this.map.setCenter(new OpenLayers.LonLat(1169980, 6640717), 6);
+        /* add maplayer and set center of the map */
+        this.map.setView(new L.LatLng(49, 9), 6).addLayer(mapLayer);
+
 
         /* SelectFeature for some simple opacity changes */
-        var selectMarkerFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
+ /*       var selectMarkerFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
             geometryTypes: ['OpenLayers.Geometry.Point'],
             hover: true,
             callbacks: {
@@ -62,7 +79,7 @@ _.extend(window.Map.prototype, {
         this.map.addControl(selectMarkerFeature);
         selectMarkerFeature.activate();
 
-        /* DragFeature for drag and drop support of the markers */
+        /* DragFeature for drag and drop support of the markers 
         var controlFeature = new OpenLayers.Control.DragFeature(this.dataLayer, {
             geometryTypes: ['OpenLayers.Geometry.Point'],
             onStart: function(feature) {
@@ -71,7 +88,7 @@ _.extend(window.Map.prototype, {
             onComplete: _.bind(this.onDragComplete, this)
         });
         this.map.addControl(controlFeature);
-        controlFeature.activate();
+        controlFeature.activate(); */
     },
 
     onDragComplete: function(feature, pix) {
@@ -125,7 +142,7 @@ _.extend(window.Map.prototype, {
      */
     resetRoute: function () {
         if (!_.isNull(this.routeFeature)) {
-            this.dataLayer.removeFeatures([this.routeFeature]);
+            this.map.removeLayer(this.routeFeature);
             this.routeOverlay.remove();
         }
             
@@ -138,7 +155,12 @@ _.extend(window.Map.prototype, {
     resetMarkers: function () {
         // - remove all features (route and markers)
         // - then draw route back
-        this.dataLayer.removeAllFeatures();
+        if (this.markers.length > 0) {
+            for (var i = 0; i < this.markers.length; ++i)
+                this.map.removeLayer(this.markers[i]);
+            this.markers = [];
+        }
+        
         if (!_.isNull(this.routeFeature)) {
             this.dataLayer.addFeatures(this.routeFeature);
         }            
@@ -149,7 +171,7 @@ _.extend(window.Map.prototype, {
      * Needed, when the div of this map is getting resized.
      */
     refresh: function () {
-        this.map.updateSize();
+        this.map.invalidateSize();
     },
 
     /**
@@ -159,22 +181,20 @@ _.extend(window.Map.prototype, {
         var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
-            var size = new OpenLayers.Size(17, 25);
 
-            // Icons generated with: http://mapicons.nicolasmollet.com/numbers-letters/?style=default&custom_color=e89733
-            var iconPath = 'img/mark.png';
+            var icon;
             if (i === 0) {
-                iconPath = 'img/startmark.png';
+                icon = new StartMarker();
             } else if (!sourceIsTarget && i == markList.length - 1) {
-                iconPath = 'img/targetmark.png';
+                icon = new TargetMarker();
+            } else {
+                icon = new Marker();
             }
 
-            var feature = new OpenLayers.Feature.Vector(
-                new OpenLayers.Geometry.Point(mark.get('lonlat').lon, mark.get('lonlat').lat),
-                {mark: mark},
-                {externalGraphic: iconPath, graphicHeight: size.h, graphicWidth: size.w, graphicXOffset: -(size.w/2), graphicYOffset: -size.h, graphicOpacity: 0.7}
-            );
-            this.dataLayer.addFeatures(feature);
+            log(mark);
+            var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});
+            this.map.addLayer(marker);
+            this.markers.push(marker);
         }
     },
 
@@ -196,27 +216,22 @@ _.extend(window.Map.prototype, {
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
 
-        var proj = new OpenLayers.Projection("EPSG:4326");
+        //var proj = new OpenLayers.Projection("EPSG:4326");
         for (var i = 0; i < vertexString.way.length; i++) {
             for (var j = 0; j < vertexString.way[i].length; j++) {
                 // transform points
                 var p = vertexString.way[i][j];           
-                var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
-                point.transform(proj, this.map.getProjectionObject());
+                //var point = new OpenLayers.Geometry.Point(p.ln / 1e7, p.lt / 1e7);
+                //point.transform(proj, this.map.getProjectionObject());
 
-                pointList.push(point);
+                pointList.push(new L.LatLng(p.lt / 1e7, p.ln / 1e7));
             }
         }
 
         // draw route on a layer and add it to map
-        var geometry = new OpenLayers.Geometry.LineString(pointList);
-        this.routeFeature = new OpenLayers.Feature.Vector(geometry, null, {
-            strokeColor: "#0000ff",
-            strokeOpacity: 1.7,
-            strokeWidth: 2.5
-        });
-        this.dataLayer.addFeatures(this.routeFeature);       
-        this.zoomToRoute();
+        this.routeFeature = new L.Polyline(pointList, {color: 'blue'});
+        this.map.addLayer(routeFeature);
+        this.map.fitBounds(new L.LatLngBounds(pointList));
 
         this.displayRouteInfo();
     },
@@ -230,10 +245,11 @@ _.extend(window.Map.prototype, {
         this.drawRoute(obj);
         window.markList.deleteAllMarks();
 
-        var proj = new OpenLayers.Projection("EPSG:4326");
+        //var proj = new OpenLayers.Projection("EPSG:4326");
         for (var i in obj.points) {
-            var ll = new OpenLayers.LonLat(obj.points[i].ln / 1e7, obj.points[i].lt / 1e7);
-            ll.transform(proj, this.map.getProjectionObject());
+            //var ll = new OpenLayers.LonLat(obj.points[i].ln / 1e7, obj.points[i].lt / 1e7);
+            //ll.transform(proj, this.map.getProjectionObject());
+            var ll = new L.LatLng(obj.points[i].lt / 1e7, obj.points.ln / 1e7)
 
             var m = new Mark({lonlat: ll});
             m.set(obj.points[i]);
@@ -270,21 +286,12 @@ _.extend(window.Map.prototype, {
      * @param bb The bounding box to zoom to.
      */
     setCenter: function(lonlat, bb) {
-        this.map.setCenter(this.transformFrom1984(new OpenLayers.LonLat(lonlat.lon, lonlat.lat)));
+    /*    this.map.setCenter(this.transformFrom1984(new OpenLayers.LonLat(lonlat.lon, lonlat.lat)));
 
         if (arguments.length >= 2) {
             var bounds = new OpenLayers.Bounds(bb[2], bb[0], bb[3], bb[1]).transform(new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
             this.map.zoomToExtent(bounds);
-        }
-    },
-
-    /**
-     * Zoom into map, so that the whole route is visible.
-     */
-    zoomToRoute: function() {
-        if (!_.isNull(this.dataLayer.getDataExtent())) {
-            this.map.zoomToExtent(this.dataLayer.getDataExtent());
-        }
+        } */
     },
 
     /**
@@ -295,9 +302,11 @@ _.extend(window.Map.prototype, {
      * @return A OpenLayers.LonLat object in 1984 projection
      */
     getLonLatFromPos: function (posX, posY) {
-        var pixel = new OpenLayers.Pixel(posX, posY);
-        var lonlat = this.map.getLonLatFromPixel(pixel);
-        return this.transfromTo1984(lonlat);
+        // var pixel = new OpenLayers.Pixel(posX, posY);
+        // var lonlat = this.map.getLonLatFromPixel(pixel);
+        // return this.transfromTo1984(lonlat);
+
+        return this.map.layerPointToLatLng(new L.Point(posX, posY));
     },
 
     /**
@@ -307,11 +316,12 @@ _.extend(window.Map.prototype, {
      * @return The object in 1984 projection
      */
     transformTo1984: function (lonlat) {
-        var proj = new OpenLayers.Projection("EPSG:4326");
-        var lonlatClone = lonlat.clone();
-        lonlatClone.transform(this.map.getProjectionObject(), proj);
+        //var proj = new OpenLayers.Projection("EPSG:4326");
+        //var lonlatClone = lonlat.clone();
+        //lonlatClone.transform(this.map.getProjectionObject(), proj);
 
-        return lonlatClone;
+        //return lonlatClone;
+        return lonlat;
     },
     
     /**
@@ -321,10 +331,11 @@ _.extend(window.Map.prototype, {
      * @return The object in map projection
      */
     transformFrom1984: function (lonlat) {
-        var proj = new OpenLayers.Projection("EPSG:4326");
-        var lonlatClone = lonlat.clone();
-        lonlatClone.transform(proj, this.map.getProjectionObject());
-        return lonlatClone;
+        // var proj = new OpenLayers.Projection("EPSG:4326");
+        // var lonlatClone = lonlat.clone();
+        // lonlatClone.transform(proj, this.map.getProjectionObject());
+        // return lonlatClone;
+        return lonlat;
     }
 
 });

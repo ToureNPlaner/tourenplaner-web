@@ -8,22 +8,23 @@ window.Mark = Backbone.Model.extend({
 
     getLonLatAs1984: function () {
         var lonlat = this.get("lonlat");
-        if (!_.isNull(lonlat)) {
-            return window.map.transformTo1984(this.get("lonlat"));
-        } else {
-            // error!
-            log("Fehler in Markmodel");
-            return null;
-        }
+        // if (!_.isNull(lonlat)) {
+        //     return window.map.transformTo1984(this.get("lonlat"));
+        // } else {
+        //     // error!
+        //     log("Fehler in Markmodel");
+        //     return null;
+        // }
+        return this.get("lonlat");
     },
 
-    setLonLatWith1984: function (lon,lat){
+    setLonLatWith1984: function (lon, lat){
         if(!_.isNull(lon) && !_.isNull(lat)){
-            var tempLon = lon / 1e7;
-            var tempLat = lat / 1e7;
-            var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
-            var newLonLat = window.map.transformFrom1984(tempLonLat);
-            this.set({'lonlat':newLonLat});
+            // var tempLon = lon / 1e7;
+            // var tempLat = lat / 1e7;
+            // var tempLonLat = new OpenLayers.LonLat(tempLon,tempLat);
+            // var newLonLat = window.map.transformFrom1984(tempLonLat);
+            this.set({'lonlat': new L.LatLng(lat / 1e7, lon / 1e7)});
         } else {
             // error!
             log("Fehler in Markmodel");
@@ -50,7 +51,7 @@ window.Mark = Backbone.Model.extend({
         // We're using ints here instead of floats for performance improvements (Java is a bit slow)
 
         var json = {
-            "ln": Math.floor(this.getLonLatAs1984().lon * 1e7),
+            "ln": Math.floor(this.getLonLatAs1984().lng * 1e7),
             "lt": Math.floor(this.getLonLatAs1984().lat * 1e7),
             "name": this.get("name"),
             "position": this.get("position"),

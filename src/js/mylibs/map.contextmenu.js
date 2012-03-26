@@ -6,12 +6,10 @@
  * @param evt The event object
  */
 function addMarker(action, evt) {
-    var pixelx = evt.pageX - $('#map').offset().left;
-    var pixely = evt.pageY - $('#map').offset().top;
-    var pixel = new OpenLayers.Pixel(pixelx, pixely);
-    var lonlat = window.map.getMap().getLonLatFromPixel(pixel);
+    var latlng = window.map.getMap().mouseEventToLatLng(evt);
+    log(latlng);
     var mark = new Mark({
-        "lonlat": lonlat
+        "lonlat": latlng
     });
 	switch (action) {
 		// alert selected point as lonlat
@@ -60,7 +58,7 @@ function setContextMenu() {
     $('#main #map').contextPopup({
         title: $._("Markers"),
         items: function (evt) {
-            var feature = window.map.dataLayer.getFeatureFromEvent(evt);
+            var feature = null; //window.map.dataLayer.getFeatureFromEvent(evt);
             var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
 
             // if it's a marker
