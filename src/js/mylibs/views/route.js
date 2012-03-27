@@ -11,6 +11,8 @@ window.RouteOverlay = Backbone.View.extend({
 	},
 
 	render: function () {
+		$('#algview').hide();
+
 		var html = templates.routeOverlay();
 		jQuery.each(this.data, function(i, val) {
 			i = i.charAt(0).toUpperCase() + i.slice(1);
@@ -19,10 +21,9 @@ window.RouteOverlay = Backbone.View.extend({
 
 		this.$el.html(html);
 
-
 		$('#main').append(this.el);
 
-		var left = ($(window).width() - this.$el.innerWidth()) / 2;
+		var left = ($("#map").width() - this.$el.innerWidth()) / 2 + $("#sidebar").width();
 		this.$el.css("left", left + "px");
 
 		return this;
