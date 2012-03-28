@@ -84,13 +84,11 @@ window.BillingView = Backbone.View.extend({
                         }
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
                         // add click handling (draw clicked route) TODO: Actually support this
-                        that.$('#billing-item').each(function () {
-                            $(this).click(function(){
-                                var link = '/route/' + $(this).children()[0].innerHTML;
-                                that.remove();
-                                window.app.navigate(link, {trigger: true});
-                            });
-                        });						
+                        that.$('#billing-table tr').click(function () {
+                            var link = '/route/' + $(this).children()[0].innerHTML;
+                            that.remove();
+                            window.app.navigate(link, {trigger: true});
+                        });
                     }
 
                     // Update pagination

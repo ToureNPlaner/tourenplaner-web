@@ -340,7 +340,7 @@ templates.billingView =  '<div class="modal-header">\
                    
 templates.billingView = Handlebars.compile(templates.billingView);
 
-templates.billingMainView =  '<table>\
+templates.billingMainView =  '<table id="billing-table">\
                                 <thead>\
                                     <th>#</th>\
                                     <th>' + $._('User ID') + '</th>\
@@ -355,7 +355,7 @@ templates.billingMainView =  '<table>\
                                 </tbody>\
                             </table>';
 
-templates.billingTableRowView = '<tr id="billing-item">\
+templates.billingTableRowView = '<tr>\
                                 <td>{{request.requestid}}</td>\
                                 <td>{{request.userid}}</td>\
                                 <td>{{request.algorithm}}</td>\
