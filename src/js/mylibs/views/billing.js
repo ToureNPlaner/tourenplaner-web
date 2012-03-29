@@ -66,7 +66,7 @@ window.BillingView = Backbone.View.extend({
                     var page = Math.floor((that.position.offset / that.position.limit) + 1);
                     var pages = Math.ceil(text.number / that.position.limit);
 
-                    // Update table
+                    // update table
                     that.$('tbody').html('');
                     for (var i in text.requests){
                         var date;
@@ -83,13 +83,14 @@ window.BillingView = Backbone.View.extend({
                             text.requests[i].finisheddate = date;
                         }
                         that.$('tbody').append(templates.billingTableRowView({request: text.requests[i]}));
-                        // add click handling (draw clicked route) TODO: Actually support this
-                        that.$('#billing-table tr').click(function () {
-                            var link = '/route/' + $(this).children()[0].innerHTML;
-                            that.remove();
-                            window.app.navigate(link, {trigger: true});
-                        });
                     }
+
+                    // add call for drawing listed routes
+                    that.$('#billing-table tr').click(function () {
+                        var link = '/route/' + $(this).children()[0].innerHTML;
+                        that.remove();
+                        window.app.navigate(link, {trigger: true});
+                    });
 
                     // Update pagination
                     that.$('.pagination').remove();
