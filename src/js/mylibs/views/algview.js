@@ -121,12 +121,6 @@ window.AlgView = Backbone.View.extend({
                     var initValue = this.$('#pc_' + key).val();
                     this.$('#pc_' + key).spinner({min:0, max:99999, init: 0});
                     this.$('#pc_' + key).twipsy({placement: 'right'});
-
-                    this.$('#pc_' + key).keyup(function (e) {
-                        if ((e.keyCode == 13)) {
-                            // avoid submitting the formula when hitting enter
-                        }
-                    });
                 }
                 // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);

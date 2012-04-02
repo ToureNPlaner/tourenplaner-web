@@ -14,8 +14,14 @@ window.BodyView = Backbone.View.extend({
      * Constructor of the BodyView class. Initializes all visible elements of the page.
      */
     initialize: function () {
+        var that = this;
         this.topbar = new TopbarView().render();
         this.main = new MainView().render();
+        $(document).keydown(function(event) {
+            if (event.which == 13) {
+                that.main.sidebar.onSend();
+            }
+        });
     },
 
     /**
