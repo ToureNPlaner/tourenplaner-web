@@ -60,6 +60,11 @@ window.DataView = Backbone.View.extend({
 			
 			var initValue = this.$('#dataview #pc_' + key).val();
             this.$('#dataview #pc_' + key).spinit({height: 30, initValue: initValue, min: pointconstraints[i].min, max: pointconstraints[i].max});
+            this.$('#pc_' + key).keyup(function (e) {
+                if ((e.keyCode == 13)) {
+                    // avoid submitting the formula when hitting enter
+                }
+            });
 		}
 	
 
