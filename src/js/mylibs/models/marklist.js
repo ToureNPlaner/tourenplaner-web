@@ -62,12 +62,14 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     moveMark: function (mark, pos) {
-        this.deleteMark(mark);
-        mark.set({position: pos});
-        this._moveAllMarks(pos, 1);
-        this.add(mark, {
-            at: pos
-        });
+        if (mark != this.at(pos)) {
+            this.deleteMark(mark);
+            mark.set({position: pos});
+            this._moveAllMarks(pos, 1);
+            this.add(mark, {
+                at: pos
+            });
+        }
     },
 
     deleteMark: function (mark) {
