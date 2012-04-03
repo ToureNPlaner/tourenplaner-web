@@ -156,6 +156,7 @@ _.extend(window.Map.prototype, {
      */
     drawMarkers: function () {
         var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
+        var that = this;
         for (var i = 0; i < markList.length; i++) {
             var mark = markList.at(i);
 
@@ -172,7 +173,11 @@ _.extend(window.Map.prototype, {
             marker.mark = mark;
             marker.on("dragend", this.onDragComplete, this);
             marker.on("click", function (e) {
-                window.body.main.data.showMarker(e.target.mark); 
+                // Show the marker in the data view
+                window.body.main.data.showMarker(e.target.mark);
+
+                // Center on the marker
+                that.map.setView(e.target.getLatLng(), that.map.getZoom());
             });
 
             this.map.addLayer(marker);
