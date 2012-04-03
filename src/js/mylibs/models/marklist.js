@@ -51,10 +51,16 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     appendMark: function (mark) {
-        mark.set({position: this.length});
-        this.add(mark, {
-            at: this.length
-        });
+        if (this.length >= 2 && !window.algview.getSelectedAlgorithm().details.sourceistarget) {
+            mark.set({position: this.length - 1});
+            this.at(this.length - 1).set({position: this.length});
+            this.add(mark, {at: this.length - 1});
+        } else {
+            mark.set({position: this.length});
+            this.add(mark, {
+                at: this.length
+            });
+        }
     },
 
     indexOfMark: function (mark) {
