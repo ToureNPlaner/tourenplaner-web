@@ -69,8 +69,8 @@ _.extend(window.Map.prototype, {
 
         var alg = window.algview.getSelectedAlgorithm().urlsuffix;
         if (!_.isUndefined(alg) && !_.isEmpty(alg) && 
-                window.markList.length >= window.algview.getSelectedAlgorithm().details.minpoints &&
-                window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints) {
+                (_.isUndefined(window.algview.getSelectedAlgorithm().details.minpoints) || window.markList.length >= window.algview.getSelectedAlgorithm().details.minpoints) &&
+                (_.isUndefined(window.algview.getSelectedAlgorithm().details.maxpoints) || window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints)) {
 
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             
@@ -224,7 +224,7 @@ _.extend(window.Map.prototype, {
         window.markList.deleteAllMarks();
 
         for (var i in obj.points) {
-            var ll = new L.LatLng(obj.points[i].lt / 1e7, obj.points.ln / 1e7)
+            var ll = new L.LatLng(obj.points[i].lt / 1e7, obj.points[i].ln / 1e7)
 
             var m = new Mark({lonlat: ll});
             m.set(obj.points[i]);

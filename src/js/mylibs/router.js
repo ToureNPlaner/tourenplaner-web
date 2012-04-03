@@ -176,7 +176,7 @@ window.Router = Backbone.Router.extend({
                 }
                 this.loadingView.remove();
             }
-        })
+        });
     },
 
     onAdminRemove: function () {
