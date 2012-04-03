@@ -15,7 +15,8 @@ window.RouteOverlay = Backbone.View.extend({
 
 		var html = templates.routeOverlay();
 		jQuery.each(this.data, function(i, val) {
-			if(i === "distance" || i === "altitude") val = val / 1000 + " km"
+			if (i === "distance" || i === "altitude") val = val / 1000 + " km"
+			if (i === "time") val = Math.floor(val / 3600) + " h " + Math.floor((val - (Math.floor(val / 3600) * 3600)) / 60) + " min";
 			i = i.charAt(0).toUpperCase() + i.slice(1);
 			html += templates.routeOverlayAttribute({name: i, value: val});
 		});
