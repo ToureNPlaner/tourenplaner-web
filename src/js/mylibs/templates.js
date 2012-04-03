@@ -16,7 +16,7 @@ templates.topbarView = '<div class="fill">\
                               <img src="img/icon.png" class="icon">\
                               <h3><a href="#">ToureNPlaner</a></h3>\
                               <form>\
-                                <input type="text" placeholder="' + $._('Search') + '" />\
+                                <input type="search" placeholder="' + $._('Search') + '" />\
                               </form>\
                               <ul class="nav secondary-nav private-server">\
                                 <li class="user"><a href="#" onclick="return false;"></a></li>\

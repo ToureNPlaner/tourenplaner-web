@@ -1,8 +1,6 @@
 @import "bootstrap-1.4.0.css";
 @import "jquery-ui-1.8.18.custom.css";
 @import "jquery.contextMenu.css";
-@import "smartspinner.css";
-@import "ui.spinner.css";
 
 #login, #register, #message, #loading {
   display: none;
@@ -224,7 +222,7 @@ div.popover {
   -webkit-box-shadow: 0 2px 2px 0 #333;
 }
 .topbar h3 a {
-  margin-left: 20px;
+  margin-left: 25px;
 }
 .topbar ul li.menu, .topbar ul li.user, .topbar ul li.menu ul li.admin {
   display: none;
