@@ -65,14 +65,13 @@ _.extend(window.Map.prototype, {
         e.target.mark.set({
             lonlat: e.target.getLatLng()
         }, {silent: true});
+        e.target.mark.findNearestNeighbour();
 
         var alg = window.algview.getSelectedAlgorithm().urlsuffix;
-        if (_.isUndefined(alg) || _.isEmpty(alg) || 
-                window.markList.length < window.algview.getSelectedAlgorithm().details.minpoints ||
-                window.markList.length > window.algview.getSelectedAlgorithm().details.maxpoints) {
-            // Only send a nns request if we're not requesting the whole route (which would also return the nns)
-            e.target.mark.findNearestNeighbour();
-        } else {
+        if (!_.isUndefined(alg) && !_.isEmpty(alg) && 
+                window.markList.length >= window.algview.getSelectedAlgorithm().details.minpoints &&
+                window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints) {
+
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             
             var jsonObj = {
@@ -82,9 +81,8 @@ _.extend(window.Map.prototype, {
                     if (success) {
                         for (var i = 0; i < text.points.length; i++) {
                             var pos = text.points[i].position;
-                            if (pos < window.markList.length) {
+                            if (pos < window.markList.length)
                                 window.markList.moveMark(window.markList.at(pos), i);
-                            }
                         }
 
                         window.map.drawRoute(text);
@@ -97,9 +95,8 @@ _.extend(window.Map.prototype, {
 
             // if constraints are available, then add them to request object
             var constraints = window.algview.getConstraintSettings();
-            if (constraints != null) {
+            if (constraints != null)
                 jsonObj['constraints'] = constraints;
-            }
 
             window.api.alg(jsonObj);
         }
