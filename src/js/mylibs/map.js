@@ -171,8 +171,8 @@ _.extend(window.Map.prototype, {
             var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});
             marker.mark = mark;
             marker.on("dragend", this.onDragComplete, this);
-            marker.on("click", function () { 
-                window.body.main.data.showMarker(mark); 
+            marker.on("click", function (e) {
+                window.body.main.data.showMarker(e.target.mark); 
             });
 
             this.map.addLayer(marker);
