@@ -59,32 +59,10 @@ _.extend(window.Map.prototype, {
 
         /* add maplayer and set center of the map */
         this.map.setView(new L.LatLng(51, 10), 6).addLayer(mapLayer);
-
-
-        /* SelectFeature for some simple opacity changes */
- /*       var selectMarkerFeature = new OpenLayers.Control.SelectFeature(this.dataLayer, {
-            geometryTypes: ['OpenLayers.Geometry.Point'],
-            hover: true,
-            callbacks: {
-                over: function (feature) {
-                    feature.style.graphicOpacity = 1;
-                    this.layer.drawFeature(feature);
-                },
-                out: function (feature) {
-                    feature.style.graphicOpacity = 0.7;
-                    this.layer.drawFeature(feature);
-                }
-            }
-        });
-        this.map.addControl(selectMarkerFeature);
-        selectMarkerFeature.activate();
- */
     },
 
     onDragComplete: function(e) {
-        log(e);
-
-        feature.data.mark.set({
+        e.target.mark.set({
             lonlat: e.target.getLatLng()
         }, {silent: true});
 
@@ -93,7 +71,7 @@ _.extend(window.Map.prototype, {
                 window.markList.length < window.algview.getSelectedAlgorithm().details.minpoints ||
                 window.markList.length > window.algview.getSelectedAlgorithm().details.maxpoints) {
             // Only send a nns request if we're not requesting the whole route (which would also return the nns)
-            feature.data.mark.findNearestNeighbour();
+            e.target.mark.findNearestNeighbour();
         } else {
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             
@@ -125,6 +103,21 @@ _.extend(window.Map.prototype, {
 
             window.api.alg(jsonObj);
         }
+    },
+
+    /**
+     * Returns the marker at the given point.
+     *
+     * @param point The point to look for
+     * @return The marker at the given point or null
+     */
+    getMarkerForPoint: function(point) {        
+        for (var i = 0; i < this.markers.length; ++i) {
+            var pt = this.map.latLngToLayerPoint(this.markers[i].getLatLng());
+            if (pt.x === point.x && pt.y === point.y)
+                return this.markers[i];
+        }
+        return null;
     },
 
     /**
@@ -176,6 +169,7 @@ _.extend(window.Map.prototype, {
             }
 
             var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});
+            marker.mark = mark;
             marker.on("dragend", this.onDragComplete, this);
             marker.on("click", function () { 
                 window.body.main.data.showMarker(mark); 

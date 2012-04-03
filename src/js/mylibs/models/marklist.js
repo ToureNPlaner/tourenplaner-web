@@ -88,15 +88,13 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     getMarkByLonLat: function (lonlat) {
-        var ret = null;
         for (var i = 0; i < this.length; i++) {
             var l = this.at(i).get("lonlat");
-            if (l == lonlat) {
-                ret = this.at(i);
-            }
+            if (l.equals(lonlat))
+                return this.at(i);            
         }
 
-        return ret;
+        return null;
     },
 
     flip: function() {
