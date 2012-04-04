@@ -165,25 +165,28 @@ $.mockjax({
     responseTimeout: 10,
     status: 200,
     response: function(data) {
-        var login = data.headers.Authorization.split(' ')[1];
-        if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
-            this.responseText = {
-                userid: 42,
-                username: 'root@tourenplaner.de',
-                email: 'root@tourenplaner.de',
-                firstname: 'Peter',
-                lastname: 'Lustig',
-                admin: true,
-                active: true
+        if(!_.isUndefined(data.headers.Authorization)){
+            var login = data.headers.Authorization.split(' ')[1];
+            if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
+                this.responseText = {
+                    userid: 42,
+                    username: 'root@tourenplaner.de',
+                    email: 'root@tourenplaner.de',
+                    firstname: 'Peter',
+                    lastname: 'Lustig',
+                    admin: true,
+                    active: true
+                }
+            } else {
+                this.status = 401;
+                this.responseText = {
+                    errorid: "EAUTH",
+                    message: "Wrong email or password",
+                    details: ""
+                };
             }
-        } else {
-            this.status = 401;
-            this.responseText = {
-                errorid: "EAUTH",
-                message: "Wrong email or password",
-                details: ""
-            };
         }
+        else return false;
     }
 });
 
