@@ -266,29 +266,4 @@ _.extend(window.Map.prototype, {
         this.map.fitBounds(new L.LatLngBounds(new L.LatLng(bb[0], bb[2]), new L.LatLng(bb[1], bb[3])));
     },
 
-    /**
-     * Returns the geo coordinates for a pixel position on the map.
-     *
-     * @param posX The position on the x axis
-     * @param posY The position on the y axis
-     * @return A L.LatLng object in 1984 projection
-     */
-    getLonLatFromPos: function (posX, posY) {
-        return this.map.layerPointToLatLng(new L.Point(posX, posY));
-    },
-
-    /**
-     * Method stub
-     */
-    transformTo1984: function (lonlat) {
-        return lonlat;
-    },
-    
-    /**
-     * Method stub
-     */
-    transformFrom1984: function (lonlat) {
-        return lonlat;
-    }
-
 });

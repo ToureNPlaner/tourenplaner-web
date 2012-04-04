@@ -40,7 +40,7 @@ window.DataView = Backbone.View.extend({
 
     onDataViewChange: function (model, marker) {
         var that = this,
-            lonlat = window.map.transformTo1984(marker.get("lonlat")),
+            lonlat = marker.get("lonlat"),
             // get all pointconstraints for currently selected algorithm
             pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints,
             // add fields to edit pointconstraints
