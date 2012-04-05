@@ -4,7 +4,8 @@ window.AlgView = Backbone.View.extend({
 
     events: {
         "change #algorithms input": "onRefreshAlgorithm",
-        "click a.close": "onCloseDialog"
+        "click a.close": "onCloseDialog",
+        "submit" : "onEnterKeyDown"
     },
 
     initialize: function () {
@@ -130,5 +131,10 @@ window.AlgView = Backbone.View.extend({
 
     onCloseDialog: function() {
         $('#algview').hide();
+    },
+
+    onEnterKeyDown: function() {
+        window.body.main.sidebar.onSend();
+        return false;
     }
 });

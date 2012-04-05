@@ -9,7 +9,8 @@ window.DataView = Backbone.View.extend({
     oldStyle: "",
 
     events: {
-        "click span.minmax a": "onMinMax"
+        "click span.minmax a": "onMinMax",
+        "keydown" : "onEnterKeyDown"
     },
 
     render: function () {
@@ -133,6 +134,13 @@ window.DataView = Backbone.View.extend({
             link.html('_');
 
             this.el.attr('style', this.oldStyle);
+        }
+    },
+
+    onEnterKeyDown: function(event) {
+        if (event.which == 13) {
+            this.$('#dataview #saveMarkAttributes').click();
+            return false;
         }
     }
 });
