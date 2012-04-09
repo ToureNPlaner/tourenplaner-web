@@ -117,7 +117,6 @@ window.SidebarView = Backbone.View.extend({
                                 window.markList.moveMark(window.markList.at(pos), i);
                             }
                         }
-                        
                         window.map.drawRoute(text);
                         if (!_.isUndefined(text.requestid))
                             window.app.navigate('route/' + text.requestid);
@@ -131,7 +130,6 @@ window.SidebarView = Backbone.View.extend({
             if (constraints != null) {
                 jsonObj['constraints'] = constraints;
             }
-
             window.api.alg(jsonObj);
         }
     },

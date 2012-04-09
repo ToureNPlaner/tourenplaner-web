@@ -27,18 +27,24 @@ $.mockjax({
                 },
                 pointconstraints: [
                     {
+                        id: "height",
                         name: "height",
+                        description: "Höhenmeter",
                         type: "meter",
                         min: 0.0,
                         max: 2000.0
                     },{
+                        id: "boolconstraint",
                         name: "BoolConstraint",
+                        description: "......",
                         type: "boolean",
                         min: 0.0,
                         max: 2000.0
                     },{
+                        id: "priceconstraint",
                         name: "PriceConstraint",
                         type: "price",
+                        description: "Preis...",
                         min: 0.0,
                         max: 2000.0
                     }

@@ -72,9 +72,13 @@ templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon
                                   <div class="clearfix">\
                                     <label for="pc_{{name}}">{{name}}: </label>\
                                     {{#ifEquals type "boolean"}}\
-                                      <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
+                                      <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                     {{else}}\
-                                      <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                      {{#ifEquals type "enum"}}\
+                                        <br><select class="alg-combobox" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                      {{else}}\
+                                        <input type="text" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                        {{/ifEquals}}\
                                     {{/ifEquals}}\
                                   </div>\
                                 {{/each}}\
