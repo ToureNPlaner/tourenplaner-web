@@ -109,9 +109,13 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                               <div class="clearfix">\
                                 <label for="pc_{{name}}">{{name}}: </label>\
                                 {{#ifEquals type "boolean"}}\
-                                  <input type="checkbox" name="pc_{{id}}" id="pc_{{id}}" />\
+                                  <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                 {{else}}\
-                                  <input type="text" value="0" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                  {{#ifEquals type "enum"}}\
+                                    <br><select class="alg-combobox" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                  {{else}}\
+                                    <input type="text" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                    {{/ifEquals}}\
                                 {{/ifEquals}}\
                               </div>\
                             {{/each}}\

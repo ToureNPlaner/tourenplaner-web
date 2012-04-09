@@ -53,6 +53,8 @@ window.AlgView = Backbone.View.extend({
                                 
                 if (!_.isEmpty(this.$('#pc_' + key).val())) {
                     var value = this.$('#pc_' + key).val();
+
+                    // convert textinputs to the respective format
         		    switch(currentAlg.constraints[i].type) {
         		    	case "boolean":
         			    	if (that.$('#pc_' + key).attr('checked')) {
@@ -75,6 +77,9 @@ window.AlgView = Backbone.View.extend({
         		        case "float":
         		        	value = parseFloat(value.replace(",", "."));
         		        	break;
+                        default:
+                            // there is nothing to convert.
+                            break;
         		    }
                     constraintsJson[key] = value;
                 } else {
@@ -92,9 +97,7 @@ window.AlgView = Backbone.View.extend({
 
     onRefreshAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
-
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
-            //var index = this.$('input[@name=alg]:checked').index('input[name=alg]');
             var suffix = this.$('input[@name=alg]:checked').val();
             if (_.isUndefined(suffix)) {
                 suffix = algorithms[0].urlsuffix;
@@ -115,15 +118,35 @@ window.AlgView = Backbone.View.extend({
 
             // ... and print them out
             this.$el.html(templates.algView(data));
-
             if (!_.isUndefined(currentAlg)) {
-                for (i = 0; i < currentAlg.constraints.length; i++) {
+                for (var i = 0; i < currentAlg.constraints.length; i++) {
                     key = currentAlg.constraints[i].id;
-                    var initValue = this.$('#pc_' + key).val();
-                    this.$('#pc_' + key).spinner({min:0, max:99999, init: 0});
+                    type = currentAlg.constraints[i].type;
+                    spinnerRequired = new Array("integer", "float", "meter", "price");
+                    comboboxRequired = new Array("enum");
+                    if (spinnerRequired.join().indexOf(type) > -1) {
+                        minValue = currentAlg.constraints[i].min;
+                        maxValue = currentAlg.constraints[i].max;
+
+                        if (typeof maxValue == "undefined")
+                            maxValue = Number.MAX_VALUE;
+
+                        if (typeof minValue == "undefined" || minValue == 0) {
+                            this.$('#pc_' + key).spinner({min:0, max:maxValue, init:0});
+                            // workaround: spinner inits with maxValue if min and init are 0.
+                            this.$('#pc_' + key).val(0);
+                        } else {
+                            this.$('#pc_' + key).spinner({min:minValue, max:maxValue, init: minValue});
+                        }
+                    } else if (comboboxRequired.join().indexOf(type) > -1) {
+                        options = currentAlg.constraints[i].values;
+
+                        for (var j = 0; j < options.length; j++) {
+                            this.$('#pc_' + key).append(new Option(options[i], options[i]));
+                        }
+                    }
                     this.$('#pc_' + key).twipsy({placement: 'right'});
                 }
-                // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
             }
         }

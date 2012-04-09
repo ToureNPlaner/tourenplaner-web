@@ -241,6 +241,7 @@ div.popover {
   left: 2px;
 }
 
+.alg-combobox {position: relative; display: block; left:0; width:auto;}
 .ui-spinner {position: absolute; display: block; left:82%; width:auto;}
 .ui-spinner-buttons {position: relative; display: block;}
 .ui-spinner-button {overflow: hidden; display: block;}

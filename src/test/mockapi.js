@@ -111,6 +111,37 @@ $.mockjax({
                     }
                 ]
             },{
+                version: 7,
+                name: "Another Testalgorithm",
+                urlsuffix: "ata",
+                details: {
+                    hidden: false,
+                    minpoints: 3,
+                    sourceistarget: false
+                },
+                pointconstraints: [],
+                constraints: [
+                    {
+                        "id": "transportation",
+                        "name": "Type of Transportation",
+                        "description": "The Kind of transportation to use.",
+                        "type": "enum",
+                        "values": ["Foot", "Bicycle", "Car"]
+                    },{
+                        "name": "Max Altitude Difference",
+                        "id": "maxAltitudeDifference",
+                        "description": "The maximum difference in altitude combined over the path",
+                        "type": "meter",
+                        "min": 0
+                    },{
+                        "id": "randomBoolConstraint",
+                        "name": "Random Boolean Constraint",
+                        "description": "...",
+                        "type": "boolean"
+                    }
+
+                ]
+            },{
                 version: 2,
                 name: "Nearest Neighbor",
                 urlsuffix: "nns",
