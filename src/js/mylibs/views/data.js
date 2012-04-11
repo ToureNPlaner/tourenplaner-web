@@ -141,9 +141,6 @@ window.DataView = Backbone.View.extend({
 					}
 				}
 			}
-
-            var pos = that.$('#dataview #markerPos').val();
-            window.markList.moveMark(marker, pos);
         });
 
         this.$('#dataview #deleteMark').click(function () {
