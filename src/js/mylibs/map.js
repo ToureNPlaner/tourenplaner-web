@@ -50,9 +50,9 @@ _.extend(window.Map.prototype, {
 
         this.map = new L.Map("map");
 
-        var mapLayer = new L.TileLayer('http://gerbera.informatik.uni-stuttgart.de/osm/tiles/{z}/{x}/{y}.png', {
+        var mapLayer = new L.TileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-            maxZoom: 19
+            maxZoom: 18
         });
 
         this.map.addLayer(mapLayer);
