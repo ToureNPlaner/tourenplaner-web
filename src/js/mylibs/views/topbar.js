@@ -39,15 +39,15 @@ window.TopbarView = Backbone.View.extend({
         if (!window.nomApi)
             window.nomApi = new Nominatim();
 
-        var s = this.$('form input[type=text]').val(),
+        var s = this.$('form input[type=search]').val(),
             that = this;
         nomApi.search(s, function (success, data) {
             var spot = null;
             for (var i in data) {
-                if (data[i]["class"] == "place") {
-                    spot = data[i];
-                    break;
-                }
+                if (data[i]["class"] == "boundary")
+                    continue;
+                spot = data[i];
+                break;
             }
 
             if (_.isNull(spot)) {
