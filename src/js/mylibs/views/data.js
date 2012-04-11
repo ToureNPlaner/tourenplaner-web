@@ -94,7 +94,14 @@ window.DataView = Backbone.View.extend({
             }
 
             this.$('#dataview #pc_' + key).twipsy({placement: 'right'});
+            this.$('#dataview #pc_' + key).focus(function() {
+                that.$('#dataview #saveMarkAttributes').removeClass('disabled');
+            });
         }
+
+        this.$('#markerName').focus(function() {
+            that.$('#dataview #saveMarkAttributes').removeClass('disabled');
+        });
 
         // Save mark attributes
         this.$('#dataview #saveMarkAttributes').click(function () {
@@ -140,6 +147,8 @@ window.DataView = Backbone.View.extend({
 						marker.attributes[key] = undefined;
 					}
 				}
+
+                that.$('#dataview #saveMarkAttributes').addClass('disabled');
 			}
         });
 

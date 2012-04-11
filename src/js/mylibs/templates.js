@@ -83,7 +83,7 @@ templates.dataViewContent = '<div class="clearfix"><label for="markerName">' + $
                                 {{/each}}\
                              {{/if}}\
                              </div>\
-                             <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
+                             <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary disabled">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
 templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>';
