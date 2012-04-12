@@ -265,6 +265,6 @@ _.extend(window.Map.prototype, {
     setCenter: function(lonlat, bb) {
         //TODO: Needs testing
         this.map.fitBounds(new L.LatLngBounds(new L.LatLng(bb[0], bb[2]), new L.LatLng(bb[1], bb[3])));
-    },
+    }
 
 });
