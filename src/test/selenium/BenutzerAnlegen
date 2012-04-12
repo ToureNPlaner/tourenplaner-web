@@ -13,12 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>//a[contains(text(),'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//a[contains(@href, '#/admin')]</td>
+	<td>xpath=/html/body/div/header/div/div/ul/li[2]/ul/li[4]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -28,17 +23,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[contains(@href, '#/admin/user')]</td>
+	<td>xpath=/html/body/div[3]/div[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>admin-user</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=firstname</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,14 +62,19 @@
 	<td>enteenteente</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=password_confirm</td>
+	<td>enteenteente</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=active</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[contains(text(),'Save')]</td>
-	<td></td>
+	<td>xpath=/html/body/div[3]/div[2]/div/form/div[9]/a</td>
+	<td>/html/body/div[3]/div[2]/div/form/div[9]/a</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>

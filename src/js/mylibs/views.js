@@ -17,11 +17,6 @@ window.BodyView = Backbone.View.extend({
         var that = this;
         this.topbar = new TopbarView().render();
         this.main = new MainView().render();
-        $(document).keydown(function(event) {
-            if (event.which == 13) {
-                that.main.sidebar.onSend();
-            }
-        });
     },
 
     /**

@@ -13,12 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>//a[contains(text(),'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//a[contains(@href, '#/settings')]</td>
+	<td>xpath=/html/body/div/header/div/div/ul/li[2]/ul/li/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -28,17 +23,22 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[contains(text(),'Save')]</td>
+	<td>xpath=/html/body/div[3]/div[2]/div/form/div[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>message</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>user-settings</td>
+	<td>message</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=x</td>
+	<td>xpath=/html/body/div[3]/div[3]/a</td>
 	<td></td>
 </tr>
 </tbody></table>

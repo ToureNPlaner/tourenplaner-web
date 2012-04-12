@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>clickAt</td>
-	<td>link=*Marker*</td>
+	<td>link=*Mark*</td>
 	<td>780,80</td>
 </tr>
 <tr>
@@ -24,7 +24,7 @@
 <tr>
 	<td>assertText</td>
 	<td>marks</td>
-	<td>Stuttgart (Target)</td>
+	<td>Stuttgart</td>
 </tr>
 </tbody></table>
 </body>

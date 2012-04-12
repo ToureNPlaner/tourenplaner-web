@@ -45,11 +45,10 @@ window.Mark = Backbone.Model.extend({
         };
 
         // get all pointconstraints for currently selected algorithm
-        var pointconstraints = window.algview.getSelectedAlgorithm();
+        var pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints;
         if (!_.isNull(pointconstraints)) {
             for (var i = 0; i < pointconstraints.length; i++) {
-                var key = pointconstraints[i].name;
-
+                var key = pointconstraints[i].id;
                 if (!_.isUndefined(this.get(key))) {
                     json[key] = this.get(key);
                 } else {

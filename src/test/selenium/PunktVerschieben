@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>dragAndDropToObject</td>
-	<td>link=*Marker*</td>
+	<td>xpath=//*[@id=&quot;OpenLayers.Geometry.Point_*&quot;]</td>
 	<td>400,400</td>
 </tr>
 </tbody></table>
