@@ -26,16 +26,19 @@ window.DataView = Backbone.View.extend({
     showMarker: function (marker) {
         var that = this;
 
-        if (this.currentMarker != null) {
+        if (!_.isNull(this.currentMarker))
             this.currentMarker.unbind("change:lonlat");
-        }
         
-        this.currentMarker = marker;
-        this.currentMarker.bind("change:lonlat", function() {
-            that.onDataViewChange(that, marker);
-        });
 
-        this.onDataViewChange(this, marker);
+        this.currentMarker = marker;
+        if (!_.isNull(marker)) {
+            this.currentMarker.on("change:lonlat", function() {
+                that.onDataViewChange(that, marker);
+            });            
+            this.onDataViewChange(this, marker);
+        } else {
+            that.$('.content').html($._("No point selected!"));
+        }
     },
 
     onDataViewChange: function (model, marker) {
