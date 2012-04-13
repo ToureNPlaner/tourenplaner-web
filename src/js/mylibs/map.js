@@ -86,7 +86,7 @@ _.extend(window.Map.prototype, {
                         }
 
                         window.map.drawRoute(text);
-                        if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid) && parseInt(text.requestid) > 0)
+                        if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid)) && parseInt(text.requestid) > 0)
                             window.app.navigate('route/' + text.requestid);
                     }
                     loadingView.remove();

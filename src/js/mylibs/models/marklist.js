@@ -35,7 +35,10 @@ window.MarkList = Backbone.Collection.extend({
             this._moveAllMarks(oldpos + 1, -1);
             this.sort();
         } else if (mark.get('position') >= this.length) {
-            this.appendMark(mark);
+            mark.set({position: this.length});
+            this.add(mark, {
+                at: this.length
+            });
         }
 
     },
