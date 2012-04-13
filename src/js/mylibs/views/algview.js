@@ -124,6 +124,7 @@ window.AlgView = Backbone.View.extend({
                 }
                 // Update info in sidebar
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
+                window.markList.trigger('reset');
             }
         }
     },
