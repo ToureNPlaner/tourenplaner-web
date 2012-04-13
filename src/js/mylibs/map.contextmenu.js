@@ -6,12 +6,10 @@
  * @param evt The event object
  */
 function addMarker(action, evt) {
-    var pixelx = evt.pageX - $('#map').offset().left;
-    var pixely = evt.pageY - $('#map').offset().top;
-    var pixel = new OpenLayers.Pixel(pixelx, pixely);
-    var lonlat = window.map.getMap().getLonLatFromPixel(pixel);
+    var latlng = window.map.getMap().mouseEventToLatLng(evt);
+    log(latlng);
     var mark = new Mark({
-        "lonlat": lonlat
+        lonlat: latlng
     });
 	switch (action) {
 		// alert selected point as lonlat
@@ -42,13 +40,13 @@ function addMarker(action, evt) {
 function editMarker(action, marker) {
     switch (action) {
         case 'delete':
-            window.markList.remove(marker.data.mark);
+            window.markList.remove(marker);
             break;
         case 'start':
-            window.markList.setStartMark(marker.data.mark);
+            window.markList.setStartMark(marker);
             break;
         case 'end':
-            window.markList.setTargetMark(marker.data.mark);
+            window.markList.setTargetMark(marker);
             break;
     }
 }
@@ -60,28 +58,30 @@ function setContextMenu() {
     $('#main #map').contextPopup({
         title: $._("Markers"),
         items: function (evt) {
-            var feature = window.map.dataLayer.getFeatureFromEvent(evt);
-            var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
+            var ret = [
+                {label: $._("Add Startmarker"), icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
+                {label: $._("Add Marker"), icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }}                    
+            ];
+            if (!window.body.main.algview.getSelectedAlgorithm().details.sourceistarget)
+                ret.push({label: $._("Add Endmarker"), icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }});
+            return ret;            
+        }
+    });
+}
 
-            // if it's a marker
-            if (feature && !_.isUndefined(feature.attributes.mark)) {
-                var ret = [
-                    {label: $._('Set as Startmarker'), icon: 'img/startmark.png', action: function (evt) { editMarker('start', feature); }},
-                    null,
-                    {label: $._("Delete"), action: function (evt) { editMarker('delete', feature); }}
-                ];
-                if (!sourceIsTarget)
-                    ret.splice(1, 0, {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', feature); }});
-                return ret;
-            } else {
-                var ret = [
-                    {label: $._("Add Startmarker"), icon: 'img/startmark.png', action: function (evt) { addMarker("start", evt); }},
-                    {label: $._("Add Marker"), icon: 'img/mark.png', action: function (evt) {  addMarker("mark", evt); }}                    
-                ];
-                if (!sourceIsTarget)
-                    ret.push({label: $._("Add Endmarker"), icon: 'img/targetmark.png', action: function (evt) { addMarker("target", evt); }});
-                return ret;
-            }
+function setMarkerMenu() {
+        $('#main #map .leaflet-marker-icon').contextPopup({
+        title: $._("Marker"),
+        items: function (evt) {
+            var marker = window.map.getMarkerForPoint(evt.target._leaflet_pos);
+            var ret = [
+                {label: $._('Set as Startmarker'), icon: 'img/startmark.png', action: function (evt) { editMarker('start', marker.mark); }},
+                null,
+                {label: $._("Delete"), action: function (evt) { editMarker('delete', marker.mark); }}
+            ];
+            if (!window.body.main.algview.getSelectedAlgorithm().details.sourceistarget)
+                ret.splice(1, 0, {label: $._('Set as Endmarker'), icon: 'img/targetmark.png', action: function (evt) { editMarker('end', marker.mark); }});
+            return ret;
         }
     });
 }

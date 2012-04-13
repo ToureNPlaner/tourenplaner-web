@@ -22,6 +22,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(@href, '#')])[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(@href, '#')])[11]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>map</td>
 	<td>780,80</td>
@@ -32,9 +42,9 @@
 	<td>750,480</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;markerName&quot;]</td>
-	<td>Stuttgart</td>
+	<td>assertText</td>
+	<td>xpath=/html/body/div/div/div/div/form/div[3]/div/div/a</td>
+	<td>*Stuttgart*</td>
 </tr>
 </tbody></table>
 </body>

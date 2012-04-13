@@ -27,18 +27,24 @@ $.mockjax({
                 },
                 pointconstraints: [
                     {
+                        id: "height",
                         name: "height",
+                        description: "Höhenmeter",
                         type: "meter",
                         min: 0.0,
                         max: 2000.0
                     },{
+                        id: "boolconstraint",
                         name: "BoolConstraint",
+                        description: "......",
                         type: "boolean",
                         min: 0.0,
                         max: 2000.0
                     },{
+                        id: "priceconstraint",
                         name: "PriceConstraint",
                         type: "price",
+                        description: "Preis...",
                         min: 0.0,
                         max: 2000.0
                     }
@@ -111,6 +117,37 @@ $.mockjax({
                     }
                 ]
             },{
+                version: 7,
+                name: "Another Testalgorithm",
+                urlsuffix: "ata",
+                details: {
+                    hidden: false,
+                    minpoints: 3,
+                    sourceistarget: false
+                },
+                pointconstraints: [],
+                constraints: [
+                    {
+                        "id": "transportation",
+                        "name": "Type of Transportation",
+                        "description": "The Kind of transportation to use.",
+                        "type": "enum",
+                        "values": ["Foot", "Bicycle", "Car"]
+                    },{
+                        "name": "Max Altitude Difference",
+                        "id": "maxAltitudeDifference",
+                        "description": "The maximum difference in altitude combined over the path",
+                        "type": "meter",
+                        "min": 0
+                    },{
+                        "id": "randomBoolConstraint",
+                        "name": "Random Boolean Constraint",
+                        "description": "...",
+                        "type": "boolean"
+                    }
+
+                ]
+            },{
                 version: 2,
                 name: "Nearest Neighbor",
                 urlsuffix: "nns",
@@ -165,25 +202,28 @@ $.mockjax({
     responseTimeout: 10,
     status: 200,
     response: function(data) {
-        var login = data.headers.Authorization.split(' ')[1];
-        if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
-            this.responseText = {
-                userid: 42,
-                username: 'root@tourenplaner.de',
-                email: 'root@tourenplaner.de',
-                firstname: 'Peter',
-                lastname: 'Lustig',
-                admin: true,
-                active: true
+        if(!_.isUndefined(data.headers.Authorization)){
+            var login = data.headers.Authorization.split(' ')[1];
+            if (_.isEqual(login, Base64.encode('root@tourenplaner.de:toureNPlaner'))) {
+                this.responseText = {
+                    userid: 42,
+                    username: 'root@tourenplaner.de',
+                    email: 'root@tourenplaner.de',
+                    firstname: 'Peter',
+                    lastname: 'Lustig',
+                    admin: true,
+                    active: true
+                }
+            } else {
+                this.status = 401;
+                this.responseText = {
+                    errorid: "EAUTH",
+                    message: "Wrong email or password",
+                    details: ""
+                };
             }
-        } else {
-            this.status = 401;
-            this.responseText = {
-                errorid: "EAUTH",
-                message: "Wrong email or password",
-                details: ""
-            };
         }
+        else return false;
     }
 });
 

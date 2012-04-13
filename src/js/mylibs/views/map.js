@@ -37,6 +37,8 @@ window.MapView = Backbone.View.extend({
         var mapObject = window.map;
         mapObject.resetMarkers();
         mapObject.drawMarkers(markList);
+
+        setMarkerMenu();
     },
 
     onResize: function (sidebar) {

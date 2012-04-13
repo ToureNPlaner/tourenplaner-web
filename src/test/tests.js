@@ -53,7 +53,7 @@ test("/info", 5, function() {
         server: null
     });
 
-    stop();
+    stop(1);
     var ret = tmpApi.serverInformation({
         callback: function(json, success) {
             same(success, true, 'Got some info');
@@ -238,7 +238,7 @@ test("/listusers", 8, function (){
     ok(!api.listUsers({limit: "e", offset: 10}), 'limit NaN');
     ok(!api.listUsers({limit: 2, offset: "w"}), 'offset NaN');
     
-    stop();
+    stop(1);
     api.listUsers({limit: 1,
                   offset: 3,
                   callback: function(json, success){
@@ -260,7 +260,7 @@ test("/deleteuser", 4, function (){
     ok(!api.deleteUser({callback: function(){ }}), 'missing id');
     ok(!api.deleteUser({id: "r94",callback: function(){ }}), 'id ("r94") is not a number');
     
-    stop();
+    stop(1);
     api.deleteUser({id: 94,
                   callback: function(json, success){
                       same(success, true, "user deleted");
@@ -325,7 +325,7 @@ test("/alg", 8, function (){
 module("nominatim.js");
 
 test("search", 3, function() {
-    stop();
+    stop(1);
 
     window.nom = new Nominatim();
     nom.search("Stuttgart", function(success, msg) {

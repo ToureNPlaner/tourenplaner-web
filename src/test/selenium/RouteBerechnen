@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=*Startmarker*</td>
+	<td>link=*Start*</td>
 	<td></td>
 </tr>
 <tr>
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=*Endmarker*</td>
+	<td>link=*End*</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,8 +37,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertAlert</td>
+	<td>waitForElementPresent</td>
+	<td>route-overlay</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>route-overlay</td>
 	<td></td>
 </tr>
 </tbody></table>

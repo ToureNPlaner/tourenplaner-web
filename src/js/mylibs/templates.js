@@ -62,25 +62,28 @@ templates.dataView = '<span class="minmax">\
                         <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
                       </div>';
 
-templates.dataViewContent = '<div class="clearfix"><label for="lon">' + $._('Lon') + ':</label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
+templates.dataViewContent = '<div class="clearfix"><label for="markerName">' + $._('Name') + ':</label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
+                             <div class="clearfix"><label for="lon">' + $._('Lon') + ':</label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
                              <div class="clearfix"><label for="lat">' + $._('Lat') + ':</label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="markerName">' + $._('Name') + ':</label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
-                             <div class="clearfix"><label for="markerPos">' + $._('Position') + ':</label><input value="{{marker.position}}" type="text" name="markerPos" id="markerPos" /></div>\
                              {{#if constraints}}\
                                 <h4>Constraints</h4>\
                                 {{#each constraints}}\
                                   <div class="clearfix">\
                                     <label for="pc_{{name}}">{{name}}: </label>\
                                     {{#ifEquals type "boolean"}}\
-                                      <input type="checkbox" name="pc_{{name}}" id="pc_{{name}}" />\
+                                      <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                     {{else}}\
-                                      <input type="text" name="pc_{{name}}" id="pc_{{name}}" class="smartspinner" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                      {{#ifEquals type "enum"}}\
+                                        <br><select class="alg-combobox" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                      {{else}}\
+                                        <input type="text" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                        {{/ifEquals}}\
                                     {{/ifEquals}}\
                                   </div>\
                                 {{/each}}\
                              {{/if}}\
                              </div>\
-                             <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
+                             <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary disabled">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
 templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>';
@@ -109,9 +112,13 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                               <div class="clearfix">\
                                 <label for="pc_{{name}}">{{name}}: </label>\
                                 {{#ifEquals type "boolean"}}\
-                                  <input type="checkbox" name="pc_{{id}}" id="pc_{{id}}" />\
+                                  <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                 {{else}}\
-                                  <input type="text" value="0" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                  {{#ifEquals type "enum"}}\
+                                    <br><select class="alg-combobox" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                  {{else}}\
+                                    <input type="text" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                    {{/ifEquals}}\
                                 {{/ifEquals}}\
                               </div>\
                             {{/each}}\

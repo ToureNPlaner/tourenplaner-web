@@ -13,7 +13,6 @@
 <tr><td><a href="MarkerViewOeffnen">Marker Dataview öffnen</a></td></tr>
 <tr><td><a href="AlgorithmusWaehlen">AlgorithmusWaehlen</a></td></tr>
 <tr><td><a href="MarkereigenschaftenAendern">Markereigenschaften editieren</a></td></tr>
-<tr><td><a href="PunktVerschieben">PunktVerschieben</a></td></tr>
 <tr><td><a href="MarkerLoeschen">Marker löschen</a></td></tr>
 <tr><td><a href="Reset">Reset</a></td></tr>
 <tr><td><a href="RouteBerechnen">RouteBerechnen</a></td></tr>

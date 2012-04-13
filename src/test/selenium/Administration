@@ -17,16 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[contains(text(),'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//a[contains(@href, '#/admin')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
 	<td>admin</td>
 	<td></td>

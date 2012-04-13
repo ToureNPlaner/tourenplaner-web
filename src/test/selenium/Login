@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[contains(@href, '#/login')]</td>
+	<td>xpath=/html/body/div[3]/div[3]/a[2]</td>
 	<td></td>
 </tr>
 <tr>
