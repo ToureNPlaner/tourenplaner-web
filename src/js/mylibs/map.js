@@ -242,7 +242,7 @@ _.extend(window.Map.prototype, {
             data = JSON.parse(this.currentRouteString);
 
         data = data.misc;
-        if(!_.isUndefined(data))
+        if(!_.isUndefined(data) && !_.isNull(data))
             this.routeOverlay = new RouteOverlay(data).render();
     },
 
