@@ -25,6 +25,7 @@ window.MarkView = Backbone.View.extend({
 
         this.$('a.view').click(_.bind(this.onClick, this));
         this.model.bind('change:position', _.bind(this.onPositionChange, this));
+        this.model.bind('change:name', _.bind(this.onNameChange, this));
 
         return this;
     },
@@ -52,5 +53,9 @@ window.MarkView = Backbone.View.extend({
 
     onPositionChange: function () {
         this.$el.html(this.getTemplate());
+    },
+
+    onNameChange: function () {
+        this.$('a.view').html(this.model.get('name'));
     }
 });
