@@ -74,9 +74,9 @@ templates.dataViewContent = '<div class="clearfix"><label for="markerName">' + $
                                       <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                     {{else}}\
                                       {{#ifEquals type "enum"}}\
-                                        <br><select class="alg-combobox" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                        <select class="textbox-dataview" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
                                       {{else}}\
-                                        <input type="text" class="spininput" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                        <input type="text" class="textbox-dataview" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
                                         {{/ifEquals}}\
                                     {{/ifEquals}}\
                                   </div>\

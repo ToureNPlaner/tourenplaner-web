@@ -48,7 +48,7 @@ window.DataView = Backbone.View.extend({
             // get all pointconstraints for currently selected algorithm
             pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints;
             // add fields to edit pointconstraints
-
+log(marker);
 	
         var data = {
             lonlat:  lonlat,
@@ -96,7 +96,7 @@ window.DataView = Backbone.View.extend({
                 this.$('#dataview #pc_' + key).val(initValue);
             }
 
-            this.$('#dataview #pc_' + key).twipsy({placement: 'right'});
+            this.$('#dataview #pc_' + key).twipsy({placement: 'left'});
             this.$('#dataview #pc_' + key).focus(function() {
                 that.$('#dataview #saveMarkAttributes').removeClass('disabled');
             });
