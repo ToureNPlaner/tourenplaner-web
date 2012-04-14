@@ -30,7 +30,7 @@ TargetMarker = L.Icon.extend({
 _.extend(window.Map.prototype, {
     map: null,
     currentRouteString: null,
-    routeFeature: null,
+    routeFeature: [],
     markers: [],
 
     /**
@@ -121,12 +121,16 @@ _.extend(window.Map.prototype, {
      * Removes the currently drawn route from the map.
      */
     resetRoute: function () {
-        if (!_.isNull(this.routeFeature)) {
-            this.map.removeLayer(this.routeFeature);
-            this.routeOverlay.remove();
+        if (this.routeFeature.length > 0) {
+            for (var i = 0; i < this.routeFeature.length; i++){
+                this.map.removeLayer(this.routeFeature[i]);
+            }
+            if(!_.isUndefined(this.routeOverlay) && !_.isNull(this.routeOverlay))
+                this.routeOverlay.remove();
         }
             
-        this.currentRouteString = this.routeFeature = null;        
+        this.currentRouteString = null;
+        this.routeFeature = [];
     },
 
     /**
@@ -194,22 +198,26 @@ _.extend(window.Map.prototype, {
         this.resetRoute();    	
         this.currentRouteString = vertexString;
     	
+        var allPointList = [];
         // parse string of vertices
-        var pointList = [];
         if (_.isString(vertexString))
             vertexString = JSON.parse(vertexString);
 
         for (var i = 0; i < vertexString.way.length; i++) {
+            var pointList = [];
             for (var j = 0; j < vertexString.way[i].length; j++) {
                 var p = vertexString.way[i][j];
                 pointList.push(new L.LatLng(p.lt / 1e7, p.ln / 1e7));
+                allPointList.push(new L.LatLng(p.lt / 1e7, p.ln / 1e7));
             }
-        }
+            // draw segment of route on a layer and add it to map
+            var singleRouteFeature = new L.Polyline(pointList, {color: 'blue'});
+            this.map.addLayer(singleRouteFeature);
 
-        // draw route on a layer and add it to map
-        this.routeFeature = new L.Polyline(pointList, {color: 'blue'});
-        this.map.addLayer(this.routeFeature);
-        this.map.fitBounds(new L.LatLngBounds(pointList));
+            // add segment to route list
+            this.routeFeature.push(singleRouteFeature);
+        }
+        this.map.fitBounds(new L.LatLngBounds(allPointList));
 
         this.displayRouteInfo();
     },
