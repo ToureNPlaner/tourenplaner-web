@@ -62,28 +62,28 @@ templates.dataView = '<span class="minmax">\
                         <p style="padding: 5px 10px">' + $._('No point selected!') + '</p>\
                       </div>';
 
-templates.dataViewContent = '<div class="clearfix"><label for="markerName">' + $._('Name') + ':</label><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></div>\
-                             <div class="clearfix"><label for="lon">' + $._('Lon') + ':</label><input size="10" value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled" /></div>\
-                             <div class="clearfix"><label for="lat">' + $._('Lat') + ':</label><input size="10" value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled" /></div>\
-                             {{#if constraints}}\
-                                <h4>Constraints</h4>\
-                                {{#each constraints}}\
-                                  <div class="clearfix">\
-                                    <label for="pc_{{name}}">{{name}}: </label>\
-                                    {{#ifEquals type "boolean"}}\
-                                      <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
-                                    {{else}}\
-                                      {{#ifEquals type "enum"}}\
-                                        <select class="textbox-dataview" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+templates.dataViewContent = '<table border="0" class="grid">\
+                                <tr><td><b>' + $._('Name') + '</b>:</td><td><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></td></tr>\
+                                <tr><td><b>' + $._('Lon') + '</b>:</td><td><input value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled"/></td></tr>\
+                                <tr><td><b>' + $._('Lat') + '</b>:</td><td><input value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled"/></td></tr>\
+                               {{#if constraints}}\
+                                  {{#each constraints}}\
+                                    <tr><td><b>{{name}}:</b></td><td>\
+                                      {{#ifEquals type "boolean"}}\
+                                        <input type="checkbox" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" />\
                                       {{else}}\
-                                        <input type="text" class="textbox-dataview" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
-                                        {{/ifEquals}}\
-                                    {{/ifEquals}}\
-                                  </div>\
-                                {{/each}}\
-                             {{/if}}\
-                             </div>\
+                                        {{#ifEquals type "enum"}}\
+                                          <select class="textbox-dataview" name="pc_{{id}}" id="pc_{{id}}" title="{{description}}"></select>\
+                                        {{else}}\
+                                          <input type="text" class="textbox-dataview" title="{{description}}" name="pc_{{id}}" id="pc_{{id}}" /> {{#ifEquals type "meter"}}m{{/ifEquals}}{{#ifEquals type "price"}}&euro;{{/ifEquals}}\
+                                          {{/ifEquals}}\
+                                      {{/ifEquals}}\
+                                    </td></tr>\
+                                  {{/each}}\
+                               {{/if}}\
+                             </table>\
                              <div class="clearfix"><label for="saveMarkAttributes" /><button id="saveMarkAttributes" class="btn primary disabled">' + $._('Apply') + '</button><button id="deleteMark" class="btn secondary">' + $._('Delete') + '</button></div>';
+
 templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 
 templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>';

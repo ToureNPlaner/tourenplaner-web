@@ -250,12 +250,28 @@ div.popover {
 }
 
 .alg-combobox {position: relative; display: block; left:0; width:auto;}
-.ui-spinner {position: absolute; display: block; left:82%; width:auto;}
-.ui-spinner-buttons {position: relative; display: block;}
-.ui-spinner-button {overflow: hidden; display: block;}
+#algview .ui-spinner {position: absolute; left:82%; width:auto;}
+#algview .ui-spinner-buttons {position: relative;}
+#algview .ui-spinner-button {overflow: hidden; }
+
+#data .ui-spinner {position:absolute; margin:0; padding:0;}
+#data .ui-spinner-buttons {position: relative; top: -9px;}
+#data .ui-spinner-button {overflow: hidden; position: absolute; top:-9px;}
+
 .spininput {
   width: 80%;
 }
 .textbox-dataview {
   size:10;
 }
+
+table.grid {
+    border-collapse: collapse;
+    border:0;
+    cellspacing:0;
+    cellpadding:0;
+    margin:0;
+    border-spacing: 0px;
+    border-style: none;
+  }
+table.grid td { padding: 1px 1px; text-align: left}

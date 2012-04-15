@@ -48,7 +48,6 @@ window.DataView = Backbone.View.extend({
             // get all pointconstraints for currently selected algorithm
             pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints;
             // add fields to edit pointconstraints
-log(marker);
 	
         var data = {
             lonlat:  lonlat,
@@ -62,18 +61,20 @@ log(marker);
             type = pointconstraints[i].type;
             spinnerRequired = new Array("integer", "float", "meter", "price");
             comboboxRequired = new Array("enum");
-            var initValue = marker.attributes[key];
+            var initValue = marker.attributes[key]
+            if (initValue == "undefined") 
+                initValue = 0;
             if (spinnerRequired.join().indexOf(type) > -1) {
                 // component is a spinner, set min, max and initial value 
                 minValue = pointconstraints[i].min;
                 maxValue = pointconstraints[i].max;
 
-                if (typeof minValue == "undefined" || minValue == 0) {
-                    minValue = -Number.MAX_VALUE;
+                if (typeof minValue == "undefined") {
+                    minValue = -99999;
                 } 
 
-                if (typeof maxValue == "undefined" || maxValue == 0) {
-                    maxValue = Number.MAX_VALUE;
+                if (typeof maxValue == "undefined") {
+                    maxValue = 99999;
                 } 
 
                 this.$('#dataview #pc_' + key).spinner({min:minValue, max:maxValue, init:initValue});
