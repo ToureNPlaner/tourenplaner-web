@@ -6,6 +6,12 @@
  * @param evt The event object
  */
 function addMarker(action, evt) {
+    var maxpoints = window.body.main.algview.getSelectedAlgorithm().details.maxpoints;
+    if (!_.isUndefined(maxpoints) && maxpoints <= window.markList.length) {
+        new MessageView({title: $._('Too many points'), message: $._('The algorithm doesn\'t allow any more points.')}).render();
+        return;
+    }
+
     var latlng = window.map.getMap().mouseEventToLatLng(evt);
     log(latlng);
     var mark = new Mark({

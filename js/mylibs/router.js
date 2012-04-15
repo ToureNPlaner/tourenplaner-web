@@ -165,6 +165,9 @@ window.Router = Backbone.Router.extend({
      * @param id The id of the old request
      */
     request: function(id) {
+        if (_.isNaN(id) || id <= 0)
+            return;
+
         window.api.getResponse({
             id: id,
             callback: function(text, success) {

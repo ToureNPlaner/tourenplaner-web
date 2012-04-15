@@ -27,16 +27,19 @@ window.DataView = Backbone.View.extend({
     showMarker: function (marker) {
         var that = this;
 
-        if (this.currentMarker != null) {
+        if (!_.isNull(this.currentMarker))
             this.currentMarker.unbind("change:lonlat");
-        }
         
-        this.currentMarker = marker;
-        this.currentMarker.bind("change:lonlat", function() {
-            that.onDataViewChange(that, marker);
-        });
 
-        this.onDataViewChange(this, marker);
+        this.currentMarker = marker;
+        if (!_.isNull(marker)) {
+            this.currentMarker.on("change:lonlat", function() {
+                that.onDataViewChange(that, marker);
+            });            
+            this.onDataViewChange(this, marker);
+        } else {
+            that.$('.content').html($._("No point selected!"));
+        }
     },
 
     onDataViewChange: function (model, marker) {
@@ -45,7 +48,6 @@ window.DataView = Backbone.View.extend({
             // get all pointconstraints for currently selected algorithm
             pointconstraints = window.algview.getSelectedAlgorithm().pointconstraints;
             // add fields to edit pointconstraints
-
 	
         var data = {
             lonlat:  lonlat,
@@ -59,18 +61,20 @@ window.DataView = Backbone.View.extend({
             type = pointconstraints[i].type;
             spinnerRequired = new Array("integer", "float", "meter", "price");
             comboboxRequired = new Array("enum");
-            var initValue = marker.attributes[key];
+            var initValue = marker.attributes[key]
+            if (initValue == "undefined") 
+                initValue = 0;
             if (spinnerRequired.join().indexOf(type) > -1) {
                 // component is a spinner, set min, max and initial value 
                 minValue = pointconstraints[i].min;
                 maxValue = pointconstraints[i].max;
 
-                if (typeof minValue == "undefined" || minValue == 0) {
-                    minValue = -Number.MAX_VALUE;
+                if (typeof minValue == "undefined") {
+                    minValue = -99999;
                 } 
 
-                if (typeof maxValue == "undefined" || maxValue == 0) {
-                    maxValue = Number.MAX_VALUE;
+                if (typeof maxValue == "undefined") {
+                    maxValue = 99999;
                 } 
 
                 this.$('#dataview #pc_' + key).spinner({min:minValue, max:maxValue, init:initValue});
@@ -93,7 +97,7 @@ window.DataView = Backbone.View.extend({
                 this.$('#dataview #pc_' + key).val(initValue);
             }
 
-            this.$('#dataview #pc_' + key).twipsy({placement: 'right'});
+            this.$('#dataview #pc_' + key).twipsy({placement: 'left'});
             this.$('#dataview #pc_' + key).focus(function() {
                 that.$('#dataview #saveMarkAttributes').removeClass('disabled');
             });
