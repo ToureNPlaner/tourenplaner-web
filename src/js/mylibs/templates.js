@@ -64,7 +64,7 @@ templates.dataView = '<span class="minmax">\
 
 templates.dataViewContent = '<table border="0" class="grid">\
                                 <tr><td><b>' + $._('Name') + '</b>:</td><td><input value="{{marker.name}}" type="text" name="markerName" id="markerName" /></td></tr>\
-                                <tr><td><b>' + $._('Lon') + '</b>:</td><td><input value="{{lonlat.lon}}" type="text" name="lon" id="lon" disabled="disabled"/></td></tr>\
+                                <tr><td><b>' + $._('Lon') + '</b>:</td><td><input value="{{lonlat.lng}}" type="text" name="lon" id="lon" disabled="disabled"/></td></tr>\
                                 <tr><td><b>' + $._('Lat') + '</b>:</td><td><input value="{{lonlat.lat}}" type="text" name="lat" id="lat" disabled="disabled"/></td></tr>\
                                {{#if constraints}}\
                                   {{#each constraints}}\
