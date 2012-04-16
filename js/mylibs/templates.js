@@ -98,8 +98,8 @@ templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x<
                           {{#each algorithms}}\
                             {{#unless this.details.hidden}}\
                               <div class="clearfix">\
-                                <input type="radio" name="alg" id="{{urlsuffix}}" value="{{urlsuffix}}" {{#ifEquals ../../currentAlg.urlsuffix urlsuffix}}checked="checked"{{/ifEquals}} />\
-                                <label for="{{urlsuffix}}" target="{{urlsuffix}}"> {{name}}</a>\
+                                <input type="radio" name="alg" id="{{urlsuffix}}" value="{{urlsuffix}}" title="{{description}}" {{#ifEquals ../../currentAlg.urlsuffix urlsuffix}}checked="checked"{{/ifEquals}} />\
+                                <label for="{{urlsuffix}}" id="titlefor_{{urlsuffix}}" title="{{description}}" target="{{urlsuffix}}"> {{name}}</a>\
                               </div>\
                             {{/unless}}\
                           {{/each}}\

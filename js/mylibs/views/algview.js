@@ -154,6 +154,11 @@ window.AlgView = Backbone.View.extend({
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
                 window.markList.trigger('reset');
             }
+
+            for (var i = 0; i < algorithms.length; i++) {
+                this.$('#' + algorithms[i].urlsuffix).twipsy({placement: 'right'});
+                this.$('#titlefor_' + algorithms[i].urlsuffix).twipsy({placement: 'right'});
+            }
         }
     },
 
