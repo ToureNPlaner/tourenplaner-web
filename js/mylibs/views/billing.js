@@ -89,6 +89,7 @@ window.BillingView = Backbone.View.extend({
                     that.$('#billing-table tr').click(function () {
                         var link = '/route/' + $(this).children()[0].innerHTML;
                         that.remove();
+                        window.algview.setSelectedAlgorithm($(this).children()[2].innerHTML);
                         window.app.navigate(link, {trigger: true});
                     });
 

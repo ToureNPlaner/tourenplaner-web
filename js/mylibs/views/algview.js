@@ -18,6 +18,10 @@ window.AlgView = Backbone.View.extend({
         return this;
     },
 
+    setSelectedAlgorithm: function (alg) {
+        this.$('#'+alg).click();
+    },
+
     getSelectedAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
         var selected = this.$('input[@name=alg]:checked').val();
