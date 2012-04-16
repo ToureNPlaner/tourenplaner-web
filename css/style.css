@@ -275,3 +275,8 @@ table.grid {
     border-style: none;
   }
 table.grid td { padding: 1px 1px; text-align: left}
+
+.algdescription {
+  font-size:10px;
+  color: #777;
+}

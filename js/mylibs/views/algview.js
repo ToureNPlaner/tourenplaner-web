@@ -146,18 +146,13 @@ window.AlgView = Backbone.View.extend({
                         options = currentAlg.constraints[i].values;
 
                         for (var j = 0; j < options.length; j++) {
-                            this.$('#pc_' + key).append(new Option(options[i], options[i]));
+                            this.$('#pc_' + key).append(new Option(options[j], options[j]));
                         }
                     }
                     this.$('#pc_' + key).twipsy({placement: 'right'});
                 }
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
                 window.markList.trigger('reset');
-            }
-
-            for (var i = 0; i < algorithms.length; i++) {
-                this.$('#' + algorithms[i].urlsuffix).twipsy({placement: 'right'});
-                this.$('#titlefor_' + algorithms[i].urlsuffix).twipsy({placement: 'right'});
             }
         }
     },
