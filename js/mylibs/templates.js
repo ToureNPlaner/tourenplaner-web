@@ -89,7 +89,7 @@ templates.dataViewContent = Handlebars.compile(templates.dataViewContent);
 templates.routeOverlay = '<div class="header">' + $._('Routeinfos') + '</div>';
 templates.routeOverlay = Handlebars.compile(templates.routeOverlay);
 
-templates.routeOverlayAttribute = '<div style="float: left"><div class="info"><b>' + $._('{{name}}') + '</b>: {{value}}</div>';
+templates.routeOverlayAttribute = '<div style="float: left"><div class="info"><b>{{name}}</b>: {{value}}</div>';
 templates.routeOverlayAttribute = Handlebars.compile(templates.routeOverlayAttribute);
 
 templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x</a></h3>\
