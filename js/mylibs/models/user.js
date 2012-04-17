@@ -20,9 +20,7 @@ window.User = Backbone.Model.extend({
                 decarr = dec.split(':');
                 if (decarr.length == 2)
                     return this.login(decarr[0], decarr[1]);
-            } catch (e) {
-                log('Invalid cookie', cookie);
-            }
+            } catch (e) {}
             cookie = null;
         }
         $.store('tourenplaner', cookie);
@@ -43,8 +41,6 @@ window.User = Backbone.Model.extend({
                     that.set({
                         login: true
                     });
-
-                    log('Login successful');
                 } else {
                     $.store('tourenplaner', null);
                 }

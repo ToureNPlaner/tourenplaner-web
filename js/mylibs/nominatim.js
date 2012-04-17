@@ -36,11 +36,9 @@ _.extend(window.Nominatim.prototype, {
 			accepts: 'json',
 			dataType: 'json',
             success: function(data, status, jqXHR) {
-            	log(data, status);
             	callback(true, data);
             },
             error: function(jqXHR, status, error) {
-            	log(status, error);
             	callback(false, error);
             }
 		});

@@ -13,8 +13,6 @@ window.Mark = Backbone.Model.extend({
     setLonLatWith1984: function (lon, lat){
         if (!_.isNull(lon) && !_.isNull(lat))
             this.set({'lonlat': new L.LatLng(lat / 1e7, lon / 1e7)});
-        else
-            log("Fehler in Markmodel");
     },
 
     findNearestNeighbour: function (){
@@ -27,8 +25,6 @@ window.Mark = Backbone.Model.extend({
             callback: function(text, success) {
                 if (success && (!_.isUndefined(text.points) && !_.isNaN(text.points[0].ln) && !_.isNaN(text.points[0].lt)))
                     that.setLonLatWith1984(text.points[0].ln,text.points[0].lt);
-                else
-                    log("Nearest Neighbour Search wasn't successful. No points updated");   
             }
         });
     },

@@ -70,9 +70,6 @@ window.ImExportView = Backbone.View.extend({
                 }
             };
         })(file, that);
-        reader.onerror = function (e) {
-            log("Error", e);
-        };
 
         reader.readAsText(file);
 

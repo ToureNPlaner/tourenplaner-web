@@ -13,7 +13,6 @@ function addMarker(action, evt) {
     }
 
     var latlng = window.map.getMap().mouseEventToLatLng(evt);
-    log(latlng);
     var mark = new Mark({
         lonlat: latlng
     });
