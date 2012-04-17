@@ -26,7 +26,8 @@ window.MapView = Backbone.View.extend({
         // Move the attribution stuff to a readable position
         $('.leaflet-control-container .leaflet-bottom.leaflet-right').css({
             right: '5px',
-            top: '5px'
+            top: '5px',
+            height: '20px'
         });
 
         return this;
