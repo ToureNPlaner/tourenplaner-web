@@ -1,3 +1,15 @@
 $._('Shortest Path');
 $._('Shortest Path CH');
 $._('Shortest Path Simple');
+$._('Calculates the shortest path visiting the given points in the order they are supplied');
+$._('Traveling Salesman');
+$._('Calculates a short tour visiting each of the supplied points');
+$._('Constrained Shortest Path');
+$._('Calculates, if possible, a short route between the two supplied points, that climbs less than the supplied maximum altitude over it\'s length');
+$._('Maximum Altitude Difference');
+$._('The maximum altitude difference over the path');
+$._('Routeinfos');
+$._('Distance');
+$._('Time');
+$._('Message');
+$._('Altitude');

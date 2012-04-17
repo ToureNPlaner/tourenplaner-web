@@ -109,6 +109,8 @@ window.AlgView = Backbone.View.extend({
 
             currentAlg = undefined;
             for (var i = 0; i < algorithms.length; i++) {
+                algorithms[i].name = $._(algorithms[i].name);
+                algorithms[i].description = $._(algorithms[i].description);
                 if (algorithms[i].urlsuffix == suffix) {
                     currentAlg = algorithms[i];
                 }

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ToureNPlaner 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-17 11:03+0200\n"
-"PO-Revision-Date: 2012-04-17 11:03+0100\n"
+"POT-Creation-Date: 2012-04-17 11:53+0200\n"
+"PO-Revision-Date: 2012-04-17 11:58+0100\n"
 "Last-Translator: Philipp Gildein <philipp@gildein.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -85,6 +85,15 @@ msgstr "Löschen"
 #: map.contextmenu.js:88
 msgid "Set as Endmarker"
 msgstr "Als Ziel markieren"
+
+#: map.js:55
+msgid "Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> &#8212; Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>"
+msgstr "Kartentiles von <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> &#8212; Kartendaten &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> Beitragende, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>"
+
+#: map.js:76
+#: views/sidebar.js:107
+msgid "Waiting for response from server ..."
+msgstr "Warte auf Antwort vom Server ..."
 
 #: router.js:39
 msgid "Loading server information"
@@ -181,6 +190,8 @@ msgid "Clear"
 msgstr "Leeren"
 
 #: templates.js:62
+#: views/data.js:41
+#: views/data.js:161
 msgid "No point selected!"
 msgstr "Kein Punkt ausgewählt!"
 
@@ -201,6 +212,7 @@ msgid "Apply"
 msgstr "Übernehmen"
 
 #: templates.js:89
+#: strings.js:11
 msgid "Routeinfos"
 msgstr "Routeninfos"
 
@@ -408,6 +420,50 @@ msgstr "Kürzester Weg"
 msgid "Shortest Path Simple"
 msgstr "Simpler kürzester Weg"
 
+#: strings.js:4
+msgid "Calculates the shortest path visiting the given points in the order they are supplied"
+msgstr "Berechnet den kürzesten Weg der alle gegebenen Punkte in der Reihenfolge besucht"
+
+#: strings.js:5
+msgid "Traveling Salesman"
+msgstr "Handlungsreisender"
+
+#: strings.js:6
+msgid "Calculates a short tour visiting each of the supplied points"
+msgstr "Berechnet eine kurze Tour die alle gegebenen Punkte besucht"
+
+#: strings.js:7
+msgid "Constrained Shortest Path"
+msgstr "Eingeschränkt Kürzester Weg"
+
+#: strings.js:8
+msgid "Calculates, if possible, a short route between the two supplied points, that climbs less than the supplied maximum altitude over it's length"
+msgstr "Berechnet, wenn möglich, einen kurzen Weg zwischen den zwei gegebenen Punkten, der weniger Höhenunterschied als angegeben hat"
+
+#: strings.js:9
+msgid "Maximum Altitude Difference"
+msgstr "Maximaler Höhenunterschied"
+
+#: strings.js:10
+msgid "The maximum altitude difference over the path"
+msgstr "Der maximale Höhenunterschied auf dem Weg"
+
+#: strings.js:12
+msgid "Distance"
+msgstr "Distanz"
+
+#: strings.js:13
+msgid "Time"
+msgstr "Zeit"
+
+#: strings.js:14
+msgid "Message"
+msgstr "Meldung"
+
+#: strings.js:15
+msgid "Altitude"
+msgstr "Höhenunterschied"
+
 #: views/billing.js:56
 msgid "Loading billing data"
 msgstr "Rechnungsdaten werden geladen"
@@ -419,6 +475,10 @@ msgstr "Tabellendaten werden gelanden"
 #: views/admin.js:226
 msgid "Do you really want to delete the user: "
 msgstr "Wollen sie diesen Benutzer wirklich löschen:"
+
+#: views/data.js:171
+msgid "Data"
+msgstr "Daten"
 
 #: views/imexport.js:52
 msgid "No file specified"
@@ -506,10 +566,6 @@ msgstr "Nicht genug Punkte definiert."
 msgid "Too much points defined."
 msgstr "Zu viele Punkte definiert."
 
-#: views/sidebar.js:107
-msgid "Waiting for response from server ..."
-msgstr "Warte auf Antwort vom Server ..."
-
 #: views/topbar.js:54
 msgid "Couldn't find the spot"
 msgstr "Spot konnte nicht gefunden werden"
@@ -541,17 +597,11 @@ msgstr "Der Benutzer wurde erfolgreich aktualisiert"
 #~ msgid "Position"
 #~ msgstr "Position"
 
-#~ msgid "Distance"
-#~ msgstr "Distanz"
-
 #~ msgid "APX"
 #~ msgstr "APX"
 
 #~ msgid "is Paid"
 #~ msgstr "Bezahlt"
-
-#~ msgid "Data"
-#~ msgstr "Daten"
 
 #~ msgid "No points defined"
 #~ msgstr "Keine Punkte definiert"

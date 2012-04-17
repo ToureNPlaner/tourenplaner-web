@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-17 11:03+0200\n"
+"POT-Creation-Date: 2012-04-17 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,18 @@ msgstr ""
 
 #: map.contextmenu.js:88
 msgid "Set as Endmarker"
+msgstr ""
+
+#: map.js:55
+msgid ""
+"Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank"
+"\">MapQuest</a> &#8212; Map data &copy; <a href=\"http://openstreetmap.org"
+"\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/"
+"licenses/by-sa/2.0/\">CC-BY-SA</a>"
+msgstr ""
+
+#: map.js:76 views/sidebar.js:107
+msgid "Waiting for response from server ..."
 msgstr ""
 
 #: router.js:39
@@ -159,7 +171,7 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: templates.js:62
+#: templates.js:62 views/data.js:41 views/data.js:161
 msgid "No point selected!"
 msgstr ""
 
@@ -179,7 +191,7 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: templates.js:89
+#: templates.js:89 strings.js:11
 msgid "Routeinfos"
 msgstr ""
 
@@ -371,6 +383,54 @@ msgstr ""
 msgid "Shortest Path Simple"
 msgstr ""
 
+#: strings.js:4
+msgid ""
+"Calculates the shortest path visiting the given points in the order they are "
+"supplied"
+msgstr ""
+
+#: strings.js:5
+msgid "Traveling Salesman"
+msgstr ""
+
+#: strings.js:6
+msgid "Calculates a short tour visiting each of the supplied points"
+msgstr ""
+
+#: strings.js:7
+msgid "Constrained Shortest Path"
+msgstr ""
+
+#: strings.js:8
+msgid ""
+"Calculates, if possible, a short route between the two supplied points, that "
+"climbs less than the supplied maximum altitude over it's length"
+msgstr ""
+
+#: strings.js:9
+msgid "Maximum Altitude Difference"
+msgstr ""
+
+#: strings.js:10
+msgid "The maximum altitude difference over the path"
+msgstr ""
+
+#: strings.js:12
+msgid "Distance"
+msgstr ""
+
+#: strings.js:13
+msgid "Time"
+msgstr ""
+
+#: strings.js:14
+msgid "Message"
+msgstr ""
+
+#: strings.js:15
+msgid "Altitude"
+msgstr ""
+
 #: views/billing.js:56
 msgid "Loading billing data"
 msgstr ""
@@ -381,6 +441,10 @@ msgstr ""
 
 #: views/admin.js:226
 msgid "Do you really want to delete the user: "
+msgstr ""
+
+#: views/data.js:171
+msgid "Data"
 msgstr ""
 
 #: views/imexport.js:52
@@ -460,10 +524,6 @@ msgstr ""
 
 #: views/sidebar.js:104
 msgid "Too much points defined."
-msgstr ""
-
-#: views/sidebar.js:107
-msgid "Waiting for response from server ..."
 msgstr ""
 
 #: views/topbar.js:54
