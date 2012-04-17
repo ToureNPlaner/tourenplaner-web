@@ -24,7 +24,7 @@ window.MapView = Backbone.View.extend({
         mapObject.refresh();
 
         // Move the attribution stuff to a readable position
-        $('.olControlAttribution').css({
+        $('.leaflet-control-container .leaflet-bottom.leaflet-right').css({
             right: '5px',
             top: '5px'
         });
