@@ -21,7 +21,6 @@ window.MarkView = Backbone.View.extend({
 
     render: function () {
         this.$el.html(this.getTemplate());
-        $('#marks').append(this.el);
 
         this.$('a.view').click(_.bind(this.onClick, this));
         this.model.bind('change:name', _.bind(this.onNameChange, this));

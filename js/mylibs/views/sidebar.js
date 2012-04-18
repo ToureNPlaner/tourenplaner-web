@@ -70,7 +70,6 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onListReset: function () {
-        log('List reset!');
         this.marks = [];
 
         if (window.markList.length === 0) {
@@ -79,7 +78,7 @@ window.SidebarView = Backbone.View.extend({
         } else {
             for (var i = 0; i < window.markList.length; ++i) {
                 var model = window.markList.at(i);
-                var view = new MarkView({model: model, id: 'mark_' + model.cid});
+                var view = new MarkView({model: model, id: 'mark_' + model.cid}).render();
                 model.set({view: view});
                 this.marks.push(view);
             }
@@ -166,6 +165,6 @@ window.SidebarView = Backbone.View.extend({
 
         this.$('#marks').html('');
         for (var i in this.marks)
-            this.marks[i].render();
+            this.$('#marks').append(this.marks[i].el);
     }
 });
