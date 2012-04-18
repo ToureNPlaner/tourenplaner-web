@@ -70,6 +70,7 @@ window.SidebarView = Backbone.View.extend({
     },
 
     onListReset: function () {
+        log('List reset!');
         this.marks = [];
 
         if (window.markList.length === 0) {
@@ -117,8 +118,9 @@ window.SidebarView = Backbone.View.extend({
                                 window.markList.moveMark(window.markList.at(pos), i);
                             }
                         }
+                        window.markList.sort();
                         window.map.drawRoute(text);
-                        if (!_.isUndefined(text.requestid))
+                        if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid)) && parseInt(text.requestid) > 0)
                             window.app.navigate('route/' + text.requestid);
                     }
                     loadingView.remove();

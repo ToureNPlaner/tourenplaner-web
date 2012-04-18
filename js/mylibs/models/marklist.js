@@ -71,13 +71,9 @@ window.MarkList = Backbone.Collection.extend({
     },
 
     moveMark: function (mark, pos) {
-        if (mark != this.at(pos)) {
-            this.deleteMark(mark);
-            mark.set({position: pos});
+        if (mark.get('position') != pos) {
             this._moveAllMarks(pos, 1);
-            this.add(mark, {
-                at: pos
-            });
+            mark.set({position: pos}, {silent: true});
         }
     },
 
@@ -135,6 +131,6 @@ window.MarkList = Backbone.Collection.extend({
      */
     _moveAllMarks: function (from, direction) {
         for (var i = from; i < this.length; ++i)
-            this.at(i).set({position: this.at(i).get('position') + 1 * direction});
+            this.at(i).set({position: this.at(i).get('position') + 1 * direction}, {silent: true});
     }
 });

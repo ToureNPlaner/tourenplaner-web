@@ -24,13 +24,13 @@ window.MarkView = Backbone.View.extend({
         $('#marks').append(this.el);
 
         this.$('a.view').click(_.bind(this.onClick, this));
-        this.model.bind('change:position', _.bind(this.onPositionChange, this));
         this.model.bind('change:name', _.bind(this.onNameChange, this));
 
         return this;
     },
 
     remove: function () {
+        this.model.unbind('change:name', _.bind(this.onNameChange, this));
         this.$el.remove();
     },
 
@@ -49,10 +49,6 @@ window.MarkView = Backbone.View.extend({
 
     onClick: function () {
         window.body.main.data.showMarker(this.model);
-    },
-
-    onPositionChange: function () {
-        this.$el.html(this.getTemplate());
     },
 
     onNameChange: function () {
