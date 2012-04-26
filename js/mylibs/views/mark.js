@@ -24,6 +24,7 @@ window.MarkView = Backbone.View.extend({
 
         this.$('a.view').click(_.bind(this.onClick, this));
         this.model.bind('change:name', _.bind(this.onNameChange, this));
+        this.model.bind('change:position', _.bind(this.onPositionChange, this));
 
         return this;
     },
@@ -33,16 +34,19 @@ window.MarkView = Backbone.View.extend({
         this.$el.remove();
     },
 
-    getTemplate: function () {
-        var position = '',
-            sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;
+    getPosition: function () {
+        var sourceIsTarget = window.body.main.algview.getSelectedAlgorithm().details.sourceistarget;    
         if (!sourceIsTarget && this.model.get('position') === 0)
-            position = '(' + $._('Start') + ')';
+            return ' (' + $._('Start') + ')';
         else if (!sourceIsTarget && this.model.get('position') == window.markList.length - 1)
-            position = '(' + $._('Target') + ')';
+            return ' (' + $._('Target') + ')';
         else if (sourceIsTarget && this.model.get('position') === 0)
-            position = '(' + $._('Start/Target') + ')';
+            return ' (' + $._('Start/Target') + ')';
+        return '';
+    },
 
+    getTemplate: function () {
+        var position = this.getPosition();
         return templates.markView({cid: this.model.cid, name: this.name, position: position});
     },
 
@@ -52,5 +56,18 @@ window.MarkView = Backbone.View.extend({
 
     onNameChange: function () {
         this.$('a.view').html(this.model.get('name'));
+    },
+
+    onPositionChange: function (model, pos) {
+        var old = model.previous('position');
+        var old_html = this.$el.contents()[1] || "";
+
+        if (old != pos && (pos == 0 || pos == window.markList.length - 1 || (_.isString(old_html) && !_.isEmpty(old_html)))) {
+            log("position change", old, "to", pos);
+            var position = this.getPosition();
+
+            this.$el.contents().filter(function() { return this.nodeType == 3; }).remove();
+            this.$el.append(position);
+        }
     }
 });

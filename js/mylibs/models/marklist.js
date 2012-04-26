@@ -14,8 +14,7 @@ window.MarkList = Backbone.Collection.extend({
             mark.set({position: 0});
             this.add(mark);
         } else {
-            for (var i = 0; i < mark.get('position'); ++i)
-                this.at(i).set({position: this.at(i).get('position') + 1});
+            this._moveAllMarks(0, 1);
             mark.set({position: 0});
             this.sort();
         }
@@ -70,10 +69,11 @@ window.MarkList = Backbone.Collection.extend({
         return this.indexOf(mark);
     },
 
-    moveMark: function (mark, pos) {
+    moveMark: function (mark, pos, opt) {
         if (mark.get('position') != pos) {
-            this._moveAllMarks(pos, 1);
-            mark.set({position: pos}, {silent: true});
+            opt = opt || {};
+            this._moveAllMarks(pos, 1, opt);
+            mark.set({position: pos}, opt);
         }
     },
 
@@ -129,8 +129,9 @@ window.MarkList = Backbone.Collection.extend({
      * @param from The starting index
      * @param direction -1 or 1
      */
-    _moveAllMarks: function (from, direction) {
+    _moveAllMarks: function (from, direction, opt) {
+        opt = opt || {};
         for (var i = from; i < this.length; ++i)
-            this.at(i).set({position: this.at(i).get('position') + 1 * direction}, {silent: true});
+            this.at(i).set({position: this.at(i).get('position') + 1 * direction}, opt);
     }
 });

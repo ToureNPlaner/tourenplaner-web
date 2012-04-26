@@ -113,9 +113,8 @@ window.SidebarView = Backbone.View.extend({
                     if (success) {
                         for (var i = 0; i < text.points.length; i++) {
                             var pos = text.points[i].position;
-                            if (pos < window.markList.length) {
-                                window.markList.moveMark(window.markList.at(pos), i);
-                            }
+                            if (pos < window.markList.length && pos != i)
+                                window.markList.at(pos).set({position: i});
                         }
                         window.markList.sort();
                         window.map.drawRoute(text);
