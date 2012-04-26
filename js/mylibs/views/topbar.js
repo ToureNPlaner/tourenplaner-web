@@ -23,7 +23,7 @@ window.TopbarView = Backbone.View.extend({
     },
 
     hideNavigation: function () {
-        this.$('ul').hide();
+        this.$('ul.private-server').hide();
     },
 
     hideDropdown: function () {

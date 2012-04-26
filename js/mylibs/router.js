@@ -5,17 +5,18 @@ window.Router = Backbone.Router.extend({
 
     /** Maps routes to functions */
     routes: {
-        "login":           "login",            // #login
-        "logout":          "logout",           // #logout
-        "register":        "register",         // #register
-        "settings":        "settings",         // #settings
-        "import":          "import",           // #import
-        "admin":           "admin",            // #admin
-        "admin/user":      "adminNewUser",     // #admin/user
-        "admin/user/:id":  "adminEditUser",    // #admin/user/42
-        "billing":         "billing",          // #billing
-        "billing/user/:id":"billing",          // #billing/42
-        "route/:id":       "request"           // #route/42
+        "about":            "about",            // #about
+        "login":            "login",            // #login
+        "logout":           "logout",           // #logout
+        "register":         "register",         // #register
+        "settings":         "settings",         // #settings
+        "import":           "import",           // #import
+        "admin":            "admin",            // #admin
+        "admin/user":       "adminNewUser",     // #admin/user
+        "admin/user/:id":   "adminEditUser",    // #admin/user/42
+        "billing":          "billing",          // #billing
+        "billing/user/:id": "billing",          // #billing/42
+        "route/:id":        "request"           // #route/42
     },
 
     /**
@@ -47,6 +48,10 @@ window.Router = Backbone.Router.extend({
             }
             loadingView.remove();
         });
+    },
+
+    about: function () {
+        new AboutView().render();
     },
 
     /**

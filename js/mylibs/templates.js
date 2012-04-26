@@ -32,6 +32,7 @@ templates.topbarView = '<div class="fill">\
                                   </ul>\
                                 </li>\
                               </ul>\
+                              <ul class="nav secondary-nav"><li><a href="#about">' + $._('About') + '</a></li></ul>\
                             </div>\
                         </div>';
 
@@ -131,6 +132,17 @@ templates.algView = Handlebars.compile(templates.algView);
 templates.markView = '<a href="#" class="view">{{name}}</a> {{position}}';
 templates.markView = Handlebars.compile(templates.markView);
 
+templates.aboutView = '<div class="modal-header">\
+                        <a href="#" class="close">x</a>\
+                        <h3>' + $._('About') + '</h3>\
+                      </div>\
+                      <div class="modal-body">\
+                        ToureNPlaner was developed at the University of Stuttgart as part of a "Studienprojekt".\
+                      </div>\
+                      <div class="modal-footer">\
+                        <a href="#" class="btn primary">' + $._('Close') + '</a>\
+                      </div>';
+
 templates.loginView = '<div class="modal-header">\
                         <h3>' + $._('Login') + '</h3>\
                        </div>\
@@ -215,7 +227,6 @@ templates.registerView = '  <div class="modal-header">\
                               <a href="#" class="btn secondary cancel">' + $._('Cancel') + '</a>\
                               <a href="#register" class="btn primary register">' + $._('Register') + '</a>\
                             </div>';
-
 
 templates.adminView =  '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
