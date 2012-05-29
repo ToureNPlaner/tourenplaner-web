@@ -18,7 +18,8 @@ window.RouteOverlay = Backbone.View.extend({
 			if (i === "distance" || i === "altitude") val = val / 1000 + " km"
 			if (i === "time") val = Math.floor(val / 3600) + " h " + Math.floor((val - (Math.floor(val / 3600) * 3600)) / 60) + " min";
 			i = i.charAt(0).toUpperCase() + i.slice(1);
-			html += templates.routeOverlayAttribute({name: $._(i), value: val});
+			if (i !== "Time") // temporally skip time; remove this line to display time again
+				html += templates.routeOverlayAttribute({name: $._(i), value: val});
 		});
 
 		this.$el.html(html);
