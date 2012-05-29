@@ -1,6 +1,6 @@
 $(function() {
     window.api = new Api({
-        server: "gerbera.informatik.uni-stuttgart.de",
+        server: "tourenplaner.informatik.uni-stuttgart.de",
         port: 80
     });
 
