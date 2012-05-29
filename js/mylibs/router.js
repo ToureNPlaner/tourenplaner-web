@@ -46,6 +46,8 @@ window.Router = Backbone.Router.extend({
             } else if (!that.user.isLoggedIn()) {
                 that.navigate('login', {trigger: true});
             }
+            // set shortest path to default
+            window.algview.setSelectedAlgorithm('sp');
             loadingView.remove();
         });
     },
