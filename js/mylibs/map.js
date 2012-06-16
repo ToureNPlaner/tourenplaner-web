@@ -218,8 +218,26 @@ _.extend(window.Map.prototype, {
             // add segment to route list
             this.routeFeature.push(singleRouteFeature);
         }
-        this.map.fitBounds(new L.LatLngBounds(allPointList));
+        var latlngBounds = new L.LatLngBounds(allPointList);
 
+        var zoom = this.map.getBoundsZoom(latlngBounds);
+        // generate margin around the route
+        var diff = 100; // offset of route to map border
+        var north = latlngBounds.getNorthEast().lat;
+        var east = latlngBounds.getNorthEast().lng;
+        var south = latlngBounds.getSouthWest().lat;
+        var west = latlngBounds.getSouthWest().lng;
+        var northEast = this.map.project(new L.LatLng(north, east), zoom);
+        var southWest = this.map.project(new L.LatLng(south, west), zoom);
+        northEast.x = northEast.x + diff;
+        northEast.y = northEast.y - diff;
+        southWest.x = southWest.x - diff;
+        southWest.y = southWest.y + diff;
+        var unproject1 = this.map.unproject(new L.Point(northEast.x, northEast.y), zoom);
+        var unproject2 = this.map.unproject(new L.Point(southWest.x, southWest.y), zoom);
+        this.map.fitBounds(new L.LatLngBounds(unproject1, unproject2));
+
+        // this info about route (e.g. distance)
         this.displayRouteInfo();
     },
 
