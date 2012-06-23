@@ -117,7 +117,7 @@ window.SidebarView = Backbone.View.extend({
                                 window.markList.at(pos).set({position: i});
                         }
                         window.markList.sort();
-                        window.map.drawRoute(text);
+                        window.map.drawRoute(text, true);
                         if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid)) && parseInt(text.requestid) > 0)
                             window.app.navigate('route/' + text.requestid);
                     }

@@ -64,7 +64,7 @@ window.ImExportView = Backbone.View.extend({
                     if (!_.isEmpty(data.marks))
                         window.markList.fromJSON(data.marks);
                     if (!_.isEmpty(data.route))
-                        window.map.drawRoute(data.route);
+                        window.map.drawRoute(data.route, true);
 
                     dialog.remove();
                 }

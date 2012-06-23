@@ -66,18 +66,18 @@ _.extend(window.Map.prototype, {
         e.target.mark.set({
             lonlat: e.target.getLatLng()
         }, {silent: true});
+        window.api.abort();
         e.target.mark.findNearestNeighbour();
 
         var alg = window.algview.getSelectedAlgorithm().urlsuffix;
         if (!_.isUndefined(alg) && !_.isEmpty(alg) && 
                 (_.isUndefined(window.algview.getSelectedAlgorithm().details.minpoints) || window.markList.length >= window.algview.getSelectedAlgorithm().details.minpoints) &&
                 (_.isUndefined(window.algview.getSelectedAlgorithm().details.maxpoints) || window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints)) {
-
-            loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             
             var jsonObj = {
                 alg: window.algview.$('input[@name=alg]:checked').val(),
                 points: window.markList.toJSON(),
+                silent: true,
                 callback: function (text, success) {
                     if (success) {
                         for (var i = 0; i < text.points.length; i++) {
@@ -86,11 +86,10 @@ _.extend(window.Map.prototype, {
                                 window.markList.moveMark(window.markList.at(pos), i);
                         }
 
-                        window.map.drawRoute(text);
+                        window.map.drawRoute(text, false);
                         if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid)) && parseInt(text.requestid) > 0)
                             window.app.navigate('route/' + text.requestid);
                     }
-                    loadingView.remove();
                 }
             };
 
@@ -102,6 +101,45 @@ _.extend(window.Map.prototype, {
             window.api.alg(jsonObj);
         }
     },
+
+    onDrag: function(e) {
+        e.target.mark.set({
+            lonlat: e.target.getLatLng()
+        }, {silent: true});
+
+        var alg = window.algview.getSelectedAlgorithm().urlsuffix;
+        if (!_.isUndefined(alg) && !_.isEmpty(alg) && alg === "sp" &&
+                (_.isUndefined(window.algview.getSelectedAlgorithm().details.minpoints) || window.markList.length >= window.algview.getSelectedAlgorithm().details.minpoints) &&
+                (_.isUndefined(window.algview.getSelectedAlgorithm().details.maxpoints) || window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints)) {
+            
+            var jsonObj = {
+                alg: window.algview.$('input[@name=alg]:checked').val(),
+                points: window.markList.toJSON(),
+                silent: true,
+                callback: function (text, success) {
+                    if (success) {
+                        for (var i = 0; i < text.points.length; i++) {
+                            var pos = text.points[i].position;
+                            if (pos < window.markList.length)
+                                window.markList.moveMark(window.markList.at(pos), i);
+                        }
+
+                        window.map.drawRoute(text, false);
+                        if (!_.isUndefined(text.requestid) && !_.isNaN(parseInt(text.requestid)) && parseInt(text.requestid) > 0)
+                            window.app.navigate('route/' + text.requestid);
+                    }
+                }
+            };
+
+            // if constraints are available, then add them to request object
+            var constraints = window.algview.getConstraintSettings();
+            if (constraints != null)
+                jsonObj['constraints'] = constraints;
+
+            window.api.abort();
+            window.api.alg(jsonObj);
+        }
+    },    
 
     /**
      * Returns the marker at the given point.
@@ -174,6 +212,7 @@ _.extend(window.Map.prototype, {
             var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});
             marker.mark = mark;
             marker.on("dragend", this.onDragComplete, this);
+            marker.on("drag", this.onDrag, this);
             marker.on("click", function (e) {
                 // Show the marker in the data view
                 window.body.main.data.showMarker(e.target.mark);
@@ -192,7 +231,7 @@ _.extend(window.Map.prototype, {
      * 
      * @param vertexString List of vertices
      */
-    drawRoute: function (vertexString) {
+    drawRoute: function (vertexString, zoom) {
         // exit, when there is nothing to parse
         if (_.isNull(vertexString) || _.isUndefined(vertexString) || vertexString.length === 0) 
             return;
@@ -218,24 +257,27 @@ _.extend(window.Map.prototype, {
             // add segment to route list
             this.routeFeature.push(singleRouteFeature);
         }
-        var latlngBounds = new L.LatLngBounds(allPointList);
 
-        var zoom = this.map.getBoundsZoom(latlngBounds);
-        // generate margin around the route
-        var diff = 100; // offset of route to map border
-        var north = latlngBounds.getNorthEast().lat;
-        var east = latlngBounds.getNorthEast().lng;
-        var south = latlngBounds.getSouthWest().lat;
-        var west = latlngBounds.getSouthWest().lng;
-        var northEast = this.map.project(new L.LatLng(north, east), zoom);
-        var southWest = this.map.project(new L.LatLng(south, west), zoom);
-        northEast.x = northEast.x + diff;
-        northEast.y = northEast.y - diff;
-        southWest.x = southWest.x - diff;
-        southWest.y = southWest.y + diff;
-        var unproject1 = this.map.unproject(new L.Point(northEast.x, northEast.y), zoom);
-        var unproject2 = this.map.unproject(new L.Point(southWest.x, southWest.y), zoom);
-        this.map.fitBounds(new L.LatLngBounds(unproject1, unproject2));
+        if(zoom || _.isUndefined(zoom)){
+            var latlngBounds = new L.LatLngBounds(allPointList);
+
+            var level = this.map.getBoundsZoom(latlngBounds);
+            // generate margin around the route
+            var diff = 100; // offset of route to map border
+            var north = latlngBounds.getNorthEast().lat;
+            var east = latlngBounds.getNorthEast().lng;
+            var south = latlngBounds.getSouthWest().lat;
+            var west = latlngBounds.getSouthWest().lng;
+            var northEast = this.map.project(new L.LatLng(north, east), level);
+            var southWest = this.map.project(new L.LatLng(south, west), level);
+            northEast.x = northEast.x + diff;
+            northEast.y = northEast.y - diff;
+            southWest.x = southWest.x - diff;
+            southWest.y = southWest.y + diff;
+            var unproject1 = this.map.unproject(new L.Point(northEast.x, northEast.y), level);
+            var unproject2 = this.map.unproject(new L.Point(southWest.x, southWest.y), level);
+            this.map.fitBounds(new L.LatLngBounds(unproject1, unproject2));
+        }
 
         // this info about route (e.g. distance)
         this.displayRouteInfo();
@@ -247,7 +289,7 @@ _.extend(window.Map.prototype, {
      * @param obj A route object returned by the server
      */
     drawMarkersAndRoute: function(obj) {
-        this.drawRoute(obj);
+        this.drawRoute(obj, true);
         window.markList.deleteAllMarks();
 
         for (var i in obj.points) {

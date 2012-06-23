@@ -66,12 +66,17 @@ _.extend(window.Api.prototype, {
      * @return False if the reqData object was incorrect
      */
     send : function (reqData) {
+        if(_.isUndefined(this.xhr)) 
+            this.xhr = [];
+
         var url = "", event = {};
         if (_.isUndefined(reqData) || _.isNull(reqData)) return false;
         if (_.isUndefined(reqData.suffix) || !reqData.suffix) return false;
         if (_.isNull(reqData.process) || _.isUndefined(reqData.process)) reqData.process = true;
         reqData.type = reqData.type || 'GET';
         reqData.request = reqData.request || {};
+        reqData.silent = reqData.silent || false;
+        if(reqData.suffix === "algnns") reqData.silent = true; // should be done by caller-method
 
         if (!_.isNull(this.get('server')) && !_.isUndefined(this.get('server'))) {
             url +=  (this.get('ssl') ? 'https://' : 'http://') +
@@ -90,7 +95,7 @@ _.extend(window.Api.prototype, {
         // performs a callback, successful or not
         var headers = this.get('authRequired') && !_.isEmpty(this.get('authAsBase64')) ? { Authorization: this.get('realm') + ' ' + this.get('authAsBase64')} : {};
         var that = this;
-        this.xhr = $.ajax(url, {
+        var xhr = $.ajax(url, {
             cache: false,
             type: reqData.type,
             accepts: 'json',
@@ -127,7 +132,6 @@ _.extend(window.Api.prototype, {
                 }
 
                 event.trigger('request', text, false);
-
                 // Also display an error message for the user
                 if (!reqData.silent && (_.isUndefined(window.QUnit) && MessageView)) {
                     var message = text;
@@ -136,10 +140,12 @@ _.extend(window.Api.prototype, {
                     new MessageView({title: title, message: message}).render();
                 }
             },
-            complete: function (){
-                that.xhr = null;
-            }
+            complete: function (jqXHR, textStatus){
+                var i = that.xhr.indexOf(this);
+                that.xhr.splice(i, 1);
+            } 
         });
+        this.xhr.push(xhr);
 
         return true;
     },
@@ -350,9 +356,11 @@ _.extend(window.Api.prototype, {
     nearestNeighbour : function (args) {
         if (!args || !args.points)
             return false;
+        var s = true;
         this.send({
             suffix : 'algnns',
             type : 'POST',
+            silent: true,
             request : {
                 version: 1,
                 points: _.isArray(args.points) ? args.points : [args.points]
@@ -401,6 +409,7 @@ _.extend(window.Api.prototype, {
             suffix : 'alg' + args.alg,
             request : thisrequest,
             process: false,
+            silent: args.silent || false,
             callback : _.isFunction(args.callback) ? args.callback : null
         });
 
@@ -448,12 +457,13 @@ _.extend(window.Api.prototype, {
     },
 
     /**
-     * Aborts actual request
+     * Aborts all actual request
      */
     abort : function (){
-        if(!_.isNull(this.xhr)){
-            this.xhr.abort();
-            this.xhr = null;
+        while (this.xhr.length > 0) {
+            this.xhr[0].abort();
+            this.xhr[0] = null;
+            this.xhr.shift();
         }
     }
 });
