@@ -16,7 +16,8 @@ window.Router = Backbone.Router.extend({
         "admin/user/:id":   "adminEditUser",    // #admin/user/42
         "billing":          "billing",          // #billing
         "billing/user/:id": "billing",          // #billing/42
-        "route/:id":        "request"           // #route/42
+        "route/:id":        "request",          // #route/42
+        "locate/:q":        "locate"            // #locate/Universitätsstr.38,Stuttgart
     },
 
     /**
@@ -186,6 +187,33 @@ window.Router = Backbone.Router.extend({
                 }
                 this.loadingView.remove();
             }
+        });
+    },
+
+    /**
+     * tries to find a spot.
+     *
+     * @param q search string
+     */
+    locate: function(q){
+        if (!window.nomApi)
+            window.nomApi = new Nominatim();
+
+        window.nomApi.search(q, function (success, data) {
+            var spot = null;
+            for (var i in data) {
+                if (data[i]["class"] == "boundary")
+                    continue;
+                spot = data[i];
+                break;
+            }
+
+            if (_.isNull(spot)) {
+                new MessageView({title: $._("Error"), message: $._("Couldn't find the spot")}).render();
+                return;
+            }
+
+            window.map.setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
         });
     },
 
