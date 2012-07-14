@@ -137,7 +137,8 @@ templates.aboutView = '<div class="modal-header">\
                         <h3>' + $._('About') + '</h3>\
                       </div>\
                       <div class="modal-body">\
-                        ToureNPlaner was developed at the University of Stuttgart as part of a "Studienprojekt".\
+                        ToureNPlaner was developed at the University of Stuttgart as part of a "Studienprojekt".<br />\
+                        Visit our project page on <a href="http://tourenplaner.github.com/" target="_blank">GitHub</a>.\
                       </div>\
                       <div class="modal-footer">\
                         <a href="#" class="btn primary">' + $._('Close') + '</a>\
