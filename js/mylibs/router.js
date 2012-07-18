@@ -199,6 +199,8 @@ window.Router = Backbone.Router.extend({
         if (!window.nomApi)
             window.nomApi = new Nominatim();
 
+        q = unescape(q);
+
         window.nomApi.search(q, function (success, data) {
             var spot = null;
             for (var i in data) {
