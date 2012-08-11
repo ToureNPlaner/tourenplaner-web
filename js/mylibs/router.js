@@ -216,6 +216,13 @@ window.Router = Backbone.Router.extend({
             }
 
             window.map.setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
+
+            // add marker 
+            var mark = new Mark({
+                lonlat: new L.LatLng(spot.lat, spot.lon)
+            });
+            mark.findNearestNeighbour();
+            window.markList.setTargetMark(mark);
         });
     },
 
