@@ -1,6 +1,7 @@
 $(function() {
     window.api = new Api({
-        server: null
+        server: "tourenplaner.informatik.uni-stuttgart.de",
+        port: 80
     });
 
     window.server = new ServerInfo();
