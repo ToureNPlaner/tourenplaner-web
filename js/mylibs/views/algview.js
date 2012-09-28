@@ -24,7 +24,7 @@ window.AlgView = Backbone.View.extend({
 
     getSelectedAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
-        var selected = this.$('input[@name=alg]:checked').val();
+        var selected = this.$('input[name=alg]:checked').val();
 
         for (var i = 0; i < algorithms.length; i++) {
             if (algorithms[i].urlsuffix == selected) {
@@ -37,7 +37,7 @@ window.AlgView = Backbone.View.extend({
 
     getConstraintSettings: function () {
         var algorithms = window.server.get('algorithms');
-        var algSuffix = this.$('input[@name=alg]:checked').val();
+        var algSuffix = this.$('input[name=alg]:checked').val();
 
         var currentAlg = null;
         // get algorithm with algSuffix
@@ -102,7 +102,7 @@ window.AlgView = Backbone.View.extend({
     onRefreshAlgorithm: function () {
         var algorithms = window.server.get('algorithms');
         if (!_.isUndefined(algorithms) && algorithms.length > 0) {
-            var suffix = this.$('input[@name=alg]:checked').val();
+            var suffix = this.$('input[name=alg]:checked').val();
             if (_.isUndefined(suffix)) {
                 suffix = algorithms[0].urlsuffix;
             }

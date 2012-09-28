@@ -107,7 +107,7 @@ window.SidebarView = Backbone.View.extend({
             loadingView = new LoadingView($._('Waiting for response from server ...')).render();
             
             var jsonObj = {
-                alg: window.algview.$('input[@name=alg]:checked').val(),
+                alg: window.algview.$('input[name=alg]:checked').val(),
                 points: window.markList.toJSON(),
                 callback: function (text, success) {
                     if (success) {

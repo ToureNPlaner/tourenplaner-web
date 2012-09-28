@@ -54,7 +54,7 @@ _.extend(window.Map.prototype, {
                 (_.isUndefined(window.algview.getSelectedAlgorithm().details.maxpoints) || window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints)) {
             
             var jsonObj = {
-                alg: window.algview.$('input[@name=alg]:checked').val(),
+                alg: window.algview.$('input[name=alg]:checked').val(),
                 points: window.markList.toJSON(),
                 silent: true,
                 callback: function (text, success) {
@@ -92,7 +92,7 @@ _.extend(window.Map.prototype, {
                 (_.isUndefined(window.algview.getSelectedAlgorithm().details.maxpoints) || window.markList.length <= window.algview.getSelectedAlgorithm().details.maxpoints)) {
             
             var jsonObj = {
-                alg: window.algview.$('input[@name=alg]:checked').val(),
+                alg: window.algview.$('input[name=alg]:checked').val(),
                 points: window.markList.toJSON(),
                 silent: true,
                 callback: function (text, success) {
