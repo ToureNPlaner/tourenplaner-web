@@ -6,27 +6,6 @@ window.Map = function (divId) {
     this.divId = divId;
 };
 
-StartMarker = L.Icon.extend({
-    iconUrl: 'img/startmark.png',
-    shadowUrl: null,
-    iconSize: new L.Point(17, 26),
-    iconAnchor: new L.Point(8, 26)    
-});
-
-Marker = L.Icon.extend({
-    iconUrl: 'img/mark.png',
-    shadowUrl: null,
-    iconSize: new L.Point(17, 26),
-    iconAnchor: new L.Point(8, 26)    
-});
-
-TargetMarker = L.Icon.extend({
-    iconUrl: 'img/targetmark.png',
-    shadowUrl: null,
-    iconSize: new L.Point(17, 26),
-    iconAnchor: new L.Point(8, 26)    
-});
-
 _.extend(window.Map.prototype, {
     map: null,
     currentRouteString: null,
@@ -202,14 +181,28 @@ _.extend(window.Map.prototype, {
 
             var icon;
             if (i === 0) {
-                icon = new StartMarker();
+                icon = L.icon({
+                    iconUrl: 'img/startmark.png',
+                    iconSize: [17, 26],
+                    iconAnchor: [8, 26],
+                    shadowUrl: null
+                });
             } else if (!sourceIsTarget && i == markList.length - 1) {
-                icon = new TargetMarker();
+                icon = L.icon({
+                    iconUrl: 'img/targetmark.png',
+                    iconSize: [17, 26],
+                    iconAnchor: [8, 26],
+                    shadowUrl: null
+                });
             } else {
-                icon = new Marker();
+                icon = L.icon({
+                    iconUrl: 'img/mark.png',
+                    iconSize: [17, 26],
+                    iconAnchor: [8, 26],
+                    shadowUrl: null
+                });
             }
-
-            var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});
+            var marker = new L.Marker(new L.LatLng(mark.get("lonlat").lat, mark.get("lonlat").lng), {icon: icon, draggable: true});       
             marker.mark = mark;
             marker.on("dragend", this.onDragComplete, this);
             marker.on("drag", this.onDrag, this);
