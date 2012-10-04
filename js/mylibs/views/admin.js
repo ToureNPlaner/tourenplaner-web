@@ -6,6 +6,7 @@ window.AdminView = Backbone.View.extend({
     events: {
         "hidden": "remove",
         "click .cancel": "remove",
+        "click .close": "remove",
         "click .back": "onBack"
     },
 
@@ -148,8 +149,7 @@ window.AdminView = Backbone.View.extend({
     },
 
     remove: function () {
-        if (this.$el.modal(true).isShown)
-            this.$el.modal('hide');
+        this.$el.modal('hide');
         if (_.isFunction(this.options.remove))
             this.options.remove();
         this.$el.remove();
