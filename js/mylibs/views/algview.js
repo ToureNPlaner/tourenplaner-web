@@ -151,9 +151,8 @@ window.AlgView = Backbone.View.extend({
                             this.$('#pc_' + key).append(new Option(options[j], options[j]));
                         }
                     }
-                    this.$('#pc_' + key).twipsy({placement: 'right'});
+                    this.$('#pc_' + key).tooltip({placement: 'right'});
                 }
-                log("log");
                 window.body.main.sidebar.$('#selectedAlg').html(currentAlg.name);
                 window.markList.trigger('reset');
             }
