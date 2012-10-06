@@ -4,6 +4,7 @@ window.UserDialogView = Backbone.View.extend({
     className: 'modal',
     
     events: {
+        "click .modal-header a.close": "remove",
         "hidden": "remove"
     },
 
@@ -23,8 +24,7 @@ window.UserDialogView = Backbone.View.extend({
     },
 
     remove: function() {
-        if (this.$el.modal(true).isShown)
-            this.$el.modal('hide');
+        this.$el.modal('hide');
 
         this.userView.remove();
         this.$el.remove();

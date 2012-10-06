@@ -80,7 +80,7 @@ window.UserView = Backbone.View.extend({
     },
 
     remove: function () {
-        if (this.$el.modal(true).isShown)
+        //if (this.$el.modal(true).isShown)
             this.$el.modal('hide');
         if (_.isFunction(this.options.remove))
             this.options.remove();

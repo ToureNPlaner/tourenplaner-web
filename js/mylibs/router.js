@@ -97,7 +97,7 @@ window.Router = Backbone.Router.extend({
     /**
      * Display the im-/export view.
      */
-    "import": function() {
+    import: function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
             if (Modernizr.file) {
                 new ImExportView().render();

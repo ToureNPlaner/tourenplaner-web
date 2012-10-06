@@ -188,6 +188,7 @@ body {
   font-weight: normal;
   line-height: 18px;
   color: #404040;
+  overflow: hidden;
 }
 .container {
   width: 940px;
