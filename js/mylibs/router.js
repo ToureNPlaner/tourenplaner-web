@@ -99,12 +99,12 @@ window.Router = Backbone.Router.extend({
      */
     "import": function() {
         if (!window.server.isPublic() && this.user.isLoggedIn()) {
-            if (Modernizr.file) {
+            if (Modernizr.filereader) {
                 new ImExportView().render();
             } else {
                 new MessageView({
                     title: $._('Error!'),
-                    message: $._('Your browser doesn\'t support the HTML 5 File API.<br /> To use the Im-/Export functionality, please upgrade your browser.')
+                    message: $._('Your browser doesn\'t support the HTML 5 File API. To use the Im-/Export functionality, please upgrade your browser.')
                 }).render();
             }
         }
