@@ -7,7 +7,7 @@ window.ImExportView = Backbone.View.extend({
         "hidden": "remove",
         "click .modal-footer a.close": "onClose",
         "click .modal-header a.close": "onClose",
-        "click ul.tabs a": "onTabsChange",
+        "click ul.nav-tabs a": "onTabsChange",
         "click a.import": "onImport",
         "click a.export": "onExport" 
     },
@@ -21,7 +21,9 @@ window.ImExportView = Backbone.View.extend({
             keyboard: true
         });
 
-       return this;
+        $('#ieTab a:first').tab('show');
+
+        return this;
     },
 
     onClose: function () {
@@ -36,7 +38,7 @@ window.ImExportView = Backbone.View.extend({
         if ($(e.target).parent().hasClass('active'))
             return false;
 
-        this.$('ul.tabs li').each(function() {
+        this.$('ul.nav-tabs li').each(function() {
             $(this).toggleClass('active');
         });
 
