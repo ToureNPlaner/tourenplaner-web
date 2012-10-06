@@ -1,4 +1,4 @@
-@import "bootstrap-2.1.1.css";
+@import "bootstrap-1.4.0.css";
 @import "jquery-ui-1.8.23.custom.css";
 @import "jquery.contextMenu.css";
 
@@ -29,6 +29,7 @@
   float: left;
 }
 #loading .message {
+  font-weight: bold;
   line-height: 125px;
   margin-left: 50px;
   float: left;
@@ -39,7 +40,7 @@ div.popover {
 }
 
 #main {
-  margin-top: -1px;
+  margin-top: 40px;
 }
 #main #sidebar {
   float: left;
@@ -107,7 +108,7 @@ div.popover {
   margin-bottom: 3px;
 }
 #main #algview .close {
-  margin: 1px 1px;
+  margin: 10px 1px;
 }
 
 #main #map {

@@ -4,12 +4,11 @@ window.ImExportView = Backbone.View.extend({
     className: 'modal',
 
     events: {
-        "hidden": "remove",
-        "click .modal-footer a.close": "onClose",
-        "click .modal-header a.close": "onClose",
-        "click ul.tabs a": "onTabsChange",
-        "click a.import": "onImport",
-        "click a.export": "onExport" 
+       "hidden": "remove",
+       "click .modal-footer a.cancel": "remove",
+       "click ul.tabs a": "onTabsChange",
+       "click a.import": "onImport",
+       "click a.export": "onExport" 
     },
 
     render: function() {
@@ -24,12 +23,12 @@ window.ImExportView = Backbone.View.extend({
        return this;
     },
 
-    onClose: function () {
-        this.$el.modal('hide');
-    },
+    remove: function() {
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
 
-    remove: function () {
         this.$el.remove();
+        window.app.navigate('');   
     },
 
     onTabsChange: function(e) {

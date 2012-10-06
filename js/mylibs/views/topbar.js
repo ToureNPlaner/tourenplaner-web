@@ -1,7 +1,7 @@
 window.TopbarView = Backbone.View.extend({
 
     tagName: 'header',
-    className: 'navbar',
+    className: 'topbar',
 
     events: {
         "click a.menu": "showDropdown",

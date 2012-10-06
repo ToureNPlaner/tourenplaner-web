@@ -11,51 +11,45 @@ Handlebars.registerHelper('toKm', function(distance) {
 
 window.templates = window.templates || {};
 
-templates.topbarView = '<div class="navbar navbar-inverse navbar-static-top">\
-                          <div class="navbar-inner">\
-                            <div class="container-fluid">\
-                              <div class="pull-left">\
-                                <a class="brand" href="#">ToureNPlaner</a>\
-                                <img src="img/icon.png" class="icon">\
-                                <form class="pull-left navbar-search">\
-                                  <input type="search" class="search-query" placeholder="' + $._('Search') + '" />\
-                                </form>\
-                              </div>\
-                              <div class="pull-right nav-collapse">\
-                                <ul class="nav private-server">\
-                                  <li class="user"><a href="#" onclick="return false;"></a></li>\
-                                  <li class="dropdown">\
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">' + $._('Settings') + ' <b class="caret"></b></a>\
-                                    <ul class="dropdown-menu">\
-                                      <li><a href="#settings">' + $._('Profile') + '</a></li>\
-                                      <li><a href="#billing">' + $._('Billing') + '</a></li>\
-                                      <li><a href="#import">' + $._('Im-/Export') + '</a></li>\
-                                      <li class="admin"><a href="#admin">' + $._('Administration') + '</a></li>\
-                                      <li class="divider"></li>\
-                                      <li><a href="#logout">' + $._('Logout') + '</a></li>\
-                                    </ul>\
-                                  </li>\
-                                </ul>\
-                                <ul class="nav"><li><a href="#about">' + $._('About') + '</a></li></ul>\
-                              </div>\
+templates.topbarView = '<div class="fill">\
+                            <div class="container">\
+                              <img src="img/icon.png" class="icon">\
+                              <h3><a href="#">ToureNPlaner</a></h3>\
+                              <form>\
+                                <input type="search" placeholder="' + $._('Search') + '" />\
+                              </form>\
+                              <ul class="nav secondary-nav private-server">\
+                                <li class="user"><a href="#" onclick="return false;"></a></li>\
+                                <li class="menu">\
+                                  <a class="menu" href="#">' + $._('Settings') + '</a>\
+                                  <ul class="menu-dropdown">\
+                                    <li><a href="#settings">' + $._('Profile') + '</a></li>\
+                                    <li><a href="#billing">' + $._('Billing') + '</a></li>\
+                                    <li><a href="#import">' + $._('Im-/Export') + '</a></li>\
+                                    <li class="admin"><a href="#admin">' + $._('Administration') + '</a></li>\
+                                    <li class="divider"></li>\
+                                    <li><a href="#logout">' + $._('Logout') + '</a></li>\
+                                  </ul>\
+                                </li>\
+                              </ul>\
+                              <ul class="nav secondary-nav"><li><a href="#about">' + $._('About') + '</a></li></ul>\
                             </div>\
-                          </div>\
                         </div>';
 
 templates.sidebarView = '<div style="padding: 5px 0px;">\
                             <form name="route">\
                               <div class="container">\
-                                <h4>' + $._('Selected Algorithm') + ':</h4>\
+                                <h3>' + $._('Selected Algorithm') + ':</h3>\
                                 <a href="#" id="selectedAlg" class="showAlgs">' + $._('No algorithms') + ' </a>\
                               </div>\
                               <div style="border-bottom: 1px solid #CCC; padding: 5px 0;"></div>\
                               <div class="container">\
-                                <h4>' + $._('Points') + ': <a href="#" class="btn btn-small flip"><img src="img/arrow-switch.png" alt="' + $._('Switch order') + '" title="' + $._('Switch order') + '" /></a></h4>\
+                                <h3>' + $._('Points') + ': <a href="#" class="btn small secondary flip"><img src="img/arrow-switch.png" alt="' + $._('Switch order') + '" title="' + $._('Switch order') + '" /></a></h3>\
                                 <div id="marks">' + $._('No points defined!') + '</div>\
                               </div>\
                               <div class="container">\
-                                <a href="#" class="btn btn-primary send">' + $._('Calculate Route') + '</a>\
-                                <a href="#" class="btn clear">' + $._('Clear') + '</a>\
+                                <a href="#" class="btn primary send">' + $._('Calculate Route') + '</a>\
+                                <a href="#" class="btn secondary clear">' + $._('Clear') + '</a>\
                               </div>\
                             </form>\
                          </div>';
@@ -99,17 +93,15 @@ templates.routeOverlay = Handlebars.compile(templates.routeOverlay);
 templates.routeOverlayAttribute = '<div style="float: left"><div class="info"><b>{{name}}</b>: {{value}}</div>';
 templates.routeOverlayAttribute = Handlebars.compile(templates.routeOverlayAttribute);
 
-templates.algView =  '<h4>' + $._('Algorithms') + ':<a href="#" class="close">x</a></h4>\
+templates.algView =  '<h3>' + $._('Algorithms') + ':<a href="#" class="close">x</a></h3>\
                       <form>\
                         <div id="algorithms" class="clearfix">\
                           {{#each algorithms}}\
                             {{#unless this.details.hidden}}\
                               <div class="clearfix">\
-                                <label class="radio">\
-                                  <input type="radio" name="alg" id="{{urlsuffix}}" value="{{urlsuffix}}" {{#ifEquals ../../currentAlg.urlsuffix urlsuffix}}checked="checked"{{/ifEquals}} />\
-                                    {{name}}\
-                                </label>\
-                                <div class="algdescription">{{description}}</div>\
+                                <input type="radio" name="alg" id="{{urlsuffix}}" value="{{urlsuffix}}" {{#ifEquals ../../currentAlg.urlsuffix urlsuffix}}checked="checked"{{/ifEquals}} />\
+                                <label for="{{urlsuffix}}" target="{{urlsuffix}}"> {{name}}</a>\
+                                <br><div class="algdescription">{{description}}</div>\
                               </div>\
                             {{/unless}}\
                           {{/each}}\
@@ -117,7 +109,7 @@ templates.algView =  '<h4>' + $._('Algorithms') + ':<a href="#" class="close">x<
                         <div id="constraints">\
                           {{#if currentAlg.constraints}}\
                             <div class="bar">&nbsp;</div>\
-                            <h4>' + $._('Constraints') + ':</h4>\
+                            <h3>' + $._('Constraints') + ':</h3>\
                             {{#each currentAlg.constraints}}\
                               <div class="clearfix">\
                                 <label for="pc_{{name}}">{{name}}: </label>\
@@ -141,8 +133,8 @@ templates.markView = '<a href="#" class="view">{{name}}</a> {{position}}';
 templates.markView = Handlebars.compile(templates.markView);
 
 templates.aboutView = '<div class="modal-header">\
-                        <a href="#" class="close">&times;</a>\
-                        <h4>' + $._('About') + '</h4>\
+                        <a href="#" class="close">x</a>\
+                        <h3>' + $._('About') + '</h3>\
                       </div>\
                       <div class="modal-body">\
                         ToureNPlaner was developed at the University of Stuttgart as part of a "Studienprojekt".<br />\
@@ -153,7 +145,7 @@ templates.aboutView = '<div class="modal-header">\
                       </div>';
 
 templates.loginView = '<div class="modal-header">\
-                        <h4>' + $._('Login') + '</h4>\
+                        <h3>' + $._('Login') + '</h3>\
                        </div>\
                        <div class="modal-body">\
                         <div class="alert-message error error-empty">\
@@ -182,9 +174,9 @@ templates.loginView = '<div class="modal-header">\
                         <a href="#login" class="btn primary login">' + $._('Login') + '</a>\
                        </div>';
 
-templates.registerView = '<div class="modal-header">\
+templates.registerView = '  <div class="modal-header">\
                               <a href="#" class="close">x</a>\
-                              <h4>' + $._('Registration') + '</h4>\
+                              <h3>' + $._('Registration') + '</h3>\
                             </div>\
                             <div class="modal-body">\
                               <div class="alert-message error error-empty">\
@@ -239,7 +231,7 @@ templates.registerView = '<div class="modal-header">\
 
 templates.adminView =  '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
-                            <h4 class="title">' + $._('Administration') + '</h4>\
+                            <h3 class="title">' + $._('Administration') + '</h3>\
                         </div>\
                         <div class="modal-body">\
                             {{{content}}}\
@@ -346,14 +338,14 @@ templates.userView = Handlebars.compile(templates.userView);
 
 templates.userDialogView = '<div class="modal-header">\
                               <a href="#" class="close">x</a>\
-                              <h4 class="title">' + $._('Profile') + '</h4>\
+                              <h3 class="title">' + $._('Profile') + '</h3>\
                             </div>\
                             <div class="modal-body"></div>';
 
 // billing
 templates.billingView =  '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
-                            <h4 class="title">' + $._('Billing') + '</h4>\
+                            <h3 class="title">' + $._('Billing') + '</h3>\
                           </div>\
                           <div class="modal-body">\
                             {{#if admin}}\
@@ -398,7 +390,7 @@ templates.billingTableRowView = Handlebars.compile(templates.billingTableRowView
 
 templates.imexportView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
-                            <h4>' + $._('Im-/Export') + '</h4>\
+                            <h3>' + $._('Im-/Export') + '</h3>\
                           </div>\
                           <div class="modal-body">\
                             <ul class="tabs">\
@@ -416,7 +408,7 @@ templates.imexportView = '<div class="modal-header">\
                             </div>\
                           </div>\
                           <div class="modal-footer">\
-                            <a href="#" class="btn primary close">' + $._('Close') + '</a>\
+                            <a href="#" class="btn secondary cancel">' + $._('Close') + '</a>\
                           </div>';
 
 // pagination
@@ -434,7 +426,7 @@ templates.paginationView = Handlebars.compile(templates.paginationView);
 
 templates.messageView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
-                            <h4 class="title">{{title}}</h4>\
+                            <h3 class="title">{{title}}</h3>\
                          </div>\
                          <div class="modal-body">\
                           <div class="message">{{message}}</div>\
@@ -444,8 +436,10 @@ templates.messageView = '<div class="modal-header">\
                          </div>';
 templates.messageView = Handlebars.compile(templates.messageView);
 
-templates.loadingView = '<div class="modal-body">\
+templates.loadingView = '<div class="modal-header">\
                             <a href="#" class="close">x</a>\
+                         </div>\
+                         <div class="modal-body">\
                             <div class="loading"><img src="img/loading.gif" alt="Loading" title="Loading" /></div>\
                             <div class="message">{{message}}</div>\
                          </div>';

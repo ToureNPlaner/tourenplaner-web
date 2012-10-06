@@ -5,7 +5,6 @@ window.BillingView = Backbone.View.extend({
     events: {
         "hidden": "remove",
         "click .modal-footer a.cancel": "remove",
-        "click .modal-header a.close": "remove",
         "click #billingShowAll": "toggleShowAll"
     },
 
@@ -166,7 +165,8 @@ window.BillingView = Backbone.View.extend({
     },
 
     remove: function () {
-        this.$el.modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
         if (_.isFunction(this.options.remove))
             this.options.remove();
         this.$el.remove();

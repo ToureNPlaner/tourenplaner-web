@@ -101,7 +101,8 @@ window.MessageView = Backbone.View.extend({
      * Hide the dialog and remove the element.
      */
     remove: function () {
-        this.$el.modal('hide');
+        if (this.$el.modal(true).isShown)
+            this.$el.modal('hide');
 
         this.$el.remove();
     }

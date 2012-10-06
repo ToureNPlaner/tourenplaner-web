@@ -5,12 +5,10 @@ window.AboutView = Backbone.View.extend({
 
     events: {
         "click .modal-footer a": "onClose",
-        "click .modal-header a.close": "onClose",
         "hidden": "remove"
     },
 
     render: function () {
-
         this.$el.html(templates.aboutView);
         this.$el.modal({
             show: true,
