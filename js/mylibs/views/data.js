@@ -97,7 +97,7 @@ window.DataView = Backbone.View.extend({
                 this.$('#dataview #pc_' + key).val(initValue);
             }
 
-            this.$('#dataview #pc_' + key).tooltip({placement: 'left'});
+            this.$('#dataview #pc_' + key).twipsy({placement: 'left'});
             this.$('#dataview #pc_' + key).focus(function() {
                 that.$('#dataview #saveMarkAttributes').removeClass('disabled');
             });
