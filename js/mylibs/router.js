@@ -216,14 +216,23 @@ window.Router = Backbone.Router.extend({
             }
 
             window.map.setCenter({lon: spot.lon, lat: spot.lat}, spot.boundingbox);
-
+	    // Add Marker at current geolocation as start if available
+	    if(navigator.geolocation){
+		    navigator.geolocation.getCurrentPosition(function(position){
+			    var startMark = new Mark({
+				lonlat: new L.LatLng(position.coords.latitude, position.coords.longitude)		    
+			    });
+			    startMark.findNearestNeighbour();
+			    window.markList.setStartMark(startMark);
+		    });	    
+	    } 
             // add marker 
-            var mark = new Mark({
-                lonlat: new L.LatLng(spot.lat, spot.lon)
-            });
-            mark.findNearestNeighbour();
-            window.markList.setTargetMark(mark);
-        });
+	    var mark = new Mark({
+		lonlat: new L.LatLng(spot.lat, spot.lon)
+	    });
+	    mark.findNearestNeighbour();
+	    window.markList.setTargetMark(mark);
+	});
     },
 
     onAdminRemove: function () {
